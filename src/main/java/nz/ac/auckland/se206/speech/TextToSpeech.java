@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
@@ -13,6 +14,7 @@ import nz.ac.auckland.apiproxy.tts.TextToSpeechRequest;
 import nz.ac.auckland.apiproxy.tts.TextToSpeechRequest.Provider;
 import nz.ac.auckland.apiproxy.tts.TextToSpeechRequest.Voice;
 import nz.ac.auckland.apiproxy.tts.TextToSpeechResult;
+import nz.ac.auckland.se206.GameStateContext;
 
 /** A utility class for converting text to speech using the specified API proxy. */
 public class TextToSpeech {
@@ -34,14 +36,15 @@ public class TextToSpeech {
           protected Void call() {
             try {
               ApiProxyConfig config = ApiProxyConfig.readConfig();
-              Provider provider = Provider.GOOGLE;
-              Voice voice = Voice.GOOGLE_EN_US_STANDARD_H;
+              Provider provider = Provider.OPENAI;
+              Voice voice = Voice.OPENAI_ALLOY;
 
               TextToSpeechRequest ttsRequest = new TextToSpeechRequest(config);
               ttsRequest.setText(text).setProvider(provider).setVoice(voice);
 
               TextToSpeechResult ttsResult = ttsRequest.execute();
               String audioUrl = ttsResult.getAudioUrl();
+              System.out.println(audioUrl);
 
               try (InputStream inputStream =
                   new BufferedInputStream(new URL(audioUrl).openStream())) {
@@ -60,6 +63,84 @@ public class TextToSpeech {
 
     Thread backgroundThread = new Thread(backgroundTask);
     backgroundThread.setDaemon(true); // Ensure the thread does not prevent JVM shutdown
-    backgroundThread.start();
+    // backgroundThread.start();
+
+    System.out.println(text);
+  }
+
+  public static void speak(String text, GameStateContext context) {
+    if (text == null || text.isEmpty()) {
+      throw new IllegalArgumentException("Text should not be null or empty");
+    }
+
+    // Platform.runLater(
+    //     () -> {
+    //       context
+    //           .getRoomController()
+    //           .setChatStats(
+    //               context.getRoomController().getPerson().getName() + " is trying to talk...");
+    //     });
+    Task<Void> backgroundTask =
+        new Task<>() {
+          @Override
+          protected Void call() {
+            try {
+              ApiProxyConfig config = ApiProxyConfig.readConfig();
+              Provider provider = Provider.OPENAI;
+
+              Voice voice = context.getRoomController().getPerson().getVoice();
+
+              TextToSpeechRequest ttsRequest = new TextToSpeechRequest(config);
+              ttsRequest.setText(text).setProvider(provider).setVoice(voice);
+
+              TextToSpeechResult ttsResult = ttsRequest.execute();
+              String audioUrl = ttsResult.getAudioUrl();
+
+              try (InputStream inputStream =
+                  new BufferedInputStream(new URL(audioUrl).openStream())) {
+                Player player = new Player(inputStream);
+                Platform.runLater(
+                    () -> {
+                      context
+                          .getRoomController()
+                          .setChatStats(
+                              "Talking to "
+                                  + context.getRoomController().getPerson().getName()
+                                  + " who is in "
+                                  + context.getRoomController().getPerson().getColor());
+                      context.getRoomController().getStatsPane().getChildren().clear();
+                    });
+                player.play();
+              } catch (JavaLayerException | IOException e) {
+                e.printStackTrace();
+              }
+
+            } catch (ApiProxyException e) {
+              e.printStackTrace();
+            }
+            return null;
+          }
+        };
+
+    // backgroundTask.setOnSucceeded(
+    //     event -> {
+    //       Platform.runLater(
+    //           () -> {
+    //             context
+    //                 .getRoomController()
+    //                 .setChatStats(
+    //                     "Talking to "
+    //                         + context.getRoomController().getPerson().getName()
+    //                         + " who is in "
+    //                         + context.getRoomController().getPerson().getColor());
+    //             context.getRoomController().getStatsPane().getChildren().clear();
+    //             context.getRoomController().enableTalking();
+    //           });
+    //     });
+    Thread backgroundThread = new Thread(backgroundTask);
+    backgroundThread.setDaemon(true); // Ensure the thread does not prevent JVM shutdown
+    // backgroundThread.start();
+
+    System.out.println(text);
   }
 }

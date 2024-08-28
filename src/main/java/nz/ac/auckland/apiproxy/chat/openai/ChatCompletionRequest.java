@@ -16,22 +16,6 @@ import org.apache.http.impl.client.HttpClients;
 
 public class ChatCompletionRequest {
 
-  public enum Model {
-    GPT_3_5_TURBO("gpt-3.5-turbo"),
-    GPT_4("gpt-4"),
-    GPT_4o("gpt-4o");
-
-    private final String modelName;
-
-    Model(String modelName) {
-      this.modelName = modelName;
-    }
-
-    public String getModelName() {
-      return modelName;
-    }
-  }
-
   private static final int NOT_SET = -1;
 
   private ApiProxyConfig config;

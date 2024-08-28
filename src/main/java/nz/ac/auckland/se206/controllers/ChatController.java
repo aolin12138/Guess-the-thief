@@ -1,8 +1,6 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,11 +10,9 @@ import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
 import nz.ac.auckland.apiproxy.chat.openai.ChatMessage;
 import nz.ac.auckland.apiproxy.chat.openai.Choice;
-import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.prompts.PromptEngineering;
-import nz.ac.auckland.se206.speech.FreeTextToSpeech;
+import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /**
  * Controller class for the chat view. Handles user interactions and communication with the GPT
@@ -46,32 +42,32 @@ public class ChatController {
    *
    * @return the system prompt string
    */
-  private String getSystemPrompt() {
-    Map<String, String> map = new HashMap<>();
-    map.put("profession", profession);
-    return PromptEngineering.getPrompt("chat.txt", map);
-  }
+  // private String getSystemPrompt() {
+  //   Map<String, String> map = new HashMap<>();
+  //   map.put("profession", profession);
+  //   return PromptEngineering.getPrompt("chat.txt", map);
+  // }
 
   /**
    * Sets the profession for the chat context and initializes the ChatCompletionRequest.
    *
    * @param profession the profession to set
    */
-  public void setProfession(String profession) {
-    this.profession = profession;
-    try {
-      ApiProxyConfig config = ApiProxyConfig.readConfig();
-      chatCompletionRequest =
-          new ChatCompletionRequest(config)
-              .setN(1)
-              .setTemperature(0.2)
-              .setTopP(0.5)
-              .setMaxTokens(100);
-      runGpt(new ChatMessage("system", getSystemPrompt()));
-    } catch (ApiProxyException e) {
-      e.printStackTrace();
-    }
-  }
+  // public void setProfession(String profession) {
+  //   this.profession = profession;
+  //   try {
+  //     ApiProxyConfig config = ApiProxyConfig.readConfig();
+  //     chatCompletionRequest =
+  //         new ChatCompletionRequest(config)
+  //             .setN(1)
+  //             .setTemperature(0.2)
+  //             .setTopP(0.5)
+  //             .setMaxTokens(100);
+  //     runGpt(new ChatMessage("system", getSystemPrompt()));
+  //   } catch (ApiProxyException e) {
+  //     e.printStackTrace();
+  //   }
+  // }
 
   /**
    * Appends a chat message to the chat text area.
@@ -96,7 +92,7 @@ public class ChatController {
       Choice result = chatCompletionResult.getChoices().iterator().next();
       chatCompletionRequest.addMessage(result.getChatMessage());
       appendChatMessage(result.getChatMessage());
-      FreeTextToSpeech.speak(result.getChatMessage().getContent());
+      TextToSpeech.speak(result.getChatMessage().getContent());
       return result.getChatMessage();
     } catch (ApiProxyException e) {
       e.printStackTrace();

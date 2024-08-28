@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import javafx.scene.input.MouseEvent;
+import nz.ac.auckland.se206.controllers.RoomController;
 import nz.ac.auckland.se206.states.GameOver;
 import nz.ac.auckland.se206.states.GameStarted;
 import nz.ac.auckland.se206.states.GameState;
@@ -22,12 +23,13 @@ import org.yaml.snakeyaml.Yaml;
 public class GameStateContext {
 
   private final String rectIdToGuess;
-  private final String professionToGuess;
-  private final Map<String, String> rectanglesToProfession;
+  private final Person personToGuess;
+  private final Map<String, Person> rectanglesToProfession;
   private final GameStarted gameStartedState;
   private final Guessing guessingState;
   private final GameOver gameOverState;
   private GameState gameState;
+  private RoomController roomController;
 
   /** Constructs a new GameStateContext and initializes the game states and professions. */
   public GameStateContext() {
@@ -36,20 +38,60 @@ public class GameStateContext {
     gameOverState = new GameOver(this);
 
     gameState = gameStartedState; // Initial state
-    Map<String, Object> obj = null;
+    Map<String, Object> professionMap = null;
+    Map<String, Object> nameMap = null;
+    Map<String, Object> roleMap = null;
+    Map<String, Object> colorMap = null;
+
     Yaml yaml = new Yaml();
-    try (InputStream inputStream =
+    try (InputStream professionInputStream =
         GameStateContext.class.getClassLoader().getResourceAsStream("data/professions.yaml")) {
-      if (inputStream == null) {
+      if (professionInputStream == null) {
         throw new IllegalStateException("File not found!");
       }
-      obj = yaml.load(inputStream);
+      professionMap = yaml.load(professionInputStream);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    try (InputStream roleInputStream =
+        GameStateContext.class.getClassLoader().getResourceAsStream("data/roles.yaml")) {
+      if (roleInputStream == null) {
+        throw new IllegalStateException("File not found!");
+      }
+      roleMap = yaml.load(roleInputStream);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    try (InputStream nameInputStream =
+        GameStateContext.class.getClassLoader().getResourceAsStream("data/names.yaml")) {
+      if (nameInputStream == null) {
+        throw new IllegalStateException("File not found!");
+      }
+      nameMap = yaml.load(nameInputStream);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    try (InputStream colorInputStream =
+        GameStateContext.class.getClassLoader().getResourceAsStream("data/colors.yaml")) {
+      if (colorInputStream == null) {
+        throw new IllegalStateException("File not found!");
+      }
+      colorMap = yaml.load(colorInputStream);
     } catch (IOException e) {
       e.printStackTrace();
     }
 
     @SuppressWarnings("unchecked")
-    List<String> professions = (List<String>) obj.get("professions");
+    List<String> professions = (List<String>) professionMap.get("professions");
+    @SuppressWarnings("unchecked")
+    List<String> names = (List<String>) nameMap.get("names");
+    @SuppressWarnings("unchecked")
+    List<String> roles = (List<String>) roleMap.get("roles");
+    @SuppressWarnings("unchecked")
+    List<String> colors = (List<String>) colorMap.get("colors");
 
     Random random = new Random();
     Set<String> randomProfessions = new HashSet<>();
@@ -58,16 +100,57 @@ public class GameStateContext {
       randomProfessions.add(profession);
     }
 
-    String[] randomProfessionsArray = randomProfessions.toArray(new String[3]);
-    rectanglesToProfession = new HashMap<>();
-    rectanglesToProfession.put("rectPerson1", randomProfessionsArray[0]);
-    rectanglesToProfession.put("rectPerson2", randomProfessionsArray[1]);
-    rectanglesToProfession.put("rectPerson3", randomProfessionsArray[2]);
+    Set<String> randomNames = new HashSet<>();
+    while (randomNames.size() < 3) {
+      String name = names.get(random.nextInt(names.size()));
+      randomNames.add(name);
+    }
 
-    int randomNumber = random.nextInt(3);
+    Set<String> randomRoles = new HashSet<>();
+    while (randomRoles.size() < 3) {
+      String role = roles.get(random.nextInt(roles.size()));
+      randomRoles.add(role);
+    }
+
+    Set<String> randomColor = new HashSet<>();
+    while (randomColor.size() < 3) {
+      String color = colors.get(random.nextInt(colors.size()));
+      randomColor.add(color);
+    }
+
+    String[] randomProfessionsArray = randomProfessions.toArray(new String[3]);
+    String[] randomNamesArray = randomNames.toArray(new String[3]);
+    String[] randomRolesArray = randomRoles.toArray(new String[3]);
+    int randomIndex = random.nextInt(3);
+    randomRolesArray[randomIndex] = "thief";
+
+    Person person1 =
+        new Person(
+            randomNamesArray[0],
+            randomRolesArray[0],
+            randomProfessionsArray[0],
+            randomColor.toArray(new String[3])[0]);
+    Person person2 =
+        new Person(
+            randomNamesArray[1],
+            randomRolesArray[1],
+            randomProfessionsArray[1],
+            randomColor.toArray(new String[3])[1]);
+    Person person3 =
+        new Person(
+            randomNamesArray[2],
+            randomRolesArray[2],
+            randomProfessionsArray[2],
+            randomColor.toArray(new String[3])[2]);
+
+    rectanglesToProfession = new HashMap<>();
+    rectanglesToProfession.put("rectPerson1", person1);
+    rectanglesToProfession.put("rectPerson2", person2);
+    rectanglesToProfession.put("rectPerson3", person3);
+
     rectIdToGuess =
-        randomNumber == 0 ? "rectPerson1" : ((randomNumber == 1) ? "rectPerson2" : "rectPerson3");
-    professionToGuess = rectanglesToProfession.get(rectIdToGuess);
+        randomIndex == 0 ? "rectPerson1" : ((randomIndex == 1) ? "rectPerson2" : "rectPerson3");
+    personToGuess = rectanglesToProfession.get(rectIdToGuess);
   }
 
   /**
@@ -111,8 +194,8 @@ public class GameStateContext {
    *
    * @return the profession to guess
    */
-  public String getProfessionToGuess() {
-    return professionToGuess;
+  public Person getPersonToGuess() {
+    return personToGuess;
   }
 
   /**
@@ -130,7 +213,7 @@ public class GameStateContext {
    * @param rectangleId the rectangle ID
    * @return the profession associated with the rectangle ID
    */
-  public String getProfession(String rectangleId) {
+  public Person getPerson(String rectangleId) {
     return rectanglesToProfession.get(rectangleId);
   }
 
@@ -152,5 +235,29 @@ public class GameStateContext {
    */
   public void handleGuessClick() throws IOException {
     gameState.handleGuessClick();
+  }
+
+  public void handleTrashBinClick(MouseEvent event, String itemId) throws IOException {
+    gameState.handleTrashBinClick(event, itemId);
+  }
+
+  public void handleCameraClick(MouseEvent event, String itemId) throws IOException {
+    gameState.handleCameraClick(event, itemId);
+  }
+
+  public void handleCarClick(MouseEvent event, String itemId) throws IOException {
+    gameState.handleCarClick(event, itemId);
+  }
+
+  public void setRoomController(RoomController roomController) {
+    this.roomController = roomController;
+  }
+
+  public RoomController getRoomController() {
+    return roomController;
+  }
+
+  public GameState getGameState() {
+    return gameState;
   }
 }
