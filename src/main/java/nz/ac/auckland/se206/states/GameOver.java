@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.states;
 
 import java.io.IOException;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.speech.TextToSpeech;
@@ -35,7 +36,7 @@ public class GameOver implements GameState {
     if (rectangleId.equals("rectCashier") || rectangleId.equals("rectWaitress")) {
       return;
     }
-    String clickedProfession = context.getProfession(rectangleId);
+    String clickedProfession = context.getPerson(rectangleId).getRole();
     TextToSpeech.speak("Game Over, you have already guessed! This is the " + clickedProfession);
   }
 
@@ -47,6 +48,25 @@ public class GameOver implements GameState {
    */
   @Override
   public void handleGuessClick() throws IOException {
-    TextToSpeech.speak("You have already guessed!");
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("Game Over");
+    alert.setHeaderText("Game Over");
+    alert.setContentText("You have already guessed! The game is over.");
+    alert.showAndWait();
+  }
+
+  @Override
+  public void handleTrashBinClick(MouseEvent event, String itemId) throws IOException {
+    // Do nothing
+  }
+
+  @Override
+  public void handleCameraClick(MouseEvent event, String itemId) throws IOException {
+    // Do nothing
+  }
+
+  @Override
+  public void handleCarClick(MouseEvent event, String itemId) throws IOException {
+    // Do nothing
   }
 }

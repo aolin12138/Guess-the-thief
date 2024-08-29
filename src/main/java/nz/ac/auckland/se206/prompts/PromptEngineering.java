@@ -7,6 +7,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
+import nz.ac.auckland.se206.Person;
 
 /**
  * Utility class for prompt engineering. This class provides methods to load and fill prompt
@@ -22,10 +23,17 @@ public class PromptEngineering {
    * @return the filled prompt
    * @throws IllegalArgumentException if there is an error loading or filling the template
    */
-  public static String getPrompt(String promptId, Map<String, String> data) {
+  public static String getPrompt(String promptId, Map<String, String> data, Person person) {
     try {
       // Load the prompt template file from resources
-      URL resourceUrl = PromptEngineering.class.getClassLoader().getResource("prompts/chat.txt");
+
+      String resourcePath = "";
+      if (person.hasTalked()) {
+        resourcePath = "prompts/chat3.txt";
+      } else {
+        resourcePath = "prompts/chat2.txt";
+      }
+      URL resourceUrl = PromptEngineering.class.getClassLoader().getResource(resourcePath);
       String template = loadTemplate(resourceUrl.toURI());
       // Fill the template with the provided data
       return fillTemplate(template, data);

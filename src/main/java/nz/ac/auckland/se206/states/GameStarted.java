@@ -1,9 +1,15 @@
 package nz.ac.auckland.se206.states;
 
 import java.io.IOException;
+import javafx.concurrent.Task;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.input.MouseEvent;
-import nz.ac.auckland.se206.App;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import nz.ac.auckland.se206.GameStateContext;
+import nz.ac.auckland.se206.controllers.RoomController;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /**
@@ -35,14 +41,52 @@ public class GameStarted implements GameState {
   public void handleRectangleClick(MouseEvent event, String rectangleId) throws IOException {
     // Transition to chat view or provide an introduction based on the clicked rectangle
     switch (rectangleId) {
-      case "rectCashier":
-        TextToSpeech.speak("Welcome to my cafe!");
+      case "officer":
+        TextToSpeech.speak("Talk to the suspects and find the thief!");
         return;
-      case "rectWaitress":
-        TextToSpeech.speak("Hi, let me know when you are ready to order!");
+      case "officer2":
+        TextToSpeech.speak("Emmm... What are in the crime scene?");
         return;
     }
-    App.openChat(event, context.getProfession(rectangleId));
+
+    ProgressIndicator statsIndicator = new ProgressIndicator();
+    statsIndicator.setMinSize(1, 1);
+    context.getRoomController().getStatsPane().getChildren().add(statsIndicator);
+    context
+        .getRoomController()
+        .setChatStats(
+            "Walking to "
+                + context.getPerson(rectangleId).getName()
+                + " who is in "
+                + context.getPerson(rectangleId).getColor());
+
+    context.getRoomController().noTalking();
+    Task<Void> task =
+        new Task<Void>() {
+
+          @Override
+          protected Void call() throws Exception {
+            context.getRoomController().setPerson(context.getPerson(rectangleId));
+            return null;
+          }
+        };
+
+    // task.setOnSucceeded(
+    //     event1 -> {
+    //       context
+    //           .getRoomController()
+    //           .setChatStats(
+    //               "Talking to "
+    //                   + context.getPerson(rectangleId).getName()
+    //                   + " who is in "
+    //                   + context.getPerson(rectangleId).getColor());
+    //       context.getRoomController().getStatsPane().getChildren().remove(statsIndicator);
+    //       context.getRoomController().enableTalking();
+    //     });
+
+    context.getRoomController().talked();
+    Thread backgrounThread = new Thread(task);
+    backgrounThread.start();
   }
 
   /**
@@ -53,7 +97,74 @@ public class GameStarted implements GameState {
    */
   @Override
   public void handleGuessClick() throws IOException {
-    TextToSpeech.speak("Make a guess, click on the " + context.getProfessionToGuess());
+    if (!context.getRoomController().getHasTalked()) {
+      Alert alert = new Alert(AlertType.INFORMATION);
+      alert.setTitle("Information Dialog");
+      alert.setHeaderText("Talk to at least one suspect before making a guess.");
+      alert.showAndWait();
+      return;
+    } else if (!context.getRoomController().isWalletFound()
+        && !context.getRoomController().isCameraFound()
+        && !context.getRoomController().isDashcamFound()) {
+      Alert alert = new Alert(AlertType.INFORMATION);
+      alert.setTitle("Information Dialog");
+      alert.setHeaderText("There is missing evidence.");
+      alert.showAndWait();
+      return;
+    }
+
+    Media media = new Media(getClass().getResource("/sounds/make_guess.mp3").toString());
+    MediaPlayer mediaPlayer = new MediaPlayer(media);
+    mediaPlayer.play();
+    RoomController roomController = context.getRoomController();
+    roomController.getBtnGuess().setText("Rethink");
     context.setState(context.getGuessingState());
+  }
+
+  @Override
+  public void handleTrashBinClick(MouseEvent event, String itemId) throws IOException {
+    if (context.getRoomController().isWalletFound()) {
+      Alert alert = new Alert(AlertType.INFORMATION);
+      alert.setTitle("Wallet found");
+      alert.setHeaderText("There is nothing else suspicious on the floor.");
+      alert.showAndWait();
+      return;
+    }
+
+    context.getRoomController().foundWallet();
+    String thiefName = context.getPersonToGuess().getName();
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Wallet found");
+    alert.setHeaderText("You found a wallet on the floor near crime scene.");
+    alert.setContentText("The wallet belong to " + thiefName);
+    alert.showAndWait();
+  }
+
+  @Override
+  public void handleCameraClick(MouseEvent event, String itemId) throws IOException {
+    context.getRoomController().foundCamera();
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Camera footage found");
+    alert.setHeaderText(
+        "A person in "
+            + context.getPersonToGuess().getColor()
+            + " clothes was seen near the crime scene.");
+    alert.showAndWait();
+  }
+
+  @Override
+  public void handleCarClick(MouseEvent event, String itemId) throws IOException {
+    if (!context.getRoomController().isCarFound()) {
+      Alert alert = new Alert(AlertType.INFORMATION);
+      alert.setTitle("Car found");
+      alert.setHeaderText("There is a car parking next to the crime scene.");
+      alert.showAndWait();
+    }
+    context.getRoomController().foundCar();
+    context.getRoomController().diableRectangles();
+    context.getRoomController().getCarImage().setVisible(true);
+    context.getRoomController().getDashcam().setDisable(false);
+    context.getRoomController().getBtnBack().setVisible(true);
+    context.getRoomController().getBtnBack().setDisable(false);
   }
 }
