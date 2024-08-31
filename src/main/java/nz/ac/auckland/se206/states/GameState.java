@@ -24,10 +24,4 @@ public interface GameState {
    * @throws IOException if there is an I/O error
    */
   void handleGuessClick() throws IOException;
-
-  void handleTrashBinClick(MouseEvent event, String itemId) throws IOException;
-
-  void handleCameraClick(MouseEvent event, String itemId) throws IOException;
-
-  void handleCarClick(MouseEvent event, String itemId) throws IOException;
 }

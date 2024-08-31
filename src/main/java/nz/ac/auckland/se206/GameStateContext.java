@@ -1,20 +1,15 @@
 package nz.ac.auckland.se206;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.Set;
 import javafx.scene.input.MouseEvent;
+import nz.ac.auckland.apiproxy.tts.TextToSpeechRequest.Voice;
 import nz.ac.auckland.se206.controllers.RoomController;
 import nz.ac.auckland.se206.states.GameOver;
 import nz.ac.auckland.se206.states.GameStarted;
 import nz.ac.auckland.se206.states.GameState;
 import nz.ac.auckland.se206.states.Guessing;
-import org.yaml.snakeyaml.Yaml;
 
 /**
  * Context class for managing the state of the game. Handles transitions between different game
@@ -38,118 +33,109 @@ public class GameStateContext {
     gameOverState = new GameOver(this);
 
     gameState = gameStartedState; // Initial state
-    Map<String, Object> professionMap = null;
-    Map<String, Object> nameMap = null;
-    Map<String, Object> roleMap = null;
-    Map<String, Object> colorMap = null;
+    // Map<String, Object> professionMap = null;
+    // Map<String, Object> nameMap = null;
+    // Map<String, Object> roleMap = null;
+    // Map<String, Object> colorMap = null;
 
-    Yaml yaml = new Yaml();
-    try (InputStream professionInputStream =
-        GameStateContext.class.getClassLoader().getResourceAsStream("data/professions.yaml")) {
-      if (professionInputStream == null) {
-        throw new IllegalStateException("File not found!");
-      }
-      professionMap = yaml.load(professionInputStream);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    // Yaml yaml = new Yaml();
+    // try (InputStream professionInputStream =
+    //     GameStateContext.class.getClassLoader().getResourceAsStream("data/professions.yaml")) {
+    //   if (professionInputStream == null) {
+    //     throw new IllegalStateException("File not found!");
+    //   }
+    //   professionMap = yaml.load(professionInputStream);
+    // } catch (IOException e) {
+    //   e.printStackTrace();
+    // }
 
-    try (InputStream roleInputStream =
-        GameStateContext.class.getClassLoader().getResourceAsStream("data/roles.yaml")) {
-      if (roleInputStream == null) {
-        throw new IllegalStateException("File not found!");
-      }
-      roleMap = yaml.load(roleInputStream);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    // try (InputStream roleInputStream =
+    //     GameStateContext.class.getClassLoader().getResourceAsStream("data/roles.yaml")) {
+    //   if (roleInputStream == null) {
+    //     throw new IllegalStateException("File not found!");
+    //   }
+    //   roleMap = yaml.load(roleInputStream);
+    // } catch (IOException e) {
+    //   e.printStackTrace();
+    // }
 
-    try (InputStream nameInputStream =
-        GameStateContext.class.getClassLoader().getResourceAsStream("data/names.yaml")) {
-      if (nameInputStream == null) {
-        throw new IllegalStateException("File not found!");
-      }
-      nameMap = yaml.load(nameInputStream);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    // try (InputStream nameInputStream =
+    //     GameStateContext.class.getClassLoader().getResourceAsStream("data/names.yaml")) {
+    //   if (nameInputStream == null) {
+    //     throw new IllegalStateException("File not found!");
+    //   }
+    //   nameMap = yaml.load(nameInputStream);
+    // } catch (IOException e) {
+    //   e.printStackTrace();
+    // }
 
-    try (InputStream colorInputStream =
-        GameStateContext.class.getClassLoader().getResourceAsStream("data/colors.yaml")) {
-      if (colorInputStream == null) {
-        throw new IllegalStateException("File not found!");
-      }
-      colorMap = yaml.load(colorInputStream);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    // try (InputStream colorInputStream =
+    //     GameStateContext.class.getClassLoader().getResourceAsStream("data/colors.yaml")) {
+    //   if (colorInputStream == null) {
+    //     throw new IllegalStateException("File not found!");
+    //   }
+    //   colorMap = yaml.load(colorInputStream);
+    // } catch (IOException e) {
+    //   e.printStackTrace();
+    // }
 
-    @SuppressWarnings("unchecked")
-    List<String> professions = (List<String>) professionMap.get("professions");
-    @SuppressWarnings("unchecked")
-    List<String> names = (List<String>) nameMap.get("names");
-    @SuppressWarnings("unchecked")
-    List<String> roles = (List<String>) roleMap.get("roles");
-    @SuppressWarnings("unchecked")
-    List<String> colors = (List<String>) colorMap.get("colors");
+    // @SuppressWarnings("unchecked")
+    // List<String> professions = (List<String>) professionMap.get("professions");
+    // @SuppressWarnings("unchecked")
+    // List<String> names = (List<String>) nameMap.get("names");
+    // @SuppressWarnings("unchecked")
+    // List<String> roles = (List<String>) roleMap.get("roles");
+    // @SuppressWarnings("unchecked")
+    // List<String> colors = (List<String>) colorMap.get("colors");
 
-    Random random = new Random();
-    Set<String> randomProfessions = new HashSet<>();
-    while (randomProfessions.size() < 3) {
-      String profession = professions.get(random.nextInt(professions.size()));
-      randomProfessions.add(profession);
-    }
+    // Random random = new Random();
+    // Set<String> randomProfessions = new HashSet<>();
+    // while (randomProfessions.size() < 3) {
+    //   String profession = professions.get(random.nextInt(professions.size()));
+    //   randomProfessions.add(profession);
+    // }
 
-    Set<String> randomNames = new HashSet<>();
-    while (randomNames.size() < 3) {
-      String name = names.get(random.nextInt(names.size()));
-      randomNames.add(name);
-    }
+    // Set<String> randomNames = new HashSet<>();
+    // while (randomNames.size() < 3) {
+    //   String name = names.get(random.nextInt(names.size()));
+    //   randomNames.add(name);
+    // }
 
-    Set<String> randomRoles = new HashSet<>();
-    while (randomRoles.size() < 3) {
-      String role = roles.get(random.nextInt(roles.size()));
-      randomRoles.add(role);
-    }
+    // Set<String> randomRoles = new HashSet<>();
+    // while (randomRoles.size() < 3) {
+    //   String role = roles.get(random.nextInt(roles.size()));
+    //   randomRoles.add(role);
+    // }
 
-    Set<String> randomColor = new HashSet<>();
-    while (randomColor.size() < 3) {
-      String color = colors.get(random.nextInt(colors.size()));
-      randomColor.add(color);
-    }
+    // Set<String> randomColor = new HashSet<>();
+    // while (randomColor.size() < 3) {
+    //   String color = colors.get(random.nextInt(colors.size()));
+    //   randomColor.add(color);
+    // }
 
-    String[] randomProfessionsArray = randomProfessions.toArray(new String[3]);
-    String[] randomNamesArray = randomNames.toArray(new String[3]);
-    String[] randomRolesArray = randomRoles.toArray(new String[3]);
-    int randomIndex = random.nextInt(3);
-    randomRolesArray[randomIndex] = "thief";
+    // String[] randomProfessionsArray = randomProfessions.toArray(new String[3]);
+    // String[] randomNamesArray = randomNames.toArray(new String[3]);
+    // String[] randomRolesArray = randomRoles.toArray(new String[3]);
+    // int randomIndex = random.nextInt(3);
+    // randomRolesArray[randomIndex] = "thief";
 
     Person person1 =
         new Person(
-            randomNamesArray[0],
-            randomRolesArray[0],
-            randomProfessionsArray[0],
-            randomColor.toArray(new String[3])[0]);
+            "John", "not the thief", "worker at the restaurant", Voice.GOOGLE_EN_AU_STANDARD_B);
     Person person2 =
         new Person(
-            randomNamesArray[1],
-            randomRolesArray[1],
-            randomProfessionsArray[1],
-            randomColor.toArray(new String[3])[1]);
+            "Bob", "not the thief", "owner of the other restaurant", Voice.GOOGLE_EN_AU_STANDARD_C);
     Person person3 =
         new Person(
-            randomNamesArray[2],
-            randomRolesArray[2],
-            randomProfessionsArray[2],
-            randomColor.toArray(new String[3])[2]);
+            "Jason", "the thief", "Elder brother of the family", Voice.GOOGLE_EN_AU_STANDARD_D);
 
     rectanglesToProfession = new HashMap<>();
     rectanglesToProfession.put("rectPerson1", person1);
     rectanglesToProfession.put("rectPerson2", person2);
     rectanglesToProfession.put("rectPerson3", person3);
 
-    rectIdToGuess =
-        randomIndex == 0 ? "rectPerson1" : ((randomIndex == 1) ? "rectPerson2" : "rectPerson3");
+    rectIdToGuess = "rectPerson3";
+
     personToGuess = rectanglesToProfession.get(rectIdToGuess);
   }
 
@@ -235,18 +221,6 @@ public class GameStateContext {
    */
   public void handleGuessClick() throws IOException {
     gameState.handleGuessClick();
-  }
-
-  public void handleTrashBinClick(MouseEvent event, String itemId) throws IOException {
-    gameState.handleTrashBinClick(event, itemId);
-  }
-
-  public void handleCameraClick(MouseEvent event, String itemId) throws IOException {
-    gameState.handleCameraClick(event, itemId);
-  }
-
-  public void handleCarClick(MouseEvent event, String itemId) throws IOException {
-    gameState.handleCarClick(event, itemId);
   }
 
   public void setRoomController(RoomController roomController) {

@@ -96,7 +96,7 @@ public class RoomController {
   @FXML
   public void initialize() {
     if (isFirstTimeInit) {
-      // context.setRoomController(this);
+      context.setRoomController(this);
       indicatorPane.getChildren().add(ringProgressIndicator);
       ringProgressIndicator.setRingWidth(50);
       timerLabel.setText(String.format("%02d", timeToCount));
@@ -461,21 +461,6 @@ public class RoomController {
     //     });
     Thread backgroundThread = new Thread(task);
     backgroundThread.start();
-  }
-
-  @FXML
-  public void handleTrashBinClick(MouseEvent event) throws IOException {
-    context.handleTrashBinClick(event, ((Ellipse) event.getSource()).getId());
-  }
-
-  @FXML
-  public void handleCameraClick(MouseEvent event) throws IOException {
-    context.handleCameraClick(event, ((Rectangle) event.getSource()).getId());
-  }
-
-  @FXML
-  public void handleCarClick(MouseEvent event) throws IOException {
-    context.handleCarClick(event, ((Rectangle) event.getSource()).getId());
   }
 
   @FXML

@@ -3,7 +3,6 @@ package nz.ac.auckland.se206.states;
 import java.io.IOException;
 import java.util.Optional;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
@@ -93,52 +92,5 @@ public class Guessing implements GameState {
     RoomController roomController = context.getRoomController();
     roomController.getBtnGuess().setText("Make a Guess");
     context.setState(context.getGameStartedState());
-  }
-
-  @Override
-  public void handleTrashBinClick(MouseEvent event, String itemId) throws IOException {
-    if (context.getRoomController().isWalletFound()) {
-      Alert alert = new Alert(AlertType.INFORMATION);
-      alert.setTitle("Information Dialog");
-      alert.setHeaderText("There is nothing else suspicious on the floor.");
-      alert.showAndWait();
-      return;
-    }
-
-    context.getRoomController().foundWallet();
-    String thiefName = context.getPersonToGuess().getName();
-    Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle("Information Dialog");
-    alert.setHeaderText("You found a wallet on the floor near crime scene.");
-    alert.setContentText("The ID says to be " + thiefName);
-    alert.showAndWait();
-  }
-
-  @Override
-  public void handleCameraClick(MouseEvent event, String itemId) throws IOException {
-    context.getRoomController().foundCamera();
-    Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle("Camera footage found");
-    alert.setHeaderText(
-        "A person in "
-            + context.getPersonToGuess().getColor()
-            + " clothes was seen near the crime scene.");
-    alert.showAndWait();
-  }
-
-  @Override
-  public void handleCarClick(MouseEvent event, String itemId) throws IOException {
-    if (!context.getRoomController().isCarFound()) {
-      Alert alert = new Alert(AlertType.INFORMATION);
-      alert.setTitle("Car found");
-      alert.setHeaderText("There is a car parking next to the crime scene.");
-      alert.showAndWait();
-    }
-    context.getRoomController().foundCar();
-    context.getRoomController().diableRectangles();
-    context.getRoomController().getCarImage().setVisible(true);
-    context.getRoomController().getDashcam().setDisable(false);
-    context.getRoomController().getBtnBack().setVisible(true);
-    context.getRoomController().getBtnBack().setDisable(false);
   }
 }

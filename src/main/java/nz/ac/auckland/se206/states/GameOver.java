@@ -54,19 +54,4 @@ public class GameOver implements GameState {
     alert.setContentText("You have already guessed! The game is over.");
     alert.showAndWait();
   }
-
-  @Override
-  public void handleTrashBinClick(MouseEvent event, String itemId) throws IOException {
-    // Do nothing
-  }
-
-  @Override
-  public void handleCameraClick(MouseEvent event, String itemId) throws IOException {
-    // Do nothing
-  }
-
-  @Override
-  public void handleCarClick(MouseEvent event, String itemId) throws IOException {
-    // Do nothing
-  }
 }
