@@ -35,8 +35,8 @@ public class StartController {
 
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/room.fxml"));
       Parent root = loader.load();
-      RoomController controller = loader.getController();
-      controller.getContext().setRoomController(controller);
+      // RoomController controller = loader.getController();
+      // controller.getContext().setRoomController(controller);
       startButton.getScene().setRoot(root);
     } catch (IOException e) {
       e.printStackTrace();

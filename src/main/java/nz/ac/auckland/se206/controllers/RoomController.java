@@ -96,7 +96,7 @@ public class RoomController {
   @FXML
   public void initialize() {
     if (isFirstTimeInit) {
-      // context.setRoomController(this);
+      context.setRoomController(this);
       indicatorPane.getChildren().add(ringProgressIndicator);
       ringProgressIndicator.setRingWidth(50);
       timerLabel.setText(String.format("%02d", timeToCount));
