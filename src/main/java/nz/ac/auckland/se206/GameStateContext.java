@@ -223,18 +223,6 @@ public class GameStateContext {
     gameState.handleGuessClick();
   }
 
-  public void handleTrashBinClick(MouseEvent event, String itemId) throws IOException {
-    gameState.handleTrashBinClick(event, itemId);
-  }
-
-  public void handleCameraClick(MouseEvent event, String itemId) throws IOException {
-    gameState.handleCameraClick(event, itemId);
-  }
-
-  public void handleCarClick(MouseEvent event, String itemId) throws IOException {
-    gameState.handleCarClick(event, itemId);
-  }
-
   public void setRoomController(RoomController roomController) {
     this.roomController = roomController;
   }

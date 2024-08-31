@@ -464,21 +464,6 @@ public class RoomController {
   }
 
   @FXML
-  public void handleTrashBinClick(MouseEvent event) throws IOException {
-    context.handleTrashBinClick(event, ((Ellipse) event.getSource()).getId());
-  }
-
-  @FXML
-  public void handleCameraClick(MouseEvent event) throws IOException {
-    context.handleCameraClick(event, ((Rectangle) event.getSource()).getId());
-  }
-
-  @FXML
-  public void handleCarClick(MouseEvent event) throws IOException {
-    context.handleCarClick(event, ((Rectangle) event.getSource()).getId());
-  }
-
-  @FXML
   public void handleDashcamClick(MouseEvent event) throws IOException {
     dashcamFound = true;
     Alert alert = new Alert(AlertType.INFORMATION);
