@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.input.MouseEvent;
+import nz.ac.auckland.apiproxy.tts.TextToSpeechRequest.Voice;
 import nz.ac.auckland.se206.controllers.RoomController;
 import nz.ac.auckland.se206.states.GameOver;
 import nz.ac.auckland.se206.states.GameStarted;
@@ -31,7 +32,7 @@ public class GameStateContext {
     guessingState = new Guessing(this);
     gameOverState = new GameOver(this);
 
-    // gameState = gameStartedState; // Initial state
+    gameState = gameStartedState; // Initial state
     // Map<String, Object> professionMap = null;
     // Map<String, Object> nameMap = null;
     // Map<String, Object> roleMap = null;
@@ -118,9 +119,15 @@ public class GameStateContext {
     // int randomIndex = random.nextInt(3);
     // randomRolesArray[randomIndex] = "thief";
 
-    Person person1 = new Person("John", "not the thief", "worker at the restaurant");
-    Person person2 = new Person("Bob", "not the thief", "owner of the other restaurant");
-    Person person3 = new Person("Jason", "the thief", "Elder brother of the family");
+    Person person1 =
+        new Person(
+            "John", "not the thief", "worker at the restaurant", Voice.GOOGLE_EN_AU_STANDARD_B);
+    Person person2 =
+        new Person(
+            "Bob", "not the thief", "owner of the other restaurant", Voice.GOOGLE_EN_AU_STANDARD_C);
+    Person person3 =
+        new Person(
+            "Jason", "the thief", "Elder brother of the family", Voice.GOOGLE_EN_AU_STANDARD_D);
 
     rectanglesToProfession = new HashMap<>();
     rectanglesToProfession.put("rectPerson1", person1);
