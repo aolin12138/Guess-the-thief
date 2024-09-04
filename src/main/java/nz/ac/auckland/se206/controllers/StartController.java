@@ -14,7 +14,7 @@ import javafx.scene.media.MediaPlayer;
 public class StartController {
 
   @FXML Button startButton;
-  @FXML Button onViewInstructions;
+  @FXML Button instructionsButton;
   @FXML TextArea scoreboardArea;
 
   Media media = new Media(getClass().getResource("/sounds/opening_voice.mp3").toExternalForm());
@@ -22,6 +22,13 @@ public class StartController {
 
   @FXML
   public void initialize() {
+    // When start page launches, we should create an ArrayList that can be used in the end of the
+    // game
+    // to store the scoreboard values.
+    // If this is the first round, scoreboard should display a message saying that there are no
+    // scores
+    // yet.
+
     Platform.runLater(
         () -> {
           mediaPlayer.play();
