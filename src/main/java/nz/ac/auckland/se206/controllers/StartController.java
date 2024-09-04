@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -13,6 +14,8 @@ import javafx.scene.media.MediaPlayer;
 public class StartController {
 
   @FXML Button startButton;
+  @FXML Button onViewInstructions;
+  @FXML TextArea scoreboardArea;
 
   Media media = new Media(getClass().getResource("/sounds/opening_voice.mp3").toExternalForm());
   MediaPlayer mediaPlayer = new MediaPlayer(media);
