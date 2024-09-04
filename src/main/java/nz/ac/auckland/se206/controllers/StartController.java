@@ -54,6 +54,9 @@ public class StartController {
   }
 
   @FXML
+  public void onViewInstructions() {}
+
+  @FXML
   public void onKeyPressed(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " pressed");
   }
