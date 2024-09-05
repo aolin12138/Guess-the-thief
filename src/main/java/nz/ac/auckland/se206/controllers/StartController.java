@@ -3,15 +3,18 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import nz.ac.auckland.se206.PreviousScore;
+import nz.ac.auckland.se206.SceneManager;
 
 public class StartController {
 
@@ -73,15 +76,18 @@ public class StartController {
   // This method will take the user to the instructions page when they click on the Instructions
   // button
   @FXML
-  public void onViewInstructions() {
-    try {
+  public void onViewInstructions(ActionEvent event) {
+    Button button = (Button) event.getSource();
+    Scene sceneOfButton = button.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.INSTRUCTIONS));
+    // try {
 
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/instructions.fxml"));
-      Parent root = loader.load();
-      startButton.getScene().setRoot(root);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    //   FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/instructions.fxml"));
+    //   Parent root = loader.load();
+    //   startButton.getScene().setRoot(root);
+    // } catch (IOException e) {
+    //   e.printStackTrace();
+    // }
   }
 
   @FXML
