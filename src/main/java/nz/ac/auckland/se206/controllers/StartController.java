@@ -67,7 +67,6 @@ public class StartController {
   @FXML
   public void onEnterPressed() {
     try {
-
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/room.fxml"));
       Parent root = loader.load();
       // RoomController controller = loader.getController();
@@ -85,14 +84,6 @@ public class StartController {
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.INSTRUCTIONS));
-    // try {
-
-    //   FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/instructions.fxml"));
-    //   Parent root = loader.load();
-    //   startButton.getScene().setRoot(root);
-    // } catch (IOException e) {
-    //   e.printStackTrace();
-    // }
   }
 
   @FXML
