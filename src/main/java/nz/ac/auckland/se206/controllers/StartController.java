@@ -32,8 +32,10 @@ public class StartController {
 
   @FXML
   public void initialize() {
+    // Check is the previousScores arraylist is empty, if it isn't, display the scores from previous
+    // rounds.
     if (previousScores.isEmpty()) {
-      scoreboardArea.setText("No scores yet.");
+      scoreboardArea.setText("Previous scores will appear here once you play more rounds!");
     } else {
       for (PreviousScore score : previousScores) {
         scoreboardArea.appendText(score.getRoundNumber() + " " + score.getTimeUsed() + "\n");
@@ -68,8 +70,19 @@ public class StartController {
     }
   }
 
+  // This method will take the user to the instructions page when they click on the Instructions
+  // button
   @FXML
-  public void onViewInstructions() {}
+  public void onViewInstructions() {
+    try {
+
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/instructions.fxml"));
+      Parent root = loader.load();
+      startButton.getScene().setRoot(root);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
   @FXML
   public void onKeyPressed(KeyEvent event) {
