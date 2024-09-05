@@ -20,7 +20,12 @@ public class StartController {
 
   @FXML Button startButton;
   @FXML Button instructionsButton;
-  @FXML TextArea scoreboardArea;
+  @FXML private TextArea scoreboardArea1;
+  @FXML private TextArea scoreboardArea2;
+  @FXML private TextArea scoreboardArea3;
+  @FXML private TextArea scoreboardArea4;
+  @FXML private TextArea scoreboardArea5;
+  @FXML private TextArea scoreboardArea6;
 
   // This ArrayList will store the scores of the previous rounds.
   private ArrayList<PreviousScore> previousScores = new ArrayList<PreviousScore>();
@@ -38,10 +43,10 @@ public class StartController {
     // Check is the previousScores arraylist is empty, if it isn't, display the scores from previous
     // rounds.
     if (previousScores.isEmpty()) {
-      scoreboardArea.setText("Previous scores will appear here once you play more rounds!");
+      // scoreboardArea1.setText("Previous scores will appear here once you play more rounds!");
     } else {
       for (PreviousScore score : previousScores) {
-        scoreboardArea.appendText(score.getRoundNumber() + " " + score.getTimeUsed() + "\n");
+        // scoreboardArea1.appendText(score.getRoundNumber() + " " + score.getTimeUsed() + "\n");
       }
     }
     // to store the scoreboard values.
@@ -76,7 +81,7 @@ public class StartController {
   // This method will take the user to the instructions page when they click on the Instructions
   // button
   @FXML
-  public void onViewInstructions(ActionEvent event) {
+  public void onViewInstructions(ActionEvent event) throws IOException {
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.INSTRUCTIONS));

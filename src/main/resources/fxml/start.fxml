@@ -24,7 +24,12 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextArea fx:id="scoreboardArea" layoutX="215.0" layoutY="285.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextArea fx:id="scoreboardArea" layoutX="181.0" layoutY="289.0" prefHeight="15.0" prefWidth="150.0" promptText="User name" />
       <Button fx:id="instructionsButton" layoutX="260.0" layoutY="161.0" mnemonicParsing="false" onAction="#onViewInstructions" text="View Instructions" />
+      <TextArea layoutX="181.0" layoutY="341.0" prefHeight="15.0" prefWidth="150.0" />
+      <TextArea layoutX="181.0" layoutY="402.0" prefHeight="15.0" prefWidth="150.0" />
+      <TextArea layoutX="351.0" layoutY="341.0" prefHeight="15.0" prefWidth="60.0" />
+      <TextArea layoutX="351.0" layoutY="288.0" prefHeight="15.0" prefWidth="60.0" promptText="00:00" />
+      <TextArea layoutX="351.0" layoutY="402.0" prefHeight="15.0" prefWidth="60.0" />
    </children>
 </Pane>
