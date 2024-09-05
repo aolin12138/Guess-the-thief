@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 
 public class SceneManager {
   public enum Scene {
+    INSTRUCTIONS,
     START,
     ROOM,
     Chat,
