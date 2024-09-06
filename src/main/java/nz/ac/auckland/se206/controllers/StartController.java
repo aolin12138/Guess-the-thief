@@ -10,11 +10,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import nz.ac.auckland.se206.PreviousScore;
 import nz.ac.auckland.se206.SceneManager;
+import nz.ac.auckland.se206.Utils;
 
 public class StartController {
 
@@ -26,6 +28,7 @@ public class StartController {
   @FXML private TextArea scoreboardArea4;
   @FXML private TextArea scoreboardArea5;
   @FXML private TextArea scoreboardArea6;
+  @FXML private TextField playerNameWindow;
 
   // This ArrayList will store the scores of the previous rounds.
   private ArrayList<PreviousScore> previousScores = new ArrayList<PreviousScore>();
@@ -66,6 +69,12 @@ public class StartController {
 
   @FXML
   public void onEnterPressed() {
+    // Store the player name
+    if (playerNameWindow.getText().isEmpty()) {
+      Utils.setPlayerName("Guest Player");
+    } else {
+      Utils.setPlayerName(playerNameWindow.getText());
+    }
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/room.fxml"));
       Parent root = loader.load();

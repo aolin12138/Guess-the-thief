@@ -15,6 +15,7 @@ public class Utils {
   public static FileWriter writer;
   private static ArrayList<String> previousScoresNames = new ArrayList<String>();
   private static ArrayList<String> previousScoresTimes = new ArrayList<String>();
+  private static String playerName;
 
   /**
    * Writes the user's name and time to a CSV file. The data is appended to the end of any current
@@ -108,7 +109,7 @@ public class Utils {
   // If the player won, their score will be passed here and checked to see if it is in the top 3.
   // If it is, this method will sort the csv files to include the new score and in the correct
   // order.
-  public static void updateScoreBoard(String user, int time) {
+  public static void updateScoreBoard(int time) {
     // Read current scores from the csv file
     previousScoresNames.clear();
     previousScoresTimes.clear();
@@ -117,8 +118,8 @@ public class Utils {
     if (previousScoresNames.isEmpty()) {
       try {
         previousScoresTimes.add(0, convertSecondsToTimeFormat(time));
-        previousScoresNames.add(0, user);
-        writeToCsv(user, convertSecondsToTimeFormat(time), false);
+        previousScoresNames.add(0, playerName);
+        writeToCsv(playerName, convertSecondsToTimeFormat(time), false);
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -129,12 +130,12 @@ public class Utils {
         previousScoresTimes.add(1, previousScoresTimes.get(0));
         previousScoresNames.add(1, previousScoresNames.get(0));
         previousScoresTimes.set(0, convertSecondsToTimeFormat(time));
-        previousScoresNames.set(0, user);
+        previousScoresNames.set(0, playerName);
         appendToCsv(2);
         return;
       } else {
         previousScoresTimes.add(1, convertSecondsToTimeFormat(time));
-        previousScoresNames.add(1, user);
+        previousScoresNames.add(1, playerName);
         appendToCsv(2);
         return;
       }
@@ -146,19 +147,19 @@ public class Utils {
         previousScoresTimes.set(1, previousScoresTimes.get(0));
         previousScoresNames.set(1, previousScoresNames.get(0));
         previousScoresTimes.set(0, convertSecondsToTimeFormat(time));
-        previousScoresNames.set(0, user);
+        previousScoresNames.set(0, playerName);
         appendToCsv(3);
         return;
       } else if (time > convertTimeFormatToSeconds(previousScoresTimes.get(1))) {
         previousScoresTimes.add(2, previousScoresTimes.get(1));
         previousScoresNames.add(2, previousScoresNames.get(1));
         previousScoresTimes.set(1, convertSecondsToTimeFormat(time));
-        previousScoresNames.set(1, user);
+        previousScoresNames.set(1, playerName);
         appendToCsv(3);
         return;
       } else {
         previousScoresTimes.add(2, convertSecondsToTimeFormat(time));
-        previousScoresNames.add(2, user);
+        previousScoresNames.add(2, playerName);
         appendToCsv(3);
         return;
       }
@@ -179,19 +180,19 @@ public class Utils {
         previousScoresTimes.set(1, previousScoresTimes.get(0));
         previousScoresNames.set(1, previousScoresNames.get(0));
         previousScoresTimes.set(0, convertSecondsToTimeFormat(time));
-        previousScoresNames.set(0, user);
+        previousScoresNames.set(0, playerName);
         appendToCsv(3);
         return;
       } else if ((time > convertTimeFormatToSeconds(previousScoresTimes.get(i))) && i == 1) {
         previousScoresTimes.set(2, previousScoresTimes.get(1));
         previousScoresNames.set(2, previousScoresNames.get(1));
         previousScoresTimes.set(1, convertSecondsToTimeFormat(time));
-        previousScoresNames.set(1, user);
+        previousScoresNames.set(1, playerName);
         appendToCsv(3);
         return;
       } else if ((time > convertTimeFormatToSeconds(previousScoresTimes.get(i))) && i == 2) {
         previousScoresTimes.set(2, convertSecondsToTimeFormat(time));
-        previousScoresNames.set(2, user);
+        previousScoresNames.set(2, playerName);
         appendToCsv(3);
         return;
       }
@@ -241,5 +242,9 @@ public class Utils {
    */
   public ArrayList<String> getScoresTimes() {
     return previousScoresTimes;
+  }
+
+  public static void setPlayerName(String name) {
+    playerName = name;
   }
 }

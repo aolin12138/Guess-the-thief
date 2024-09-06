@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -24,12 +25,28 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextArea fx:id="scoreboardArea" layoutX="181.0" layoutY="289.0" prefHeight="15.0" prefWidth="150.0" promptText="User name" />
+      <TextArea fx:id="scoreboardArea1" layoutX="181.0" layoutY="289.0" prefHeight="15.0" prefWidth="150.0" promptText="Play to generate scores" />
       <Button fx:id="instructionsButton" layoutX="260.0" layoutY="161.0" mnemonicParsing="false" onAction="#onViewInstructions" text="View Instructions" />
-      <TextArea layoutX="181.0" layoutY="341.0" prefHeight="15.0" prefWidth="150.0" />
-      <TextArea layoutX="181.0" layoutY="402.0" prefHeight="15.0" prefWidth="150.0" />
-      <TextArea layoutX="351.0" layoutY="341.0" prefHeight="15.0" prefWidth="60.0" />
-      <TextArea layoutX="351.0" layoutY="288.0" prefHeight="15.0" prefWidth="60.0" promptText="00:00" />
-      <TextArea layoutX="351.0" layoutY="402.0" prefHeight="15.0" prefWidth="60.0" />
+      <TextArea fx:id="scoreboardArea3" layoutX="181.0" layoutY="341.0" prefHeight="15.0" prefWidth="150.0" promptText="Play to generate scores" />
+      <TextArea fx:id="scoreboardArea5" layoutX="181.0" layoutY="402.0" prefHeight="15.0" prefWidth="150.0" promptText="Play to generate scores" />
+      <TextArea fx:id="scoreboardArea4" layoutX="351.0" layoutY="341.0" prefHeight="15.0" prefWidth="60.0" promptText="00:00" />
+      <TextArea fx:id="scoreboardArea2" layoutX="351.0" layoutY="288.0" prefHeight="15.0" prefWidth="60.0" promptText="00:00" />
+      <TextArea fx:id="scoreboardArea6" layoutX="351.0" layoutY="402.0" prefHeight="15.0" prefWidth="60.0" promptText="00:00" />
+      <TextField fx:id="playerNameWindow" layoutX="235.0" layoutY="70.0" promptText="Enter detective name" />
+      <Label layoutX="142.0" layoutY="294.0" text="1st">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="137.0" layoutY="347.0" text="2nd">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="137.0" layoutY="408.0" text="3rd">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
