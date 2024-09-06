@@ -8,7 +8,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -40,9 +39,6 @@
          </font>
       </Label>
       <Pane fx:id="statsPane" layoutX="11.0" layoutY="10.0" prefHeight="25.0" prefWidth="26.0" />
-      <Ellipse fx:id="trashBin" fill="DODGERBLUE" layoutX="507.0" layoutY="278.0" onMouseClicked="#handleTrashBinClick" opacity="0.0" radiusX="40.0" radiusY="22.0" stroke="BLACK" strokeType="INSIDE" />
-      <Rectangle fx:id="camera" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="21.0" layoutX="461.0" layoutY="21.0" onMouseClicked="#handleCameraClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="18.0" />
-      <Rectangle fx:id="car" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="57.0" layoutX="197.0" layoutY="200.0" onMouseClicked="#handleCarClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="46.0" />
       <ImageView fx:id="carImage" fitHeight="416.0" fitWidth="633.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/car_close_up.jpg" />
