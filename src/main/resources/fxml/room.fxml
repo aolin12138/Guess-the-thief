@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="room" focusTraversable="true" minHeight="631.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="631.0" prefWidth="633.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.RoomController">
+<Pane fx:id="room" focusTraversable="true" minHeight="631.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="705.0" prefWidth="633.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.RoomController">
    <children>
       <ImageView fitHeight="416.0" fitWidth="653.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -19,7 +20,7 @@
          </image>
       </ImageView>
       <StackPane fx:id="indicatorPane" layoutX="518.0" layoutY="432.0" prefHeight="109.0" prefWidth="104.0" />
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="498.0" layoutY="451.0" prefHeight="71.0" prefWidth="153.0" text="120" textAlignment="CENTER" textFill="#24f59b">
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="493.0" layoutY="526.0" prefHeight="71.0" prefWidth="153.0" text="120" textAlignment="CENTER" textFill="#24f59b">
          <font>
             <Font name="System Bold" size="33.0" />
          </font>
@@ -29,10 +30,10 @@
       <Rectangle fx:id="rectPerson1" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="200.0" layoutX="253.0" layoutY="144.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="68.0" />
       <Rectangle fx:id="officer2" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="111.0" layoutX="170.0" layoutY="181.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="32.0" />
       <Rectangle fx:id="rectPerson2" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="274.0" layoutX="374.0" layoutY="111.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="93.0" />
-      <Button fx:id="btnGuess" layoutX="531.0" layoutY="586.0" mnemonicParsing="false" onAction="#handleGuessClick" prefHeight="30.0" prefWidth="94.0" text="Make a Guess" />
-      <TextArea fx:id="txtaChat" editable="false" layoutX="31.0" layoutY="434.0" prefHeight="148.0" prefWidth="484.0" wrapText="true" />
-      <TextField fx:id="txtInput" layoutX="29.0" layoutY="589.0" prefHeight="26.0" prefWidth="406.0" />
-      <Button fx:id="btnSend" layoutX="440.0" layoutY="586.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send" />
+      <Button fx:id="btnGuess" layoutX="526.0" layoutY="661.0" mnemonicParsing="false" onAction="#handleGuessClick" prefHeight="30.0" prefWidth="94.0" text="Make a Guess" />
+      <TextArea fx:id="txtaChat" editable="false" layoutX="26.0" layoutY="509.0" prefHeight="148.0" prefWidth="484.0" wrapText="true" />
+      <TextField fx:id="txtInput" layoutX="24.0" layoutY="664.0" prefHeight="26.0" prefWidth="406.0" />
+      <Button fx:id="btnSend" layoutX="435.0" layoutY="661.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send" />
       <Label fx:id="chatStats" layoutX="33.0" layoutY="408.0" prefHeight="25.0" prefWidth="312.0">
          <font>
             <Font name="System Bold" size="16.0" />
@@ -46,5 +47,13 @@
       </ImageView>
       <Rectangle fx:id="dashcam" arcHeight="5.0" arcWidth="5.0" disable="true" fill="DODGERBLUE" height="102.0" layoutX="240.0" layoutY="90.0" onMouseClicked="#handleDashcamClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="312.0" />
       <Button fx:id="btnBack" disable="true" layoutX="324.0" layoutY="366.0" mnemonicParsing="false" onAction="#onBackPressed" text="Back" visible="false" />
+      <ImageView fx:id="ownerImage" fitHeight="102.0" fitWidth="147.0" layoutX="26.0" layoutY="412.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/owner_scene.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </Pane>

@@ -1,0 +1,13 @@
+#ownerImage {
+  -fx-border-radius: 50%;
+  -fx-background-radius: 50%;
+  -fx-background-repeat: no-repeat;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+  -fx-transition: all 0.3s ease;
+}
+
+#ownerImage:hover {
+  -fx-scale-x: 1.1;
+  -fx-scale-y: 1.1;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 10, 0, 0, 0);
+}

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.KeyFrame;
+import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -80,6 +81,7 @@ public class RoomController {
   @FXML private TextField txtInput;
 
   @FXML private ImageView carImage;
+  @FXML private ImageView ownerImage;
 
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
@@ -96,6 +98,20 @@ public class RoomController {
   @FXML
   public void initialize() {
     if (isFirstTimeInit) {
+      ScaleTransition scaleTransitionIn = new ScaleTransition(Duration.millis(300), ownerImage);
+      scaleTransitionIn.setFromX(1.0);
+      scaleTransitionIn.setFromY(1.0);
+      scaleTransitionIn.setToX(1.1);
+      scaleTransitionIn.setToY(1.1);
+
+      ScaleTransition scaleTransitionOut = new ScaleTransition(Duration.millis(300), ownerImage);
+      scaleTransitionOut.setFromX(1.1);
+      scaleTransitionOut.setFromY(1.1);
+      scaleTransitionOut.setToX(1.0);
+      scaleTransitionOut.setToY(1.0);
+
+      ownerImage.setOnMouseEntered(e -> scaleTransitionIn.playFromStart());
+      ownerImage.setOnMouseExited(e -> scaleTransitionOut.playFromStart());
       context.setRoomController(this);
       indicatorPane.getChildren().add(ringProgressIndicator);
       ringProgressIndicator.setRingWidth(50);

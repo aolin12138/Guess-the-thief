@@ -57,6 +57,7 @@ public class App extends Application {
 
     Parent root = loadFxml("start");
     scene = new Scene(root);
+    scene.getStylesheets().add(getClass().getResource("/css/suspect_scene.css").toExternalForm());
     stage.setScene(scene);
     stage.show();
     root.requestFocus();

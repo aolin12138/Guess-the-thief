@@ -48,7 +48,7 @@ public class StartController {
 
     Platform.runLater(
         () -> {
-          // mediaPlayer.play(); /*************** Temporary disable */
+          mediaPlayer.play(); /*************** Temporary disable */
           mediaPlayer.setOnEndOfMedia(
               () -> {
                 startButton.setDisable(false);
@@ -65,6 +65,11 @@ public class StartController {
       // RoomController controller = loader.getController();
       // controller.getContext().setRoomController(controller);
       startButton.getScene().setRoot(root);
+
+      // startButton
+      //     .getScene()
+      //     .getStylesheets()
+      //     .add(getClass().getResource("/css/suspect_scene.css").toExternalForm());
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -75,7 +80,6 @@ public class StartController {
   @FXML
   public void onViewInstructions() {
     try {
-
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/instructions.fxml"));
       Parent root = loader.load();
       startButton.getScene().setRoot(root);
