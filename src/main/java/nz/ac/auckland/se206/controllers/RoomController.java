@@ -51,8 +51,8 @@ public class RoomController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static int timeToCount = 120;
-  private static int timeToCountTo = 120;
+  private static double timeToCount = 300000;
+  private static double timeToCountTo = 300000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
 
@@ -99,13 +99,14 @@ public class RoomController {
       context.setRoomController(this);
       indicatorPane.getChildren().add(ringProgressIndicator);
       ringProgressIndicator.setRingWidth(50);
-      timerLabel.setText(String.format("%02d", timeToCount));
+      // Timer label is updated here
+      timerLabel.setText(String.valueOf(timeToCount));
 
       timeline
           .getKeyFrames()
           .add(
               new KeyFrame(
-                  Duration.seconds(1),
+                  Duration.millis(1),
                   event -> {
                     if (timeToCount > 0) {
                       timeToCount--;
@@ -113,6 +114,7 @@ public class RoomController {
                     } else if (isTimeOver == false) {
                       Platform.runLater(
                           () -> {
+                            // need to change this to remove pop-up window
                             timeline.stop();
                             Alert alert = new Alert(AlertType.INFORMATION);
                             alert.setTitle("Time's up!");
@@ -143,10 +145,11 @@ public class RoomController {
                     }
 
                     ringProgressIndicator.setProgress(progress);
-                    timerLabel.setText(String.format("%02d", timeToCount));
+                    timerLabel.setText(String.valueOf(timeToCount));
                   }));
       timeline.setCycleCount(Timeline.INDEFINITE);
       timeline.play();
+      // play an instruction sound when entering the room for the first time
       Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
       MediaPlayer mediaPlayer = new MediaPlayer(media);
       mediaPlayer.play();

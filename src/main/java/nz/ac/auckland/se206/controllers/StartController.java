@@ -59,7 +59,7 @@ public class StartController {
 
     Platform.runLater(
         () -> {
-          // mediaPlayer.play(); /*************** Temporary disable */
+          mediaPlayer.play(); /*************** Temporary disable */
           mediaPlayer.setOnEndOfMedia(
               () -> {
                 startButton.setDisable(false);
