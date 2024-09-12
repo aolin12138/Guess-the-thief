@@ -45,9 +45,9 @@
       </ImageView>
       <Rectangle fx:id="dashcam" arcHeight="5.0" arcWidth="5.0" disable="true" fill="DODGERBLUE" height="102.0" layoutX="240.0" layoutY="90.0" onMouseClicked="#handleDashcamClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="312.0" />
       <Button fx:id="btnBack" disable="true" layoutX="324.0" layoutY="366.0" mnemonicParsing="false" onAction="#onBackPressed" text="Back" visible="false" />
-      <HBox layoutX="9.0" layoutY="415.0" prefHeight="106.0" prefWidth="600.0" spacing="20.0">
+      <HBox layoutX="25.0" layoutY="416.0" prefHeight="106.0" prefWidth="600.0" spacing="20.0" stylesheets="@../css/suspect_scene.css">
          <children>
-            <ImageView id="ownerImage" fx:id="crimeImage" fitHeight="80.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="crimeImage" fitHeight="80.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/owner_scene.png" />
                </image>
@@ -63,7 +63,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView id="ownerImage" fx:id="workerImage" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="workerImage" fx:id="workerImage" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/worker_scene.png" />
                </image>
@@ -74,7 +74,7 @@
                   <Rectangle2D />
                </viewport>
             </ImageView>
-            <ImageView id="ownerImage" fx:id="ownerImage12" fitHeight="80.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="brotherImage" fitHeight="80.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/owner_scene.png" />
                </image>

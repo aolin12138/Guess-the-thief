@@ -496,67 +496,149 @@ public class RoomController {
 
   @FXML
   public void styleScene() {
-    ScaleTransition scaleTransitionIn = new ScaleTransition(Duration.millis(200), ownerImage);
-    scaleTransitionIn.setFromX(1.0);
-    scaleTransitionIn.setFromY(1.0);
-    scaleTransitionIn.setToX(1.1);
-    scaleTransitionIn.setToY(1.1);
-    scaleTransitionIn.setCycleCount(1);
+    ScaleTransition ownerImageScaleIn = new ScaleTransition(Duration.millis(100), ownerImage);
+    ownerImageScaleIn.setFromX(1.0);
+    ownerImageScaleIn.setFromY(1.0);
+    ownerImageScaleIn.setToX(1.1);
+    ownerImageScaleIn.setToY(1.1);
+    ownerImageScaleIn.setCycleCount(1);
 
-    ScaleTransition scaleTransitionOut = new ScaleTransition(Duration.millis(200), ownerImage);
-    scaleTransitionOut.setFromX(1.1);
-    scaleTransitionOut.setFromY(1.1);
-    scaleTransitionOut.setToX(1.0);
-    scaleTransitionOut.setToY(1.0);
-    scaleTransitionOut.setCycleCount(1);
+    ScaleTransition ownerImageScaleOut = new ScaleTransition(Duration.millis(100), ownerImage);
+    ownerImageScaleOut.setFromX(1.1);
+    ownerImageScaleOut.setFromY(1.1);
+    ownerImageScaleOut.setToX(1.0);
+    ownerImageScaleOut.setToY(1.0);
+    ownerImageScaleOut.setCycleCount(1);
 
-    ColorAdjust colorAdjust = new ColorAdjust();
-    colorAdjust.setBrightness(-0.45);
+    ScaleTransition workerImageScaleIn = new ScaleTransition(Duration.millis(100), workerImage);
+    workerImageScaleIn.setFromX(1.0);
+    workerImageScaleIn.setFromY(1.0);
+    workerImageScaleIn.setToX(1.1);
+    workerImageScaleIn.setToY(1.1);
+    workerImageScaleIn.setCycleCount(1);
 
-    DropShadow dropShadow = new DropShadow();
-    dropShadow.setRadius(0);
-    dropShadow.setOffsetX(0);
-    dropShadow.setOffsetY(0);
-    dropShadow.setColor(javafx.scene.paint.Color.GRAY);
-    dropShadow.setInput(colorAdjust);
-    ownerImage.setEffect(dropShadow);
-    workerImage.setEffect(dropShadow);
+    ScaleTransition workerImageScaleOut = new ScaleTransition(Duration.millis(100), workerImage);
+    workerImageScaleOut.setFromX(1.1);
+    workerImageScaleOut.setFromY(1.1);
+    workerImageScaleOut.setToX(1.0);
+    workerImageScaleOut.setToY(1.0);
+    workerImageScaleOut.setCycleCount(1);
 
-    Timeline brightnessTransitionIn =
+    ColorAdjust ownerColorAdjust = new ColorAdjust();
+    ownerColorAdjust.setBrightness(-0.45);
+
+    ColorAdjust workerColorAdjust = new ColorAdjust();
+    workerColorAdjust.setBrightness(-0.45);
+
+    DropShadow ownerDropShadow = new DropShadow();
+    ownerDropShadow.setRadius(0);
+    ownerDropShadow.setOffsetX(0);
+    ownerDropShadow.setOffsetY(0);
+    ownerDropShadow.setColor(javafx.scene.paint.Color.GRAY);
+
+    DropShadow workerDropShadow = new DropShadow();
+    workerDropShadow.setRadius(0);
+    workerDropShadow.setOffsetX(0);
+    workerDropShadow.setOffsetY(0);
+    workerDropShadow.setColor(javafx.scene.paint.Color.GRAY);
+
+    ownerDropShadow.setInput(ownerColorAdjust);
+    ownerImage.setEffect(ownerDropShadow);
+    workerDropShadow.setInput(workerColorAdjust);
+    workerImage.setEffect(workerDropShadow);
+
+    Timeline ownerBrightnessTransitionIn =
         new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(colorAdjust.brightnessProperty(), -0.45)),
-            new KeyFrame(Duration.millis(200), new KeyValue(colorAdjust.brightnessProperty(), 0)));
-    timeline.setCycleCount(1);
-
-    Timeline brightnessTransitionOut =
-        new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(colorAdjust.brightnessProperty(), 0)),
+            new KeyFrame(Duration.ZERO, new KeyValue(ownerColorAdjust.brightnessProperty(), -0.45)),
             new KeyFrame(
-                Duration.millis(200), new KeyValue(colorAdjust.brightnessProperty(), -0.45)));
+                Duration.millis(100), new KeyValue(ownerColorAdjust.brightnessProperty(), 0)));
     timeline.setCycleCount(1);
 
-    Timeline shadowTransitionIn =
+    Timeline ownerBrightnessTransitionOut =
         new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(dropShadow.radiusProperty(), 0)),
-            new KeyFrame(Duration.millis(200), new KeyValue(dropShadow.radiusProperty(), 10)));
+            new KeyFrame(Duration.ZERO, new KeyValue(ownerColorAdjust.brightnessProperty(), 0)),
+            new KeyFrame(
+                Duration.millis(100), new KeyValue(ownerColorAdjust.brightnessProperty(), -0.45)));
     timeline.setCycleCount(1);
 
-    Timeline shadowTransitionOut =
+    Timeline ownerShadowTransitionIn =
         new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(dropShadow.radiusProperty(), 10)),
-            new KeyFrame(Duration.millis(200), new KeyValue(dropShadow.radiusProperty(), 0)));
+            new KeyFrame(Duration.ZERO, new KeyValue(ownerDropShadow.radiusProperty(), 0)),
+            new KeyFrame(Duration.millis(100), new KeyValue(ownerDropShadow.radiusProperty(), 10)));
+    timeline.setCycleCount(1);
+
+    Timeline workerShadowTransitionOut =
+        new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(workerDropShadow.radiusProperty(), 10)),
+            new KeyFrame(Duration.millis(100), new KeyValue(workerDropShadow.radiusProperty(), 0)));
+
+    Timeline workerBrightnessTransitionIn =
+        new Timeline(
+            new KeyFrame(
+                Duration.ZERO, new KeyValue(workerColorAdjust.brightnessProperty(), -0.45)),
+            new KeyFrame(
+                Duration.millis(100), new KeyValue(workerColorAdjust.brightnessProperty(), 0)));
+    timeline.setCycleCount(1);
+
+    Timeline workerBrightnessTransitionOut =
+        new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(workerColorAdjust.brightnessProperty(), 0)),
+            new KeyFrame(
+                Duration.millis(100), new KeyValue(workerColorAdjust.brightnessProperty(), -0.45)));
+    timeline.setCycleCount(1);
+
+    Timeline workerShadowTransitionIn =
+        new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(workerDropShadow.radiusProperty(), 0)),
+            new KeyFrame(
+                Duration.millis(100), new KeyValue(workerDropShadow.radiusProperty(), 10)));
+    timeline.setCycleCount(1);
+
+    Timeline ownerShadowTransitionOut =
+        new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(workerDropShadow.radiusProperty(), 10)),
+            new KeyFrame(Duration.millis(100), new KeyValue(workerDropShadow.radiusProperty(), 0)));
 
     ownerImage.setOnMouseEntered(
         e -> {
-          scaleTransitionIn.play();
-          brightnessTransitionIn.play();
-          shadowTransitionIn.play();
+          ownerImageScaleOut.stop();
+          ownerBrightnessTransitionOut.stop();
+          ownerShadowTransitionOut.stop();
+
+          ownerImageScaleIn.play();
+          ownerBrightnessTransitionIn.play();
+          ownerShadowTransitionIn.play();
         });
     ownerImage.setOnMouseExited(
         e -> {
-          scaleTransitionOut.play();
-          brightnessTransitionOut.play();
-          shadowTransitionOut.play();
+          ownerImageScaleIn.stop();
+          ownerBrightnessTransitionIn.stop();
+          ownerShadowTransitionIn.stop();
+
+          ownerImageScaleOut.play();
+          ownerBrightnessTransitionOut.play();
+          ownerShadowTransitionOut.play();
+        });
+
+    workerImage.setOnMouseEntered(
+        e -> {
+          workerImageScaleOut.stop();
+          workerBrightnessTransitionOut.stop();
+          workerShadowTransitionOut.stop();
+
+          workerImageScaleIn.play();
+          workerBrightnessTransitionIn.play();
+          workerShadowTransitionIn.play();
+        });
+    workerImage.setOnMouseExited(
+        e -> {
+          workerImageScaleIn.stop();
+          workerBrightnessTransitionIn.stop();
+          workerShadowTransitionIn.stop();
+
+          workerImageScaleOut.play();
+          workerBrightnessTransitionOut.play();
+          workerShadowTransitionOut.play();
         });
   }
 }
