@@ -54,6 +54,9 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
+    // Store the stage in the SceneManager so it will be remembered
+    SceneManager.addRoot(SceneManager.Scene.START, loadFxml("start"));
+    SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, loadFxml("instructions"));
 
     Parent root = loadFxml("start");
     scene = new Scene(root);
