@@ -19,6 +19,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -84,6 +85,7 @@ public class RoomController {
 
   @FXML private ImageView carImage;
   @FXML private ImageView ownerImage;
+  @FXML private ImageView workerImage;
 
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
@@ -494,12 +496,6 @@ public class RoomController {
 
   @FXML
   public void styleScene() {
-
-    Rectangle clip = new Rectangle(ownerImage.getFitWidth(), ownerImage.getFitHeight());
-    clip.setArcWidth(20); // Set the arc width (corner radius)
-    clip.setArcHeight(20); // Set the arc height (corner radius)
-    ownerImage.setClip(clip);
-
     ScaleTransition scaleTransitionIn = new ScaleTransition(Duration.millis(200), ownerImage);
     scaleTransitionIn.setFromX(1.0);
     scaleTransitionIn.setFromY(1.0);
@@ -516,7 +512,16 @@ public class RoomController {
 
     ColorAdjust colorAdjust = new ColorAdjust();
     colorAdjust.setBrightness(-0.45);
-    ownerImage.setEffect(colorAdjust);
+
+    DropShadow dropShadow = new DropShadow();
+    dropShadow.setRadius(0);
+    dropShadow.setOffsetX(0);
+    dropShadow.setOffsetY(0);
+    dropShadow.setColor(javafx.scene.paint.Color.GRAY);
+    dropShadow.setInput(colorAdjust);
+    ownerImage.setEffect(dropShadow);
+    workerImage.setEffect(dropShadow);
+
     Timeline brightnessTransitionIn =
         new Timeline(
             new KeyFrame(Duration.ZERO, new KeyValue(colorAdjust.brightnessProperty(), -0.45)),
@@ -530,15 +535,28 @@ public class RoomController {
                 Duration.millis(200), new KeyValue(colorAdjust.brightnessProperty(), -0.45)));
     timeline.setCycleCount(1);
 
+    Timeline shadowTransitionIn =
+        new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(dropShadow.radiusProperty(), 0)),
+            new KeyFrame(Duration.millis(200), new KeyValue(dropShadow.radiusProperty(), 10)));
+    timeline.setCycleCount(1);
+
+    Timeline shadowTransitionOut =
+        new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(dropShadow.radiusProperty(), 10)),
+            new KeyFrame(Duration.millis(200), new KeyValue(dropShadow.radiusProperty(), 0)));
+
     ownerImage.setOnMouseEntered(
         e -> {
           scaleTransitionIn.play();
           brightnessTransitionIn.play();
+          shadowTransitionIn.play();
         });
     ownerImage.setOnMouseExited(
         e -> {
           scaleTransitionOut.play();
           brightnessTransitionOut.play();
+          shadowTransitionOut.play();
         });
   }
 }

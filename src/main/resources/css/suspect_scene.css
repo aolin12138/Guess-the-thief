@@ -1,5 +1,1 @@
-#ownerImage {}
-
-#ownerImage:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 10, 0, 0, 0);
-}
+#ownerImage:hover {}
