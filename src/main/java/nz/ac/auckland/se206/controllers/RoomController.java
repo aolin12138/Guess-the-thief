@@ -494,6 +494,12 @@ public class RoomController {
 
   @FXML
   public void styleScene() {
+
+    Rectangle clip = new Rectangle(ownerImage.getFitWidth(), ownerImage.getFitHeight());
+    clip.setArcWidth(20); // Set the arc width (corner radius)
+    clip.setArcHeight(20); // Set the arc height (corner radius)
+    ownerImage.setClip(clip);
+
     ScaleTransition scaleTransitionIn = new ScaleTransition(Duration.millis(200), ownerImage);
     scaleTransitionIn.setFromX(1.0);
     scaleTransitionIn.setFromY(1.0);
