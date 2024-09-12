@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -17,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -98,20 +100,7 @@ public class RoomController {
   @FXML
   public void initialize() {
     if (isFirstTimeInit) {
-      ScaleTransition scaleTransitionIn = new ScaleTransition(Duration.millis(300), ownerImage);
-      scaleTransitionIn.setFromX(1.0);
-      scaleTransitionIn.setFromY(1.0);
-      scaleTransitionIn.setToX(1.1);
-      scaleTransitionIn.setToY(1.1);
-
-      ScaleTransition scaleTransitionOut = new ScaleTransition(Duration.millis(300), ownerImage);
-      scaleTransitionOut.setFromX(1.1);
-      scaleTransitionOut.setFromY(1.1);
-      scaleTransitionOut.setToX(1.0);
-      scaleTransitionOut.setToY(1.0);
-
-      ownerImage.setOnMouseEntered(e -> scaleTransitionIn.playFromStart());
-      ownerImage.setOnMouseExited(e -> scaleTransitionOut.playFromStart());
+      styleScene();
       context.setRoomController(this);
       indicatorPane.getChildren().add(ringProgressIndicator);
       ringProgressIndicator.setRingWidth(50);
@@ -501,5 +490,49 @@ public class RoomController {
     carImage.setVisible(false);
     btnBack.setVisible(false);
     btnBack.setDisable(true);
+  }
+
+  @FXML
+  public void styleScene() {
+    ScaleTransition scaleTransitionIn = new ScaleTransition(Duration.millis(200), ownerImage);
+    scaleTransitionIn.setFromX(1.0);
+    scaleTransitionIn.setFromY(1.0);
+    scaleTransitionIn.setToX(1.1);
+    scaleTransitionIn.setToY(1.1);
+    scaleTransitionIn.setCycleCount(1);
+
+    ScaleTransition scaleTransitionOut = new ScaleTransition(Duration.millis(200), ownerImage);
+    scaleTransitionOut.setFromX(1.1);
+    scaleTransitionOut.setFromY(1.1);
+    scaleTransitionOut.setToX(1.0);
+    scaleTransitionOut.setToY(1.0);
+    scaleTransitionOut.setCycleCount(1);
+
+    ColorAdjust colorAdjust = new ColorAdjust();
+    colorAdjust.setBrightness(-0.45);
+    ownerImage.setEffect(colorAdjust);
+    Timeline brightnessTransitionIn =
+        new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(colorAdjust.brightnessProperty(), -0.45)),
+            new KeyFrame(Duration.millis(200), new KeyValue(colorAdjust.brightnessProperty(), 0)));
+    timeline.setCycleCount(1);
+
+    Timeline brightnessTransitionOut =
+        new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(colorAdjust.brightnessProperty(), 0)),
+            new KeyFrame(
+                Duration.millis(200), new KeyValue(colorAdjust.brightnessProperty(), -0.45)));
+    timeline.setCycleCount(1);
+
+    ownerImage.setOnMouseEntered(
+        e -> {
+          scaleTransitionIn.play();
+          brightnessTransitionIn.play();
+        });
+    ownerImage.setOnMouseExited(
+        e -> {
+          scaleTransitionOut.play();
+          brightnessTransitionOut.play();
+        });
   }
 }
