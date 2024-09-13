@@ -21,8 +21,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -34,6 +32,7 @@ import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.Person;
+import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 import nz.ac.auckland.se206.speech.TextToSpeech;
@@ -100,7 +99,9 @@ public class RoomController {
       indicatorPane.getChildren().add(ringProgressIndicator);
       ringProgressIndicator.setRingWidth(50);
       // Timer label is updated here
-      timerLabel.setText(String.valueOf(timeToCount));
+      if (timeToCount % 1000 == 0) {
+        timerLabel.setText(Utils.formatTime(timeToCount));
+      }
 
       timeline
           .getKeyFrames()
@@ -116,14 +117,14 @@ public class RoomController {
                       Platform.runLater(
                           () -> {
                             // need to change this to remove pop-up window
-                            timeline.stop();
-                            Alert alert = new Alert(AlertType.INFORMATION);
-                            alert.setTitle("Time's up!");
-                            alert.setHeaderText("Time's up! You need to choose now!");
-                            alert.setContentText("Click on the thief.");
-                            alert.showAndWait();
-                            disableAll();
-                            timeline.play();
+                            // timeline.stop();
+                            // Alert alert = new Alert(AlertType.INFORMATION);
+                            // alert.setTitle("Time's up!");
+                            // alert.setHeaderText("Time's up! You need to choose now!");
+                            // alert.setContentText("Click on the thief.");
+                            // alert.showAndWait();
+                            // disableAll();
+                            // timeline.play();
                           });
                       btnGuess.setDisable(true);
                       btnSend.setDisable(true);
@@ -136,25 +137,26 @@ public class RoomController {
                       timeline.stop();
                       Platform.runLater(
                           () -> {
-                            Alert alert = new Alert(AlertType.INFORMATION);
-                            alert.setTitle("Game Over");
-                            alert.setHeaderText("Game Over");
-                            alert.setContentText("You Lost! You did not find the thief in time.");
-                            alert.showAndWait();
+                            // Alert alert = new Alert(AlertType.INFORMATION);
+                            // alert.setTitle("Game Over");
+                            // alert.setHeaderText("Game Over");
+                            // alert.setContentText("You Lost! You did not find the thief in
+                            // time.");
+                            // alert.showAndWait();
                           });
                       context.setState(context.getGameOverState());
                     }
 
                     ringProgressIndicator.setProgress(progress);
-                    timerLabel.setText(String.valueOf(timeToCount));
+                    timerLabel.setText(Utils.formatTime(timeToCount));
                   }));
       timeline.setCycleCount(Timeline.INDEFINITE);
       timeline.play();
       // play an instruction sound when entering the room for the first time
-      Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
-      MediaPlayer mediaPlayer = new MediaPlayer(media);
-      mediaPlayer.play();
-      isFirstTimeInit = false;
+      // Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
+      // MediaPlayer mediaPlayer = new MediaPlayer(media);
+      // mediaPlayer.play();
+      // isFirstTimeInit = false;
     }
   }
 

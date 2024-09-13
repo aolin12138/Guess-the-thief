@@ -247,4 +247,16 @@ public class Utils {
   public static void setPlayerName(String name) {
     playerName = name;
   }
+
+  public static String formatTime(double milliseconds) {
+    // Convert milliseconds to minutes and seconds
+    int minutes = (int) milliseconds / 60000;
+    int seconds = (int) (milliseconds / 1000) - (minutes * 60);
+
+    // Appends a 0 to maintain the format of XX:XX even when the time is less than 10 units.
+    String minuteAppend = (minutes < 10) ? "0" : "";
+    String secondAppend = (seconds < 10) ? "0" : "";
+
+    return (minuteAppend + minutes + ":" + secondAppend + seconds);
+  }
 }
