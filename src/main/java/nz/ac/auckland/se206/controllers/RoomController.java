@@ -51,8 +51,8 @@ public class RoomController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 300000;
-  private static double timeToCountTo = 300000;
+  private static double timeToCount = 100000;
+  private static double timeToCountTo = 100000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
 
@@ -110,7 +110,8 @@ public class RoomController {
                   event -> {
                     if (timeToCount > 0) {
                       timeToCount--;
-                      progress = (int) ((timeToCountTo - timeToCount) * 100 / timeToCountTo);
+                      progress =
+                          (int) (100 - ((timeToCountTo - timeToCount) * 100 / timeToCountTo));
                     } else if (isTimeOver == false) {
                       Platform.runLater(
                           () -> {
