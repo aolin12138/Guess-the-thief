@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -20,6 +18,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -37,6 +36,7 @@ import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.GameStateContext;
+import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
@@ -86,12 +86,20 @@ public class RoomController {
   @FXML private ImageView carImage;
   @FXML private ImageView ownerImage;
   @FXML private ImageView workerImage;
+  @FXML private ImageView brotherImage;
+  @FXML private ImageView crimeImage;
+  @FXML private ImageView displayImage;
 
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
+  private ImageView currentImage = null;
+  public ImageManager currentImageManager;
+  public ImageManager ownerImageManager;
+  public ImageManager workerImageManager;
+  public ImageManager brotherImageManager;
 
   private Timeline timeline = new Timeline();
 
@@ -102,6 +110,17 @@ public class RoomController {
   @FXML
   public void initialize() {
     if (isFirstTimeInit) {
+      currentImageManager = new ImageManager(currentImage);
+      ownerImageManager = new ImageManager(ownerImage);
+      workerImageManager = new ImageManager(workerImage);
+      brotherImageManager = new ImageManager(brotherImage);
+
+      ColorAdjust colorAdjust = new ColorAdjust();
+      colorAdjust.setBrightness(-0.45);
+      ownerImage.setEffect(colorAdjust);
+      workerImage.setEffect(colorAdjust);
+      brotherImage.setEffect(colorAdjust);
+
       styleScene();
       context.setRoomController(this);
       indicatorPane.getChildren().add(ringProgressIndicator);
@@ -189,6 +208,8 @@ public class RoomController {
     officer.setDisable(true);
     officer2.setDisable(true);
     btnSend.setDisable(true);
+    workerImage.setDisable(true);
+    ownerImage.setDisable(true);
   }
 
   public void enableTalking() {
@@ -198,6 +219,8 @@ public class RoomController {
     officer.setDisable(false);
     officer2.setDisable(false);
     btnSend.setDisable(false);
+    workerImage.setDisable(false);
+    ownerImage.setDisable(false);
   }
 
   public Rectangle getDashcam() {
@@ -398,13 +421,13 @@ public class RoomController {
       Platform.runLater(
           () -> {
             context.getRoomController().enableTalking();
-            context
-                .getRoomController()
-                .setChatStats(
-                    "Talking to "
-                        + context.getRoomController().getPerson().getName()
-                        + " who is in "
-                        + context.getRoomController().getPerson().getColor());
+            // context
+            //     .getRoomController()
+            //     .setChatStats(
+            //         "Talking to "
+            //             + context.getRoomController().getPerson().getName()
+            //             + " who is in "
+            //             + context.getRoomController().getPerson().getColor());
             context.getRoomController().getStatsPane().getChildren().clear();
           });
       TextToSpeech.speak(result.getChatMessage().getContent(), context);
@@ -496,149 +519,81 @@ public class RoomController {
 
   @FXML
   public void styleScene() {
-    ScaleTransition ownerImageScaleIn = new ScaleTransition(Duration.millis(100), ownerImage);
-    ownerImageScaleIn.setFromX(1.0);
-    ownerImageScaleIn.setFromY(1.0);
-    ownerImageScaleIn.setToX(1.1);
-    ownerImageScaleIn.setToY(1.1);
-    ownerImageScaleIn.setCycleCount(1);
-
-    ScaleTransition ownerImageScaleOut = new ScaleTransition(Duration.millis(100), ownerImage);
-    ownerImageScaleOut.setFromX(1.1);
-    ownerImageScaleOut.setFromY(1.1);
-    ownerImageScaleOut.setToX(1.0);
-    ownerImageScaleOut.setToY(1.0);
-    ownerImageScaleOut.setCycleCount(1);
-
-    ScaleTransition workerImageScaleIn = new ScaleTransition(Duration.millis(100), workerImage);
-    workerImageScaleIn.setFromX(1.0);
-    workerImageScaleIn.setFromY(1.0);
-    workerImageScaleIn.setToX(1.1);
-    workerImageScaleIn.setToY(1.1);
-    workerImageScaleIn.setCycleCount(1);
-
-    ScaleTransition workerImageScaleOut = new ScaleTransition(Duration.millis(100), workerImage);
-    workerImageScaleOut.setFromX(1.1);
-    workerImageScaleOut.setFromY(1.1);
-    workerImageScaleOut.setToX(1.0);
-    workerImageScaleOut.setToY(1.0);
-    workerImageScaleOut.setCycleCount(1);
-
-    ColorAdjust ownerColorAdjust = new ColorAdjust();
-    ownerColorAdjust.setBrightness(-0.45);
-
-    ColorAdjust workerColorAdjust = new ColorAdjust();
-    workerColorAdjust.setBrightness(-0.45);
-
-    DropShadow ownerDropShadow = new DropShadow();
-    ownerDropShadow.setRadius(0);
-    ownerDropShadow.setOffsetX(0);
-    ownerDropShadow.setOffsetY(0);
-    ownerDropShadow.setColor(javafx.scene.paint.Color.GRAY);
-
-    DropShadow workerDropShadow = new DropShadow();
-    workerDropShadow.setRadius(0);
-    workerDropShadow.setOffsetX(0);
-    workerDropShadow.setOffsetY(0);
-    workerDropShadow.setColor(javafx.scene.paint.Color.GRAY);
-
-    ownerDropShadow.setInput(ownerColorAdjust);
-    ownerImage.setEffect(ownerDropShadow);
-    workerDropShadow.setInput(workerColorAdjust);
-    workerImage.setEffect(workerDropShadow);
-
-    Timeline ownerBrightnessTransitionIn =
-        new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(ownerColorAdjust.brightnessProperty(), -0.45)),
-            new KeyFrame(
-                Duration.millis(100), new KeyValue(ownerColorAdjust.brightnessProperty(), 0)));
-    timeline.setCycleCount(1);
-
-    Timeline ownerBrightnessTransitionOut =
-        new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(ownerColorAdjust.brightnessProperty(), 0)),
-            new KeyFrame(
-                Duration.millis(100), new KeyValue(ownerColorAdjust.brightnessProperty(), -0.45)));
-    timeline.setCycleCount(1);
-
-    Timeline ownerShadowTransitionIn =
-        new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(ownerDropShadow.radiusProperty(), 0)),
-            new KeyFrame(Duration.millis(100), new KeyValue(ownerDropShadow.radiusProperty(), 10)));
-    timeline.setCycleCount(1);
-
-    Timeline workerShadowTransitionOut =
-        new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(workerDropShadow.radiusProperty(), 10)),
-            new KeyFrame(Duration.millis(100), new KeyValue(workerDropShadow.radiusProperty(), 0)));
-
-    Timeline workerBrightnessTransitionIn =
-        new Timeline(
-            new KeyFrame(
-                Duration.ZERO, new KeyValue(workerColorAdjust.brightnessProperty(), -0.45)),
-            new KeyFrame(
-                Duration.millis(100), new KeyValue(workerColorAdjust.brightnessProperty(), 0)));
-    timeline.setCycleCount(1);
-
-    Timeline workerBrightnessTransitionOut =
-        new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(workerColorAdjust.brightnessProperty(), 0)),
-            new KeyFrame(
-                Duration.millis(100), new KeyValue(workerColorAdjust.brightnessProperty(), -0.45)));
-    timeline.setCycleCount(1);
-
-    Timeline workerShadowTransitionIn =
-        new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(workerDropShadow.radiusProperty(), 0)),
-            new KeyFrame(
-                Duration.millis(100), new KeyValue(workerDropShadow.radiusProperty(), 10)));
-    timeline.setCycleCount(1);
-
-    Timeline ownerShadowTransitionOut =
-        new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(workerDropShadow.radiusProperty(), 10)),
-            new KeyFrame(Duration.millis(100), new KeyValue(workerDropShadow.radiusProperty(), 0)));
 
     ownerImage.setOnMouseEntered(
         e -> {
-          ownerImageScaleOut.stop();
-          ownerBrightnessTransitionOut.stop();
-          ownerShadowTransitionOut.stop();
-
-          ownerImageScaleIn.play();
-          ownerBrightnessTransitionIn.play();
-          ownerShadowTransitionIn.play();
+          ownerImageManager.hoverIn();
         });
     ownerImage.setOnMouseExited(
         e -> {
-          ownerImageScaleIn.stop();
-          ownerBrightnessTransitionIn.stop();
-          ownerShadowTransitionIn.stop();
-
-          ownerImageScaleOut.play();
-          ownerBrightnessTransitionOut.play();
-          ownerShadowTransitionOut.play();
+          ownerImageManager.hoverOut();
         });
 
     workerImage.setOnMouseEntered(
         e -> {
-          workerImageScaleOut.stop();
-          workerBrightnessTransitionOut.stop();
-          workerShadowTransitionOut.stop();
-
-          workerImageScaleIn.play();
-          workerBrightnessTransitionIn.play();
-          workerShadowTransitionIn.play();
+          workerImageManager.hoverIn();
         });
     workerImage.setOnMouseExited(
         e -> {
-          workerImageScaleIn.stop();
-          workerBrightnessTransitionIn.stop();
-          workerShadowTransitionIn.stop();
-
-          workerImageScaleOut.play();
-          workerBrightnessTransitionOut.play();
-          workerShadowTransitionOut.play();
+          workerImageManager.hoverOut();
         });
+  }
+
+  @FXML
+  public void enableImages() {
+    ownerImage.setDisable(false);
+    workerImage.setDisable(false);
+    brotherImage.setDisable(false);
+    crimeImage.setDisable(false);
+  }
+
+  @FXML
+  public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {
+    ImageView clickedImage = (ImageView) event.getSource();
+    String id = clickedImage.getId();
+
+    ColorAdjust colorAdjustOut = new ColorAdjust();
+    colorAdjustOut.setBrightness(0);
+    DropShadow dropShadowOut = new DropShadow();
+    dropShadowOut.setRadius(10);
+    dropShadowOut.setOffsetX(0);
+    dropShadowOut.setOffsetY(0);
+    dropShadowOut.setColor(javafx.scene.paint.Color.GRAY);
+    dropShadowOut.setInput(colorAdjustOut);
+    switch (id) {
+      case "ownerImage":
+        if (currentImage != null && currentImage.getId().equals("ownerImage")) {
+          return;
+        }
+        displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
+        currentImage = ownerImage;
+        currentImageManager.setImageView(currentImage);
+        context.handleRectangleClick(event, "rectPerson2");
+        break;
+      case "workerImage":
+        if (currentImage != null && currentImage.getId().equals("workerImage")) {
+          return;
+        }
+        displayImage.setImage(new Image(workerImage.getImage().getUrl()));
+        currentImage = workerImage;
+        currentImageManager.setImageView(currentImage);
+        context.handleRectangleClick(event, "rectPerson1");
+        break;
+      case "crimeImage":
+        carImage.setVisible(true);
+        btnBack.setVisible(true);
+        break;
+      case "brotherImage":
+        if (currentImage != null) {
+          currentImageManager.getImageView().setDisable(false);
+          currentImageManager.hoverOut();
+        }
+        brotherImage.setEffect(colorAdjustOut);
+        brotherImage.setFitHeight(workerImage.getFitHeight() * 1.1);
+        brotherImage.setFitWidth(workerImage.getFitWidth() * 1.1);
+        currentImage = brotherImage;
+        currentImageManager.setImageView(currentImage);
+        context.handleRectangleClick(event, "rectPerson3");
+    }
   }
 }
