@@ -1,22 +1,79 @@
 package nz.ac.auckland.se206;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+
 public class Timer {
 
-  private static double timeToCount;
-  private static double guessTime;
-  private static int progress;
+  private static double timeToCountTo = 300000;
+  private static double timeToCount = 0;
+  private static double guessTime = 60000;
+  private static int progress = 100;
+  private static boolean isTimeOver = false;
 
-  public static void startTimer() {}
+  private static Timeline timeline = new Timeline();
 
-  public static void setPlayTime(int seconds) {}
-
-  public static void setGuessTime(int seconds) {}
-
-  public static double getTime() {
-    return 1;
+  public static void startTimer() {
+    timeline
+        .getKeyFrames()
+        .add(
+            new KeyFrame(
+                Duration.millis(1),
+                event -> {
+                  if (timeToCount > 0) {
+                    timeToCount--;
+                    progress = (int) (100 - ((timeToCountTo - timeToCount) * 100 / timeToCountTo));
+                    System.out.println(progress);
+                    if ((timeToCount % 1000) == 0) {
+                      System.out.println(timeToCount);
+                    }
+                  } else {
+                    // reconfigure the timer variables for the guessing timer
+                    timeline.stop();
+                    timeToCountTo = guessTime;
+                    timeToCount = 0;
+                    progress = 100;
+                  }
+                }));
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.play();
   }
 
+  public static void setTimeToCountTo(int seconds) {
+    timeToCountTo = seconds;
+  }
+
+  public static void setGuessTime(int seconds) {
+    guessTime = seconds;
+  }
+
+  /**
+   * Gets the current time remaining in the countdown timer.
+   *
+   * @return the current time remaining in milliseconds
+   */
+  public static double getTime() {
+    return timeToCount;
+  }
+
+  /**
+   * Gets the current progress of the timer.
+   *
+   * @return the current progress as an integer
+   */
   public static int getProgress() {
-    return 1;
+    return progress;
+  }
+
+  public static void startGuessTimer() {}
+
+  /** Resets the timer to its initial state. Call this method when needing to restart the game. */
+  public static void resetTimer() {
+    timeToCountTo = 300000;
+    timeToCount = 0;
+    guessTime = 60000;
+    progress = 100;
+    isTimeOver = false;
   }
 }
