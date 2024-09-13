@@ -32,6 +32,7 @@ import nz.ac.auckland.apiproxy.chat.openai.ChatMessage;
 import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
+import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.Person;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
@@ -319,7 +320,8 @@ public class RoomController {
    */
   @FXML
   private void handleGuessClick(ActionEvent event) throws IOException {
-    context.handleGuessClick();
+    // context.handleGuessClick();
+    App.setRoot("guess");
   }
 
   /**
