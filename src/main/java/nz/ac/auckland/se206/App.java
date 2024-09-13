@@ -62,6 +62,7 @@ public class App extends Application {
     scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
+    stage.setTitle("PI Masters: Detective Training");
     root.requestFocus();
   }
 }
