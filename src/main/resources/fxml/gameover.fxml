@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="room" focusTraversable="true" minHeight="608.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="608.0" prefWidth="796.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.GameOverController">
+   <children>
+      <ImageView fitHeight="416.0" fitWidth="796.0" layoutY="-12.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/crime_scene.jpg" />
+         </image>
+      </ImageView>
+      <TextArea fx:id="txtaChat" editable="false" layoutX="7.0" layoutY="412.0" prefHeight="184.0" prefWidth="779.0" wrapText="true" />
+      <Pane fx:id="statsPane" layoutX="11.0" layoutY="10.0" prefHeight="25.0" prefWidth="26.0" />
+      <ImageView fx:id="carImage" fitHeight="416.0" fitWidth="633.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/car_close_up.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="rstbtn" layoutX="372.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleRestartClick" text="Restart" />
+   </children>
+</Pane>
