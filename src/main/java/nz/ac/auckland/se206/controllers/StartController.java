@@ -16,7 +16,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import nz.ac.auckland.se206.PreviousScore;
 import nz.ac.auckland.se206.SceneManager;
-import nz.ac.auckland.se206.Timer;
 import nz.ac.auckland.se206.Utils;
 
 public class StartController {
@@ -85,8 +84,6 @@ public class StartController {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    // Static timer begins to run from here
-    Timer.startTimer();
   }
 
   // This method will take the user to the instructions page when they click on the Instructions
