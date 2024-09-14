@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.input.MouseEvent;
 import nz.ac.auckland.apiproxy.tts.TextToSpeechRequest.Voice;
+import nz.ac.auckland.se206.controllers.GuessController;
 import nz.ac.auckland.se206.controllers.RoomController;
 import nz.ac.auckland.se206.states.GameOver;
 import nz.ac.auckland.se206.states.GameStarted;
@@ -25,6 +26,7 @@ public class GameStateContext {
   private final GameOver gameOverState;
   private GameState gameState;
   private RoomController roomController;
+  private GuessController guessController;
 
   /** Constructs a new GameStateContext and initializes the game states and professions. */
   public GameStateContext() {
@@ -234,4 +236,10 @@ public class GameStateContext {
   public GameState getGameState() {
     return gameState;
   }
+
+public void setGuessController(GuessController guessController) {
+    this.guessController = guessController;
+}
+
+  
 }

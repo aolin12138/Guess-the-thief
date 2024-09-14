@@ -3,6 +3,7 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -16,14 +17,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -35,28 +35,22 @@ import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
-import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
-import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
-/**
- * Controller class for the room view. Handles user interactions within the room where the user can
- * chat with customers and guess their profession.
- */
-public class RoomController {
+public class GuessController {
   private static boolean isFirstTimeInit = true;
+  private static boolean isTimeOver = false;
   private static boolean hasTalked = false;
   private static boolean walletFound = false;
   private static boolean cameraFound = false;
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 360000;
-  private static double timeToCountTo = 360000;
-  private static double timeForGuessing = 60000;
+  private static int timeToCount = 120;
+  private static int timeToCountTo = 120;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
 
@@ -78,30 +72,24 @@ public class RoomController {
   @FXML private Button btnGuess;
   @FXML private Button btnSend;
   @FXML private Button btnBack;
+  @FXML private Button sus1btn;
+  @FXML private Button sus2btn;
+  @FXML private Button sus3btn;
 
   @FXML private TextArea txtaChat;
 
   @FXML private TextField txtInput;
 
   @FXML private ImageView carImage;
-  @FXML private ImageView ownerImage;
-  @FXML private ImageView workerImage;
-  @FXML private ImageView brotherImage;
-  @FXML private ImageView crimeImage;
-  @FXML private ImageView displayImage;
 
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
-  private ImageView currentImage = null;
-  public ImageManager currentImageManager;
-  public ImageManager ownerImageManager;
-  public ImageManager workerImageManager;
-  public ImageManager brotherImageManager;
 
   private Timeline timeline = new Timeline();
+  private int currentSuspect = 0;
 
   /**
    * Initializes the room view. If it's the first time initialization, it will provide instructions
@@ -110,84 +98,71 @@ public class RoomController {
   @FXML
   public void initialize() {
     if (isFirstTimeInit) {
+      context.setGuessController(this);
+      indicatorPane.getChildren().add(ringProgressIndicator);
+      ringProgressIndicator.setRingWidth(50);
+      timerLabel.setText(String.format("%02d", timeToCount));
+
+      timeline
+          .getKeyFrames()
+          .add(
+              new KeyFrame(
+                  Duration.seconds(1),
+                  event -> {
+                    if (timeToCount > 0) {
+                      timeToCount--;
+                      progress = (int) ((timeToCountTo - timeToCount) * 100 / timeToCountTo);
+                    } else if (isTimeOver == false) {
+                      Platform.runLater(
+                          () -> {
+                            timeline.stop();
+                            Alert alert = new Alert(AlertType.INFORMATION);
+                            alert.setTitle("Time's up!");
+                            alert.setHeaderText("Time's up! You need to choose now!");
+                            alert.setContentText("Click on the thief.");
+                            alert.showAndWait();
+                            disableAll();
+                            timeline.play();
+                          });
+                      btnGuess.setDisable(true);
+                      btnSend.setDisable(true);
+                      context.setState(context.getGuessingState());
+                      isTimeOver = true;
+                      timeToCountTo = 10;
+                      timeToCount = 10;
+                      progress = 0;
+                    } else {
+                      timeline.stop();
+                      Platform.runLater(
+                          () -> {
+                            Alert alert = new Alert(AlertType.INFORMATION);
+                            alert.setTitle("Game Over");
+                            alert.setHeaderText("Game Over");
+                            alert.setContentText("You Lost! You did not find the thief in time.");
+                            alert.showAndWait();
+                          });
+                      context.setState(context.getGameOverState());
+                    }
+
+                    ringProgressIndicator.setProgress(progress);
+                    timerLabel.setText(String.format("%02d", timeToCount));
+                  }));
+      timeline.setCycleCount(Timeline.INDEFINITE);
+      timeline.play();
+      Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
+      MediaPlayer mediaPlayer = new MediaPlayer(media);
+      mediaPlayer.play();
       isFirstTimeInit = false;
     }
-
-    currentImageManager = new ImageManager(currentImage);
-    ownerImageManager = new ImageManager(ownerImage);
-    workerImageManager = new ImageManager(workerImage);
-    brotherImageManager = new ImageManager(brotherImage);
-
-    ColorAdjust colorAdjust = new ColorAdjust();
-    colorAdjust.setBrightness(-0.45);
-    ownerImage.setEffect(colorAdjust);
-    workerImage.setEffect(colorAdjust);
-    brotherImage.setEffect(colorAdjust);
-    styleScene();
-
-    context.setRoomController(this);
-    indicatorPane.getChildren().add(ringProgressIndicator);
-    ringProgressIndicator.setRingWidth(50);
-    // Timer label is updated here
-    if (timeToCount % 1000 == 0) {
-      timerLabel.setText(Utils.formatTime(timeToCount - timeForGuessing));
-    }
-
-    timeline
-        .getKeyFrames()
-        .add(
-            new KeyFrame(
-                Duration.millis(1),
-                event -> {
-                  if (timeToCount > timeForGuessing) {
-                    timeToCount--;
-                    progress =
-                        (int)
-                            (100
-                                - (((timeToCountTo - timeForGuessing)
-                                        - (timeToCount - timeForGuessing))
-                                    * 100
-                                    / (timeToCountTo - timeForGuessing)));
-                  } else if ((timeToCount > 0)) {
-                    // Here the timer has exceeded the time for investigation and the game must
-                    // switch to the guess scene.
-                    // Program switch to guess scene here.
-                    System.out.println("Switching to guessing state");
-                    context.setState(context.getGuessingState());
-                    // Stop the timer here, as once the suer switch to guessing state, they aren't
-                    // coming back
-                    timeline.stop();
-                  }
-
-                  ringProgressIndicator.setProgress(progress);
-                  timerLabel.setText(Utils.formatTime(timeToCount - timeForGuessing));
-                }));
-    timeline.setCycleCount(Timeline.INDEFINITE);
-    timeline.play();
-    // play an instruction sound when entering the room for the first time
-    // Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
-    // MediaPlayer mediaPlayer = new MediaPlayer(media);
-    // mediaPlayer.play();
-    // isFirstTimeInit = false;
-    // }
-  }
-
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  public static void setProgress(int progressFromPreviousScene) {
-    progress = progressFromPreviousScene;
   }
 
   public Pane getStatsPane() {
     return statsPane;
   }
 
-  // Don't think this is needed anymore
-  // public Boolean getTimeOver() {
-  //   return isTimeOver;
-  // }
+  public Boolean getTimeOver() {
+    return isTimeOver;
+  }
 
   public void disableAll() {
     officer.setDisable(true);
@@ -209,9 +184,6 @@ public class RoomController {
     officer.setDisable(true);
     officer2.setDisable(true);
     btnSend.setDisable(true);
-    workerImage.setDisable(true);
-    ownerImage.setDisable(true);
-    brotherImage.setDisable(true);
   }
 
   public void enableTalking() {
@@ -221,9 +193,6 @@ public class RoomController {
     officer.setDisable(false);
     officer2.setDisable(false);
     btnSend.setDisable(false);
-    workerImage.setDisable(false);
-    ownerImage.setDisable(false);
-    brotherImage.setDisable(false);
   }
 
   public Rectangle getDashcam() {
@@ -425,13 +394,13 @@ public class RoomController {
       Platform.runLater(
           () -> {
             context.getRoomController().enableTalking();
-            // context
-            //     .getRoomController()
-            //     .setChatStats(
-            //         "Talking to "
-            //             + context.getRoomController().getPerson().getName()
-            //             + " who is in "
-            //             + context.getRoomController().getPerson().getColor());
+            context
+                .getRoomController()
+                .setChatStats(
+                    "Talking to "
+                        + context.getRoomController().getPerson().getName()
+                        + " who is in "
+                        + context.getRoomController().getPerson().getColor());
             context.getRoomController().getStatsPane().getChildren().clear();
           });
       TextToSpeech.speak(result.getChatMessage().getContent(), context);
@@ -451,50 +420,55 @@ public class RoomController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
-    String message = txtInput.getText().trim();
-    if (message.isEmpty()) {
-      return;
-    }
+      App.setRoot("gameover");
+    // String message = txtInput.getText().trim();
+    // // if (message.isEmpty()) {
+    // //   return;
+    // // }
 
-    if (context.getGameState() == context.getGameOverState()) {
-      Alert alert = new Alert(AlertType.INFORMATION);
-      alert.setTitle("Game Over");
-      alert.setHeaderText("Game Over");
-      alert.setContentText("You can not talk to the suspects anymore.");
-      alert.showAndWait();
-      txtInput.clear();
-      return;
-    }
+    // // if (context.getGameState() == context.getGameOverState()) {
+    // //   Alert alert = new Alert(AlertType.INFORMATION);
+    // //   alert.setTitle("Game Over");
+    // //   alert.setHeaderText("Game Over");
+    // //   alert.setContentText("You can not talk to the suspects anymore.");
+    // //   alert.showAndWait();
+    // //   txtInput.clear();
+    // //   return;
+    // // }
 
-    txtInput.clear();
-    ChatMessage msg = new ChatMessage("user", message);
-    appendChatMessage(msg);
 
-    setChatStats(person.getName() + " is gathering words...");
 
-    ProgressIndicator statsIndicator = new ProgressIndicator();
-    statsIndicator.setMinSize(1, 1);
-    statsPane.getChildren().add(statsIndicator);
+    // txtInput.clear();
+    // ChatMessage msg = new ChatMessage("user", message);
+    // appendChatMessage(msg);
 
-    noTalking();
-    Task<Void> task =
-        new Task<Void>() {
+    // // setChatStats(person.getName() + " is gathering words...");
 
-          @Override
-          protected Void call() throws Exception {
-            runGpt(msg);
-            return null;
-          }
-        };
+    // ProgressIndicator statsIndicator = new ProgressIndicator();
+    // statsIndicator.setMinSize(1, 1);
+    // statsPane.getChildren().add(statsIndicator);
 
-    // task.setOnSucceeded(
-    //     event1 -> {
-    //       statsPane.getChildren().remove(statsIndicator);
-    //       // setChatStats("Talking to " + person.getName() + " who is in " + person.getColor());
-    //       enableTalking();
-    //     });
-    Thread backgroundThread = new Thread(task);
-    backgroundThread.start();
+    // noTalking();
+    // Task<Void> task =
+    //     new Task<Void>() {
+
+    //       @Override
+    //       protected Void call() throws Exception {
+    //         runGpt(msg);
+    //         return null;
+    //       }
+    //     };
+
+    // // task.setOnSucceeded(
+    // //     event1 -> {
+    // //       statsPane.getChildren().remove(statsIndicator);
+    // //       // setChatStats("Talking to " + person.getName() + " who is in " + person.getColor());
+    // //       enableTalking();
+    // //     });
+    // Thread backgroundThread = new Thread(task);
+    // backgroundThread.start();
+
+    
   }
 
   @FXML
@@ -521,89 +495,31 @@ public class RoomController {
     btnBack.setDisable(true);
   }
 
-  @FXML
-  public void styleScene() {
-
-    ownerImage.setOnMouseEntered(
-        e -> {
-          ownerImageManager.hoverIn();
-        });
-    ownerImage.setOnMouseExited(
-        e -> {
-          ownerImageManager.hoverOut();
-        });
-
-    workerImage.setOnMouseEntered(
-        e -> {
-          workerImageManager.hoverIn();
-        });
-    workerImage.setOnMouseExited(
-        e -> {
-          workerImageManager.hoverOut();
-        });
-
-    brotherImage.setOnMouseEntered(
-        e -> {
-          brotherImageManager.hoverIn();
-        });
-    brotherImage.setOnMouseExited(
-        e -> {
-          brotherImageManager.hoverOut();
-        });
+  @FXML 
+  private void selectSuspect1(ActionEvent event) throws ApiProxyException, IOException {
+    sus1btn.setDisable(true);
+    sus2btn.setDisable(false);
+    sus3btn.setDisable(false);
+    currentSuspect = 1;
+    
   }
 
-  @FXML
-  public void enableImages() {
-    ownerImage.setDisable(false);
-    workerImage.setDisable(false);
-    brotherImage.setDisable(false);
-    crimeImage.setDisable(false);
+  @FXML 
+  private void selectSuspect2(ActionEvent event) throws ApiProxyException, IOException {
+    sus1btn.setDisable(false);
+    sus2btn.setDisable(true);
+    sus3btn.setDisable(false);
+    currentSuspect = 2;
   }
 
-  @FXML
-  public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {
-    ImageView clickedImage = (ImageView) event.getSource();
-    String id = clickedImage.getId();
-
-    ColorAdjust colorAdjustOut = new ColorAdjust();
-    colorAdjustOut.setBrightness(0);
-    DropShadow dropShadowOut = new DropShadow();
-    dropShadowOut.setRadius(10);
-    dropShadowOut.setOffsetX(0);
-    dropShadowOut.setOffsetY(0);
-    dropShadowOut.setColor(javafx.scene.paint.Color.GRAY);
-    dropShadowOut.setInput(colorAdjustOut);
-    switch (id) {
-      case "ownerImage":
-        if (currentImage != null && currentImage.getId().equals("ownerImage")) {
-          return;
-        }
-        displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
-        currentImage = ownerImage;
-        currentImageManager.setImageView(currentImage);
-        context.handleRectangleClick(event, "rectPerson2");
-        break;
-      case "workerImage":
-        if (currentImage != null && currentImage.getId().equals("workerImage")) {
-          return;
-        }
-        displayImage.setImage(new Image(workerImage.getImage().getUrl()));
-        currentImage = workerImage;
-        currentImageManager.setImageView(currentImage);
-        context.handleRectangleClick(event, "rectPerson1");
-        break;
-      case "crimeImage":
-        carImage.setVisible(true);
-        btnBack.setVisible(true);
-        break;
-      case "brotherImage":
-        if (currentImage != null && currentImage.getId().equals("brotherImage")) {
-          return;
-        }
-        displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
-        currentImage = brotherImage;
-        currentImageManager.setImageView(currentImage);
-        context.handleRectangleClick(event, "rectPerson3");
-    }
+  @FXML 
+  private void selectSuspect3(ActionEvent event) throws ApiProxyException, IOException {
+    sus1btn.setDisable(false);
+    sus2btn.setDisable(false);
+    sus3btn.setDisable(true);
+    currentSuspect = 3;
   }
+
+
+
 }

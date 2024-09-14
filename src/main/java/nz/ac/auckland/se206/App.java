@@ -54,11 +54,30 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
+    // Store the stage in the SceneManager so it will be remembered
+    SceneManager.addRoot(SceneManager.Scene.START, loadFxml("start"));
+    SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, loadFxml("instructions"));
 
     Parent root = loadFxml("start");
     scene = new Scene(root);
     stage.setScene(scene);
+
+    // // Set up the onShown event handler
+    // stage.setOnShown(
+    //     event -> {
+    //       // Determine which controller is currently active and call its onSceneShown method
+    //       if (scene.getRoot().getUserData() instanceof RoomController) {
+    //         RoomController controller = (RoomController) scene.getRoot().getUserData();
+    //         controller.onSceneShown();
+    //       } else if (scene.getRoot().getUserData() instanceof InstructionsController) {
+    //         InstructionsController controller =
+    //             (InstructionsController) scene.getRoot().getUserData();
+    //         controller.onSceneShown();
+    //       }
+    //     });
+
     stage.show();
+    stage.setTitle("PI Masters: Detective Training");
     root.requestFocus();
   }
 }
