@@ -9,7 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
@@ -22,12 +22,12 @@ public class StartController {
 
   @FXML Button startButton;
   @FXML Button instructionsButton;
-  @FXML private TextArea scoreboardArea1;
-  @FXML private TextArea scoreboardArea2;
-  @FXML private TextArea scoreboardArea3;
-  @FXML private TextArea scoreboardArea4;
-  @FXML private TextArea scoreboardArea5;
-  @FXML private TextArea scoreboardArea6;
+  @FXML private Label ScoreboardNameLabel1;
+  @FXML private Label ScoreboardNameLabel2;
+  @FXML private Label ScoreboardNameLabel3;
+  @FXML private Label ScoreboardTimeLabel1;
+  @FXML private Label ScoreboardTimeLabel2;
+  @FXML private Label ScoreboardTimeLabel3;
   @FXML private TextField playerNameWindow;
 
   // This ArrayList will store the scores of the previous rounds.
