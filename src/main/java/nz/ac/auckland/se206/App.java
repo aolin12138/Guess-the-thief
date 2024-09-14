@@ -61,7 +61,23 @@ public class App extends Application {
     Parent root = loadFxml("start");
     scene = new Scene(root);
     stage.setScene(scene);
+
+    // // Set up the onShown event handler
+    // stage.setOnShown(
+    //     event -> {
+    //       // Determine which controller is currently active and call its onSceneShown method
+    //       if (scene.getRoot().getUserData() instanceof RoomController) {
+    //         RoomController controller = (RoomController) scene.getRoot().getUserData();
+    //         controller.onSceneShown();
+    //       } else if (scene.getRoot().getUserData() instanceof InstructionsController) {
+    //         InstructionsController controller =
+    //             (InstructionsController) scene.getRoot().getUserData();
+    //         controller.onSceneShown();
+    //       }
+    //     });
+
     stage.show();
+    stage.setTitle("PI Masters: Detective Training");
     root.requestFocus();
   }
 }

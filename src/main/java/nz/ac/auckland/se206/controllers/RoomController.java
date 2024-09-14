@@ -21,8 +21,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -34,6 +32,7 @@ import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.Person;
+import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 import nz.ac.auckland.se206.speech.TextToSpeech;
@@ -44,15 +43,15 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
  */
 public class RoomController {
   private static boolean isFirstTimeInit = true;
-  private static boolean isTimeOver = false;
   private static boolean hasTalked = false;
   private static boolean walletFound = false;
   private static boolean cameraFound = false;
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static int timeToCount = 120;
-  private static int timeToCountTo = 120;
+  private static double timeToCount = 360000;
+  private static double timeToCountTo = 360000;
+  private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
 
@@ -96,71 +95,72 @@ public class RoomController {
   @FXML
   public void initialize() {
     if (isFirstTimeInit) {
-      context.setRoomController(this);
-      indicatorPane.getChildren().add(ringProgressIndicator);
-      ringProgressIndicator.setRingWidth(50);
-      timerLabel.setText(String.format("%02d", timeToCount));
-
-      timeline
-          .getKeyFrames()
-          .add(
-              new KeyFrame(
-                  Duration.seconds(1),
-                  event -> {
-                    if (timeToCount > 0) {
-                      timeToCount--;
-                      progress = (int) ((timeToCountTo - timeToCount) * 100 / timeToCountTo);
-                    } else if (isTimeOver == false) {
-                      Platform.runLater(
-                          () -> {
-                            timeline.stop();
-                            Alert alert = new Alert(AlertType.INFORMATION);
-                            alert.setTitle("Time's up!");
-                            alert.setHeaderText("Time's up! You need to choose now!");
-                            alert.setContentText("Click on the thief.");
-                            alert.showAndWait();
-                            disableAll();
-                            timeline.play();
-                          });
-                      btnGuess.setDisable(true);
-                      btnSend.setDisable(true);
-                      context.setState(context.getGuessingState());
-                      isTimeOver = true;
-                      timeToCountTo = 10;
-                      timeToCount = 10;
-                      progress = 0;
-                    } else {
-                      timeline.stop();
-                      Platform.runLater(
-                          () -> {
-                            Alert alert = new Alert(AlertType.INFORMATION);
-                            alert.setTitle("Game Over");
-                            alert.setHeaderText("Game Over");
-                            alert.setContentText("You Lost! You did not find the thief in time.");
-                            alert.showAndWait();
-                          });
-                      context.setState(context.getGameOverState());
-                    }
-
-                    ringProgressIndicator.setProgress(progress);
-                    timerLabel.setText(String.format("%02d", timeToCount));
-                  }));
-      timeline.setCycleCount(Timeline.INDEFINITE);
-      timeline.play();
-      Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
-      MediaPlayer mediaPlayer = new MediaPlayer(media);
-      mediaPlayer.play();
+      // Add any first time initialisation items here
       isFirstTimeInit = false;
     }
+    context.setRoomController(this);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    ringProgressIndicator.setRingWidth(50);
+    // Timer label is updated here
+    if (timeToCount % 1000 == 0) {
+      timerLabel.setText(Utils.formatTime(timeToCount - timeForGuessing));
+    }
+
+    timeline
+        .getKeyFrames()
+        .add(
+            new KeyFrame(
+                Duration.millis(1),
+                event -> {
+                  if (timeToCount > timeForGuessing) {
+                    timeToCount--;
+                    progress =
+                        (int)
+                            (100
+                                - (((timeToCountTo - timeForGuessing)
+                                        - (timeToCount - timeForGuessing))
+                                    * 100
+                                    / (timeToCountTo - timeForGuessing)));
+                  } else if ((timeToCount > 0)) {
+                    // Here the timer has exceeded the time for investigation and the game must
+                    // switch to the guess scene.
+                    // Program switch to guess scene here.
+                    System.out.println("Switching to guessing state");
+                    context.setState(context.getGuessingState());
+                    // Stop the timer here, as once the suer switch to guessing state, they aren't
+                    // coming back
+                    timeline.stop();
+                  }
+
+                  ringProgressIndicator.setProgress(progress);
+                  timerLabel.setText(Utils.formatTime(timeToCount - timeForGuessing));
+                }));
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.play();
+    // play an instruction sound when entering the room for the first time
+    // Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
+    // MediaPlayer mediaPlayer = new MediaPlayer(media);
+    // mediaPlayer.play();
+    // isFirstTimeInit = false;
+    // }
+  }
+
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
+  public static void setProgress(int progressFromPreviousScene) {
+    progress = progressFromPreviousScene;
   }
 
   public Pane getStatsPane() {
     return statsPane;
   }
 
-  public Boolean getTimeOver() {
-    return isTimeOver;
-  }
+  // Don't think this is needed anymore
+  // public Boolean getTimeOver() {
+  //   return isTimeOver;
+  // }
 
   public void disableAll() {
     officer.setDisable(true);
