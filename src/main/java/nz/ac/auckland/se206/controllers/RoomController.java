@@ -54,8 +54,8 @@ public class RoomController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 360000;
-  private static double timeToCountTo = 360000;
+  private static double timeToCount = 80000;
+  private static double timeToCountTo = 80000;
   private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
@@ -109,6 +109,7 @@ public class RoomController {
    */
   @FXML
   public void initialize() {
+    // Probably delete this since we will only load this scene once
     if (isFirstTimeInit) {
       isFirstTimeInit = false;
     }
@@ -127,7 +128,7 @@ public class RoomController {
 
     context.setRoomController(this);
     indicatorPane.getChildren().add(ringProgressIndicator);
-    ringProgressIndicator.setRingWidth(50);
+    ringProgressIndicator.setRingWidth(60);
     // Timer label is updated here
     if (timeToCount % 1000 == 0) {
       timerLabel.setText(Utils.formatTime(timeToCount - timeForGuessing));
@@ -154,6 +155,11 @@ public class RoomController {
                     // Program switch to guess scene here.
                     System.out.println("Switching to guessing state");
                     context.setState(context.getGuessingState());
+                    try {
+                      App.setRoot("guess");
+                    } catch (IOException e) {
+                      e.printStackTrace();
+                    }
                     // Stop the timer here, as once the suer switch to guessing state, they aren't
                     // coming back
                     timeline.stop();
@@ -352,6 +358,8 @@ public class RoomController {
    */
   @FXML
   private void handleGuessClick(ActionEvent event) throws IOException {
+    // Need to pass current timer values into Guess timer
+    setGuessTime((timeToCount - timeForGuessing));
     // context.handleGuessClick();
     App.setRoot("guess");
   }
@@ -605,5 +613,9 @@ public class RoomController {
         currentImageManager.setImageView(currentImage);
         context.handleRectangleClick(event, "rectPerson3");
     }
+  }
+
+  public static void setGuessTime(double time) {
+    GuessController.setTimeToGuess(time);
   }
 }
