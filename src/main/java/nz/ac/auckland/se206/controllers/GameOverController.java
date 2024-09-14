@@ -17,6 +17,7 @@ public class GameOverController {
     @FXML private Label lblStats;
     @FXML private TextArea txtAChat;
 
+
     @FXML
     public void initialize() {
         // Check is the previousScores arraylist is empty, if it isn't, display the scores from previous
@@ -37,7 +38,19 @@ public class GameOverController {
     // statsIndicator.setMinSize(1, 1);
     // statsPane.getChildren().add(statsIndicator);
 
-    lblStats.setText("You WIN!");
+    // lblStats.setText("You WIN!");
+    
+    ProgressIndicator statsIndicator = new ProgressIndicator();
+    statsIndicator.setMinSize(1, 1);
+    statsPane.getChildren().add(statsIndicator);
+
+
+   
+    if (GuessController.getThiefFound()) {
+        lblStats.setText("You WIN!");
+    } else {
+        lblStats.setText("You LOSE!");
+    }
     
         
     }
@@ -58,6 +71,13 @@ public class GameOverController {
         
     }
 
+    // public void winStatus(int num) {
+    //     if (num == 2) {
+    //         lblStats.setText("You WIN!");
+    //     } else {
+    //         lblStats.setText("You LOSE!");
+    //     }
+    // }
 
     
 }

@@ -95,6 +95,8 @@ public class GuessController {
   private Timeline timeline = new Timeline();
   private int currentSuspect = 0;
   private boolean selectedSuspect = false;
+  private static boolean isThiefFound = false;
+  private static GuessController guessController;
   
 
   /**
@@ -244,6 +246,11 @@ public class GuessController {
     map.put("profession", person.getProfession());
     map.put("name", person.getName());
     map.put("role", person.getRole());
+
+    // Map<String, String> map = new HashMap<>();
+    // map.put("profession", profession);
+    // return PromptEngineering.getPrompt("chat.txt", map);
+
     if (person.hasTalked()) {
       return PromptEngineering.getPrompt("chat3.txt", map, person);
     }
@@ -294,6 +301,39 @@ public class GuessController {
     }
   }
 
+
+  @FXML 
+  private void selectSuspect1(ActionEvent event) throws ApiProxyException, IOException {
+    sus1btn.setDisable(true);
+    sus2btn.setDisable(false);
+    sus3btn.setDisable(false);
+    currentSuspect = 1;
+    isThiefFound = false;
+    selectedSuspect = true;
+    
+  }
+
+  @FXML 
+  private void selectSuspect2(ActionEvent event) throws ApiProxyException, IOException {
+    sus1btn.setDisable(false);
+    sus2btn.setDisable(true);
+    sus3btn.setDisable(false);
+    currentSuspect = 2;
+    isThiefFound = true;
+    selectedSuspect = true;
+  }
+
+  @FXML 
+  private void selectSuspect3(ActionEvent event) throws ApiProxyException, IOException {
+    sus1btn.setDisable(false);
+    sus2btn.setDisable(false);
+    sus3btn.setDisable(true);
+    currentSuspect = 3;
+    isThiefFound = false;
+    selectedSuspect = true;
+  }
+  
+
   /**
    * Sends a message to the GPT model.
    *
@@ -305,6 +345,7 @@ public class GuessController {
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
 
     String message = txtInput.getText().trim();
+
     if (message.isEmpty()) {
       lblDescription.setText("Empty message");
       System.out.println("Empty message");
@@ -316,6 +357,11 @@ public class GuessController {
       System.out.println("No suspect selected");
       return;
     }
+
+  
+
+      // gameOverController.setGuessController(this);
+        App.setRoot("gameover");
     
     
     
@@ -348,40 +394,24 @@ public class GuessController {
         Thread backgroundThread = new Thread(task);
         backgroundThread.start();
         
-        App.setRoot("gameover");
+        // App.setRoot("gameover");
         
         
+        
   }
 
 
-  @FXML 
-  private void selectSuspect1(ActionEvent event) throws ApiProxyException, IOException {
-    sus1btn.setDisable(true);
-    sus2btn.setDisable(false);
-    sus3btn.setDisable(false);
-    currentSuspect = 1;
-    selectedSuspect = true;
-    
+
+  public int getSuspectNumber() {
+    return currentSuspect;
   }
 
-  @FXML 
-  private void selectSuspect2(ActionEvent event) throws ApiProxyException, IOException {
-    sus1btn.setDisable(false);
-    sus2btn.setDisable(true);
-    sus3btn.setDisable(false);
-    currentSuspect = 2;
-    selectedSuspect = true;
+  public static boolean getThiefFound() {
+    return isThiefFound;
   }
 
-  @FXML 
-  private void selectSuspect3(ActionEvent event) throws ApiProxyException, IOException {
-    sus1btn.setDisable(false);
-    sus2btn.setDisable(false);
-    sus3btn.setDisable(true);
-    currentSuspect = 3;
-    selectedSuspect = true;
+  public GuessController getGuessController() {
+    return this.guessController;
   }
-
-
 
 }
