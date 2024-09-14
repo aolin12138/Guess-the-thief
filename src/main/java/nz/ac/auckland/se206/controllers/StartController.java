@@ -75,14 +75,17 @@ public class StartController {
     }
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
   }
 
   // This method will take the user to the instructions page when they click on the Instructions
   // button
   @FXML
   public void onViewInstructions(ActionEvent event) throws IOException {
+    System.out.println(event.getSource().getClass() + "\n\n");
+    System.out.println(event.getSource());
     Button button = (Button) event.getSource();
+    System.out.println(button.getScene());
     Scene sceneOfButton = button.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.INSTRUCTIONS));
   }

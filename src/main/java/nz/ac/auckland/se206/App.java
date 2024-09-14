@@ -78,8 +78,8 @@ public class App extends Application {
     //       }
     //     });
 
-    stage.show();
     stage.setTitle("PI Masters: Detective Training");
+    stage.show();
     root.requestFocus();
   }
 }
