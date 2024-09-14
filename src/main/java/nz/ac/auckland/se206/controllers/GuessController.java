@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -84,6 +85,7 @@ public class GuessController {
 
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
+  @FXML private Label lblDescription;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
@@ -91,6 +93,7 @@ public class GuessController {
   private Timeline timeline = new Timeline();
   private int currentSuspect = 0;
   private boolean selectedSuspect = false;
+  
 
   /**
    * Initializes the room view. If it's the first time initialization, it will provide instructions
@@ -276,14 +279,16 @@ public class GuessController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
-      
+
     String message = txtInput.getText().trim();
     if (message.isEmpty()) {
+      lblDescription.setText("Empty message");
       System.out.println("Empty message");
       return;
     }
     
     if (selectedSuspect == false) {
+      lblDescription.setText("No suspect selected");
       System.out.println("No suspect selected");
       return;
     }

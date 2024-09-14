@@ -7,7 +7,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <Pane fx:id="room" focusTraversable="true" minHeight="608.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="633.0" prefWidth="796.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.GuessController">
@@ -18,7 +17,7 @@
          </image>
       </ImageView>
       <StackPane fx:id="indicatorPane" layoutX="637.0" layoutY="477.0" prefHeight="109.0" prefWidth="104.0" />
-      <TextField fx:id="txtInput" layoutY="463.0" prefHeight="170.0" prefWidth="596.0" />
+      <TextField fx:id="txtInput" layoutY="500.0" prefHeight="133.0" prefWidth="596.0" />
       <Button fx:id="btnSend" layoutX="596.0" layoutY="586.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send" />
       <Label fx:id="chatStats" layoutX="33.0" layoutY="408.0" prefHeight="25.0" prefWidth="312.0">
          <font>
@@ -37,6 +36,11 @@
       <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="602.0" layoutY="496.0" prefHeight="71.0" prefWidth="173.0" text="120" textAlignment="CENTER" textFill="#24f59b">
          <font>
             <Font name="System Bold" size="33.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDescription" layoutY="460.0" prefHeight="38.0" prefWidth="596.0" textAlignment="CENTER" textFill="RED">
+         <font>
+            <Font size="16.0" />
          </font>
       </Label>
    </children>
