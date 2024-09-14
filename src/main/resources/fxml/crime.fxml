@@ -13,7 +13,7 @@
       <Rectangle fx:id="clue1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="62.0" layoutY="56.0" onMouseClicked="#onClue1Clicked" stroke="BLACK" strokeType="INSIDE" width="102.0" />
       <Rectangle fx:id="clue2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="200.0" layoutY="56.0" onMouseClicked="#onClue2Clicked" stroke="BLACK" strokeType="INSIDE" width="85.0" />
       <Rectangle fx:id="clue3" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="327.0" layoutY="56.0" onMouseClicked="#onClue3Clicked" stroke="BLACK" strokeType="INSIDE" width="112.0" />
-      <Button fx:id="btnGuess" layoutX="519.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleGuessClick" prefHeight="30.0" prefWidth="94.0" text="Make a Guess" />
+      <Button fx:id="btnGuess" layoutX="519.0" layoutY="300.0" mnemonicParsing="false" onAction="#onGuessClick" prefHeight="30.0" prefWidth="94.0" text="Make a Guess" />
       <Label fx:id="timerLabel" layoutX="495.0" layoutY="188.0" text="05:00">
          <font>
             <Font size="35.0" />

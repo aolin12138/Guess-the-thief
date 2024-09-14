@@ -44,7 +44,7 @@ public class CrimeSceneController {
   void onClue3Clicked(MouseEvent event) {}
 
   @FXML
-  void handleGuessClick(ActionEvent event) {}
+  void onGuessClick(ActionEvent event) {}
 
   @FXML
   void onSuspect1Clicked(MouseEvent event) {}
