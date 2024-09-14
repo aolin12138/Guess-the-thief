@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -19,6 +20,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -101,6 +103,22 @@ public class GuessController {
    */
   @FXML
   public void initialize() {
+
+     // Adding the event handler for 'Enter' key on txtInput
+     txtInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
+      @Override
+      public void handle(KeyEvent keyEvent) {
+          if (keyEvent.getCode() == KeyCode.ENTER) {
+              try {
+                  // Calling the send message function
+                  onSendMessage(new ActionEvent());
+              } catch (ApiProxyException | IOException e) {
+                  e.printStackTrace();
+              }
+          }
+      }
+  });
+
     if (isFirstTimeInit) {
       context.setGuessController(this);
       indicatorPane.getChildren().add(ringProgressIndicator);
@@ -158,6 +176,7 @@ public class GuessController {
       mediaPlayer.play();
       isFirstTimeInit = false;
     }
+    
   }
 
   public Pane getStatsPane() {
@@ -197,6 +216,7 @@ public class GuessController {
   @FXML
   public void onKeyPressed(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " pressed");
+
   }
 
   /**
@@ -207,7 +227,11 @@ public class GuessController {
   @FXML
   public void onKeyReleased(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " released");
+
+    
   }
+
+  
 
 
   /**
@@ -233,7 +257,7 @@ public class GuessController {
    * @param msg the chat message to append
    */
   private void appendChatMessage(ChatMessage msg) {
-    txtaChat.appendText(msg.getContent() + "\n\n");
+    txtInput.appendText(msg.getContent() + "\n\n");
   }
 
   /**
@@ -262,7 +286,7 @@ public class GuessController {
                         + context.getRoomController().getPerson().getColor());
             context.getRoomController().getStatsPane().getChildren().clear();
           });
-      TextToSpeech.speak(result.getChatMessage().getContent(), context);
+      // TextToSpeech.speak(result.getChatMessage().getContent(), context);
       return result.getChatMessage();
     } catch (ApiProxyException e) {
       e.printStackTrace();
@@ -294,43 +318,39 @@ public class GuessController {
     }
     
     
-
+    
     txtInput.clear();
     ChatMessage msg = new ChatMessage("user", message);
     appendChatMessage(msg);
-
+    
     setChatStats(" loading...");
     
-    
-
     ProgressIndicator statsIndicator = new ProgressIndicator();
     statsIndicator.setMinSize(1, 1);
     statsPane.getChildren().add(statsIndicator);
-
-
-    App.setRoot("gameover");
-
-    // noTalking();
-    Task<Void> task =
-        new Task<Void>() {
-
-          @Override
-          protected Void call() throws Exception {
-            runGpt(msg);
-            return null;
-          }
-        };
-
-    // task.setOnSucceeded(
-    //     event1 -> {
-    //       statsPane.getChildren().remove(statsIndicator);
-    //       // setChatStats("Talking to " + person.getName() + " who is in " + person.getColor());
-    //       enableTalking();
-    //     });
-    Thread backgroundThread = new Thread(task);
-    backgroundThread.start();
-
     
+    Task<Void> task =
+    new Task<Void>() {
+      
+      @Override
+      protected Void call() throws Exception {
+        runGpt(msg);
+        return null;
+      }
+    };
+    
+    // task.setOnSucceeded(
+      //     event1 -> {
+        //       statsPane.getChildren().remove(statsIndicator);
+        //       // setChatStats("Talking to " + person.getName() + " who is in " + person.getColor());
+        //       enableTalking();
+        //     });
+        Thread backgroundThread = new Thread(task);
+        backgroundThread.start();
+        
+        App.setRoot("gameover");
+        
+        
   }
 
 

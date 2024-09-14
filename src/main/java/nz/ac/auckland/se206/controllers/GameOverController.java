@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
@@ -12,6 +14,8 @@ import nz.ac.auckland.se206.App;
 public class GameOverController {
     
     @FXML private Pane statsPane;
+    @FXML private Label lblStats;
+    @FXML private TextArea txtAChat;
 
     @FXML
     public void initialize() {
@@ -32,6 +36,9 @@ public class GameOverController {
     //     ProgressIndicator statsIndicator = new ProgressIndicator();
     // statsIndicator.setMinSize(1, 1);
     // statsPane.getChildren().add(statsIndicator);
+
+    lblStats.setText("You WIN!");
+    
         
     }
 
@@ -50,5 +57,7 @@ public class GameOverController {
     public void onKeyReleased(ActionEvent event) {
         
     }
+
+
     
 }
