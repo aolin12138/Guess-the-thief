@@ -16,6 +16,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -32,6 +35,7 @@ import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
+import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
@@ -80,12 +84,22 @@ public class RoomController {
   @FXML private TextField txtInput;
 
   @FXML private ImageView carImage;
+  @FXML private ImageView ownerImage;
+  @FXML private ImageView workerImage;
+  @FXML private ImageView brotherImage;
+  @FXML private ImageView crimeImage;
+  @FXML private ImageView displayImage;
 
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
+  private ImageView currentImage = null;
+  public ImageManager currentImageManager;
+  public ImageManager ownerImageManager;
+  public ImageManager workerImageManager;
+  public ImageManager brotherImageManager;
 
   private Timeline timeline = new Timeline();
 
@@ -96,9 +110,21 @@ public class RoomController {
   @FXML
   public void initialize() {
     if (isFirstTimeInit) {
-      // Add any first time initialisation items here
       isFirstTimeInit = false;
     }
+
+    currentImageManager = new ImageManager(currentImage);
+    ownerImageManager = new ImageManager(ownerImage);
+    workerImageManager = new ImageManager(workerImage);
+    brotherImageManager = new ImageManager(brotherImage);
+
+    ColorAdjust colorAdjust = new ColorAdjust();
+    colorAdjust.setBrightness(-0.45);
+    ownerImage.setEffect(colorAdjust);
+    workerImage.setEffect(colorAdjust);
+    brotherImage.setEffect(colorAdjust);
+    styleScene();
+
     context.setRoomController(this);
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
@@ -183,6 +209,9 @@ public class RoomController {
     officer.setDisable(true);
     officer2.setDisable(true);
     btnSend.setDisable(true);
+    workerImage.setDisable(true);
+    ownerImage.setDisable(true);
+    brotherImage.setDisable(true);
   }
 
   public void enableTalking() {
@@ -192,6 +221,9 @@ public class RoomController {
     officer.setDisable(false);
     officer2.setDisable(false);
     btnSend.setDisable(false);
+    workerImage.setDisable(false);
+    ownerImage.setDisable(false);
+    brotherImage.setDisable(false);
   }
 
   public Rectangle getDashcam() {
@@ -393,13 +425,13 @@ public class RoomController {
       Platform.runLater(
           () -> {
             context.getRoomController().enableTalking();
-            context
-                .getRoomController()
-                .setChatStats(
-                    "Talking to "
-                        + context.getRoomController().getPerson().getName()
-                        + " who is in "
-                        + context.getRoomController().getPerson().getColor());
+            // context
+            //     .getRoomController()
+            //     .setChatStats(
+            //         "Talking to "
+            //             + context.getRoomController().getPerson().getName()
+            //             + " who is in "
+            //             + context.getRoomController().getPerson().getColor());
             context.getRoomController().getStatsPane().getChildren().clear();
           });
       TextToSpeech.speak(result.getChatMessage().getContent(), context);
@@ -487,5 +519,91 @@ public class RoomController {
     carImage.setVisible(false);
     btnBack.setVisible(false);
     btnBack.setDisable(true);
+  }
+
+  @FXML
+  public void styleScene() {
+
+    ownerImage.setOnMouseEntered(
+        e -> {
+          ownerImageManager.hoverIn();
+        });
+    ownerImage.setOnMouseExited(
+        e -> {
+          ownerImageManager.hoverOut();
+        });
+
+    workerImage.setOnMouseEntered(
+        e -> {
+          workerImageManager.hoverIn();
+        });
+    workerImage.setOnMouseExited(
+        e -> {
+          workerImageManager.hoverOut();
+        });
+
+    brotherImage.setOnMouseEntered(
+        e -> {
+          brotherImageManager.hoverIn();
+        });
+    brotherImage.setOnMouseExited(
+        e -> {
+          brotherImageManager.hoverOut();
+        });
+  }
+
+  @FXML
+  public void enableImages() {
+    ownerImage.setDisable(false);
+    workerImage.setDisable(false);
+    brotherImage.setDisable(false);
+    crimeImage.setDisable(false);
+  }
+
+  @FXML
+  public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {
+    ImageView clickedImage = (ImageView) event.getSource();
+    String id = clickedImage.getId();
+
+    ColorAdjust colorAdjustOut = new ColorAdjust();
+    colorAdjustOut.setBrightness(0);
+    DropShadow dropShadowOut = new DropShadow();
+    dropShadowOut.setRadius(10);
+    dropShadowOut.setOffsetX(0);
+    dropShadowOut.setOffsetY(0);
+    dropShadowOut.setColor(javafx.scene.paint.Color.GRAY);
+    dropShadowOut.setInput(colorAdjustOut);
+    switch (id) {
+      case "ownerImage":
+        if (currentImage != null && currentImage.getId().equals("ownerImage")) {
+          return;
+        }
+        displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
+        currentImage = ownerImage;
+        currentImageManager.setImageView(currentImage);
+        context.handleRectangleClick(event, "rectPerson2");
+        break;
+      case "workerImage":
+        if (currentImage != null && currentImage.getId().equals("workerImage")) {
+          return;
+        }
+        displayImage.setImage(new Image(workerImage.getImage().getUrl()));
+        currentImage = workerImage;
+        currentImageManager.setImageView(currentImage);
+        context.handleRectangleClick(event, "rectPerson1");
+        break;
+      case "crimeImage":
+        carImage.setVisible(true);
+        btnBack.setVisible(true);
+        break;
+      case "brotherImage":
+        if (currentImage != null && currentImage.getId().equals("brotherImage")) {
+          return;
+        }
+        displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
+        currentImage = brotherImage;
+        currentImageManager.setImageView(currentImage);
+        context.handleRectangleClick(event, "rectPerson3");
+    }
   }
 }
