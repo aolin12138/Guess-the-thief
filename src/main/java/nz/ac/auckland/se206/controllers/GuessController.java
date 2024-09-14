@@ -9,15 +9,18 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -84,12 +87,17 @@ public class GuessController {
 
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
+  @FXML private Label lblDescription;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
 
   private Timeline timeline = new Timeline();
   private int currentSuspect = 0;
+  private boolean selectedSuspect = false;
+  private static boolean isThiefFound = false;
+  private static GuessController guessController;
+  
 
   /**
    * Initializes the room view. If it's the first time initialization, it will provide instructions
@@ -97,6 +105,22 @@ public class GuessController {
    */
   @FXML
   public void initialize() {
+
+     // Adding the event handler for 'Enter' key on txtInput
+     txtInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
+      @Override
+      public void handle(KeyEvent keyEvent) {
+          if (keyEvent.getCode() == KeyCode.ENTER) {
+              try {
+                  // Calling the send message function
+                  onSendMessage(new ActionEvent());
+              } catch (ApiProxyException | IOException e) {
+                  e.printStackTrace();
+              }
+          }
+      }
+  });
+
     if (isFirstTimeInit) {
       context.setGuessController(this);
       indicatorPane.getChildren().add(ringProgressIndicator);
@@ -121,7 +145,7 @@ public class GuessController {
                             alert.setHeaderText("Time's up! You need to choose now!");
                             alert.setContentText("Click on the thief.");
                             alert.showAndWait();
-                            disableAll();
+                            // disableAll();
                             timeline.play();
                           });
                       btnGuess.setDisable(true);
@@ -154,6 +178,7 @@ public class GuessController {
       mediaPlayer.play();
       isFirstTimeInit = false;
     }
+    
   }
 
   public Pane getStatsPane() {
@@ -164,87 +189,13 @@ public class GuessController {
     return isTimeOver;
   }
 
-  public void disableAll() {
-    officer.setDisable(true);
-    officer2.setDisable(true);
-    trashBin.setDisable(true);
-    camera.setDisable(true);
-    dashcam.setDisable(true);
-    car.setDisable(true);
+  public Boolean getSuspectSelected() {
+    return selectedSuspect;
   }
 
-  public void talked() {
-    hasTalked = true;
-  }
-
-  public void noTalking() {
-    rectPerson1.setDisable(true);
-    rectPerson2.setDisable(true);
-    rectPerson3.setDisable(true);
-    officer.setDisable(true);
-    officer2.setDisable(true);
-    btnSend.setDisable(true);
-  }
-
-  public void enableTalking() {
-    rectPerson1.setDisable(false);
-    rectPerson2.setDisable(false);
-    rectPerson3.setDisable(false);
-    officer.setDisable(false);
-    officer2.setDisable(false);
-    btnSend.setDisable(false);
-  }
-
-  public Rectangle getDashcam() {
-    return dashcam;
-  }
-
-  public Button getBtnBack() {
-    return btnBack;
-  }
-
-  public void foundWallet() {
-    walletFound = true;
-  }
-
-  public Boolean isWalletFound() {
-    return walletFound;
-  }
-
-  public void foundCamera() {
-    cameraFound = true;
-  }
-
-  public void foundCar() {
-    isCarFound = true;
-  }
-
-  public Boolean isCameraFound() {
-    return cameraFound;
-  }
-
-  public Boolean getHasTalked() {
-    return hasTalked;
-  }
-
-  public Boolean isDashcamFound() {
-    return dashcamFound;
-  }
-
-  public Boolean isCarFound() {
-    return isCarFound;
-  }
-
-  public Button getBtnGuess() {
-    return btnGuess;
-  }
 
   public void stopTimeLine() {
     timeline.stop();
-  }
-
-  public ImageView getCarImage() {
-    return carImage;
   }
 
   public GameStateContext getContext() {
@@ -253,28 +204,6 @@ public class GuessController {
 
   public void setChatStats(String stats) {
     chatStats.setText(stats);
-  }
-
-  public void diableRectangles() {
-    rectPerson1.setDisable(true);
-    rectPerson2.setDisable(true);
-    rectPerson3.setDisable(true);
-    officer.setDisable(true);
-    officer2.setDisable(true);
-    trashBin.setDisable(true);
-    dashcam.setDisable(false);
-    car.setDisable(true);
-  }
-
-  public void enableRectangles() {
-    rectPerson1.setDisable(false);
-    rectPerson2.setDisable(false);
-    rectPerson3.setDisable(false);
-    officer.setDisable(false);
-    officer2.setDisable(false);
-    trashBin.setDisable(false);
-    car.setDisable(false);
-    dashcam.setDisable(true);
   }
 
   public Person getPerson() {
@@ -289,6 +218,7 @@ public class GuessController {
   @FXML
   public void onKeyPressed(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " pressed");
+
   }
 
   /**
@@ -299,31 +229,12 @@ public class GuessController {
   @FXML
   public void onKeyReleased(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " released");
+
+    
   }
 
-  /**
-   * Handles mouse clicks on rectangles representing people in the room.
-   *
-   * @param event the mouse event triggered by clicking a rectangle
-   * @throws IOException if there is an I/O error
-   */
-  @FXML
-  private void handleRectangleClick(MouseEvent event) throws IOException {
-    Rectangle clickedRectangle = (Rectangle) event.getSource();
-    context.handleRectangleClick(event, clickedRectangle.getId());
-  }
+  
 
-  /**
-   * Handles the guess button click event.
-   *
-   * @param event the action event triggered by clicking the guess button
-   * @throws IOException if there is an I/O error
-   */
-  @FXML
-  private void handleGuessClick(ActionEvent event) throws IOException {
-    // context.handleGuessClick();
-    App.setRoot("guess");
-  }
 
   /**
    * Generates the system prompt based on the profession.
@@ -335,38 +246,17 @@ public class GuessController {
     map.put("profession", person.getProfession());
     map.put("name", person.getName());
     map.put("role", person.getRole());
+
+    // Map<String, String> map = new HashMap<>();
+    // map.put("profession", profession);
+    // return PromptEngineering.getPrompt("chat.txt", map);
+
     if (person.hasTalked()) {
       return PromptEngineering.getPrompt("chat3.txt", map, person);
     }
     return PromptEngineering.getPrompt("chat2.txt", map, person);
   }
 
-  /**
-   * Sets the profession for the chat context and initializes the ChatCompletionRequest.
-   *
-   * @param profession the profession to set
-   */
-  public void setPerson(Person person) {
-    if (this.person == person) {
-      return;
-    }
-
-    txtaChat.clear();
-    this.person = person;
-    try {
-      ApiProxyConfig config = ApiProxyConfig.readConfig();
-      chatCompletionRequest =
-          new ChatCompletionRequest(config)
-              .setN(1)
-              .setTemperature(0.2)
-              .setTopP(0.5)
-              .setMaxTokens(100);
-      runGpt(new ChatMessage("system", getSystemPrompt()));
-      person.talked();
-    } catch (ApiProxyException e) {
-      e.printStackTrace();
-    }
-  }
 
   /**
    * Appends a chat message to the chat text area.
@@ -374,7 +264,7 @@ public class GuessController {
    * @param msg the chat message to append
    */
   private void appendChatMessage(ChatMessage msg) {
-    txtaChat.appendText(msg.getRole() + ": " + msg.getContent() + "\n\n");
+    txtInput.appendText(msg.getContent() + "\n\n");
   }
 
   /**
@@ -403,13 +293,46 @@ public class GuessController {
                         + context.getRoomController().getPerson().getColor());
             context.getRoomController().getStatsPane().getChildren().clear();
           });
-      TextToSpeech.speak(result.getChatMessage().getContent(), context);
+      // TextToSpeech.speak(result.getChatMessage().getContent(), context);
       return result.getChatMessage();
     } catch (ApiProxyException e) {
       e.printStackTrace();
       return null;
     }
   }
+
+
+  @FXML 
+  private void selectSuspect1(ActionEvent event) throws ApiProxyException, IOException {
+    sus1btn.setDisable(true);
+    sus2btn.setDisable(false);
+    sus3btn.setDisable(false);
+    currentSuspect = 1;
+    isThiefFound = false;
+    selectedSuspect = true;
+    
+  }
+
+  @FXML 
+  private void selectSuspect2(ActionEvent event) throws ApiProxyException, IOException {
+    sus1btn.setDisable(false);
+    sus2btn.setDisable(true);
+    sus3btn.setDisable(false);
+    currentSuspect = 2;
+    isThiefFound = true;
+    selectedSuspect = true;
+  }
+
+  @FXML 
+  private void selectSuspect3(ActionEvent event) throws ApiProxyException, IOException {
+    sus1btn.setDisable(false);
+    sus2btn.setDisable(false);
+    sus3btn.setDisable(true);
+    currentSuspect = 3;
+    isThiefFound = false;
+    selectedSuspect = true;
+  }
+  
 
   /**
    * Sends a message to the GPT model.
@@ -420,106 +343,75 @@ public class GuessController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
-      App.setRoot("gameover");
-    // String message = txtInput.getText().trim();
-    // // if (message.isEmpty()) {
-    // //   return;
-    // // }
 
-    // // if (context.getGameState() == context.getGameOverState()) {
-    // //   Alert alert = new Alert(AlertType.INFORMATION);
-    // //   alert.setTitle("Game Over");
-    // //   alert.setHeaderText("Game Over");
-    // //   alert.setContentText("You can not talk to the suspects anymore.");
-    // //   alert.showAndWait();
-    // //   txtInput.clear();
-    // //   return;
-    // // }
+    String message = txtInput.getText().trim();
 
-
-
-    // txtInput.clear();
-    // ChatMessage msg = new ChatMessage("user", message);
-    // appendChatMessage(msg);
-
-    // // setChatStats(person.getName() + " is gathering words...");
-
-    // ProgressIndicator statsIndicator = new ProgressIndicator();
-    // statsIndicator.setMinSize(1, 1);
-    // statsPane.getChildren().add(statsIndicator);
-
-    // noTalking();
-    // Task<Void> task =
-    //     new Task<Void>() {
-
-    //       @Override
-    //       protected Void call() throws Exception {
-    //         runGpt(msg);
-    //         return null;
-    //       }
-    //     };
-
-    // // task.setOnSucceeded(
-    // //     event1 -> {
-    // //       statsPane.getChildren().remove(statsIndicator);
-    // //       // setChatStats("Talking to " + person.getName() + " who is in " + person.getColor());
-    // //       enableTalking();
-    // //     });
-    // Thread backgroundThread = new Thread(task);
-    // backgroundThread.start();
-
+    if (message.isEmpty()) {
+      lblDescription.setText("Empty message");
+      System.out.println("Empty message");
+      return;
+    }
     
-  }
+    if (selectedSuspect == false) {
+      lblDescription.setText("No suspect selected");
+      System.out.println("No suspect selected");
+      return;
+    }
 
-  @FXML
-  public void handleDashcamClick(MouseEvent event) throws IOException {
-    dashcamFound = true;
-    Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle("Dashcam footage found");
-    alert.setHeaderText(
-        "A person in "
-            + context.getPersonToGuess().getColor()
-            + " clothes was seen near the crime scene.");
-    alert.showAndWait();
-    enableRectangles();
-    carImage.setVisible(false);
-    btnBack.setVisible(false);
-    btnBack.setDisable(true);
-  }
+  
 
-  @FXML
-  public void onBackPressed() {
-    enableRectangles();
-    carImage.setVisible(false);
-    btnBack.setVisible(false);
-    btnBack.setDisable(true);
-  }
-
-  @FXML 
-  private void selectSuspect1(ActionEvent event) throws ApiProxyException, IOException {
-    sus1btn.setDisable(true);
-    sus2btn.setDisable(false);
-    sus3btn.setDisable(false);
-    currentSuspect = 1;
+      // gameOverController.setGuessController(this);
+        App.setRoot("gameover");
     
+    
+    
+    txtInput.clear();
+    ChatMessage msg = new ChatMessage("user", message);
+    appendChatMessage(msg);
+    
+    setChatStats(" loading...");
+    
+    ProgressIndicator statsIndicator = new ProgressIndicator();
+    statsIndicator.setMinSize(1, 1);
+    statsPane.getChildren().add(statsIndicator);
+    
+    Task<Void> task =
+    new Task<Void>() {
+      
+      @Override
+      protected Void call() throws Exception {
+        runGpt(msg);
+        return null;
+      }
+    };
+    
+    // task.setOnSucceeded(
+      //     event1 -> {
+        //       statsPane.getChildren().remove(statsIndicator);
+        //       // setChatStats("Talking to " + person.getName() + " who is in " + person.getColor());
+        //       enableTalking();
+        //     });
+        Thread backgroundThread = new Thread(task);
+        backgroundThread.start();
+        
+        // App.setRoot("gameover");
+        
+        
+        
   }
 
-  @FXML 
-  private void selectSuspect2(ActionEvent event) throws ApiProxyException, IOException {
-    sus1btn.setDisable(false);
-    sus2btn.setDisable(true);
-    sus3btn.setDisable(false);
-    currentSuspect = 2;
+
+
+  public int getSuspectNumber() {
+    return currentSuspect;
   }
 
-  @FXML 
-  private void selectSuspect3(ActionEvent event) throws ApiProxyException, IOException {
-    sus1btn.setDisable(false);
-    sus2btn.setDisable(false);
-    sus3btn.setDisable(true);
-    currentSuspect = 3;
+  public static boolean getThiefFound() {
+    return isThiefFound;
   }
 
-
+  public GuessController getGuessController() {
+    return this.guessController;
+  }
 
 }
