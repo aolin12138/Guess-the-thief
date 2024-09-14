@@ -23,7 +23,7 @@
          </image>
       </ImageView>
       <StackPane fx:id="indicatorPane" layoutX="509.0" layoutY="432.0" prefHeight="109.0" prefWidth="104.0" />
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="486.0" layoutY="452.0" prefHeight="71.0" prefWidth="153.0" text="120" textAlignment="CENTER" textFill="#24f59b">
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="486.0" layoutY="452.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#24f59b">
          <font>
             <Font name="System Bold" size="33.0" />
          </font>
