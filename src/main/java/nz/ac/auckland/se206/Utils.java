@@ -109,13 +109,18 @@ public class Utils {
   // If the player won, their score will be passed here and checked to see if it is in the top 3.
   // If it is, this method will sort the csv files to include the new score and in the correct
   // order.
-  public static void updateScoreBoard(int time) {
+  public static void updateScoreBoard(int time, String playerName) {
     // Read current scores from the csv file
+    System.out.println("First: " + previousScoresNames.size());
+
     previousScoresNames.clear();
     previousScoresTimes.clear();
     readCsv();
     // If the arraylist is empty, write the new score to the csv file
     if (previousScoresNames.isEmpty()) {
+      System.out.println("Second: " + previousScoresNames.size());
+
+      System.out.println("Hello world");
       try {
         previousScoresTimes.add(0, convertSecondsToTimeFormat(time));
         previousScoresNames.add(0, playerName);
@@ -127,6 +132,9 @@ public class Utils {
     } else if (previousScoresNames.size() == 1) {
       // need to sort it first
       if (time > convertTimeFormatToSeconds(previousScoresTimes.get(0))) {
+        System.out.println("Hello world 1");
+        System.out.println("Third: " + previousScoresNames.size());
+
         previousScoresTimes.add(1, previousScoresTimes.get(0));
         previousScoresNames.add(1, previousScoresNames.get(0));
         previousScoresTimes.set(0, convertSecondsToTimeFormat(time));
@@ -134,6 +142,9 @@ public class Utils {
         appendToCsv(2);
         return;
       } else {
+        System.out.println("Hello world 2");
+        System.out.println("Fourth: " + previousScoresNames.size());
+
         previousScoresTimes.add(1, convertSecondsToTimeFormat(time));
         previousScoresNames.add(1, playerName);
         appendToCsv(2);
@@ -142,6 +153,8 @@ public class Utils {
     } else if (previousScoresNames.size() == 2) {
       // need to sort it first
       if (time > convertTimeFormatToSeconds(previousScoresTimes.get(0))) {
+        System.out.println("Hello world 3");
+
         previousScoresTimes.add(2, previousScoresTimes.get(1));
         previousScoresNames.add(2, previousScoresNames.get(1));
         previousScoresTimes.set(1, previousScoresTimes.get(0));
@@ -151,6 +164,8 @@ public class Utils {
         appendToCsv(3);
         return;
       } else if (time > convertTimeFormatToSeconds(previousScoresTimes.get(1))) {
+        System.out.println("Hello world 4");
+
         previousScoresTimes.add(2, previousScoresTimes.get(1));
         previousScoresNames.add(2, previousScoresNames.get(1));
         previousScoresTimes.set(1, convertSecondsToTimeFormat(time));
@@ -158,6 +173,8 @@ public class Utils {
         appendToCsv(3);
         return;
       } else {
+        System.out.println("Hello world 5");
+
         previousScoresTimes.add(2, convertSecondsToTimeFormat(time));
         previousScoresNames.add(2, playerName);
         appendToCsv(3);
@@ -246,5 +263,33 @@ public class Utils {
 
   public static void setPlayerName(String name) {
     playerName = name;
+  }
+
+  public static String getPlayerName() {
+    return playerName;
+  }
+
+  public static ArrayList<String> getScoresForStartPage() {
+    // Need to read the csv and put the values into an array
+    ArrayList<String> scoreBoardValues = new ArrayList<>();
+    String element;
+    int line = 0;
+    try (BufferedReader br =
+        new BufferedReader(new FileReader("./src/main/resources/csv/previous_rounds.csv"))) {
+      while (((element = br.readLine()) != null) && (line < 3)) {
+        // skip empty lines in csv
+        if (element.trim().isEmpty()) {
+          continue;
+        }
+        String[] split = element.split(",");
+        scoreBoardValues.add(split[0]);
+        scoreBoardValues.add(split[1]);
+        line++;
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.exit(-1); // exit the program
+    }
+    return scoreBoardValues;
   }
 }

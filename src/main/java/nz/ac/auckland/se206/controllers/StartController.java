@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import nz.ac.auckland.se206.PreviousScore;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.Utils;
 
@@ -30,36 +29,44 @@ public class StartController {
   @FXML private Label ScoreboardTimeLabel3;
   @FXML private TextField playerNameWindow;
 
-  // This ArrayList will store the scores of the previous rounds.
-  private ArrayList<PreviousScore> previousScores = new ArrayList<PreviousScore>();
-
   Media media = new Media(getClass().getResource("/sounds/opening_voice.mp3").toExternalForm());
   MediaPlayer mediaPlayer = new MediaPlayer(media);
 
   // This method will add a score to the scoreboard arraylist.
-  public void addScore(PreviousScore score) {
-    previousScores.add(score);
-  }
+  // public void addScore(PreviousScore score) {
+  //   previousScores.add(score);
+  // }
 
   @FXML
   public void initialize() {
+    Utils.updateScoreBoard(43, "Adam");
+
+    // Utils.updateScoreBoard(12, "Trump");
+    // This ArrayList will store the scores of the previous rounds.
+    ArrayList<String> previousScores = new ArrayList<>();
+    // previousScores = Utils.getScoresForStartPage();
     // Check is the previousScores arraylist is empty, if it isn't, display the scores from previous
     // rounds.
-    if (previousScores.isEmpty()) {
-      // scoreboardArea1.setText("Previous scores will appear here once you play more rounds!");
-    } else {
-      for (PreviousScore score : previousScores) {
-        // scoreboardArea1.appendText(score.getRoundNumber() + " " + score.getTimeUsed() + "\n");
-      }
+    if (previousScores.size() == 2) {
+      ScoreboardNameLabel1.setText(previousScores.get(0));
+      ScoreboardTimeLabel1.setText(previousScores.get(1));
+    } else if (previousScores.size() == 4) {
+      ScoreboardNameLabel1.setText(previousScores.get(0));
+      ScoreboardTimeLabel1.setText(previousScores.get(1));
+      ScoreboardNameLabel2.setText(previousScores.get(2));
+      ScoreboardTimeLabel2.setText(previousScores.get(3));
+    } else if (previousScores.size() == 6) {
+      ScoreboardNameLabel1.setText(previousScores.get(0));
+      ScoreboardTimeLabel1.setText(previousScores.get(1));
+      ScoreboardNameLabel2.setText(previousScores.get(2));
+      ScoreboardTimeLabel2.setText(previousScores.get(3));
+      ScoreboardNameLabel3.setText(previousScores.get(4));
+      ScoreboardTimeLabel3.setText(previousScores.get(5));
     }
-    // to store the scoreboard values.
-    // If this is the first round, scoreboard should display a message saying that there are no
-    // scores
-    // yet.
 
     Platform.runLater(
         () -> {
-          // mediaPlayer.play(); /*************** Temporary disable */
+          mediaPlayer.play();
           mediaPlayer.setOnEndOfMedia(
               () -> {
                 startButton.setDisable(false);
