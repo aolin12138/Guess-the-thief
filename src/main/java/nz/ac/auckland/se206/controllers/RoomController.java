@@ -94,7 +94,10 @@ public class RoomController {
    */
   @FXML
   public void initialize() {
-    // if (isFirstTimeInit) {
+    if (isFirstTimeInit) {
+      // Add any first time initialisation items here
+      isFirstTimeInit = false;
+    }
     context.setRoomController(this);
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
@@ -140,6 +143,14 @@ public class RoomController {
     // mediaPlayer.play();
     // isFirstTimeInit = false;
     // }
+  }
+
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
+  public static void setProgress(int progressFromPreviousScene) {
+    progress = progressFromPreviousScene;
   }
 
   public Pane getStatsPane() {
