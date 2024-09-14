@@ -210,6 +210,7 @@ public class RoomController {
     btnSend.setDisable(true);
     workerImage.setDisable(true);
     ownerImage.setDisable(true);
+    brotherImage.setDisable(true);
   }
 
   public void enableTalking() {
@@ -221,6 +222,7 @@ public class RoomController {
     btnSend.setDisable(false);
     workerImage.setDisable(false);
     ownerImage.setDisable(false);
+    brotherImage.setDisable(false);
   }
 
   public Rectangle getDashcam() {
@@ -537,6 +539,15 @@ public class RoomController {
         e -> {
           workerImageManager.hoverOut();
         });
+
+    brotherImage.setOnMouseEntered(
+        e -> {
+          brotherImageManager.hoverIn();
+        });
+    brotherImage.setOnMouseExited(
+        e -> {
+          brotherImageManager.hoverOut();
+        });
   }
 
   @FXML
@@ -584,13 +595,10 @@ public class RoomController {
         btnBack.setVisible(true);
         break;
       case "brotherImage":
-        if (currentImage != null) {
-          currentImageManager.getImageView().setDisable(false);
-          currentImageManager.hoverOut();
+        if (currentImage != null && currentImage.getId().equals("brotherImage")) {
+          return;
         }
-        brotherImage.setEffect(colorAdjustOut);
-        brotherImage.setFitHeight(workerImage.getFitHeight() * 1.1);
-        brotherImage.setFitWidth(workerImage.getFitWidth() * 1.1);
+        displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
         currentImage = brotherImage;
         currentImageManager.setImageView(currentImage);
         context.handleRectangleClick(event, "rectPerson3");
