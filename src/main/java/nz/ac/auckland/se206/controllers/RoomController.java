@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -20,6 +21,7 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -100,6 +102,7 @@ public class RoomController {
   public ImageManager ownerImageManager;
   public ImageManager workerImageManager;
   public ImageManager brotherImageManager;
+  public Scene suspectScene;
 
   private Timeline timeline = new Timeline();
 
@@ -112,6 +115,25 @@ public class RoomController {
     if (isFirstTimeInit) {
       isFirstTimeInit = false;
     }
+
+    btnSend
+        .sceneProperty()
+        .addListener(
+            (observable, oldScene, newScene) -> {
+              if (newScene != null) {
+                newScene.addEventHandler(
+                    KeyEvent.KEY_PRESSED,
+                    event -> {
+                      if (event.getCode() == KeyCode.ENTER) {
+                        try {
+                          onSendMessage(new ActionEvent());
+                        } catch (ApiProxyException | IOException e) {
+                          e.printStackTrace();
+                        }
+                      }
+                    });
+              }
+            });
 
     currentImageManager = new ImageManager(currentImage);
     ownerImageManager = new ImageManager(ownerImage);
@@ -384,6 +406,17 @@ public class RoomController {
 
     txtaChat.clear();
     this.person = person;
+
+    Platform.runLater(
+        () -> {
+          ProgressIndicator statsIndicator = new ProgressIndicator();
+          statsIndicator.setMinSize(1, 1);
+          statsPane.getChildren().add(statsIndicator);
+
+          context
+              .getRoomController()
+              .setChatStats("Talking to " + context.getRoomController().getPerson().getName());
+        });
     try {
       ApiProxyConfig config = ApiProxyConfig.readConfig();
       chatCompletionRequest =
@@ -425,13 +458,6 @@ public class RoomController {
       Platform.runLater(
           () -> {
             context.getRoomController().enableTalking();
-            // context
-            //     .getRoomController()
-            //     .setChatStats(
-            //         "Talking to "
-            //             + context.getRoomController().getPerson().getName()
-            //             + " who is in "
-            //             + context.getRoomController().getPerson().getColor());
             context.getRoomController().getStatsPane().getChildren().clear();
           });
       TextToSpeech.speak(result.getChatMessage().getContent(), context);
@@ -470,8 +496,6 @@ public class RoomController {
     ChatMessage msg = new ChatMessage("user", message);
     appendChatMessage(msg);
 
-    setChatStats(person.getName() + " is gathering words...");
-
     ProgressIndicator statsIndicator = new ProgressIndicator();
     statsIndicator.setMinSize(1, 1);
     statsPane.getChildren().add(statsIndicator);
@@ -495,22 +519,6 @@ public class RoomController {
     //     });
     Thread backgroundThread = new Thread(task);
     backgroundThread.start();
-  }
-
-  @FXML
-  public void handleDashcamClick(MouseEvent event) throws IOException {
-    dashcamFound = true;
-    Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle("Dashcam footage found");
-    alert.setHeaderText(
-        "A person in "
-            + context.getPersonToGuess().getColor()
-            + " clothes was seen near the crime scene.");
-    alert.showAndWait();
-    enableRectangles();
-    carImage.setVisible(false);
-    btnBack.setVisible(false);
-    btnBack.setDisable(true);
   }
 
   @FXML
