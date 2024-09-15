@@ -1,7 +1,5 @@
 package nz.ac.auckland.se206.controllers;
 
-// I THINK THIS SCENE CAN BE DELETED **********************************************
-
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,6 +35,9 @@ public class CrimeSceneController {
   @FXML private Rectangle suscpect2Scene;
   @FXML private Rectangle suspect1Scene;
   @FXML private Rectangle suspect3Scene;
+
+  @FXML
+  public void initialize() {}
 
   @FXML
   void onClue1Clicked(MouseEvent event) {}
