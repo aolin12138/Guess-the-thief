@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
@@ -24,10 +26,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
@@ -80,6 +84,7 @@ public class RoomController {
   @FXML private Button btnGuess;
   @FXML private Button btnSend;
   @FXML private Button btnBack;
+  @FXML private Button btnSlide;
 
   @FXML private TextArea txtaChat;
 
@@ -95,13 +100,19 @@ public class RoomController {
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
 
+  @FXML public ComboBox<HBox> imagesComboBox;
+
+  @FXML private HBox imagesHBox;
+
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
   private ImageView currentImage = null;
+
   public ImageManager currentImageManager;
   public ImageManager ownerImageManager;
   public ImageManager workerImageManager;
   public ImageManager brotherImageManager;
+  public ImageManager crimeImageManager;
   public Scene suspectScene;
 
   private Timeline timeline = new Timeline();
@@ -120,6 +131,8 @@ public class RoomController {
         .sceneProperty()
         .addListener(
             (observable, oldScene, newScene) -> {
+              Stage stage = (Stage) newScene.getWindow();
+              stage.sizeToScene();
               if (newScene != null) {
                 newScene.addEventHandler(
                     KeyEvent.KEY_PRESSED,
@@ -139,12 +152,14 @@ public class RoomController {
     ownerImageManager = new ImageManager(ownerImage);
     workerImageManager = new ImageManager(workerImage);
     brotherImageManager = new ImageManager(brotherImage);
+    crimeImageManager = new ImageManager(crimeImage);
 
     ColorAdjust colorAdjust = new ColorAdjust();
     colorAdjust.setBrightness(-0.45);
     ownerImage.setEffect(colorAdjust);
     workerImage.setEffect(colorAdjust);
     brotherImage.setEffect(colorAdjust);
+    crimeImage.setEffect(colorAdjust);
     styleScene();
 
     context.setRoomController(this);
@@ -558,6 +573,17 @@ public class RoomController {
         e -> {
           brotherImageManager.hoverOut();
         });
+
+    crimeImage.setOnMouseEntered(
+        e -> {
+          crimeImageManager.hoverIn();
+        });
+    crimeImage.setOnMouseExited(
+        e -> {
+          crimeImageManager.hoverOut();
+        });
+
+    btnSlide.setOnAction(event -> toggleHBox());
   }
 
   @FXML
@@ -613,5 +639,24 @@ public class RoomController {
         currentImageManager.setImageView(currentImage);
         context.handleRectangleClick(event, "rectPerson3");
     }
+  }
+
+  private void toggleHBox() {
+    // Create the transition
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesHBox);
+
+    if (imagesHBox.isVisible()) {
+      // Slide out
+      transition.setToY(-imagesHBox.getHeight()); // Move off-screen
+      transition.setOnFinished(event -> imagesHBox.setVisible(false)); // Hide after animation
+    } else {
+      // Slide in
+      imagesHBox.setVisible(true); // Show before animation
+      transition.setFromY(-imagesHBox.getHeight()); // Start off-screen
+      transition.setToY(0); // Move to visible position
+    }
+
+    // Play the transition
+    transition.play();
   }
 }
