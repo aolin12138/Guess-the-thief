@@ -23,6 +23,10 @@ public class CrimeSceneController {
   private static boolean cameraFound = false;
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
+  private static boolean isClue1Found = false;
+  private static boolean isClue2Found = false;
+  private static boolean isClue3Found = false;
+
   private static GameStateContext context = new GameStateContext();
   private static double timeToCount = 360000;
   private static double timeToCountTo = 360000;
@@ -96,13 +100,19 @@ public class CrimeSceneController {
   }
 
   @FXML
-  void onClue1Clicked(MouseEvent event) {}
+  void onClue1Clicked(MouseEvent event) {
+    isClue1Found = true;
+  }
 
   @FXML
-  void onClue2Clicked(MouseEvent event) {}
+  void onClue2Clicked(MouseEvent event) {
+    isClue2Found = true;
+  }
 
   @FXML
-  void onClue3Clicked(MouseEvent event) {}
+  void onClue3Clicked(MouseEvent event) {
+    isClue3Found = true;
+  }
 
   @FXML
   void onGuessClick(ActionEvent event) throws IOException {
@@ -124,5 +134,12 @@ public class CrimeSceneController {
   @FXML
   void onSuspect3Clicked(ActionEvent event) throws IOException {
     App.setRoot("room");
+  }
+
+  public static char getClueInvestigationStatus() {
+    // 8 possible combinations of clue interaction. From 0 all the way to 3 interacted.
+    // Will implement functionality here to return a char based on the number of clues interacted.
+
+    return 'A';
   }
 }
