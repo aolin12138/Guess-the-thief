@@ -1,6 +1,7 @@
 .circleindicator-container {
   circleindicator-color: #24f59b;
   -fx-padding: 5.0;
+  -fx-background: white;
 }
 
 .circleindicator-container>.circleindicator-label {

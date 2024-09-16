@@ -15,17 +15,17 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="room" focusTraversable="true" minHeight="629.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="629.0" prefWidth="633.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.RoomController">
+<Pane fx:id="room" focusTraversable="true" minHeight="583.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="586.0" prefWidth="637.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.RoomController">
    <children>
-      <ImageView fx:id="displayImage" fitHeight="416.0" fitWidth="653.0" layoutX="1.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="displayImage" fitHeight="398.0" fitWidth="643.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/crime_scene.jpg" />
+            <Image url="@../images/crime_scene.jpeg" />
          </image>
       </ImageView>
       <StackPane fx:id="indicatorPane" layoutX="509.0" layoutY="432.0" prefHeight="109.0" prefWidth="104.0" />
       <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="486.0" layoutY="452.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#24f59b">
          <font>
-            <Font name="System Bold" size="33.0" />
+            <Font name="System Bold" size="26.0" />
          </font>
       </Label>
       <Rectangle fx:id="officer" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="194.0" layoutX="554.0" layoutY="116.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="65.0" />
@@ -33,23 +33,21 @@
       <Rectangle fx:id="rectPerson1" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="200.0" layoutX="253.0" layoutY="144.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="68.0" />
       <Rectangle fx:id="officer2" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="111.0" layoutX="170.0" layoutY="181.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="32.0" />
       <Rectangle fx:id="rectPerson2" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="274.0" layoutX="374.0" layoutY="111.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="93.0" />
-      <Button fx:id="btnGuess" layoutX="519.0" layoutY="587.0" mnemonicParsing="false" onAction="#handleGuessClick" prefHeight="30.0" prefWidth="94.0" text="Make a Guess" />
-      <TextArea fx:id="txtaChat" editable="false" layoutX="19.0" layoutY="435.0" prefHeight="148.0" prefWidth="484.0" wrapText="true" />
-      <TextField fx:id="txtInput" layoutX="17.0" layoutY="590.0" prefHeight="26.0" prefWidth="406.0" />
-      <Button fx:id="btnSend" layoutX="428.0" layoutY="587.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send" />
-      <Pane fx:id="statsPane" layoutX="11.0" layoutY="10.0" prefHeight="25.0" prefWidth="26.0" />
+      <Button fx:id="btnGuess" layoutX="512.0" layoutY="547.0" mnemonicParsing="false" onAction="#handleGuessClick" prefHeight="30.0" prefWidth="94.0" text="Make a Guess" />
+      <TextArea fx:id="txtaChat" editable="false" layoutX="12.0" layoutY="395.0" prefHeight="148.0" prefWidth="484.0" wrapText="true" />
+      <TextField fx:id="txtInput" layoutX="10.0" layoutY="550.0" prefHeight="26.0" prefWidth="406.0" />
+      <Button fx:id="btnSend" layoutX="421.0" layoutY="547.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send" />
       <ImageView fx:id="carImage" fitHeight="416.0" fitWidth="633.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/car_close_up.jpg" />
          </image>
       </ImageView>
-      <Rectangle fx:id="dashcam" arcHeight="5.0" arcWidth="5.0" disable="true" fill="DODGERBLUE" height="102.0" layoutX="240.0" layoutY="90.0" onMouseClicked="#handleDashcamClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="312.0" />
       <Button fx:id="btnBack" disable="true" layoutX="324.0" layoutY="366.0" mnemonicParsing="false" onAction="#onBackPressed" text="Back" visible="false" />
-      <HBox layoutX="23.0" layoutY="344.0" prefHeight="106.0" prefWidth="561.0" spacing="20.0" stylesheets="@../css/suspect_scene.css">
+      <HBox fx:id="imagesHBox" layoutX="24.0" layoutY="5.0" prefHeight="106.0" prefWidth="561.0" spacing="20.0" stylesheets="@../css/suspect_scene.css" visible="false">
          <children>
             <ImageView id="crimeImage" fx:id="crimeImage" fitHeight="74.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/crime_scene.jpg" />
+                  <Image url="@../images/crime_scene.jpeg" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -87,5 +85,12 @@
             <Insets />
          </opaqueInsets>
       </HBox>
+      <Label fx:id="chatStats" layoutX="14.0" layoutY="364.0" prefHeight="30.0" prefWidth="138.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Pane fx:id="statsPane" layoutX="4.0" layoutY="27.0" prefHeight="25.0" prefWidth="26.0" />
+      <Button fx:id="btnSlide" layoutX="171.0" layoutY="353.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="290.0" text="Switching Scenes" />
    </children>
 </Pane>
