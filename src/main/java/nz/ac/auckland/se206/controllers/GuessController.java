@@ -1,6 +1,8 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.KeyFrame;
@@ -27,6 +29,7 @@ import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
 import nz.ac.auckland.apiproxy.chat.openai.ChatMessage;
 import nz.ac.auckland.apiproxy.chat.openai.Choice;
+import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
@@ -218,62 +221,17 @@ public class GuessController {
    */
   private String getSystemPrompt() {
     Map<String, String> map = new HashMap<>();
-    map.put("profession", person.getProfession());
+    // map.put("profession", person.getProfession());
     map.put("name", person.getName());
-    map.put("role", person.getRole());
+    // map.put("role", person.getRole());
 
-    // Map<String, String> map = new HashMap<>();
-    // map.put("profession", profession);
-    // return PromptEngineering.getPrompt("chat.txt", map);
-
-    if (person.hasTalked()) {
-      return PromptEngineering.getPrompt("chat3.txt", map, person);
-    }
+    // if (person.hasTalked()) {
+    //   return PromptEngineering.getPrompt("chat3.txt", map, person);
+    // }
     return PromptEngineering.getPrompt("chat2.txt", map, person);
   }
 
-  /**
-   * Appends a chat message to the chat text area.
-   *
-   * @param msg the chat message to append
-   */
-  private void appendChatMessage(ChatMessage msg) {
-    txtInput.appendText(msg.getContent() + "\n\n");
-  }
 
-  /**
-   * Runs the GPT model with a given chat message.
-   *
-   * @param msg the chat message to process
-   * @return the response chat message
-   * @throws ApiProxyException if there is an error communicating with the API proxy
-   */
-  private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
-    chatCompletionRequest.addMessage(msg);
-    try {
-      ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
-      Choice result = chatCompletionResult.getChoices().iterator().next();
-      chatCompletionRequest.addMessage(result.getChatMessage());
-      appendChatMessage(result.getChatMessage());
-      Platform.runLater(
-          () -> {
-            context.getRoomController().enableTalking();
-            context
-                .getRoomController()
-                .setChatStats(
-                    "Talking to "
-                        + context.getRoomController().getPerson().getName()
-                        + " who is in "
-                        + context.getRoomController().getPerson().getColor());
-            context.getRoomController().getStatsPane().getChildren().clear();
-          });
-      // TextToSpeech.speak(result.getChatMessage().getContent(), context);
-      return result.getChatMessage();
-    } catch (ApiProxyException e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
 
   @FXML
   private void selectSuspect1(ActionEvent event) throws ApiProxyException, IOException {
@@ -329,41 +287,113 @@ public class GuessController {
       return;
     }
 
-    // gameOverController.setGuessController(this);
-    App.setRoot("gameover");
 
-    txtInput.clear();
-    ChatMessage msg = new ChatMessage("user", message);
-    appendChatMessage(msg);
+      // gameOverController.setGuessController(this);
+    
+    if(selectedSuspect) {
 
-    setChatStats(" loading...");
+      ProgressIndicator statsIndicator = new ProgressIndicator();
+      statsIndicator.setMinSize(1, 1);
+      statsPane.getChildren().add(statsIndicator);
+    
+      Task<Void> task = new Task<Void>(){
+        @Override 
+        protected Void call() throws Exception{
+          try{
+            String validExplanation = isExplanationValid();
 
-    ProgressIndicator statsIndicator = new ProgressIndicator();
-    statsIndicator.setMinSize(1, 1);
-    statsPane.getChildren().add(statsIndicator);
+            GameOverController.setOutputText(validExplanation);
 
-    Task<Void> task =
-        new Task<Void>() {
+            String[] split = validExplanation.trim().split("");
+            boolean valid = 
+            currentSuspect == 2;
 
-          @Override
-          protected Void call() throws Exception {
-            runGpt(msg);
-            return null;
+            Platform.runLater(
+              () -> {
+
+                // GuessTimeLimitManager.stopTimer();
+
+                if(valid) {
+                  context.setState(context.getGameOverState());
+
+                  try {
+
+                    App.setRoot("gameover");
+                  }catch(IOException e) {
+                    e.printStackTrace();
+                  }
+                } else {
+                  context.setState(context.getGameOverState());
+
+                  try{
+                    // GameOverController.setCorrectSuspect(true);
+
+                    App.setRoot("gamelost");
+                  }catch(IOException e) {
+                    e.printStackTrace();
+                  }
+                }
+              });
+            }catch(ApiProxyException e) {
+              e.printStackTrace();
+                }
+                return null;
+              }
+
+            };
+
+            sus1btn.setDisable(true);
+            sus2btn.setDisable(true);
+            sus3btn.setDisable(true);
+            txtInput.setDisable(true);
+
+            new Thread(task).start();
+          } else {
+
+            // GameOverController.setCorrectSuspect(false);
+
+            // GuessTimeLimitManager.stopTimer();
+
+            context.setState(context.getGameOverState());
+            App.setRoot("gamelost");
           }
-        };
+        }
 
-    // task.setOnSucceeded(
-    //     event1 -> {
-    //       statsPane.getChildren().remove(statsIndicator);
-    //       // setChatStats("Talking to " + person.getName() + " who is in " + person.getColor());
-    //       enableTalking();
-    //     });
-    Thread backgroundThread = new Thread(task);
-    backgroundThread.start();
+              
+    
+        public String isExplanationValid() throws ApiProxyException, IOException {
+            try {
+              String evidencePrompt =
+              new String(Files.readAllBytes(Paths.get("src/main/resources/prompts/chat2.txt")));
 
-    // App.setRoot("gameover");
+      String fullPrompt =
+          evidencePrompt + "\nUser Reasoning:\n" + txtInput.getText() + "\n";
 
-  }
+      ChatCompletionRequest request =
+          new ChatCompletionRequest(ApiProxyConfig.readConfig())
+              .setN(1)
+              .setTemperature(0.2)
+              .setTopP(0.5)
+              .setMaxTokens(150)
+              .addMessage(
+                  new ChatMessage(
+                      "system",
+                      "You are an expert at evaluating reasoning based on clues and evidence."));
+
+      request.addMessage(new ChatMessage("user", fullPrompt));
+
+      ChatCompletionResult result = request.execute();
+      String response = result.getChoices().iterator().next().getChatMessage().getContent().trim();
+      return response;
+    } catch (ApiProxyException e) {
+      e.printStackTrace();
+      return null;
+    }
+
+        }
+ 
+        
+        
 
   public int getSuspectNumber() {
     return currentSuspect;
@@ -376,6 +406,7 @@ public class GuessController {
   public GuessController getGuessController() {
     return this.guessController;
   }
+
 
   public static void setTimeToGuess(double time) {
     // Adds any leftover time from the investigation scene to the time available for guessing.

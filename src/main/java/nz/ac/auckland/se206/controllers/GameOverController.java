@@ -16,6 +16,8 @@ public class GameOverController {
     @FXML private Pane statsPane;
     @FXML private Label lblStats;
     @FXML private TextArea txtAChat;
+    private static String explanation;
+    @FXML private Label lblExplanation;
 
 
     @FXML
@@ -38,13 +40,14 @@ public class GameOverController {
     // statsIndicator.setMinSize(1, 1);
     // statsPane.getChildren().add(statsIndicator);
 
-    // lblStats.setText("You WIN!");
     
-    ProgressIndicator statsIndicator = new ProgressIndicator();
-    statsIndicator.setMinSize(1, 1);
-    statsPane.getChildren().add(statsIndicator);
+    // ProgressIndicator statsIndicator = new ProgressIndicator();
+    // statsIndicator.setMinSize(1, 1);
+    // statsPane.getChildren().add(statsIndicator);
 
 
+    lblExplanation.setText(explanation);
+    
    
     if (GuessController.getThiefFound()) {
         lblStats.setText("You WIN!");
@@ -71,12 +74,17 @@ public class GameOverController {
         
     }
 
-    // public void winStatus(int num) {
-    //     if (num == 2) {
-    //         lblStats.setText("You WIN!");
-    //     } else {
-    //         lblStats.setText("You LOSE!");
-    //     }
+    public static void setOutputText(String text) {
+        explanation = text;
+    }
+
+    // public static void winStatus(int num) {
+        // if (num == 2) {
+        //     lblStats.setText("You WIN!");
+        // } else {
+        //     lblStats.setText("You LOSE!");
+        // }
+
     // }
 
     
