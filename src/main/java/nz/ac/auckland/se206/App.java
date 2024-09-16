@@ -57,10 +57,28 @@ public class App extends Application {
     // Store the stage in the SceneManager so it will be remembered
     SceneManager.addRoot(SceneManager.Scene.START, loadFxml("start"));
     SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, loadFxml("instructions"));
+    SceneManager.addRoot(SceneManager.Scene.CRIME, loadFxml("crime"));
+    SceneManager.addRoot(SceneManager.Scene.ROOM, loadFxml("room"));
 
     Parent root = loadFxml("start");
     scene = new Scene(root);
     stage.setScene(scene);
+
+    // // Set up the onShown event handler
+    // stage.setOnShown(
+    //     event -> {
+    //       // Determine which controller is currently active and call its onSceneShown method
+    //       if (scene.getRoot().getUserData() instanceof RoomController) {
+    //         RoomController controller = (RoomController) scene.getRoot().getUserData();
+    //         controller.onSceneShown();
+    //       } else if (scene.getRoot().getUserData() instanceof InstructionsController) {
+    //         InstructionsController controller =
+    //             (InstructionsController) scene.getRoot().getUserData();
+    //         controller.onSceneShown();
+    //       }
+    //     });
+
+    stage.setTitle("PI Masters: Detective Training");
     stage.show();
     root.requestFocus();
   }

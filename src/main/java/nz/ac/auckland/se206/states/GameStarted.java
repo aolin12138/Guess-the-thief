@@ -52,13 +52,13 @@ public class GameStarted implements GameState {
     ProgressIndicator statsIndicator = new ProgressIndicator();
     statsIndicator.setMinSize(1, 1);
     context.getRoomController().getStatsPane().getChildren().add(statsIndicator);
-    context
-        .getRoomController()
-        .setChatStats(
-            "Walking to "
-                + context.getPerson(rectangleId).getName()
-                + " who is in "
-                + context.getPerson(rectangleId).getColor());
+    // context
+    //     .getRoomController()
+    //     .setChatStats(
+    //         "Walking to "
+    //             + context.getPerson(rectangleId).getName()
+    //             + " who is in "
+    //             + context.getPerson(rectangleId).getColor());
 
     context.getRoomController().noTalking();
     Task<Void> task =

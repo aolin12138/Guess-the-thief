@@ -292,4 +292,20 @@ public class Utils {
     }
     return scoreBoardValues;
   }
+
+  /**
+   * Converts a time duration from milliseconds to a formatted string in the format "MM:SS".
+   *
+   * @param milliseconds the time duration in milliseconds
+   * @return a formatted string representing the time duration in "MM:SS" format
+   */
+  public static String formatTime(double milliseconds) {
+    // Convert milliseconds to minutes and seconds
+    int minutes = (int) milliseconds / 60000;
+    int seconds = (int) (milliseconds / 1000) - (minutes * 60);
+    // Appends a 0 to maintain the format of XX:XX even when the time is less than 10 units.
+    String minuteAppend = (minutes < 10) ? "0" : "";
+    String secondAppend = (seconds < 10) ? "0" : "";
+    return (minuteAppend + minutes + ":" + secondAppend + seconds);
+  }
 }

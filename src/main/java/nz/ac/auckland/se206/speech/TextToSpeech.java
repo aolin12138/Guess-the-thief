@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
@@ -73,13 +72,6 @@ public class TextToSpeech {
       throw new IllegalArgumentException("Text should not be null or empty");
     }
 
-    // Platform.runLater(
-    //     () -> {
-    //       context
-    //           .getRoomController()
-    //           .setChatStats(
-    //               context.getRoomController().getPerson().getName() + " is trying to talk...");
-    //     });
     Task<Void> backgroundTask =
         new Task<>() {
           @Override
@@ -99,17 +91,6 @@ public class TextToSpeech {
               try (InputStream inputStream =
                   new BufferedInputStream(new URL(audioUrl).openStream())) {
                 Player player = new Player(inputStream);
-                Platform.runLater(
-                    () -> {
-                      context
-                          .getRoomController()
-                          .setChatStats(
-                              "Talking to "
-                                  + context.getRoomController().getPerson().getName()
-                                  + " who is in "
-                                  + context.getRoomController().getPerson().getColor());
-                      context.getRoomController().getStatsPane().getChildren().clear();
-                    });
                 player.play();
               } catch (JavaLayerException | IOException e) {
                 e.printStackTrace();

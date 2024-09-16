@@ -3,40 +3,59 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="room" focusTraversable="true" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="631.0" prefWidth="630.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.StartController">
+<Pane fx:id="room" focusTraversable="true" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="633.0" prefWidth="796.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.StartController">
    <children>
-      <Label layoutX="85.0" layoutY="5.0" text="PI Masters: Detective Training ">
+      <ImageView fitHeight="416.0" fitWidth="796.0" layoutY="53.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/start_scene.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="154.0" text="PI Masters: Detective Training ">
          <font>
             <Font size="38.0" />
          </font>
       </Label>
-      <Button fx:id="startButton" disable="true" layoutX="261.0" layoutY="107.0" mnemonicParsing="false" onAction="#onEnterPressed" text="Begin Investigation" />
-      <Label layoutX="66.0" layoutY="56.0">
+      <Button fx:id="startButton" disable="true" layoutX="348.0" layoutY="418.0" mnemonicParsing="false" onAction="#onEnterPressed" text="Begin Investigation" />
+      <Label layoutX="135.0" layoutY="57.0">
          <font>
             <Font size="21.0" />
          </font>
       </Label>
-      <Label layoutX="256.0" layoutY="249.0" text="Scoreboard">
+      <Label layoutX="346.0" layoutY="462.0" text="Scoreboard">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
+<<<<<<< HEAD
       <Button fx:id="instructionsButton" layoutX="260.0" layoutY="161.0" mnemonicParsing="false" onAction="#onViewInstructions" text="View Instructions" />
       <TextField fx:id="playerNameWindow" layoutX="235.0" layoutY="70.0" promptText="Enter detective name" />
       <Label layoutX="142.0" layoutY="294.0" text="1st">
+=======
+      <TextArea fx:id="scoreboardArea1" layoutX="309.0" layoutY="497.0" prefHeight="15.0" prefWidth="150.0" promptText="Play to generate scores" />
+      <Button fx:id="instructionsButton" layoutX="660.0" layoutY="88.0" mnemonicParsing="false" onAction="#onViewInstructions" text="View Instructions" />
+      <TextArea fx:id="scoreboardArea3" layoutX="309.0" layoutY="541.0" prefHeight="15.0" prefWidth="150.0" promptText="Play to generate scores" />
+      <TextArea fx:id="scoreboardArea5" layoutX="309.0" layoutY="586.0" prefHeight="15.0" prefWidth="150.0" promptText="Play to generate scores" />
+      <TextArea fx:id="scoreboardArea4" layoutX="468.0" layoutY="542.0" prefHeight="15.0" prefWidth="60.0" promptText="00:00" />
+      <TextArea fx:id="scoreboardArea2" layoutX="468.0" layoutY="497.0" prefHeight="15.0" prefWidth="60.0" promptText="00:00" />
+      <TextArea fx:id="scoreboardArea6" layoutX="468.0" layoutY="586.0" prefHeight="15.0" prefWidth="60.0" promptText="00:00" />
+      <TextField fx:id="playerNameWindow" layoutX="332.0" layoutY="345.0" prefHeight="48.0" prefWidth="150.0" promptText="Enter detective name" />
+      <Label layoutX="269.0" layoutY="499.0" text="1st">
+>>>>>>> main
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="137.0" layoutY="347.0" text="2nd">
+      <Label layoutX="269.0" layoutY="543.0" text="2nd">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="137.0" layoutY="408.0" text="3rd">
+      <Label layoutX="271.0" layoutY="588.0" text="3rd">
          <font>
             <Font size="24.0" />
          </font>

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -73,29 +71,26 @@ public class StartController {
   }
 
   @FXML
-  public void onEnterPressed() {
+  public void onEnterPressed(ActionEvent event) {
     // Store the player name
     if (playerNameWindow.getText().isEmpty()) {
       Utils.setPlayerName("Guest Player");
     } else {
       Utils.setPlayerName(playerNameWindow.getText());
     }
-    try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/room.fxml"));
-      Parent root = loader.load();
-      // RoomController controller = loader.getController();
-      // controller.getContext().setRoomController(controller);
-      startButton.getScene().setRoot(root);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    Button button = (Button) event.getSource();
+    Scene sceneOfButton = button.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
   }
 
   // This method will take the user to the instructions page when they click on the Instructions
   // button
   @FXML
   public void onViewInstructions(ActionEvent event) throws IOException {
+    System.out.println(event.getSource().getClass() + "\n\n");
+    System.out.println(event.getSource());
     Button button = (Button) event.getSource();
+    System.out.println(button.getScene());
     Scene sceneOfButton = button.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.INSTRUCTIONS));
   }
