@@ -256,49 +256,6 @@ public class GuessController {
   }
 
 
-  /**
-   * Appends a chat message to the chat text area.
-   *
-   * @param msg the chat message to append
-   */
-  private void appendChatMessage(ChatMessage msg) {
-    txtInput.appendText(msg.getContent() + "\n\n");
-  }
-
-  /**
-   * Runs the GPT model with a given chat message.
-   *
-   * @param msg the chat message to process
-   * @return the response chat message
-   * @throws ApiProxyException if there is an error communicating with the API proxy
-   */
-  private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
-    chatCompletionRequest.addMessage(msg);
-    try {
-      ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
-      Choice result = chatCompletionResult.getChoices().iterator().next();
-      chatCompletionRequest.addMessage(result.getChatMessage());
-      appendChatMessage(result.getChatMessage());
-      Platform.runLater(
-          () -> {
-            context.getRoomController().enableTalking();
-            context
-                .getRoomController()
-                .setChatStats(
-                    "Talking to "
-                        + context.getRoomController().getPerson().getName()
-                        + " who is in "
-                        + context.getRoomController().getPerson().getColor());
-            context.getRoomController().getStatsPane().getChildren().clear();
-          });
-      // TextToSpeech.speak(result.getChatMessage().getContent(), context);
-      return result.getChatMessage();
-    } catch (ApiProxyException e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
-
 
   @FXML 
   private void selectSuspect1(ActionEvent event) throws ApiProxyException, IOException {
@@ -357,9 +314,12 @@ public class GuessController {
     }
 
       // gameOverController.setGuessController(this);
-        // App.setRoot("gameover");
     
     if(selectedSuspect) {
+
+      ProgressIndicator statsIndicator = new ProgressIndicator();
+      statsIndicator.setMinSize(1, 1);
+      statsPane.getChildren().add(statsIndicator);
     
       Task<Void> task = new Task<Void>(){
         @Override 
@@ -371,12 +331,10 @@ public class GuessController {
 
             String[] split = validExplanation.trim().split("");
             boolean valid = 
-            // split[0].toLowerCase().contains("yes");
             currentSuspect == 2;
 
             Platform.runLater(
               () -> {
-                // stopLoadingAnimation();
 
                 // GuessTimeLimitManager.stopTimer();
 
