@@ -27,7 +27,7 @@ public class StartController {
   @FXML private Label ScoreboardTimeLabel3;
   @FXML private TextField playerNameWindow;
 
-  Media media = new Media(getClass().getResource("/sounds/opening_voice.mp3").toExternalForm());
+  Media media = new Media(getClass().getResource("/sounds/Intro_brief.mp3").toExternalForm());
   MediaPlayer mediaPlayer = new MediaPlayer(media);
 
   // This method will add a score to the scoreboard arraylist.
