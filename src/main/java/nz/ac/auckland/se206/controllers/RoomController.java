@@ -5,13 +5,16 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
@@ -20,12 +23,15 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
@@ -78,6 +84,7 @@ public class RoomController {
   @FXML private Button btnGuess;
   @FXML private Button btnSend;
   @FXML private Button btnBack;
+  @FXML private Button btnSlide;
 
   @FXML private TextArea txtaChat;
 
@@ -93,13 +100,20 @@ public class RoomController {
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
 
+  @FXML public ComboBox<HBox> imagesComboBox;
+
+  @FXML private HBox imagesHBox;
+
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
   private ImageView currentImage = null;
+
   public ImageManager currentImageManager;
   public ImageManager ownerImageManager;
   public ImageManager workerImageManager;
   public ImageManager brotherImageManager;
+  public ImageManager crimeImageManager;
+  public Scene suspectScene;
 
   private Timeline timeline = new Timeline();
 
@@ -114,16 +128,39 @@ public class RoomController {
       isFirstTimeInit = false;
     }
 
+    btnSend
+        .sceneProperty()
+        .addListener(
+            (observable, oldScene, newScene) -> {
+              Stage stage = (Stage) newScene.getWindow();
+              stage.sizeToScene();
+              if (newScene != null) {
+                newScene.addEventHandler(
+                    KeyEvent.KEY_PRESSED,
+                    event -> {
+                      if (event.getCode() == KeyCode.ENTER) {
+                        try {
+                          onSendMessage(new ActionEvent());
+                        } catch (ApiProxyException | IOException e) {
+                          e.printStackTrace();
+                        }
+                      }
+                    });
+              }
+            });
+
     currentImageManager = new ImageManager(currentImage);
     ownerImageManager = new ImageManager(ownerImage);
     workerImageManager = new ImageManager(workerImage);
     brotherImageManager = new ImageManager(brotherImage);
+    crimeImageManager = new ImageManager(crimeImage);
 
     ColorAdjust colorAdjust = new ColorAdjust();
     colorAdjust.setBrightness(-0.45);
     ownerImage.setEffect(colorAdjust);
     workerImage.setEffect(colorAdjust);
     brotherImage.setEffect(colorAdjust);
+    crimeImage.setEffect(colorAdjust);
     styleScene();
 
     context.setRoomController(this);
@@ -392,6 +429,17 @@ public class RoomController {
 
     txtaChat.clear();
     this.person = person;
+
+    Platform.runLater(
+        () -> {
+          ProgressIndicator statsIndicator = new ProgressIndicator();
+          statsIndicator.setMinSize(1, 1);
+          statsPane.getChildren().add(statsIndicator);
+
+          context
+              .getRoomController()
+              .setChatStats("Talking to " + context.getRoomController().getPerson().getName());
+        });
     try {
       ApiProxyConfig config = ApiProxyConfig.readConfig();
       chatCompletionRequest =
@@ -433,13 +481,6 @@ public class RoomController {
       Platform.runLater(
           () -> {
             context.getRoomController().enableTalking();
-            // context
-            //     .getRoomController()
-            //     .setChatStats(
-            //         "Talking to "
-            //             + context.getRoomController().getPerson().getName()
-            //             + " who is in "
-            //             + context.getRoomController().getPerson().getColor());
             context.getRoomController().getStatsPane().getChildren().clear();
           });
       TextToSpeech.speak(result.getChatMessage().getContent(), context);
@@ -478,8 +519,6 @@ public class RoomController {
     ChatMessage msg = new ChatMessage("user", message);
     appendChatMessage(msg);
 
-    setChatStats(person.getName() + " is gathering words...");
-
     ProgressIndicator statsIndicator = new ProgressIndicator();
     statsIndicator.setMinSize(1, 1);
     statsPane.getChildren().add(statsIndicator);
@@ -503,22 +542,6 @@ public class RoomController {
     //     });
     Thread backgroundThread = new Thread(task);
     backgroundThread.start();
-  }
-
-  @FXML
-  public void handleDashcamClick(MouseEvent event) throws IOException {
-    dashcamFound = true;
-    Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle("Dashcam footage found");
-    alert.setHeaderText(
-        "A person in "
-            + context.getPersonToGuess().getColor()
-            + " clothes was seen near the crime scene.");
-    alert.showAndWait();
-    enableRectangles();
-    carImage.setVisible(false);
-    btnBack.setVisible(false);
-    btnBack.setDisable(true);
   }
 
   @FXML
@@ -558,6 +581,17 @@ public class RoomController {
         e -> {
           brotherImageManager.hoverOut();
         });
+
+    crimeImage.setOnMouseEntered(
+        e -> {
+          crimeImageManager.hoverIn();
+        });
+    crimeImage.setOnMouseExited(
+        e -> {
+          crimeImageManager.hoverOut();
+        });
+
+    btnSlide.setOnAction(event -> toggleHBox());
   }
 
   @FXML
@@ -581,6 +615,7 @@ public class RoomController {
     dropShadowOut.setOffsetY(0);
     dropShadowOut.setColor(javafx.scene.paint.Color.GRAY);
     dropShadowOut.setInput(colorAdjustOut);
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesHBox);
     switch (id) {
       case "ownerImage":
         if (currentImage != null && currentImage.getId().equals("ownerImage")) {
@@ -589,6 +624,9 @@ public class RoomController {
         displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
         currentImage = ownerImage;
         currentImageManager.setImageView(currentImage);
+        transition.setToY(-imagesHBox.getHeight()); // Move off-screen
+        transition.setOnFinished(e -> imagesHBox.setVisible(false)); // Hide after animation
+        transition.play();
         context.handleRectangleClick(event, "rectPerson2");
         break;
       case "workerImage":
@@ -598,6 +636,9 @@ public class RoomController {
         displayImage.setImage(new Image(workerImage.getImage().getUrl()));
         currentImage = workerImage;
         currentImageManager.setImageView(currentImage);
+        transition.setToY(-imagesHBox.getHeight()); // Move off-screen
+        transition.setOnFinished(e -> imagesHBox.setVisible(false)); // Hide after animation
+        transition.play();
         context.handleRectangleClick(event, "rectPerson1");
         break;
       case "crimeImage":
@@ -611,8 +652,30 @@ public class RoomController {
         displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
         currentImage = brotherImage;
         currentImageManager.setImageView(currentImage);
+        transition.setToY(-imagesHBox.getHeight()); // Move off-screen
+        transition.setOnFinished(e -> imagesHBox.setVisible(false)); // Hide after animation
+        transition.play();
         context.handleRectangleClick(event, "rectPerson3");
     }
+  }
+
+  private void toggleHBox() {
+    // Create the transition
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesHBox);
+
+    if (imagesHBox.isVisible()) {
+      // Slide out
+      transition.setToY(-imagesHBox.getHeight()); // Move off-screen
+      transition.setOnFinished(event -> imagesHBox.setVisible(false)); // Hide after animation
+    } else {
+      // Slide in
+      imagesHBox.setVisible(true); // Show before animation
+      transition.setFromY(-imagesHBox.getHeight()); // Start off-screen
+      transition.setToY(0); // Move to visible position
+    }
+
+    // Play the transition
+    transition.play();
   }
 
   public static void setGuessTime(double time) {
