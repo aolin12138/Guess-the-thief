@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -13,22 +12,16 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -41,9 +34,9 @@ import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.Person;
+import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
-import nz.ac.auckland.se206.speech.TextToSpeech;
 
 public class GuessController {
   private static boolean isFirstTimeInit = true;
@@ -54,8 +47,10 @@ public class GuessController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static int timeToCount = 120;
-  private static int timeToCountTo = 120;
+  private static double timeToCount = 300000;
+  private static double timeToCountTo = 360000;
+  private static double maxTimeforGuessing = 60000;
+  private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
 
@@ -99,7 +94,6 @@ public class GuessController {
   private boolean selectedSuspect = false;
   private static boolean isThiefFound = false;
   private static GuessController guessController;
-  
 
   /**
    * Initializes the room view. If it's the first time initialization, it will provide instructions
@@ -108,79 +102,68 @@ public class GuessController {
   @FXML
   public void initialize() {
 
-     // Adding the event handler for 'Enter' key on txtInput
-     txtInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
-      @Override
-      public void handle(KeyEvent keyEvent) {
-          if (keyEvent.getCode() == KeyCode.ENTER) {
+    // Adding the event handler for 'Enter' key on txtInput
+    txtInput.setOnKeyPressed(
+        new EventHandler<KeyEvent>() {
+          @Override
+          public void handle(KeyEvent keyEvent) {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
               try {
-                  // Calling the send message function
-                  onSendMessage(new ActionEvent());
+                // Calling the send message function
+                onSendMessage(new ActionEvent());
               } catch (ApiProxyException | IOException e) {
-                  e.printStackTrace();
+                e.printStackTrace();
               }
+            }
           }
-      }
-  });
+        });
 
-    if (isFirstTimeInit) {
-      context.setGuessController(this);
-      indicatorPane.getChildren().add(ringProgressIndicator);
-      ringProgressIndicator.setRingWidth(50);
-      timerLabel.setText(String.format("%02d", timeToCount));
-
-      timeline
-          .getKeyFrames()
-          .add(
-              new KeyFrame(
-                  Duration.seconds(1),
-                  event -> {
-                    if (timeToCount > 0) {
-                      timeToCount--;
-                      progress = (int) ((timeToCountTo - timeToCount) * 100 / timeToCountTo);
-                    } else if (isTimeOver == false) {
-                      Platform.runLater(
-                          () -> {
-                            timeline.stop();
-                            Alert alert = new Alert(AlertType.INFORMATION);
-                            alert.setTitle("Time's up!");
-                            alert.setHeaderText("Time's up! You need to choose now!");
-                            alert.setContentText("Click on the thief.");
-                            alert.showAndWait();
-                            // disableAll();
-                            timeline.play();
-                          });
-                      btnGuess.setDisable(true);
-                      btnSend.setDisable(true);
-                      context.setState(context.getGuessingState());
-                      isTimeOver = true;
-                      timeToCountTo = 10;
-                      timeToCount = 10;
-                      progress = 0;
-                    } else {
-                      timeline.stop();
-                      Platform.runLater(
-                          () -> {
-                            Alert alert = new Alert(AlertType.INFORMATION);
-                            alert.setTitle("Game Over");
-                            alert.setHeaderText("Game Over");
-                            alert.setContentText("You Lost! You did not find the thief in time.");
-                            alert.showAndWait();
-                          });
-                      context.setState(context.getGameOverState());
-                    }
-
-                    ringProgressIndicator.setProgress(progress);
-                    timerLabel.setText(String.format("%02d", timeToCount));
-                  }));
-      timeline.setCycleCount(Timeline.INDEFINITE);
-      timeline.play();
-      Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
-      MediaPlayer mediaPlayer = new MediaPlayer(media);
-      mediaPlayer.play();
-      isFirstTimeInit = false;
+    context.setGuessController(this);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    ringProgressIndicator.setRingWidth(60);
+    // Timer label is updated here
+    if (timeToCount % 1000 == 0) {
+      timerLabel.setText(Utils.formatTime(timeForGuessing));
     }
-    
+
+    timeline
+        .getKeyFrames()
+        .add(
+            new KeyFrame(
+                Duration.millis(1),
+                event -> {
+                  if (timeForGuessing > 0) {
+                    timeForGuessing--;
+                    progress =
+                        (int)
+                            (100
+                                - ((maxTimeforGuessing - timeForGuessing)
+                                    * 100
+                                    / (maxTimeforGuessing)));
+                  } else if ((timeForGuessing == 0)) {
+                    System.out.println("Switching to game over scene and and state");
+                    context.setState(context.getGameOverState());
+                    try {
+                      App.setRoot("gameover");
+                    } catch (IOException e) {
+                      e.printStackTrace();
+                    }
+                    // Here we need to implement functionality that happens when the guessing time
+                    // runs out.
+                    // Either the user has guessed and explained, or they haven't(immediately report
+                    // a loss), so we should account for each case.
+                    timeline.stop();
+                  }
+
+                  ringProgressIndicator.setProgress(progress);
+                  timerLabel.setText(Utils.formatTime(timeForGuessing));
+                }));
+    timeline.setCycleCount(Timeline.INDEFINITE);
+    timeline.play();
+    // Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
+    // MediaPlayer mediaPlayer = new MediaPlayer(media);
+    // mediaPlayer.play();
+
   }
 
   public Pane getStatsPane() {
@@ -194,7 +177,6 @@ public class GuessController {
   public Boolean getSuspectSelected() {
     return selectedSuspect;
   }
-
 
   public void stopTimeLine() {
     timeline.stop();
@@ -220,7 +202,6 @@ public class GuessController {
   @FXML
   public void onKeyPressed(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " pressed");
-
   }
 
   /**
@@ -231,12 +212,7 @@ public class GuessController {
   @FXML
   public void onKeyReleased(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " released");
-
-    
   }
-
-  
-
 
   /**
    * Generates the system prompt based on the profession.
@@ -257,7 +233,7 @@ public class GuessController {
 
 
 
-  @FXML 
+  @FXML
   private void selectSuspect1(ActionEvent event) throws ApiProxyException, IOException {
     sus1btn.setDisable(true);
     sus2btn.setDisable(false);
@@ -265,10 +241,9 @@ public class GuessController {
     currentSuspect = 1;
     isThiefFound = false;
     selectedSuspect = true;
-    
   }
 
-  @FXML 
+  @FXML
   private void selectSuspect2(ActionEvent event) throws ApiProxyException, IOException {
     sus1btn.setDisable(false);
     sus2btn.setDisable(true);
@@ -278,7 +253,7 @@ public class GuessController {
     selectedSuspect = true;
   }
 
-  @FXML 
+  @FXML
   private void selectSuspect3(ActionEvent event) throws ApiProxyException, IOException {
     sus1btn.setDisable(false);
     sus2btn.setDisable(false);
@@ -287,7 +262,6 @@ public class GuessController {
     isThiefFound = false;
     selectedSuspect = true;
   }
-  
 
   /**
    * Sends a message to the GPT model.
@@ -306,12 +280,13 @@ public class GuessController {
       System.out.println("Empty message");
       return;
     }
-    
+
     if (selectedSuspect == false) {
       lblDescription.setText("No suspect selected");
       System.out.println("No suspect selected");
       return;
     }
+
 
       // gameOverController.setGuessController(this);
     
@@ -419,10 +394,6 @@ public class GuessController {
  
         
         
-        
-  
-
-
 
   public int getSuspectNumber() {
     return currentSuspect;
@@ -437,5 +408,9 @@ public class GuessController {
   }
 
 
-
+  public static void setTimeToGuess(double time) {
+    // Adds any leftover time from the investigation scene to the time available for guessing.
+    timeForGuessing = timeForGuessing + time;
+    maxTimeforGuessing = maxTimeforGuessing + time;
+  }
 }
