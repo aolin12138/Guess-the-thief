@@ -45,7 +45,7 @@
       <Button fx:id="btnBack" disable="true" layoutX="324.0" layoutY="366.0" mnemonicParsing="false" onAction="#onBackPressed" text="Back" visible="false" />
       <HBox fx:id="imagesHBox" layoutX="24.0" layoutY="5.0" prefHeight="106.0" prefWidth="561.0" spacing="20.0" stylesheets="@../css/suspect_scene.css" visible="false">
          <children>
-            <ImageView id="crimeImage" fx:id="crimeImage" fitHeight="74.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="crimeImage" fx:id="crimeImage" fitHeight="74.0" fitWidth="138.0" onMouseClicked="#onCrimeSceneClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/crime_scene.jpeg" />
                </image>

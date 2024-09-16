@@ -43,6 +43,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
+import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
@@ -60,8 +61,8 @@ public class RoomController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 80000;
-  private static double timeToCountTo = 80000;
+  private static double timeToCount = 360000;
+  private static double timeToCountTo = 360000;
   private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
@@ -219,8 +220,8 @@ public class RoomController {
     timeToCount = timeFromPreviousScene;
   }
 
-  public static void setProgress(int progressFromPreviousScene) {
-    progress = progressFromPreviousScene;
+  public static void passTimeToCrimeScene(double timeToCount) {
+    CrimeSceneController.setTimeToCount(timeToCount);
   }
 
   public Pane getStatsPane() {
@@ -376,6 +377,22 @@ public class RoomController {
   }
 
   /**
+   * Handles the event when the crime scene icon is clicked. This method is triggered by a mouse
+   * click event on the crime scene element. It performs the necessary actions to transition to the
+   * crime scene view.
+   *
+   * @param event the MouseEvent that triggered this handler
+   * @throws IOException if an input or output exception occurs
+   * @throws ApiProxyException if there is an issue with the API proxy
+   */
+  @FXML
+  void onCrimeSceneClicked(MouseEvent event) throws ApiProxyException, IOException {
+    Scene sceneOfButton = btnGuess.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
+    passTimeToCrimeScene(timeToCount);
+  }
+
+  /**
    * Handles mouse clicks on rectangles representing people in the room.
    *
    * @param event the mouse event triggered by clicking a rectangle
@@ -395,8 +412,6 @@ public class RoomController {
    */
   @FXML
   private void handleGuessClick(ActionEvent event) throws IOException {
-    // Need to pass current timer values into Guess timer
-    setGuessTime((timeToCount - timeForGuessing));
     // context.handleGuessClick();
     App.setRoot("guess");
   }
@@ -676,9 +691,5 @@ public class RoomController {
 
     // Play the transition
     transition.play();
-  }
-
-  public static void setGuessTime(double time) {
-    GuessController.setTimeToGuess(time);
   }
 }
