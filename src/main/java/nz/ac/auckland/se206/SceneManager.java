@@ -7,6 +7,7 @@ public class SceneManager {
   public enum Scene {
     INSTRUCTIONS,
     START,
+    CRIME,
     ROOM,
     Chat,
   }

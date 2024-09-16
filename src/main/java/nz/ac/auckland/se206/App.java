@@ -57,6 +57,8 @@ public class App extends Application {
     // Store the stage in the SceneManager so it will be remembered
     SceneManager.addRoot(SceneManager.Scene.START, loadFxml("start"));
     SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, loadFxml("instructions"));
+    SceneManager.addRoot(SceneManager.Scene.CRIME, loadFxml("crime"));
+    SceneManager.addRoot(SceneManager.Scene.ROOM, loadFxml("room"));
 
     Parent root = loadFxml("start");
     scene = new Scene(root);
@@ -76,8 +78,8 @@ public class App extends Application {
     //       }
     //     });
 
-    stage.show();
     stage.setTitle("PI Masters: Detective Training");
+    stage.show();
     root.requestFocus();
   }
 }
