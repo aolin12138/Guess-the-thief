@@ -38,7 +38,7 @@ public class CrimeSceneController {
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
 
-  private Timeline timeline = new Timeline();
+  private static Timeline timeline = new Timeline();
 
   @FXML private Rectangle clue1;
   @FXML private Rectangle clue2;
@@ -52,10 +52,7 @@ public class CrimeSceneController {
 
   @FXML
   public void initialize() {
-    if (isFirstTimeInit) {
-      isFirstTimeInit = false;
-    }
-
+    if (isFirstTimeInit) {}
     // context.setCrimeController(this); *******NEED THIS
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
@@ -82,11 +79,9 @@ public class CrimeSceneController {
                   } else if ((timeToCount > 0)) {
                     // Here the timer has exceeded the time for investigation and the game must
                     // switch to the guess scene.
-                    // Program switch to guess scene here.
                     System.out.println("Switching to guessing state");
                     context.setState(context.getGuessingState());
-                    // Stop the timer here, as once the suer switch to guessing state, they aren't
-                    // coming back
+                    // Once in guess state, player will never return to crime scene
                     timeline.stop();
                   }
 
@@ -100,7 +95,7 @@ public class CrimeSceneController {
     // MediaPlayer mediaPlayer = new MediaPlayer(media);
     // mediaPlayer.play();
     // isFirstTimeInit = false;
-    // }
+    // }}
   }
 
   @FXML

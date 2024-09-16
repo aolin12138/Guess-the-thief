@@ -36,13 +36,15 @@ public class App extends Application {
 
   /**
    * Loads the FXML file and returns the associated node. The method expects that the file is
-   * located in "src/main/resources/fxml".
+   * located in "src/main/resources/fxml". Had to set visibililty to public for the StartController
+   * -> On enter clicked, Crime scene must be initialised over there because timer starts on
+   * initialisation.
    *
    * @param fxml the name of the FXML file (without extension)
    * @return the root node of the FXML file
    * @throws IOException if the FXML file is not found
    */
-  private static Parent loadFxml(final String fxml) throws IOException {
+  public static Parent loadFxml(final String fxml) throws IOException {
     return new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml")).load();
   }
 
@@ -57,7 +59,6 @@ public class App extends Application {
     // Store the stage in the SceneManager so it will be remembered
     SceneManager.addRoot(SceneManager.Scene.START, loadFxml("start"));
     SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, loadFxml("instructions"));
-    SceneManager.addRoot(SceneManager.Scene.CRIME, loadFxml("crime"));
     SceneManager.addRoot(SceneManager.Scene.ROOM, loadFxml("room"));
 
     Parent root = loadFxml("start");

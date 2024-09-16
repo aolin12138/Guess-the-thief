@@ -61,8 +61,8 @@ public class RoomController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 80000;
-  private static double timeToCountTo = 80000;
+  private static double timeToCount = 360000;
+  private static double timeToCountTo = 360000;
   private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
