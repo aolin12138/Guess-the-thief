@@ -249,7 +249,7 @@ public class GuessController {
     sus2btn.setDisable(true);
     sus3btn.setDisable(false);
     currentSuspect = 2;
-    isThiefFound = true;
+    isThiefFound = false;
     selectedSuspect = true;
   }
 
@@ -259,7 +259,7 @@ public class GuessController {
     sus2btn.setDisable(false);
     sus3btn.setDisable(true);
     currentSuspect = 3;
-    isThiefFound = false;
+    isThiefFound = true;
     selectedSuspect = true;
   }
 
@@ -295,6 +295,8 @@ public class GuessController {
       ProgressIndicator statsIndicator = new ProgressIndicator();
       statsIndicator.setMinSize(1, 1);
       statsPane.getChildren().add(statsIndicator);
+
+      lblDescription.setText("Loading...");
     
       Task<Void> task = new Task<Void>(){
         @Override 
@@ -306,7 +308,7 @@ public class GuessController {
 
             String[] split = validExplanation.trim().split("");
             boolean valid = 
-            currentSuspect == 2;
+            currentSuspect == 3;
 
             Platform.runLater(
               () -> {
