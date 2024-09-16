@@ -26,6 +26,7 @@ public class CrimeSceneController {
   private static boolean cameraFound = false;
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
+  private static boolean isAnyClueFound = false;
   private static boolean isClue1Found = false;
   private static boolean isClue2Found = false;
   private static boolean isClue3Found = false;
@@ -105,16 +106,22 @@ public class CrimeSceneController {
   @FXML
   void onClue1Clicked(MouseEvent event) {
     isClue1Found = true;
+    // Satisfies requirement of at least one clue being discovered
+    isAnyClueFound = true;
   }
 
   @FXML
   void onClue2Clicked(MouseEvent event) {
     isClue2Found = true;
+    // Satisfies requirement of at least one clue being discovered
+    isAnyClueFound = true;
   }
 
   @FXML
   void onClue3Clicked(MouseEvent event) {
     isClue3Found = true;
+    // Satisfies requirement of at least one clue being discovered
+    isAnyClueFound = true;
   }
 
   @FXML
