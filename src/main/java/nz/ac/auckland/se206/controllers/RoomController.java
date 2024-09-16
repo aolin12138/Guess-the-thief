@@ -220,8 +220,8 @@ public class RoomController {
     timeToCount = timeFromPreviousScene;
   }
 
-  public static void setProgress(int progressFromPreviousScene) {
-    progress = progressFromPreviousScene;
+  public static void passTimeToCrimeScene(double timeToCount) {
+    CrimeSceneController.setTimeToCount(timeToCount);
   }
 
   public Pane getStatsPane() {
@@ -389,6 +389,7 @@ public class RoomController {
   void onCrimeSceneClicked(MouseEvent event) throws ApiProxyException, IOException {
     Scene sceneOfButton = btnGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
+    passTimeToCrimeScene(timeToCount);
   }
 
   /**
@@ -411,8 +412,6 @@ public class RoomController {
    */
   @FXML
   private void handleGuessClick(ActionEvent event) throws IOException {
-    // Need to pass current timer values into Guess timer
-    setGuessTime((timeToCount - timeForGuessing));
     // context.handleGuessClick();
     App.setRoot("guess");
   }
@@ -692,9 +691,5 @@ public class RoomController {
 
     // Play the transition
     transition.play();
-  }
-
-  public static void setGuessTime(double time) {
-    GuessController.setTimeToGuess(time);
   }
 }

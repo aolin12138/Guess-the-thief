@@ -98,6 +98,18 @@ public class CrimeSceneController {
     // }}
   }
 
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
+  public static void setProgress(int progressFromPreviousScene) {
+    progress = progressFromPreviousScene;
+  }
+
+  public static void passTimeToSuspectScene(double timeToCount) {
+    RoomController.setTimeToCount(timeToCount);
+  }
+
   @FXML
   void onClue1Clicked(MouseEvent event) {
     isClue1Found = true;
@@ -128,18 +140,21 @@ public class CrimeSceneController {
   void onSuspect1Clicked(MouseEvent event) throws IOException, ApiProxyException {
     Scene sceneOfButton = btnGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
+    passTimeToSuspectScene(timeToCount);
   }
 
   @FXML
   void onSuspect2Clicked(MouseEvent event) throws IOException, ApiProxyException {
     Scene sceneOfButton = btnGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
+    passTimeToSuspectScene(timeToCount);
   }
 
   @FXML
   void onSuspect3Clicked(MouseEvent event) throws IOException, ApiProxyException {
     Scene sceneOfButton = btnGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
+    passTimeToSuspectScene(timeToCount);
   }
 
   public static char getClueInvestigationStatus() {
