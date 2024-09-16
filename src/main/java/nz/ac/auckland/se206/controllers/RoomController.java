@@ -43,6 +43,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
+import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
@@ -373,6 +374,21 @@ public class RoomController {
   @FXML
   public void onKeyReleased(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " released");
+  }
+
+  /**
+   * Handles the event when the crime scene icon is clicked. This method is triggered by a mouse
+   * click event on the crime scene element. It performs the necessary actions to transition to the
+   * crime scene view.
+   *
+   * @param event the MouseEvent that triggered this handler
+   * @throws IOException if an input or output exception occurs
+   * @throws ApiProxyException if there is an issue with the API proxy
+   */
+  @FXML
+  void onCrimeSceneClicked(MouseEvent event) throws ApiProxyException, IOException {
+    Scene sceneOfButton = btnGuess.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
   }
 
   /**
