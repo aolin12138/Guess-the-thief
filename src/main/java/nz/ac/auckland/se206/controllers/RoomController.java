@@ -607,6 +607,7 @@ public class RoomController {
     dropShadowOut.setOffsetY(0);
     dropShadowOut.setColor(javafx.scene.paint.Color.GRAY);
     dropShadowOut.setInput(colorAdjustOut);
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesHBox);
     switch (id) {
       case "ownerImage":
         if (currentImage != null && currentImage.getId().equals("ownerImage")) {
@@ -615,6 +616,9 @@ public class RoomController {
         displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
         currentImage = ownerImage;
         currentImageManager.setImageView(currentImage);
+        transition.setToY(-imagesHBox.getHeight()); // Move off-screen
+        transition.setOnFinished(e -> imagesHBox.setVisible(false)); // Hide after animation
+        transition.play();
         context.handleRectangleClick(event, "rectPerson2");
         break;
       case "workerImage":
@@ -624,6 +628,9 @@ public class RoomController {
         displayImage.setImage(new Image(workerImage.getImage().getUrl()));
         currentImage = workerImage;
         currentImageManager.setImageView(currentImage);
+        transition.setToY(-imagesHBox.getHeight()); // Move off-screen
+        transition.setOnFinished(e -> imagesHBox.setVisible(false)); // Hide after animation
+        transition.play();
         context.handleRectangleClick(event, "rectPerson1");
         break;
       case "crimeImage":
@@ -637,6 +644,9 @@ public class RoomController {
         displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
         currentImage = brotherImage;
         currentImageManager.setImageView(currentImage);
+        transition.setToY(-imagesHBox.getHeight()); // Move off-screen
+        transition.setOnFinished(e -> imagesHBox.setVisible(false)); // Hide after animation
+        transition.play();
         context.handleRectangleClick(event, "rectPerson3");
     }
   }
