@@ -1,6 +1,8 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -243,17 +245,13 @@ public class GuessController {
    */
   private String getSystemPrompt() {
     Map<String, String> map = new HashMap<>();
-    map.put("profession", person.getProfession());
+    // map.put("profession", person.getProfession());
     map.put("name", person.getName());
-    map.put("role", person.getRole());
+    // map.put("role", person.getRole());
 
-    // Map<String, String> map = new HashMap<>();
-    // map.put("profession", profession);
-    // return PromptEngineering.getPrompt("chat.txt", map);
-
-    if (person.hasTalked()) {
-      return PromptEngineering.getPrompt("chat3.txt", map, person);
-    }
+    // if (person.hasTalked()) {
+    //   return PromptEngineering.getPrompt("chat3.txt", map, person);
+    // }
     return PromptEngineering.getPrompt("chat2.txt", map, person);
   }
 
@@ -358,47 +356,113 @@ public class GuessController {
       return;
     }
 
-  
-
       // gameOverController.setGuessController(this);
-        App.setRoot("gameover");
-    
-    
-    
-    txtInput.clear();
-    ChatMessage msg = new ChatMessage("user", message);
-    appendChatMessage(msg);
-    
-    setChatStats(" loading...");
-    
-    ProgressIndicator statsIndicator = new ProgressIndicator();
-    statsIndicator.setMinSize(1, 1);
-    statsPane.getChildren().add(statsIndicator);
-    
-    Task<Void> task =
-    new Task<Void>() {
-      
-      @Override
-      protected Void call() throws Exception {
-        runGpt(msg);
-        return null;
-      }
-    };
-    
-    // task.setOnSucceeded(
-      //     event1 -> {
-        //       statsPane.getChildren().remove(statsIndicator);
-        //       // setChatStats("Talking to " + person.getName() + " who is in " + person.getColor());
-        //       enableTalking();
-        //     });
-        Thread backgroundThread = new Thread(task);
-        backgroundThread.start();
-        
         // App.setRoot("gameover");
+    
+    if(selectedSuspect) {
+    
+      Task<Void> task = new Task<Void>(){
+        @Override 
+        protected Void call() throws Exception{
+          try{
+            String validExplanation = isExplanationValid();
+
+            GameOverController.setOutputText(validExplanation);
+
+            String[] split = validExplanation.trim().split("");
+            boolean valid = 
+            // split[0].toLowerCase().contains("yes");
+            currentSuspect == 2;
+
+            Platform.runLater(
+              () -> {
+                // stopLoadingAnimation();
+
+                // GuessTimeLimitManager.stopTimer();
+
+                if(valid) {
+                  context.setState(context.getGameOverState());
+
+                  try {
+
+                    App.setRoot("gameover");
+                  }catch(IOException e) {
+                    e.printStackTrace();
+                  }
+                } else {
+                  context.setState(context.getGameOverState());
+
+                  try{
+                    // GameOverController.setCorrectSuspect(true);
+
+                    App.setRoot("gamelost");
+                  }catch(IOException e) {
+                    e.printStackTrace();
+                  }
+                }
+              });
+            }catch(ApiProxyException e) {
+              e.printStackTrace();
+                }
+                return null;
+              }
+
+            };
+
+            sus1btn.setDisable(true);
+            sus2btn.setDisable(true);
+            sus3btn.setDisable(true);
+            txtInput.setDisable(true);
+
+            new Thread(task).start();
+          } else {
+
+            // GameOverController.setCorrectSuspect(false);
+
+            // GuessTimeLimitManager.stopTimer();
+
+            context.setState(context.getGameOverState());
+            App.setRoot("gamelost");
+          }
+        }
+
+              
+    
+        public String isExplanationValid() throws ApiProxyException, IOException {
+            try {
+              String evidencePrompt =
+              new String(Files.readAllBytes(Paths.get("src/main/resources/prompts/chat2.txt")));
+
+      String fullPrompt =
+          evidencePrompt + "\nUser Reasoning:\n" + txtInput.getText() + "\n";
+
+      ChatCompletionRequest request =
+          new ChatCompletionRequest(ApiProxyConfig.readConfig())
+              .setN(1)
+              .setTemperature(0.2)
+              .setTopP(0.5)
+              .setMaxTokens(150)
+              .addMessage(
+                  new ChatMessage(
+                      "system",
+                      "You are an expert at evaluating reasoning based on clues and evidence."));
+
+      request.addMessage(new ChatMessage("user", fullPrompt));
+
+      ChatCompletionResult result = request.execute();
+      String response = result.getChoices().iterator().next().getChatMessage().getContent().trim();
+      return response;
+    } catch (ApiProxyException e) {
+      e.printStackTrace();
+      return null;
+    }
+
+        }
+ 
         
         
         
-  }
+  
 
 
 
@@ -413,5 +477,7 @@ public class GuessController {
   public GuessController getGuessController() {
     return this.guessController;
   }
+
+
 
 }
