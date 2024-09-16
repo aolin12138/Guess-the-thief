@@ -39,9 +39,7 @@ public class StartController {
 
   @FXML
   public void initialize() {
-    Utils.updateScoreBoard(43, "Adam");
 
-    // Utils.updateScoreBoard(12, "Trump");
     // This ArrayList will store the scores of the previous rounds.
     ArrayList<String> previousScores = new ArrayList<>();
     // previousScores = Utils.getScoresForStartPage();
