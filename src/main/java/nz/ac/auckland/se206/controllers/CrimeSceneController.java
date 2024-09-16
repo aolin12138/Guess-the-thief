@@ -5,14 +5,17 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
+import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 
@@ -120,20 +123,21 @@ public class CrimeSceneController {
   }
 
   @FXML
-  void onSuspect1Clicked(MouseEvent event) throws IOException {
-    // System.out.println(event.getSource().getClass() + "\n\n");
-    // System.out.println(event.getSource());
-    // App.setRoot("room");
+  void onSuspect1Clicked(MouseEvent event) throws IOException, ApiProxyException {
+    Scene sceneOfButton = btnGuess.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
   }
 
   @FXML
-  void onSuspect2Clicked(ActionEvent event) throws IOException {
-    App.setRoot("room");
+  void onSuspect2Clicked(MouseEvent event) throws IOException, ApiProxyException {
+    Scene sceneOfButton = btnGuess.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
   }
 
   @FXML
-  void onSuspect3Clicked(ActionEvent event) throws IOException {
-    App.setRoot("room");
+  void onSuspect3Clicked(MouseEvent event) throws IOException, ApiProxyException {
+    Scene sceneOfButton = btnGuess.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
   }
 
   public static char getClueInvestigationStatus() {

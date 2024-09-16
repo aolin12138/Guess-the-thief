@@ -75,7 +75,7 @@ public class StartController {
     }
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
   }
 
   // This method will take the user to the instructions page when they click on the Instructions
