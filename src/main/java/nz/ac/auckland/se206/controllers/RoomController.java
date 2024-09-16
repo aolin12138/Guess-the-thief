@@ -677,4 +677,8 @@ public class RoomController {
     // Play the transition
     transition.play();
   }
+
+  public static void setGuessTime(double time) {
+    GuessController.setTimeToGuess(time);
+  }
 }

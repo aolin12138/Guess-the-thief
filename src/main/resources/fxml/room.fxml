@@ -17,9 +17,9 @@
 
 <Pane fx:id="room" focusTraversable="true" minHeight="583.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="586.0" prefWidth="637.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.RoomController">
    <children>
-      <ImageView fx:id="displayImage" fitHeight="339.0" fitWidth="654.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="displayImage" fitHeight="398.0" fitWidth="643.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/crime_scene.jpg" />
+            <Image url="@../images/crime_scene.jpeg" />
          </image>
       </ImageView>
       <StackPane fx:id="indicatorPane" layoutX="502.0" layoutY="392.0" prefHeight="109.0" prefWidth="104.0" />
@@ -47,7 +47,7 @@
          <children>
             <ImageView id="crimeImage" fx:id="crimeImage" fitHeight="74.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/crime_scene.jpg" />
+                  <Image url="@../images/crime_scene.jpeg" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
