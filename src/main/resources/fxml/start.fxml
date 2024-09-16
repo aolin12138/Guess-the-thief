@@ -31,21 +31,9 @@
             <Font size="24.0" />
          </font>
       </Label>
-<<<<<<< HEAD
       <Button fx:id="instructionsButton" layoutX="260.0" layoutY="161.0" mnemonicParsing="false" onAction="#onViewInstructions" text="View Instructions" />
       <TextField fx:id="playerNameWindow" layoutX="235.0" layoutY="70.0" promptText="Enter detective name" />
       <Label layoutX="142.0" layoutY="294.0" text="1st">
-=======
-      <TextArea fx:id="scoreboardArea1" layoutX="309.0" layoutY="497.0" prefHeight="15.0" prefWidth="150.0" promptText="Play to generate scores" />
-      <Button fx:id="instructionsButton" layoutX="660.0" layoutY="88.0" mnemonicParsing="false" onAction="#onViewInstructions" text="View Instructions" />
-      <TextArea fx:id="scoreboardArea3" layoutX="309.0" layoutY="541.0" prefHeight="15.0" prefWidth="150.0" promptText="Play to generate scores" />
-      <TextArea fx:id="scoreboardArea5" layoutX="309.0" layoutY="586.0" prefHeight="15.0" prefWidth="150.0" promptText="Play to generate scores" />
-      <TextArea fx:id="scoreboardArea4" layoutX="468.0" layoutY="542.0" prefHeight="15.0" prefWidth="60.0" promptText="00:00" />
-      <TextArea fx:id="scoreboardArea2" layoutX="468.0" layoutY="497.0" prefHeight="15.0" prefWidth="60.0" promptText="00:00" />
-      <TextArea fx:id="scoreboardArea6" layoutX="468.0" layoutY="586.0" prefHeight="15.0" prefWidth="60.0" promptText="00:00" />
-      <TextField fx:id="playerNameWindow" layoutX="332.0" layoutY="345.0" prefHeight="48.0" prefWidth="150.0" promptText="Enter detective name" />
-      <Label layoutX="269.0" layoutY="499.0" text="1st">
->>>>>>> main
          <font>
             <Font size="24.0" />
          </font>
