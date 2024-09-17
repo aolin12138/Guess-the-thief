@@ -115,6 +115,8 @@ public class CrimeSceneController {
     isClue1Found = true;
     // Satisfies requirement of at least one clue being discovered
     isAnyClueFound = true;
+    Scene sceneOfButton = phoneClue.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
   }
 
   @FXML

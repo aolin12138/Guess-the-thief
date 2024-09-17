@@ -12,7 +12,8 @@ public class SceneManager {
     Chat,
     NEWSPAPER,
     PHONE,
-    CALL_HISTORY
+    CALL_HISTORY,
+    CCTV
   }
 
   private static HashMap<Scene, Parent> sceneMap = new HashMap<Scene, Parent>();
