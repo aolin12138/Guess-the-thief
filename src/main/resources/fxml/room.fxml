@@ -9,21 +9,21 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="room" focusTraversable="true" minHeight="583.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="586.0" prefWidth="637.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.RoomController">
+<Pane fx:id="room" focusTraversable="true" minHeight="480.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="582.0" prefWidth="800.0" style="-fx-background-color: light grey;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.RoomController">
    <children>
-      <ImageView fx:id="displayImage" fitHeight="398.0" fitWidth="643.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="displayImage" fitHeight="427.0" fitWidth="805.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/crime_scene.jpeg" />
          </image>
       </ImageView>
-      <StackPane fx:id="indicatorPane" layoutX="509.0" layoutY="432.0" prefHeight="109.0" prefWidth="104.0" />
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="486.0" layoutY="452.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#24f59b">
+      <StackPane fx:id="indicatorPane" layoutX="4.0" layoutY="449.0" prefHeight="109.0" prefWidth="104.0" />
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-19.0" layoutY="469.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#24f59b">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
@@ -33,64 +33,116 @@
       <Rectangle fx:id="rectPerson1" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="200.0" layoutX="253.0" layoutY="144.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="68.0" />
       <Rectangle fx:id="officer2" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="111.0" layoutX="170.0" layoutY="181.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="32.0" />
       <Rectangle fx:id="rectPerson2" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="274.0" layoutX="374.0" layoutY="111.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="93.0" />
-      <Button fx:id="btnGuess" layoutX="512.0" layoutY="547.0" mnemonicParsing="false" onAction="#handleGuessClick" prefHeight="30.0" prefWidth="94.0" text="Make a Guess" />
-      <TextArea fx:id="txtaChat" editable="false" layoutX="12.0" layoutY="395.0" prefHeight="148.0" prefWidth="484.0" wrapText="true" />
-      <TextField fx:id="txtInput" layoutX="10.0" layoutY="550.0" prefHeight="26.0" prefWidth="406.0" />
-      <Button fx:id="btnSend" layoutX="421.0" layoutY="547.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send" />
+      <Button fx:id="btnGuess" layoutX="524.0" layoutY="494.0" mnemonicParsing="false" onAction="#handleGuessClick" prefHeight="35.0" prefWidth="119.0" text="Make a Guess" />
+      <TextArea fx:id="txtaChat" editable="false" layoutX="116.0" layoutY="445.0" prefHeight="87.0" prefWidth="395.0" wrapText="true" />
+      <TextField fx:id="txtInput" layoutX="115.0" layoutY="542.0" prefHeight="26.0" prefWidth="397.0" />
+      <Button fx:id="btnSend" layoutX="525.0" layoutY="542.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="32.0" prefWidth="119.0" text="Send" />
       <ImageView fx:id="carImage" fitHeight="416.0" fitWidth="633.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/car_close_up.jpg" />
          </image>
       </ImageView>
       <Button fx:id="btnBack" disable="true" layoutX="324.0" layoutY="366.0" mnemonicParsing="false" onAction="#onBackPressed" text="Back" visible="false" />
-      <HBox fx:id="imagesHBox" layoutX="24.0" layoutY="5.0" prefHeight="106.0" prefWidth="561.0" spacing="20.0" stylesheets="@../css/suspect_scene.css" visible="false">
-         <children>
-            <ImageView id="crimeImage" fx:id="crimeImage" fitHeight="74.0" fitWidth="138.0" onMouseClicked="#onCrimeSceneClicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/crime_scene.jpeg" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <ImageView id="ownerImage" fx:id="ownerImage" fitHeight="80.0" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/owner_scene.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-            <ImageView id="workerImage" fx:id="workerImage" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/worker_scene.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <viewport>
-                  <Rectangle2D />
-               </viewport>
-            </ImageView>
-            <ImageView id="brotherImage" fx:id="brotherImage" fitHeight="80.0" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/brother_scene.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </HBox>
-      <Label fx:id="chatStats" layoutX="14.0" layoutY="364.0" prefHeight="30.0" prefWidth="138.0">
+      <Label fx:id="chatStats" layoutX="4.0" layoutY="434.0" prefHeight="30.0" prefWidth="106.0" visible="false">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
       <Pane fx:id="statsPane" layoutX="4.0" layoutY="27.0" prefHeight="25.0" prefWidth="26.0" />
-      <Button fx:id="btnSlide" layoutX="171.0" layoutY="353.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="290.0" text="Switching Scenes" />
+      <VBox fx:id="imagesVBox" layoutX="660.0" layoutY="10.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0">
+         <children>
+            <VBox prefHeight="88.0" prefWidth="132.0">
+               <children>
+                  <ImageView id="crimeImage" fx:id="crimeImage" fitHeight="70.0" fitWidth="135.0" onMouseClicked="#onCrimeSceneClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/crime_scene.jpeg" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label fx:id="crimeLabel" text="Crime Scene" textFill="WHITE" visible="false">
+                     <font>
+                        <Font name="Bai Jamjuree Regular" size="13.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="25.0" top="3.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="83.0" prefWidth="130.0">
+               <children>
+                  <ImageView id="ownerImage" fx:id="ownerImage" fitHeight="80.0" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/owner_scene.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label fx:id="ownerLabel" text="Owner" textFill="WHITE" visible="false">
+                     <font>
+                        <Font name="Bai Jamjuree Regular" size="13.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="45.0" top="3.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="88.0" prefWidth="130.0">
+               <children>
+                  <ImageView id="workerImage" fx:id="workerImage" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/worker_scene.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+                  <Label fx:id="workerLabel" text="Worker" textFill="WHITE" visible="false">
+                     <font>
+                        <Font name="Bai Jamjuree Regular" size="13.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="43.0" top="3.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="88.0" prefWidth="130.0">
+               <children>
+                  <ImageView id="brotherImage" fx:id="brotherImage" fitHeight="80.0" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/brother_scene.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label fx:id="brotherLabel" text="Brother" textFill="WHITE" visible="false">
+                     <font>
+                        <Font name="Bai Jamjuree Regular" size="13.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="40.0" top="3.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <VBox layoutX="659.0" layoutY="431.0" prefHeight="144.0" prefWidth="132.0" spacing="10.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="39.0" stroke="BLACK" strokeType="INSIDE" width="132.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="132.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="39.0" stroke="BLACK" strokeType="INSIDE" width="132.0" />
+         </children>
+      </VBox>
+      <Button fx:id="btnSlide" layoutX="524.0" layoutY="445.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="119.0" text="Switching Scenes" />
    </children>
 </Pane>

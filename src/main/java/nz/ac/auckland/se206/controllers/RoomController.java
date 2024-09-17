@@ -29,6 +29,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -81,6 +82,10 @@ public class RoomController {
   @FXML private Label lblProfession;
   @FXML private Label timerLabel;
   @FXML private Label chatStats;
+  @FXML private Label crimeLabel;
+  @FXML private Label workerLabel;
+  @FXML private Label ownerLabel;
+  @FXML private Label brotherLabel;
 
   @FXML private Button btnGuess;
   @FXML private Button btnSend;
@@ -103,7 +108,7 @@ public class RoomController {
 
   @FXML public ComboBox<HBox> imagesComboBox;
 
-  @FXML private HBox imagesHBox;
+  @FXML private VBox imagesVBox;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
@@ -578,37 +583,45 @@ public class RoomController {
     ownerImage.setOnMouseEntered(
         e -> {
           ownerImageManager.hoverIn();
+          ownerLabel.setVisible(true);
         });
     ownerImage.setOnMouseExited(
         e -> {
           ownerImageManager.hoverOut();
+          ownerLabel.setVisible(false);
         });
 
     workerImage.setOnMouseEntered(
         e -> {
           workerImageManager.hoverIn();
+          workerLabel.setVisible(true);
         });
     workerImage.setOnMouseExited(
         e -> {
           workerImageManager.hoverOut();
+          workerLabel.setVisible(false);
         });
 
     brotherImage.setOnMouseEntered(
         e -> {
           brotherImageManager.hoverIn();
+          brotherLabel.setVisible(true);
         });
     brotherImage.setOnMouseExited(
         e -> {
           brotherImageManager.hoverOut();
+          brotherLabel.setVisible(false);
         });
 
     crimeImage.setOnMouseEntered(
         e -> {
           crimeImageManager.hoverIn();
+          crimeLabel.setVisible(true);
         });
     crimeImage.setOnMouseExited(
         e -> {
           crimeImageManager.hoverOut();
+          crimeLabel.setVisible(false);
         });
 
     btnSlide.setOnAction(event -> toggleHBox());
@@ -635,7 +648,7 @@ public class RoomController {
     dropShadowOut.setOffsetY(0);
     dropShadowOut.setColor(javafx.scene.paint.Color.GRAY);
     dropShadowOut.setInput(colorAdjustOut);
-    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesHBox);
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesVBox);
     switch (id) {
       case "ownerImage":
         if (currentImage != null && currentImage.getId().equals("ownerImage")) {
@@ -644,8 +657,8 @@ public class RoomController {
         displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
         currentImage = ownerImage;
         currentImageManager.setImageView(currentImage);
-        transition.setToY(-imagesHBox.getHeight()); // Move off-screen
-        transition.setOnFinished(e -> imagesHBox.setVisible(false)); // Hide after animation
+        transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
+        transition.setOnFinished(e -> imagesVBox.setVisible(false)); // Hide after animation
         transition.play();
         context.handleRectangleClick(event, "rectPerson2");
         break;
@@ -656,8 +669,8 @@ public class RoomController {
         displayImage.setImage(new Image(workerImage.getImage().getUrl()));
         currentImage = workerImage;
         currentImageManager.setImageView(currentImage);
-        transition.setToY(-imagesHBox.getHeight()); // Move off-screen
-        transition.setOnFinished(e -> imagesHBox.setVisible(false)); // Hide after animation
+        transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
+        transition.setOnFinished(e -> imagesVBox.setVisible(false)); // Hide after animation
         transition.play();
         context.handleRectangleClick(event, "rectPerson1");
         break;
@@ -672,8 +685,8 @@ public class RoomController {
         displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
         currentImage = brotherImage;
         currentImageManager.setImageView(currentImage);
-        transition.setToY(-imagesHBox.getHeight()); // Move off-screen
-        transition.setOnFinished(e -> imagesHBox.setVisible(false)); // Hide after animation
+        transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
+        transition.setOnFinished(e -> imagesVBox.setVisible(false)); // Hide after animation
         transition.play();
         context.handleRectangleClick(event, "rectPerson3");
     }
@@ -681,17 +694,17 @@ public class RoomController {
 
   private void toggleHBox() {
     // Create the transition
-    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesHBox);
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesVBox);
 
-    if (imagesHBox.isVisible()) {
+    if (imagesVBox.isVisible()) {
       // Slide out
-      transition.setToY(-imagesHBox.getHeight()); // Move off-screen
-      transition.setOnFinished(event -> imagesHBox.setVisible(false)); // Hide after animation
+      transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
+      transition.setOnFinished(event -> imagesVBox.setVisible(false)); // Hide after animation
     } else {
       // Slide in
-      imagesHBox.setVisible(true); // Show before animation
-      transition.setFromY(-imagesHBox.getHeight()); // Start off-screen
-      transition.setToY(0); // Move to visible position
+      imagesVBox.setVisible(true); // Show before animation
+      transition.setFromX(imagesVBox.getWidth() + 30); // Start off-screen
+      transition.setToX(0); // Move to visible position
     }
 
     // Play the transition
