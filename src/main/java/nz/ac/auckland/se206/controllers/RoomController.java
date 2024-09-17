@@ -476,7 +476,12 @@ public class RoomController {
    * @param msg the chat message to append
    */
   private void appendChatMessage(ChatMessage msg) {
-    txtaChat.appendText(msg.getRole() + ": " + msg.getContent() + "\n\n");
+    txtaChat.appendText("You: " + msg.getContent() + "\n\n");
+  }
+
+  //
+  private void appendChatMessage(ChatMessage msg, Person person) {
+    txtaChat.appendText(person.getName() + ": " + msg.getContent() + "\n\n");
   }
 
   /**
@@ -492,7 +497,7 @@ public class RoomController {
       ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
       Choice result = chatCompletionResult.getChoices().iterator().next();
       chatCompletionRequest.addMessage(result.getChatMessage());
-      appendChatMessage(result.getChatMessage());
+      appendChatMessage(result.getChatMessage(), person);
       Platform.runLater(
           () -> {
             context.getRoomController().enableTalking();
