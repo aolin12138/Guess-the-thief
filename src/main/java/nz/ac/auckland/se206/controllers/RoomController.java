@@ -11,8 +11,6 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -520,15 +518,16 @@ public class RoomController {
       return;
     }
 
-    if (context.getGameState() == context.getGameOverState()) {
-      Alert alert = new Alert(AlertType.INFORMATION);
-      alert.setTitle("Game Over");
-      alert.setHeaderText("Game Over");
-      alert.setContentText("You can not talk to the suspects anymore.");
-      alert.showAndWait();
-      txtInput.clear();
-      return;
-    }
+    // Won't need this anymore as gameover state is a different scene
+    // if (context.getGameState() == context.getGameOverState()) {
+    //   Alert alert = new Alert(AlertType.INFORMATION);
+    //   alert.setTitle("Game Over");
+    //   alert.setHeaderText("Game Over");
+    //   alert.setContentText("You can not talk to the suspects anymore.");
+    //   alert.showAndWait();
+    //   txtInput.clear();
+    //   return;
+    // }
 
     txtInput.clear();
     ChatMessage msg = new ChatMessage("user", message);
