@@ -10,6 +10,10 @@ public class SceneManager {
     CRIME,
     ROOM,
     Chat,
+    NEWSPAPER,
+    PHONE,
+    CALL_HISTORY,
+    CCTV
   }
 
   private static HashMap<Scene, Parent> sceneMap = new HashMap<Scene, Parent>();

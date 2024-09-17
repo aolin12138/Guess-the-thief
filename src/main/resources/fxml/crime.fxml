@@ -9,9 +9,9 @@
 
 <AnchorPane layoutX="1.0" layoutY="-14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="653.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CrimeSceneController">
    <children>
-      <Rectangle fx:id="clue1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="62.0" layoutY="56.0" onMouseClicked="#onClue1Clicked" stroke="BLACK" strokeType="INSIDE" width="102.0" />
-      <Rectangle fx:id="clue2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="200.0" layoutY="56.0" onMouseClicked="#onClue2Clicked" stroke="BLACK" strokeType="INSIDE" width="85.0" />
-      <Rectangle fx:id="clue3" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="327.0" layoutY="56.0" onMouseClicked="#onClue3Clicked" stroke="BLACK" strokeType="INSIDE" width="112.0" />
+      <Rectangle fx:id="CCTVClue" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="62.0" layoutY="56.0" onMouseClicked="#onCCTVClueClicked" stroke="BLACK" strokeType="INSIDE" width="102.0" />
+      <Rectangle fx:id="phoneClue" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="200.0" layoutY="56.0" onMouseClicked="#onPhoneClueClicked" stroke="BLACK" strokeType="INSIDE" width="85.0" />
+      <Rectangle fx:id="newspaperClue" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="327.0" layoutY="56.0" onMouseClicked="#onNewspaperClueClicked" stroke="BLACK" strokeType="INSIDE" width="112.0" />
       <Button fx:id="btnGuess" layoutX="519.0" layoutY="300.0" mnemonicParsing="false" onAction="#onGuessClick" prefHeight="30.0" prefWidth="94.0" text="Make a Guess" />
       <StackPane fx:id="indicatorPane" layoutX="441.0" layoutY="38.0" prefHeight="150.0" prefWidth="200.0" />
       <Rectangle fx:id="suspect1Scene" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="79.0" layoutX="64.0" layoutY="288.0" onMouseClicked="#onSuspect1Clicked" stroke="BLACK" strokeType="INSIDE" width="135.0" />
