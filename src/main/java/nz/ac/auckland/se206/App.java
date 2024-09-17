@@ -60,6 +60,7 @@ public class App extends Application {
     SceneManager.addRoot(SceneManager.Scene.START, loadFxml("start"));
     SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, loadFxml("instructions"));
     SceneManager.addRoot(SceneManager.Scene.ROOM, loadFxml("room"));
+    SceneManager.addRoot(SceneManager.Scene.NEWSPAPER, loadFxml("newspaper"));
 
     Parent root = loadFxml("start");
     scene = new Scene(root);
