@@ -31,7 +31,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
@@ -133,8 +132,8 @@ public class RoomController {
         .sceneProperty()
         .addListener(
             (observable, oldScene, newScene) -> {
-              Stage stage = (Stage) newScene.getWindow();
-              stage.sizeToScene();
+              // Stage stage = (Stage) newScene.getWindow();
+              // stage.sizeToScene();
               if (newScene != null) {
                 newScene.addEventHandler(
                     KeyEvent.KEY_PRESSED,
