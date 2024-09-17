@@ -29,7 +29,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
@@ -131,8 +130,8 @@ public class RoomController {
         .sceneProperty()
         .addListener(
             (observable, oldScene, newScene) -> {
-              Stage stage = (Stage) newScene.getWindow();
-              stage.sizeToScene();
+              // Stage stage = (Stage) newScene.getWindow();
+              // stage.sizeToScene();
               if (newScene != null) {
                 newScene.addEventHandler(
                     KeyEvent.KEY_PRESSED,
@@ -424,10 +423,21 @@ public class RoomController {
     map.put("profession", person.getProfession());
     map.put("name", person.getName());
     map.put("role", person.getRole());
-    if (person.hasTalked()) {
+    // if (person.hasTalked()) {
+    //   return PromptEngineering.getPrompt("chat3.txt", map, person);
+    // }
+    // return PromptEngineering.getPrompt("chat2.txt", map, person);
+
+    if (person.getName().equals("John")) {
+      return PromptEngineering.getPrompt("chat1.txt", map, person);
+    } else if (person.getName().equals("Bob")) {
+      return PromptEngineering.getPrompt("chat2.txt", map, person);
+    } else if (person.getName().equals("Jason")) {
       return PromptEngineering.getPrompt("chat3.txt", map, person);
+    } else {
+      return "That name doesn't exist";
     }
-    return PromptEngineering.getPrompt("chat2.txt", map, person);
+
   }
 
   /**
@@ -463,6 +473,7 @@ public class RoomController {
               .setMaxTokens(100);
       runGpt(new ChatMessage("system", getSystemPrompt()));
       person.talked();
+      person.setChatCompletionRequest(chatCompletionRequest);
     } catch (ApiProxyException e) {
       e.printStackTrace();
     }
@@ -485,6 +496,7 @@ public class RoomController {
    * @throws ApiProxyException if there is an error communicating with the API proxy
    */
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
+    chatCompletionRequest = person.getChatCompletionRequest();
     chatCompletionRequest.addMessage(msg);
     try {
       ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
@@ -501,7 +513,7 @@ public class RoomController {
     } catch (ApiProxyException e) {
       e.printStackTrace();
       return null;
-    }
+    } 
   }
 
   /**
