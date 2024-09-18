@@ -279,15 +279,17 @@ public class GuessController {
 
     String message = txtInput.getText().trim();
 
-    if (message.isEmpty() && !isTimeOver) {
-      lblDescription.setText("You must type your explanation first!");
-      System.out.println("Empty message");
+    // Time remaining, checking that suspect is guessed and explanation is entered.
+    if ((!isSuspectSelected) && (message.isEmpty()) && (!isTimeOver)) {
+      lblDescription.setText(
+          "You must click on your suspected thief and type a brief explanation to support your"
+              + " decision.");
       return;
-    }
-
-    if (isSuspectSelected == false) {
-      lblDescription.setText("No suspect selected");
-      System.out.println("No suspect selected");
+    } else if ((!isSuspectSelected) && (!message.isEmpty()) && (!isTimeOver)) {
+      lblDescription.setText("You must click on your suspected thief first!");
+      return;
+    } else if ((isSuspectSelected) && (message.isEmpty()) && (!isTimeOver)) {
+      lblDescription.setText("You must type an explanation to support your decision.");
       return;
     }
 
