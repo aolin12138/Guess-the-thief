@@ -46,8 +46,8 @@ public class GuessController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static double maxTimeforGuessing = 60000;
-  private static double timeForGuessing = 60000;
+  private static double maxTimeforGuessing = 6000;
+  private static double timeForGuessing = 6000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
 
@@ -140,24 +140,14 @@ public class GuessController {
                                     / (maxTimeforGuessing)));
                   } else if ((timeForGuessing == 0)) {
                     isTimeOver = true;
-                    // When timer reaches 0, this code runs. Ideally, the user will have already
-                    // clicked the submit guess button.
-                    // If they haven't and the timer runs out, this code will handle all scenarios.
-                    if (!isSuspectSelected) {
-                      // User didn't click on a suspect, therefore they cannot possibly win the
-                      // game.
-                      context.setState(context.getGameOverState());
-                      GameOverController.setOutputText(
-                          "You did not guess any of the suspects within the time limit!\n"
-                              + "Next time you play, make sure to click on your suspected thief and"
-                              + " type an explanation to support your decision.\n"
-                              + "Click play again to replay.");
-                      try {
-                        App.setRoot("gameover");
-                      } catch (IOException e) {
-                        e.printStackTrace();
-                      }
+                    // Call the onSendMessage without clicking button (input therefore null, but
+                    // isn't required anyway.)
+                    try {
+                      onSendMessage(null);
+                    } catch (ApiProxyException | IOException e) {
+                      e.printStackTrace();
                     }
+
                     timeline.stop();
                   }
 
@@ -278,6 +268,51 @@ public class GuessController {
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
 
     String message = txtInput.getText().trim();
+    System.out.println("isSuspectSelected: " + isSuspectSelected);
+    System.out.println("isMessageEmpty: " + message.isEmpty());
+    System.out.println("isTimeOver: " + isTimeOver);
+
+    // No time remaining
+    if ((!isSuspectSelected) && (message.isEmpty()) && (isTimeOver)) {
+      context.setState(context.getGameOverState());
+      GameOverController.setOutputText(
+          "You did not guess any of the suspects within the time limit!\n"
+              + "Next time you play, make sure to click on your suspected thief and"
+              + " type an explanation to support your decision.\n"
+              + "Click play again to replay.");
+      try {
+        App.setRoot("gamelost");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      return;
+    } else if ((!isSuspectSelected) && (!message.isEmpty()) && (isTimeOver)) {
+      context.setState(context.getGameOverState());
+      GameOverController.setOutputText(
+          "Even though you typed your explanation, you did not guess any of the suspects within the"
+              + " time limit!\n"
+              + "Click play again to replay.");
+      try {
+        App.setRoot("gamelost");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      return;
+    } else if ((isSuspectSelected) && (message.isEmpty()) && (isTimeOver)) {
+      context.setState(context.getGameOverState());
+      GameOverController.setOutputText(
+          "Even though you guessed a suspect, you did not type any explanation within the"
+              + " time limit.\n\n"
+              + " Because of this, it is unlikely that the authortities will accept your"
+              + " decision.\n\n"
+              + "Click play again to replay.");
+      try {
+        App.setRoot("gamelost");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      return;
+    }
 
     // Time remaining, checking that suspect is guessed and explanation is entered.
     if ((!isSuspectSelected) && (message.isEmpty()) && (!isTimeOver)) {
@@ -296,6 +331,7 @@ public class GuessController {
     // gameOverController.setGuessController(this);
 
     if (isSuspectSelected) {
+      System.out.println("Suspect is selected");
 
       ProgressIndicator statsIndicator = new ProgressIndicator();
       statsIndicator.setMinSize(1, 1);
