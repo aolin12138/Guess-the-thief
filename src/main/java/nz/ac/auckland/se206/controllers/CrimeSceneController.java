@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -10,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
@@ -37,6 +40,7 @@ public class CrimeSceneController {
   private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
+  private MediaPlayer player;
 
   private static Timeline timeline = new Timeline();
 
@@ -137,8 +141,30 @@ public class CrimeSceneController {
   }
 
   @FXML
-  void onGuessClick(ActionEvent event) throws IOException {
-    App.setRoot("guess");
+  void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
+    // Check all 3 suspects have been spoken to and at least 1 clue has been clicked
+    if (context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
+      // context.handleGuessClick();
+      App.setRoot("guess");
+    } else if (!context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
+      Media sound =
+          new Media(App.class.getResource("/sounds/missing_suspect.mp3").toURI().toString());
+      player = new MediaPlayer(sound);
+      player.play();
+      return;
+    } else if (context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
+      Media sound =
+          new Media(App.class.getResource("/sounds/clue_reminder_1.mp3").toURI().toString());
+      player = new MediaPlayer(sound);
+      player.play();
+      return;
+    } else if (!context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
+      Media sound =
+          new Media(App.class.getResource("/sounds/keep_investigating.mp3").toURI().toString());
+      player = new MediaPlayer(sound);
+      player.play();
+      return;
+    }
   }
 
   @FXML
