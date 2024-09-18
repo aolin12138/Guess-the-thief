@@ -17,13 +17,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
@@ -32,6 +35,7 @@ import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
+import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
@@ -78,10 +82,17 @@ public class GuessController {
   @FXML private TextField txtInput;
 
   @FXML private ImageView carImage;
+  @FXML private ImageView ownerImage;
+  @FXML private ImageView workerImage;
+  @FXML private ImageView brotherImage;
+  @FXML private ImageView crimeScene;
 
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
   @FXML private Label lblDescription;
+  @FXML private Label ownerLabel;
+  @FXML private Label workerLabel;
+  @FXML private Label brotherLabel;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
@@ -92,12 +103,26 @@ public class GuessController {
   private static boolean isThiefFound = false;
   private static GuessController guessController;
 
+  ImageManager ownerImageManager;
+  ImageManager workerImageManager;
+  ImageManager brotherImageManager;
+  ImageManager currentImageManager;
+
   /**
    * Initializes the room view. If it's the first time initialization, it will provide instructions
    * via text-to-speech.
    */
   @FXML
   public void initialize() {
+    btnSend
+        .sceneProperty()
+        .addListener(
+            (observable, oldScene, newScene) -> {
+              if (newScene != null) {
+                Stage stage = (Stage) newScene.getWindow();
+                stage.sizeToScene();
+              }
+            });
 
     // Adding the event handler for 'Enter' key on txtInput
     txtInput.setOnKeyPressed(
@@ -114,6 +139,18 @@ public class GuessController {
             }
           }
         });
+
+    ownerImageManager = new ImageManager(ownerImage);
+    workerImageManager = new ImageManager(workerImage);
+    brotherImageManager = new ImageManager(brotherImage);
+
+    ColorAdjust colorAdjust = new ColorAdjust();
+    colorAdjust.setBrightness(-0.45);
+    ownerImage.setEffect(colorAdjust);
+    workerImage.setEffect(colorAdjust);
+    brotherImage.setEffect(colorAdjust);
+
+    styleScene();
 
     context.setGuessController(this);
     indicatorPane.getChildren().add(ringProgressIndicator);
@@ -228,30 +265,36 @@ public class GuessController {
   }
 
   @FXML
-  private void selectSuspect1(ActionEvent event) throws ApiProxyException, IOException {
-    sus1btn.setDisable(true);
-    sus2btn.setDisable(false);
-    sus3btn.setDisable(false);
+  private void selectSuspect1(MouseEvent event) throws ApiProxyException, IOException {
+    if (currentImageManager != null) {
+      currentImageManager.unclicked();
+    }
+    ownerImageManager.clicked();
+    currentImageManager = ownerImageManager;
     currentSuspect = 1;
     isThiefFound = false;
     isSuspectSelected = true;
   }
 
   @FXML
-  private void selectSuspect2(ActionEvent event) throws ApiProxyException, IOException {
-    sus1btn.setDisable(false);
-    sus2btn.setDisable(true);
-    sus3btn.setDisable(false);
+  private void selectSuspect2(MouseEvent event) throws ApiProxyException, IOException {
+    if (currentImageManager != null) {
+      currentImageManager.unclicked();
+    }
+    workerImageManager.clicked();
+    currentImageManager = workerImageManager;
     currentSuspect = 2;
     isThiefFound = true;
     isSuspectSelected = true;
   }
 
   @FXML
-  private void selectSuspect3(ActionEvent event) throws ApiProxyException, IOException {
-    sus1btn.setDisable(false);
-    sus2btn.setDisable(false);
-    sus3btn.setDisable(true);
+  private void selectSuspect3(MouseEvent event) throws ApiProxyException, IOException {
+    if (currentImageManager != null) {
+      currentImageManager.unclicked();
+    }
+    brotherImageManager.clicked();
+    currentImageManager = brotherImageManager;
     currentSuspect = 3;
     isThiefFound = false;
     isSuspectSelected = true;
@@ -376,10 +419,6 @@ public class GuessController {
               return null;
             }
           };
-
-      sus1btn.setDisable(true);
-      sus2btn.setDisable(true);
-      sus3btn.setDisable(true);
       txtInput.setDisable(true);
 
       new Thread(task).start();
@@ -433,5 +472,40 @@ public class GuessController {
 
   public GuessController getGuessController() {
     return this.guessController;
+  }
+
+  public void styleScene() {
+    ownerImage.setOnMouseEntered(
+        e -> {
+          ownerImageManager.hoverIn();
+          ownerLabel.setVisible(true);
+        });
+    ownerImage.setOnMouseExited(
+        e -> {
+          ownerImageManager.hoverOut();
+          ownerLabel.setVisible(false);
+        });
+
+    workerImage.setOnMouseEntered(
+        e -> {
+          workerImageManager.hoverIn();
+          workerLabel.setVisible(true);
+        });
+    workerImage.setOnMouseExited(
+        e -> {
+          workerImageManager.hoverOut();
+          workerLabel.setVisible(false);
+        });
+
+    brotherImage.setOnMouseEntered(
+        e -> {
+          brotherImageManager.hoverIn();
+          brotherLabel.setVisible(true);
+        });
+    brotherImage.setOnMouseExited(
+        e -> {
+          brotherImageManager.hoverOut();
+          brotherLabel.setVisible(false);
+        });
   }
 }

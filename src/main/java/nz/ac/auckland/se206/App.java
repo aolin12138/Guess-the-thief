@@ -57,16 +57,26 @@ public class App extends Application {
   @Override
   public void start(final Stage stage) throws IOException {
     // Store the stage in the SceneManager so it will be remembered
-    SceneManager.addRoot(SceneManager.Scene.START, loadFxml("start"));
-    SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, loadFxml("instructions"));
-    SceneManager.addRoot(SceneManager.Scene.ROOM, loadFxml("room"));
-    SceneManager.addRoot(SceneManager.Scene.NEWSPAPER, loadFxml("newspaper"));
-    SceneManager.addRoot(SceneManager.Scene.PHONE, loadFxml("phone"));
-    SceneManager.addRoot(SceneManager.Scene.CALL_HISTORY, loadFxml("callhistory"));
-    SceneManager.addRoot(SceneManager.Scene.CCTV, loadFxml("cctv"));
 
-    Parent root = loadFxml("start");
-    scene = new Scene(root);
+    FXMLLoader startLoader = new FXMLLoader(App.class.getResource("/fxml/start.fxml"));
+    FXMLLoader roomLoader = new FXMLLoader(App.class.getResource("/fxml/room.fxml"));
+    FXMLLoader instructionLoader = new FXMLLoader(App.class.getResource("/fxml/instructions.fxml"));
+    FXMLLoader phoneLoader = new FXMLLoader(App.class.getResource("/fxml/phone.fxml"));
+    FXMLLoader newspaperLoader = new FXMLLoader(App.class.getResource("/fxml/newspaper.fxml"));
+    FXMLLoader callHistoryLoader = new FXMLLoader(App.class.getResource("/fxml/callhistory.fxml"));
+    FXMLLoader cctvLoader = new FXMLLoader(App.class.getResource("/fxml/cctv.fxml"));
+
+    SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, instructionLoader.load());
+    SceneManager.addRoot(SceneManager.Scene.START, startLoader.load());
+    SceneManager.addRoot(SceneManager.Scene.ROOM, roomLoader.load());
+    SceneManager.addRoot(SceneManager.Scene.PHONE, phoneLoader.load());
+    SceneManager.addRoot(SceneManager.Scene.NEWSPAPER, newspaperLoader.load());
+    SceneManager.addRoot(SceneManager.Scene.CALL_HISTORY, callHistoryLoader.load());
+    SceneManager.addRoot(SceneManager.Scene.CCTV, cctvLoader.load());
+
+    SceneManager.setRoomLoader(roomLoader);
+
+    scene = new Scene(SceneManager.getRoot(SceneManager.Scene.START));
     stage.setScene(scene);
 
     // // Set up the onShown event handler
@@ -85,6 +95,6 @@ public class App extends Application {
 
     stage.setTitle("PI Masters: Detective Training");
     stage.show();
-    root.requestFocus();
+    SceneManager.getRoot(SceneManager.Scene.START).requestFocus();
   }
 }
