@@ -189,10 +189,65 @@ public class RoomController {
                                     * 100
                                     / (timeToCountTo - timeForGuessing)));
                   } else if ((timeToCount > 0)) {
-                    // Here the timer has exceeded the time for investigation and the game must
-                    // switch to the guess scene.
-                    // Program switch to guess scene here.
-                    System.out.println("Switching to guessing state");
+                    // Program switch to guess scene here ONLY if clues and suspects have been
+                    // correctly interacted with
+                    if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
+                      // context.handleGuessClick();
+                      try {
+                        App.setRoot("guess");
+                      } catch (IOException e) {
+                        e.printStackTrace();
+                      }
+                    } else if (!context.isAllSuspectsSpokenTo()
+                        && CrimeSceneController.isAnyClueFound()) {
+                      Media sound;
+                      try {
+                        sound =
+                            new Media(
+                                App.class
+                                    .getResource("/sounds/missing_suspect.mp3")
+                                    .toURI()
+                                    .toString());
+                      } catch (URISyntaxException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                      }
+
+                      return;
+                    } else if (context.isAllSuspectsSpokenTo()
+                        && !CrimeSceneController.isAnyClueFound()) {
+                      Media sound;
+                      try {
+                        sound =
+                            new Media(
+                                App.class
+                                    .getResource("/sounds/clue_reminder_1.mp3")
+                                    .toURI()
+                                    .toString());
+                      } catch (URISyntaxException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                      }
+
+                      return;
+                    } else if (!context.isAllSuspectsSpokenTo()
+                        && !CrimeSceneController.isAnyClueFound()) {
+                      Media sound;
+                      try {
+                        sound =
+                            new Media(
+                                App.class
+                                    .getResource("/sounds/keep_investigating.mp3")
+                                    .toURI()
+                                    .toString());
+                      } catch (URISyntaxException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                      }
+
+                      return;
+                    }
+
                     context.setState(context.getGuessingState());
                     try {
                       App.setRoot("guess");
