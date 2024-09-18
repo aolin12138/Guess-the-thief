@@ -40,6 +40,7 @@ public class NewspaperController {
   void onReturnToCrimeScene(ActionEvent event) {
     Scene sceneOfButton = ReturnBtn.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
+    passTimeToCrimeScene(timeToCount);
   }
 
   @FXML

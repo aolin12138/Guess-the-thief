@@ -165,6 +165,7 @@ public class CrimeSceneController {
     isAnyClueFound = true;
     Scene sceneOfButton = phoneClue.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
+    CCTVController.setTimeToCount(timeToCount);
   }
 
   @FXML
@@ -174,6 +175,7 @@ public class CrimeSceneController {
     isAnyClueFound = true;
     Scene sceneOfButton = phoneClue.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
+    PhoneController.setTimeToCount(timeToCount);
   }
 
   @FXML
@@ -183,6 +185,7 @@ public class CrimeSceneController {
     isAnyClueFound = true;
     Scene sceneOfButton = btnGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.NEWSPAPER));
+    NewspaperController.setTimeToCount(timeToCount);
   }
 
   @FXML

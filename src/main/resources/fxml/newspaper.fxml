@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.NewspaperController">
    <children>
@@ -15,5 +17,11 @@
       <Label layoutX="54.0" layoutY="131.0" prefHeight="17.0" prefWidth="599.0" text="The owner of a struggling restaurant in town has said that if he can't get more customers in the door, he may be forced to shut down his restaurant. The owner said he is prepared to do anything it takes to ensure his restaurant survives, and is on the hunt for a new head chef to create a new and exciting menu to delight customers." />
       <Label layoutX="54.0" layoutY="197.0" prefHeight="17.0" prefWidth="560.0" text="CLIMATE CHANGE POLICY IS A RECIPE FOR DISASTER, EXPERTS SAY" />
       <Label layoutX="54.0" layoutY="214.0" prefHeight="17.0" prefWidth="482.0" text="Climate Science experts believe that changes by local government to reduce emissions will not be enough to reduce the towns carbon footprint. They believe the changes will create risk of electricity black-outs across large parts of the town. “It’s a disaster waiting to happen,” one expert says." />
+      <StackPane fx:id="indicatorPane" layoutX="14.0" layoutY="459.0" prefHeight="109.0" prefWidth="104.0" />
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-9.0" layoutY="479.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#4effb2">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
