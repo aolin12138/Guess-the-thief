@@ -489,19 +489,19 @@ public class RoomController {
    */
   private String getSystemPrompt() {
     Map<String, String> map = new HashMap<>();
-    map.put("profession", person.getProfession());
-    map.put("name", person.getName());
+    // map.put("profession", person.getProfession());
+    // map.put("name", person.getName());
     map.put("role", person.getRole());
     // if (person.hasTalked()) {
     //   return PromptEngineering.getPrompt("chat3.txt", map, person);
     // }
     // return PromptEngineering.getPrompt("chat2.txt", map, person);
 
-    if (person.getName().equals("John")) {
-      return PromptEngineering.getPrompt("chat1.txt", map, person);
-    } else if (person.getName().equals("Bob")) {
+    if (person.getProfession().equals("owner of the other restaurant")) {
+      return PromptEngineering.getPrompt("chat.txt", map, person);
+    } else if (person.getProfession().equals("worker at the restaurant")) {
       return PromptEngineering.getPrompt("chat2.txt", map, person);
-    } else if (person.getName().equals("Jason")) {
+    } else if (person.getProfession().equals("Elder brother of the family")) {
       return PromptEngineering.getPrompt("chat3.txt", map, person);
     } else {
       return "That name doesn't exist";
@@ -541,7 +541,6 @@ public class RoomController {
               .setMaxTokens(100);
       runGpt(new ChatMessage("system", getSystemPrompt()));
       person.talked();
-      person.setChatCompletionRequest(chatCompletionRequest);
     } catch (ApiProxyException e) {
       e.printStackTrace();
     }

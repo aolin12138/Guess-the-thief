@@ -34,7 +34,7 @@ public class PromptEngineering {
         resourcePath = "prompts/chat2.txt";
       }
 
-      resourcePath = "prompts/chat2.txt";
+      resourcePath = "prompts/" + promptId;
 
       URL resourceUrl = PromptEngineering.class.getClassLoader().getResource(resourcePath);
       String template = loadTemplate(resourceUrl.toURI());
