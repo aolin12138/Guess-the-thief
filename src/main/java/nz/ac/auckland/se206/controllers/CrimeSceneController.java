@@ -30,15 +30,6 @@ import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 
 public class CrimeSceneController {
   private static boolean isFirstTimeInit = true;
-  private static boolean hasTalked = false;
-  private static boolean walletFound = false;
-  private static boolean cameraFound = false;
-  private static boolean dashcamFound = false;
-  private static boolean isCarFound = false;
-  private static boolean isAnyClueFound = false;
-  private static boolean isClue1Found = false;
-  private static boolean isClue2Found = false;
-  private static boolean isClue3Found = false;
 
   private static GameStateContext context = new GameStateContext();
   private static double timeToCount = 360000;
@@ -210,27 +201,27 @@ public class CrimeSceneController {
 
   @FXML
   void onCCTVClueClicked(MouseEvent event) {
-    isClue1Found = true;
+    context.clue1Found();
     // Satisfies requirement of at least one clue being discovered
-    isAnyClueFound = true;
+    context.clueFound();
     Scene sceneOfButton = phoneClue.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
   }
 
   @FXML
   void onPhoneClueClicked(MouseEvent event) {
-    isClue2Found = true;
+    context.clue2Found();
     // Satisfies requirement of at least one clue being discovered
-    isAnyClueFound = true;
+    context.clueFound();
     Scene sceneOfButton = phoneClue.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
   }
 
   @FXML
   void onNewspaperClueClicked(MouseEvent event) {
-    isClue3Found = true;
+    context.clue3Found();
     // Satisfies requirement of at least one clue being discovered
-    isAnyClueFound = true;
+    context.clueFound();
     Scene sceneOfButton = btnGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.NEWSPAPER));
   }
@@ -284,7 +275,7 @@ public class CrimeSceneController {
   }
 
   public static boolean isAnyClueFound() {
-    return isAnyClueFound;
+    return context.isAnyClueFound();
   }
 
   @FXML
@@ -365,6 +356,8 @@ public class CrimeSceneController {
     Scene sceneOfButton = imageView.getScene();
 
     RoomController roomController = SceneManager.getRoomLoader().getController();
+    roomController.setContext(context);
+    context.setRoomController(roomController);
 
     SceneManager.getRoot(SceneManager.Scene.ROOM)
         .sceneProperty()
@@ -386,5 +379,9 @@ public class CrimeSceneController {
 
   public String getId() {
     return id;
+  }
+
+  public GameStateContext getContext() {
+    return context;
   }
 }
