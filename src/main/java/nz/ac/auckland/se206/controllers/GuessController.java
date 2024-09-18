@@ -246,7 +246,7 @@ public class GuessController {
     sus2btn.setDisable(true);
     sus3btn.setDisable(false);
     currentSuspect = 2;
-    isThiefFound = true;
+    isThiefFound = false;
     selectedSuspect = true;
   }
 
@@ -256,7 +256,7 @@ public class GuessController {
     sus2btn.setDisable(false);
     sus3btn.setDisable(true);
     currentSuspect = 3;
-    isThiefFound = false;
+    isThiefFound = true;
     selectedSuspect = true;
   }
 
@@ -292,17 +292,19 @@ public class GuessController {
       statsIndicator.setMinSize(1, 1);
       statsPane.getChildren().add(statsIndicator);
 
+      
+      lblDescription.setText("Loading...");
+
       Task<Void> task =
           new Task<Void>() {
             @Override
             protected Void call() throws Exception {
               try {
                 String validExplanation = isExplanationValid();
+            String[] split = validExplanation.trim().split("");
+            boolean valid = 
+            currentSuspect == 3;
 
-                GameOverController.setOutputText(validExplanation);
-
-                String[] split = validExplanation.trim().split("");
-                boolean valid = currentSuspect == 2;
 
                 Platform.runLater(
                     () -> {
@@ -354,12 +356,13 @@ public class GuessController {
     }
   }
 
-  public String isExplanationValid() throws ApiProxyException, IOException {
-    try {
-      String evidencePrompt =
-          new String(Files.readAllBytes(Paths.get("src/main/resources/prompts/chat2.txt")));
+        public String isExplanationValid() throws ApiProxyException, IOException {
+            try {
+              String evidencePrompt =
+              new String(Files.readAllBytes(Paths.get("src/main/resources/prompts/guessing.txt")));
 
-      String fullPrompt = evidencePrompt + "\nUser Reasoning:\n" + txtInput.getText() + "\n";
+      String fullPrompt =
+          evidencePrompt + "\nUser Reasoning:\n" + txtInput.getText() + "\n";
 
       ChatCompletionRequest request =
           new ChatCompletionRequest(ApiProxyConfig.readConfig())

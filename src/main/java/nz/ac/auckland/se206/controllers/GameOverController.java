@@ -50,9 +50,9 @@ public class GameOverController {
     
    
     if (GuessController.getThiefFound()) {
-        lblStats.setText("You WIN!");
+        lblStats.setText("The guess is correct!");
     } else {
-        lblStats.setText("You LOSE!");
+        lblStats.setText("Wrong guess!");
     }
     
         
