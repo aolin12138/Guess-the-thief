@@ -29,7 +29,7 @@
       <Rectangle fx:id="CCTVClue" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="79.0" layoutX="226.0" layoutY="173.0" onMouseClicked="#onCCTVClueClicked" stroke="BLACK" strokeType="INSIDE" width="135.0" />
       <Rectangle fx:id="phoneClue" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="79.0" layoutX="422.0" layoutY="242.0" onMouseClicked="#onPhoneClueClicked" stroke="BLACK" strokeType="INSIDE" width="135.0" />
       <Rectangle fx:id="newspaperClue" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="79.0" layoutX="97.0" layoutY="282.0" onMouseClicked="#onNewspaperClueClicked" stroke="BLACK" strokeType="INSIDE" width="135.0" />
-      <VBox fx:id="imagesVBox" layoutX="661.0" layoutY="25.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0">
+      <VBox fx:id="imagesVBox" layoutX="661.0" layoutY="25.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" visible="false">
          <children>
             <VBox prefHeight="88.0" prefWidth="132.0">
                <children>
@@ -116,8 +116,8 @@
             </VBox>
          </children>
       </VBox>
-      <StackPane fx:id="indicatorPane" layoutX="15.0" layoutY="9.0" prefHeight="109.0" prefWidth="104.0" />
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-8.0" layoutY="29.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#24f59b">
+      <StackPane fx:id="indicatorPane" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0" />
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#24f59b">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>

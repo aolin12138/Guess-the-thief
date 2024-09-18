@@ -26,13 +26,13 @@
             <Font size="21.0" />
          </font>
       </Label>
-      <Label layoutX="245.0" layoutY="221.0" text="Scoreboard" textFill="#fffefe">
+      <Label layoutX="209.0" layoutY="105.0" text="Scoreboard" textFill="#fffefe">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
       <Button fx:id="instructionsButton" layoutX="10.0" layoutY="339.0" mnemonicParsing="false" onAction="#onViewInstructions" text="View Instructions" />
-      <TextField fx:id="playerNameWindow" layoutX="292.0" layoutY="175.0" prefHeight="26.0" prefWidth="193.0" promptText="(Optional) Enter detective name" />
+      <TextField fx:id="playerNameWindow" layoutX="297.0" layoutY="72.0" prefHeight="26.0" prefWidth="193.0" promptText="(Optional) Enter detective name" />
       <Label layoutX="218.0" layoutY="295.0" text="1st" textFill="WHITE">
          <font>
             <Font size="24.0" />
