@@ -370,7 +370,7 @@ public class GuessController {
 
     // gameOverController.setGuessController(this);
 
-    if (currentSuspect == 3) {
+    // if (currentSuspect == 3) {
 
       ProgressIndicator statsIndicator = new ProgressIndicator();
       statsIndicator.setMinSize(1, 1);
@@ -387,15 +387,15 @@ public class GuessController {
                 GameOverController.setOutputText(validExplanation);
                 String[] split = validExplanation.trim().split("");
                 boolean valid = split[0].toLowerCase().contains("true");
-                isThiefFound = true;
-
+                
                 Platform.runLater(
-                    () -> {
-
-                      // GuessTimeLimitManager.stopTimer();
-
-                      if (valid) {
-                        context.setState(context.getGameOverState());
+                  () -> {
+                    
+                    // GuessTimeLimitManager.stopTimer();
+                    
+                    if (valid && currentSuspect == 3) {
+                      context.setState(context.getGameOverState());
+                      isThiefFound = true;
 
                         try {
 
@@ -424,15 +424,15 @@ public class GuessController {
       txtInput.setDisable(true);
 
       new Thread(task).start();
-    } else {
+    // } else {
+      
+    //   // GameOverController.setCorrectSuspect(false);
 
-      // GameOverController.setCorrectSuspect(false);
+    //   // GuessTimeLimitManager.stopTimer();
 
-      // GuessTimeLimitManager.stopTimer();
-
-      context.setState(context.getGameOverState());
-      App.setRoot("gamelost");
-    }
+    //   context.setState(context.getGameOverState());
+    //   App.setRoot("gamelost");
+    // }
   }
 
   public String isExplanationValid() throws ApiProxyException, IOException {
