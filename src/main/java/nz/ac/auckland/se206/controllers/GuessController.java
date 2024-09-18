@@ -88,7 +88,7 @@ public class GuessController {
 
   private Timeline timeline = new Timeline();
   private int currentSuspect = 0;
-  private boolean selectedSuspect = false;
+  private boolean isSuspectSelected = false;
   private static boolean isThiefFound = false;
   private static GuessController guessController;
 
@@ -139,14 +139,13 @@ public class GuessController {
                                     * 100
                                     / (maxTimeforGuessing)));
                   } else if ((timeForGuessing == 0)) {
+                    isTimeOver = true;
                     // When timer reaches 0, this code runs. Ideally, the user will have already
                     // clicked the submit guess button.
                     // If they haven't and the timer runs out, this code will handle all scenarios.
-                    if (!selectedSuspect) {
+                    if (!isSuspectSelected) {
                       // User didn't click on a suspect, therefore they cannot possibly win the
                       // game.
-
-                      System.out.println("Switching to game over scene and and state");
                       context.setState(context.getGameOverState());
                       GameOverController.setOutputText(
                           "You did not guess any of the suspects within the time limit!\n"
@@ -159,10 +158,6 @@ public class GuessController {
                         e.printStackTrace();
                       }
                     }
-                    // Here we need to implement functionality that happens when the guessing time
-                    // runs out.
-                    // Either the user has guessed and explained, or they haven't(immediately report
-                    // a loss), so we should account for each case.
                     timeline.stop();
                   }
 
@@ -186,7 +181,7 @@ public class GuessController {
   }
 
   public Boolean getSuspectSelected() {
-    return selectedSuspect;
+    return isSuspectSelected;
   }
 
   public void stopTimeLine() {
@@ -249,7 +244,7 @@ public class GuessController {
     sus3btn.setDisable(false);
     currentSuspect = 1;
     isThiefFound = false;
-    selectedSuspect = true;
+    isSuspectSelected = true;
   }
 
   @FXML
@@ -259,7 +254,7 @@ public class GuessController {
     sus3btn.setDisable(false);
     currentSuspect = 2;
     isThiefFound = true;
-    selectedSuspect = true;
+    isSuspectSelected = true;
   }
 
   @FXML
@@ -269,7 +264,7 @@ public class GuessController {
     sus3btn.setDisable(true);
     currentSuspect = 3;
     isThiefFound = false;
-    selectedSuspect = true;
+    isSuspectSelected = true;
   }
 
   /**
@@ -284,13 +279,13 @@ public class GuessController {
 
     String message = txtInput.getText().trim();
 
-    if (message.isEmpty()) {
-      lblDescription.setText("Empty message");
+    if (message.isEmpty() && !isTimeOver) {
+      lblDescription.setText("You must type your explanation first!");
       System.out.println("Empty message");
       return;
     }
 
-    if (selectedSuspect == false) {
+    if (isSuspectSelected == false) {
       lblDescription.setText("No suspect selected");
       System.out.println("No suspect selected");
       return;
@@ -298,7 +293,7 @@ public class GuessController {
 
     // gameOverController.setGuessController(this);
 
-    if (selectedSuspect) {
+    if (isSuspectSelected) {
 
       ProgressIndicator statsIndicator = new ProgressIndicator();
       statsIndicator.setMinSize(1, 1);
