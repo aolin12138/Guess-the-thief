@@ -12,35 +12,26 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="room" focusTraversable="true" minHeight="608.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="580.0" prefWidth="796.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.GuessController">
+<Pane fx:id="room" focusTraversable="true" minHeight="579.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="579.0" prefWidth="796.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.GuessController">
    <children>
-      <ImageView fx:id="crimeScene" fitHeight="583.0" fitWidth="800.0" layoutX="2.0" layoutY="-2.0" pickOnBounds="true">
+      <ImageView fx:id="crimeScene" fitHeight="583.0" fitWidth="800.0" pickOnBounds="true">
          <image>
             <Image url="@../images/crime_scene3.png" />
          </image>
       </ImageView>
-      <StackPane fx:id="indicatorPane" layoutX="637.0" layoutY="477.0" prefHeight="109.0" prefWidth="104.0" />
-
-      <TextField fx:id="txtInput" layoutX="-2.0" layoutY="490.0" prefHeight="118.0" prefWidth="596.0" />
-      <Button fx:id="btnSend" layoutX="595.0" layoutY="579.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send" />
-
-      <Label fx:id="chatStats" layoutX="8.0" layoutY="466.0" prefHeight="25.0" prefWidth="312.0">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
+      <StackPane fx:id="indicatorPane" layoutX="23.0" layoutY="416.0" prefHeight="109.0" prefWidth="104.0" />
       <Pane fx:id="statsPane" layoutX="14.0" layoutY="58.0" prefHeight="30.0" prefWidth="26.0" />
       <Label layoutX="-1.0" layoutY="4.0" prefHeight="38.0" prefWidth="765.0" text="Select who you think the Recipe Thief is and explain why you've guessed that suspect below!" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="602.0" layoutY="496.0" prefHeight="71.0" prefWidth="173.0" text="120" textAlignment="CENTER" textFill="#24f59b">
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-12.0" layoutY="435.0" prefHeight="71.0" prefWidth="173.0" text="120" textAlignment="CENTER" textFill="#24f59b">
          <font>
-            <Font name="System Bold" size="33.0" />
+            <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Label fx:id="lblDescription" alignment="CENTER" layoutY="460.0" prefHeight="38.0" prefWidth="596.0" textAlignment="CENTER" textFill="RED">
+      <Label fx:id="lblDescription" alignment="CENTER" layoutX="104.0" layoutY="373.0" prefHeight="38.0" prefWidth="596.0" textAlignment="CENTER" textFill="RED">
          <font>
             <Font size="16.0" />
          </font>
@@ -100,5 +91,21 @@
             </VBox>
          </children>
       </HBox>
+      <HBox fx:id="chatHBox" layoutX="152.0" layoutY="392.0" prefHeight="167.0" prefWidth="610.0" visible="false">
+         <children>
+      
+            <TextField fx:id="txtInput" prefHeight="159.0" prefWidth="512.0" />
+            <Button fx:id="btnSend" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <Label fx:id="explanationLabel" layoutX="154.0" layoutY="362.0" text="Please explain your answer below" textFill="WHITE" visible="false">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
