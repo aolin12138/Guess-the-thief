@@ -11,7 +11,11 @@ public class SceneManager {
     CRIME,
     ROOM,
     Chat,
-    GUESS
+    GUESS,
+    NEWSPAPER,
+    PHONE,
+    CALL_HISTORY,
+    CCTV
   }
 
   public static FXMLLoader roomLoader;

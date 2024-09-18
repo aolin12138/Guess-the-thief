@@ -20,8 +20,10 @@
          </image>
       </ImageView>
       <StackPane fx:id="indicatorPane" layoutX="637.0" layoutY="477.0" prefHeight="109.0" prefWidth="104.0" />
+
       <TextField fx:id="txtInput" layoutX="-2.0" layoutY="490.0" prefHeight="118.0" prefWidth="596.0" />
       <Button fx:id="btnSend" layoutX="595.0" layoutY="579.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send" />
+
       <Label fx:id="chatStats" layoutX="8.0" layoutY="466.0" prefHeight="25.0" prefWidth="312.0">
          <font>
             <Font name="System Bold" size="16.0" />
@@ -38,7 +40,7 @@
             <Font name="System Bold" size="33.0" />
          </font>
       </Label>
-      <Label fx:id="lblDescription" layoutY="460.0" prefHeight="38.0" prefWidth="596.0" textAlignment="CENTER" textFill="RED">
+      <Label fx:id="lblDescription" alignment="CENTER" layoutY="460.0" prefHeight="38.0" prefWidth="596.0" textAlignment="CENTER" textFill="RED">
          <font>
             <Font size="16.0" />
          </font>

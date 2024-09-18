@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.input.MouseEvent;
+import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.apiproxy.tts.TextToSpeechRequest.Voice;
 import nz.ac.auckland.se206.controllers.GuessController;
 import nz.ac.auckland.se206.controllers.RoomController;
@@ -28,7 +29,8 @@ public class GameStateContext {
   private RoomController roomController;
   private GuessController guessController;
 
-  /** Constructs a new GameStateContext and initializes the game states and professions. */
+  /** Constructs a new GameStateContext and initializes the game states and professions. 
+   * @throws ApiProxyException */
   public GameStateContext() {
     gameStartedState = new GameStarted(this);
     guessingState = new Guessing(this);
