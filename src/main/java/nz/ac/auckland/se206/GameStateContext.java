@@ -29,8 +29,11 @@ public class GameStateContext {
   private RoomController roomController;
   private GuessController guessController;
 
-  /** Constructs a new GameStateContext and initializes the game states and professions. 
-   * @throws ApiProxyException */
+  /**
+   * Constructs a new GameStateContext and initializes the game states and professions.
+   *
+   * @throws ApiProxyException
+   */
   public GameStateContext() {
     gameStartedState = new GameStarted(this);
     guessingState = new Guessing(this);
