@@ -272,7 +272,7 @@ public class GuessController {
     ownerImageManager.clicked();
     currentImageManager = ownerImageManager;
     currentSuspect = 1;
-    isThiefFound = false;
+    // isThiefFound = false;
     isSuspectSelected = true;
   }
 
@@ -284,7 +284,7 @@ public class GuessController {
     workerImageManager.clicked();
     currentImageManager = workerImageManager;
     currentSuspect = 2;
-    isThiefFound = true;
+    // isThiefFound = false;
     isSuspectSelected = true;
   }
 
@@ -296,7 +296,7 @@ public class GuessController {
     brotherImageManager.clicked();
     currentImageManager = brotherImageManager;
     currentSuspect = 3;
-    isThiefFound = false;
+    // isThiefFound = true;
     isSuspectSelected = true;
   }
 
@@ -370,7 +370,7 @@ public class GuessController {
 
     // gameOverController.setGuessController(this);
 
-    if (isSuspectSelected) {
+    if (currentSuspect == 3) {
 
       ProgressIndicator statsIndicator = new ProgressIndicator();
       statsIndicator.setMinSize(1, 1);
@@ -384,8 +384,10 @@ public class GuessController {
             protected Void call() throws Exception {
               try {
                 String validExplanation = isExplanationValid();
+                GameOverController.setOutputText(validExplanation);
                 String[] split = validExplanation.trim().split("");
-                boolean valid = currentSuspect == 3;
+                boolean valid = split[0].toLowerCase().contains("true");
+                isThiefFound = true;
 
                 Platform.runLater(
                     () -> {
