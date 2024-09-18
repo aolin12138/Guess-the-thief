@@ -40,9 +40,9 @@ public class CrimeSceneController {
 
   private static Timeline timeline = new Timeline();
 
-  @FXML private Rectangle clue1;
-  @FXML private Rectangle clue2;
-  @FXML private Rectangle clue3;
+  @FXML private Rectangle CCTVClue;
+  @FXML private Rectangle phoneClue;
+  @FXML private Rectangle newspaperClue;
   @FXML private Button btnGuess;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
@@ -111,24 +111,30 @@ public class CrimeSceneController {
   }
 
   @FXML
-  void onClue1Clicked(MouseEvent event) {
+  void onCCTVClueClicked(MouseEvent event) {
     isClue1Found = true;
     // Satisfies requirement of at least one clue being discovered
     isAnyClueFound = true;
+    Scene sceneOfButton = phoneClue.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
   }
 
   @FXML
-  void onClue2Clicked(MouseEvent event) {
+  void onPhoneClueClicked(MouseEvent event) {
     isClue2Found = true;
     // Satisfies requirement of at least one clue being discovered
     isAnyClueFound = true;
+    Scene sceneOfButton = phoneClue.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
   }
 
   @FXML
-  void onClue3Clicked(MouseEvent event) {
+  void onNewspaperClueClicked(MouseEvent event) {
     isClue3Found = true;
     // Satisfies requirement of at least one clue being discovered
     isAnyClueFound = true;
+    Scene sceneOfButton = btnGuess.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.NEWSPAPER));
   }
 
   @FXML

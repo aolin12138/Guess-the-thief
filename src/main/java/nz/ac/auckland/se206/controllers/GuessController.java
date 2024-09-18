@@ -333,17 +333,16 @@ public class GuessController {
       statsIndicator.setMinSize(1, 1);
       statsPane.getChildren().add(statsIndicator);
 
+      lblDescription.setText("Loading...");
+
       Task<Void> task =
           new Task<Void>() {
             @Override
             protected Void call() throws Exception {
               try {
                 String validExplanation = isExplanationValid();
-
-                GameOverController.setOutputText(validExplanation);
-
                 String[] split = validExplanation.trim().split("");
-                boolean valid = currentSuspect == 2;
+                boolean valid = currentSuspect == 3;
 
                 Platform.runLater(
                     () -> {
@@ -398,7 +397,7 @@ public class GuessController {
   public String isExplanationValid() throws ApiProxyException, IOException {
     try {
       String evidencePrompt =
-          new String(Files.readAllBytes(Paths.get("src/main/resources/prompts/chat2.txt")));
+          new String(Files.readAllBytes(Paths.get("src/main/resources/prompts/guessing.txt")));
 
       String fullPrompt = evidencePrompt + "\nUser Reasoning:\n" + txtInput.getText() + "\n";
 

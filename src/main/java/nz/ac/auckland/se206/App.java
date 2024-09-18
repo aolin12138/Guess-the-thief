@@ -60,6 +60,10 @@ public class App extends Application {
     SceneManager.addRoot(SceneManager.Scene.START, loadFxml("start"));
     SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, loadFxml("instructions"));
     SceneManager.addRoot(SceneManager.Scene.ROOM, loadFxml("room"));
+    SceneManager.addRoot(SceneManager.Scene.NEWSPAPER, loadFxml("newspaper"));
+    SceneManager.addRoot(SceneManager.Scene.PHONE, loadFxml("phone"));
+    SceneManager.addRoot(SceneManager.Scene.CALL_HISTORY, loadFxml("callhistory"));
+    SceneManager.addRoot(SceneManager.Scene.CCTV, loadFxml("cctv"));
 
     Parent root = loadFxml("start");
     scene = new Scene(root);
