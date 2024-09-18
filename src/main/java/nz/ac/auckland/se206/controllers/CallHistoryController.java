@@ -8,7 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
@@ -25,10 +28,12 @@ public class CallHistoryController {
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
   private static GameStateContext context = new GameStateContext();
+  private MediaPlayer player;
 
   @FXML private Button HomeBtn;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
+  @FXML private Rectangle voiceMailRectangle;
 
   @FXML
   void onHomeButtonClicked(ActionEvent event) {
@@ -132,4 +137,7 @@ public class CallHistoryController {
   public static void passTimeToPhoneScene(double timeToCount) {
     PhoneController.setTimeToCount(timeToCount);
   }
+
+  @FXML
+  void onVoicemailClicked(MouseEvent event) {}
 }
