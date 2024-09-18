@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="room" focusTraversable="true" minHeight="480.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="582.0" prefWidth="800.0" style="-fx-background-color: light grey;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.RoomController">
+<Pane fx:id="room" focusTraversable="true" minHeight="480.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.RoomController">
    <children>
       <ImageView fx:id="displayImage" fitHeight="427.0" fitWidth="805.0" layoutX="-2.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -33,10 +33,10 @@
       <Rectangle fx:id="rectPerson1" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="200.0" layoutX="253.0" layoutY="144.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="68.0" />
       <Rectangle fx:id="officer2" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="111.0" layoutX="170.0" layoutY="181.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="32.0" />
       <Rectangle fx:id="rectPerson2" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="274.0" layoutX="374.0" layoutY="111.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="93.0" />
-      <Button fx:id="btnGuess" layoutX="524.0" layoutY="494.0" mnemonicParsing="false" onAction="#handleGuessClick" prefHeight="35.0" prefWidth="119.0" text="Make a Guess" />
-      <TextArea fx:id="txtaChat" editable="false" layoutX="116.0" layoutY="445.0" prefHeight="87.0" prefWidth="395.0" wrapText="true" />
-      <TextField fx:id="txtInput" layoutX="115.0" layoutY="542.0" prefHeight="26.0" prefWidth="397.0" />
-      <Button fx:id="btnSend" layoutX="525.0" layoutY="542.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="32.0" prefWidth="119.0" text="Send" />
+      <Button fx:id="btnGuess" layoutX="665.0" layoutY="549.0" mnemonicParsing="false" onAction="#handleGuessClick" prefHeight="35.0" prefWidth="119.0" text="Make a Guess" />
+      <TextArea fx:id="txtaChat" editable="false" layoutX="116.0" layoutY="445.0" prefHeight="103.0" prefWidth="535.0" wrapText="true" />
+      <TextField fx:id="txtInput" layoutX="115.0" layoutY="553.0" prefHeight="26.0" prefWidth="397.0" />
+      <Button fx:id="btnSend" layoutX="527.0" layoutY="551.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="32.0" prefWidth="119.0" text="Send" />
       <ImageView fx:id="carImage" fitHeight="416.0" fitWidth="633.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/car_close_up.jpg" />
@@ -136,13 +136,13 @@
             </VBox>
          </children>
       </VBox>
-      <VBox layoutX="659.0" layoutY="431.0" prefHeight="144.0" prefWidth="132.0" spacing="10.0">
+      <VBox layoutX="673.0" layoutY="444.0" prefHeight="98.0" prefWidth="105.0" spacing="10.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="39.0" stroke="BLACK" strokeType="INSIDE" width="132.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="132.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="39.0" stroke="BLACK" strokeType="INSIDE" width="132.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="21.0" stroke="BLACK" strokeType="INSIDE" width="109.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="24.0" stroke="BLACK" strokeType="INSIDE" width="109.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="19.0" stroke="BLACK" strokeType="INSIDE" width="106.0" />
          </children>
       </VBox>
-      <Button fx:id="btnSlide" layoutX="524.0" layoutY="445.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="119.0" text="Switching Scenes" />
+      <Button fx:id="btnSlide" layoutX="289.0" layoutY="413.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="225.0" text="Switching Scenes" />
    </children>
 </Pane>

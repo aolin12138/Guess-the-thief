@@ -390,6 +390,7 @@ public class RoomController {
   @FXML
   void onCrimeSceneClicked(MouseEvent event) throws ApiProxyException, IOException {
     Scene sceneOfButton = btnGuess.getScene();
+    imagesVBox.setVisible(false);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
   }
@@ -478,7 +479,7 @@ public class RoomController {
    * @param msg the chat message to append
    */
   private void appendChatMessage(ChatMessage msg) {
-    txtaChat.appendText("You: " + msg.getContent() + "\n\n");
+    txtaChat.appendText(Utils.getPlayerName() + ": " + msg.getContent() + "\n\n");
   }
 
   //
@@ -654,6 +655,7 @@ public class RoomController {
   public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {
     ImageView clickedImage = (ImageView) event.getSource();
     String id = clickedImage.getId();
+
     TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesVBox);
     switch (id) {
       case "ownerImage":
@@ -720,15 +722,30 @@ public class RoomController {
   public void setPersonImage(MouseEvent event, String id) throws IOException {
     switch (id) {
       case "ownerImage":
+        if (currentImage != null && currentImage.getId().equals("ownerImage")) {
+          return;
+        }
         displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
+        currentImage = ownerImage;
+        currentImageManager.setImageView(currentImage);
         context.handleRectangleClick(event, "rectPerson2");
         break;
       case "workerImage":
+        if (currentImage != null && currentImage.getId().equals("workerImage")) {
+          return;
+        }
         displayImage.setImage(new Image(workerImage.getImage().getUrl()));
+        currentImage = workerImage;
+        currentImageManager.setImageView(currentImage);
         context.handleRectangleClick(event, "rectPerson1");
         break;
       case "brotherImage":
+        if (currentImage != null && currentImage.getId().equals("brotherImage")) {
+          return;
+        }
         displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
+        currentImage = brotherImage;
+        currentImageManager.setImageView(currentImage);
         context.handleRectangleClick(event, "rectPerson3");
         break;
     }

@@ -306,6 +306,7 @@ public class CrimeSceneController {
               }
             });
 
+    imagesVBox.setVisible(false);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
   }
 
