@@ -28,11 +28,11 @@ public class PromptEngineering {
       // Load the prompt template file from resources
 
       String resourcePath = "";
-      // if (person.hasTalked()) {
-      //   resourcePath = "prompts/chat3.txt";
-      // } else {
-      //   resourcePath = "prompts/chat2.txt";
-      // }
+      if (person.hasTalked()) {
+        resourcePath = "prompts/chat3.txt";
+      } else {
+        resourcePath = "prompts/chat2.txt";
+      }
 
       resourcePath = "prompts/" + promptId;
 

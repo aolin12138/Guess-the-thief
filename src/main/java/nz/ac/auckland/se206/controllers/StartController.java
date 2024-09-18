@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -38,6 +39,8 @@ public class StartController {
 
   @FXML
   public void initialize() {
+    // enter the scene immediately
+    startButton.setDisable(false);
 
     // This ArrayList will store the scores of the previous rounds.
     ArrayList<String> previousScores = new ArrayList<>();
@@ -79,8 +82,11 @@ public class StartController {
     } else {
       Utils.setPlayerName(playerNameWindow.getText());
     }
+
+    FXMLLoader crimeSceneLoader = new FXMLLoader(App.class.getResource("/fxml/crime.fxml"));
+    SceneManager.addRoot(SceneManager.Scene.CRIME, crimeSceneLoader.load());
+    SceneManager.setCrimeSceneLoader(crimeSceneLoader);
     // Loads CRIME scene here because timer starts when it is initialised
-    SceneManager.addRoot(SceneManager.Scene.CRIME, App.loadFxml("crime"));
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));

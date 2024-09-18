@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.KeyFrame;
@@ -12,23 +13,24 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
@@ -63,6 +65,7 @@ public class RoomController {
   private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
+  private MediaPlayer player;
 
   @FXML private Rectangle rectPerson1;
   @FXML private Rectangle rectPerson2;
@@ -78,6 +81,10 @@ public class RoomController {
   @FXML private Label lblProfession;
   @FXML private Label timerLabel;
   @FXML private Label chatStats;
+  @FXML private Label crimeLabel;
+  @FXML private Label workerLabel;
+  @FXML private Label ownerLabel;
+  @FXML private Label brotherLabel;
 
   @FXML private Button btnGuess;
   @FXML private Button btnSend;
@@ -98,9 +105,7 @@ public class RoomController {
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
 
-  @FXML public ComboBox<HBox> imagesComboBox;
-
-  @FXML private HBox imagesHBox;
+  @FXML private VBox imagesVBox;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
@@ -125,13 +130,16 @@ public class RoomController {
     if (isFirstTimeInit) {
       isFirstTimeInit = false;
     }
+    txtInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
 
     btnSend
         .sceneProperty()
         .addListener(
             (observable, oldScene, newScene) -> {
-              // Stage stage = (Stage) newScene.getWindow();
-              // stage.sizeToScene();
+              if (newScene != null) {
+                Stage stage = (Stage) newScene.getWindow();
+                stage.sizeToScene();
+              }
               if (newScene != null) {
                 newScene.addEventHandler(
                     KeyEvent.KEY_PRESSED,
@@ -185,21 +193,58 @@ public class RoomController {
                                     * 100
                                     / (timeToCountTo - timeForGuessing)));
                   } else if ((timeToCount > 0)) {
-                    // Here the timer has exceeded the time for investigation and the game must
-                    // switch to the guess scene.
-                    // Program switch to guess scene here.
-                    System.out.println("Switching to guessing state");
-                    context.setState(context.getGuessingState());
-                    try {
-                      App.setRoot("guess");
-                    } catch (IOException e) {
-                      e.printStackTrace();
+                    // Program switch to guess scene here ONLY if clues and suspects have been
+                    // correctly interacted with
+                    if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
+                      context.setState(context.getGuessingState());
+                      try {
+                        App.setRoot("guess");
+                      } catch (IOException e) {
+                        e.printStackTrace();
+                      }
+                      // Stop the timer here, as once the suer switch to guessing state, they aren't
+                      // coming back
+                      timeline.stop();
+                    } else if (!context.isAllSuspectsSpokenTo()
+                        && CrimeSceneController.isAnyClueFound()) {
+                      context.setState(context.getGameOverState());
+                      GameOverController.setOutputText(
+                          "You did not speak to every suspect during your investigation!\nWithout"
+                              + " doing this, the investigation is incomplete!\n"
+                              + "Click play again to replay.");
+                      try {
+                        App.setRoot("gamelost");
+                      } catch (IOException e) {
+                        e.printStackTrace();
+                      }
+                    } else if (context.isAllSuspectsSpokenTo()
+                        && !CrimeSceneController.isAnyClueFound()) {
+                      context.setState(context.getGameOverState());
+                      GameOverController.setOutputText(
+                          "You did not find any clues in the crime scene!\n"
+                              + "Finding clues is vital to conduting a good investigation!\n"
+                              + "Click play again to replay");
+                      try {
+                        App.setRoot("gamelost");
+                      } catch (IOException e) {
+                        e.printStackTrace();
+                      }
+                    } else if (!context.isAllSuspectsSpokenTo()
+                        && !CrimeSceneController.isAnyClueFound()) {
+                      context.setState(context.getGameOverState());
+                      GameOverController.setOutputText(
+                          "You did not inspect the crime scene for clues or speak to every"
+                              + " suspect!\n"
+                              + "These steps are vital in any investigation.\n"
+                              + "Click play again to replay.");
+                      try {
+                        App.setRoot("gamelost");
+                      } catch (IOException e) {
+                        e.printStackTrace();
+                      }
                     }
-                    // Stop the timer here, as once the suer switch to guessing state, they aren't
-                    // coming back
                     timeline.stop();
                   }
-
                   ringProgressIndicator.setProgress(progress);
                   timerLabel.setText(Utils.formatTime(timeToCount - timeForGuessing));
                 }));
@@ -385,6 +430,7 @@ public class RoomController {
   @FXML
   void onCrimeSceneClicked(MouseEvent event) throws ApiProxyException, IOException {
     Scene sceneOfButton = btnGuess.getScene();
+    imagesVBox.setVisible(false);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
   }
@@ -406,11 +452,34 @@ public class RoomController {
    *
    * @param event the action event triggered by clicking the guess button
    * @throws IOException if there is an I/O error
+   * @throws URISyntaxException
    */
   @FXML
-  private void handleGuessClick(ActionEvent event) throws IOException {
-    // context.handleGuessClick();
-    App.setRoot("guess");
+  private void handleGuessClick(ActionEvent event) throws IOException, URISyntaxException {
+    // Before switching to guess scene, check the user has spoken to all 3 suspects and seen at
+    // least one clue
+    if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
+      // context.handleGuessClick();
+      App.setRoot("guess");
+    } else if (!context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
+      Media sound =
+          new Media(App.class.getResource("/sounds/missing_suspect.mp3").toURI().toString());
+      player = new MediaPlayer(sound);
+      player.play();
+      return;
+    } else if (context.isAllSuspectsSpokenTo() && !CrimeSceneController.isAnyClueFound()) {
+      Media sound =
+          new Media(App.class.getResource("/sounds/clue_reminder_1.mp3").toURI().toString());
+      player = new MediaPlayer(sound);
+      player.play();
+      return;
+    } else if (!context.isAllSuspectsSpokenTo() && !CrimeSceneController.isAnyClueFound()) {
+      Media sound =
+          new Media(App.class.getResource("/sounds/keep_investigating.mp3").toURI().toString());
+      player = new MediaPlayer(sound);
+      player.play();
+      return;
+    }
   }
 
   /**
@@ -437,7 +506,6 @@ public class RoomController {
     } else {
       return "That name doesn't exist";
     }
-
   }
 
   /**
@@ -484,7 +552,12 @@ public class RoomController {
    * @param msg the chat message to append
    */
   private void appendChatMessage(ChatMessage msg) {
-    txtaChat.appendText(msg.getRole() + ": " + msg.getContent() + "\n\n");
+    txtaChat.appendText(Utils.getPlayerName() + ": " + msg.getContent() + "\n\n");
+  }
+
+  //
+  private void appendChatMessage(ChatMessage msg, Person person) {
+    txtaChat.appendText(person.getName() + ": " + msg.getContent() + "\n\n");
   }
 
   /**
@@ -512,7 +585,7 @@ public class RoomController {
     } catch (ApiProxyException e) {
       e.printStackTrace();
       return null;
-    } 
+    }
   }
 
   /**
@@ -580,40 +653,66 @@ public class RoomController {
   @FXML
   public void styleScene() {
 
+    if (SceneManager.getCrimeSceneLoader() != null) {
+      CrimeSceneController crimeSceneController =
+          SceneManager.getCrimeSceneLoader().getController();
+      switch (crimeSceneController.getId()) {
+        case "ownerImage":
+          displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
+          setPerson(context.getPerson("rectPerson2"));
+
+        case "workerImage":
+          displayImage.setImage(new Image(workerImage.getImage().getUrl()));
+          setPerson(context.getPerson("rectPerson1"));
+
+        case "brotherImage":
+          displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
+          setPerson(context.getPerson("rectPerson3"));
+      }
+    }
+
     ownerImage.setOnMouseEntered(
         e -> {
           ownerImageManager.hoverIn();
+          ownerLabel.setVisible(true);
         });
     ownerImage.setOnMouseExited(
         e -> {
           ownerImageManager.hoverOut();
+          ownerLabel.setVisible(false);
         });
 
     workerImage.setOnMouseEntered(
         e -> {
           workerImageManager.hoverIn();
+          workerLabel.setVisible(true);
         });
     workerImage.setOnMouseExited(
         e -> {
           workerImageManager.hoverOut();
+          workerLabel.setVisible(false);
         });
 
     brotherImage.setOnMouseEntered(
         e -> {
           brotherImageManager.hoverIn();
+          brotherLabel.setVisible(true);
         });
     brotherImage.setOnMouseExited(
         e -> {
           brotherImageManager.hoverOut();
+          brotherLabel.setVisible(false);
         });
 
     crimeImage.setOnMouseEntered(
         e -> {
           crimeImageManager.hoverIn();
+          crimeLabel.setVisible(true);
         });
     crimeImage.setOnMouseExited(
         e -> {
           crimeImageManager.hoverOut();
+          crimeLabel.setVisible(false);
         });
 
     btnSlide.setOnAction(event -> toggleHBox());
@@ -632,15 +731,7 @@ public class RoomController {
     ImageView clickedImage = (ImageView) event.getSource();
     String id = clickedImage.getId();
 
-    ColorAdjust colorAdjustOut = new ColorAdjust();
-    colorAdjustOut.setBrightness(0);
-    DropShadow dropShadowOut = new DropShadow();
-    dropShadowOut.setRadius(10);
-    dropShadowOut.setOffsetX(0);
-    dropShadowOut.setOffsetY(0);
-    dropShadowOut.setColor(javafx.scene.paint.Color.GRAY);
-    dropShadowOut.setInput(colorAdjustOut);
-    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesHBox);
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesVBox);
     switch (id) {
       case "ownerImage":
         if (currentImage != null && currentImage.getId().equals("ownerImage")) {
@@ -649,8 +740,9 @@ public class RoomController {
         displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
         currentImage = ownerImage;
         currentImageManager.setImageView(currentImage);
-        transition.setToY(-imagesHBox.getHeight()); // Move off-screen
-        transition.setOnFinished(e -> imagesHBox.setVisible(false)); // Hide after animation
+        context.person1Talked();
+        transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
+        transition.setOnFinished(e -> imagesVBox.setVisible(false)); // Hide after animation
         transition.play();
         context.handleRectangleClick(event, "rectPerson2");
         break;
@@ -661,14 +753,11 @@ public class RoomController {
         displayImage.setImage(new Image(workerImage.getImage().getUrl()));
         currentImage = workerImage;
         currentImageManager.setImageView(currentImage);
-        transition.setToY(-imagesHBox.getHeight()); // Move off-screen
-        transition.setOnFinished(e -> imagesHBox.setVisible(false)); // Hide after animation
+        context.person2Talked();
+        transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
+        transition.setOnFinished(e -> imagesVBox.setVisible(false)); // Hide after animation
         transition.play();
         context.handleRectangleClick(event, "rectPerson1");
-        break;
-      case "crimeImage":
-        carImage.setVisible(true);
-        btnBack.setVisible(true);
         break;
       case "brotherImage":
         if (currentImage != null && currentImage.getId().equals("brotherImage")) {
@@ -677,8 +766,9 @@ public class RoomController {
         displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
         currentImage = brotherImage;
         currentImageManager.setImageView(currentImage);
-        transition.setToY(-imagesHBox.getHeight()); // Move off-screen
-        transition.setOnFinished(e -> imagesHBox.setVisible(false)); // Hide after animation
+        context.person3Talked();
+        transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
+        transition.setOnFinished(e -> imagesVBox.setVisible(false)); // Hide after animation
         transition.play();
         context.handleRectangleClick(event, "rectPerson3");
     }
@@ -686,20 +776,59 @@ public class RoomController {
 
   private void toggleHBox() {
     // Create the transition
-    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesHBox);
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesVBox);
 
-    if (imagesHBox.isVisible()) {
+    if (imagesVBox.isVisible()) {
       // Slide out
-      transition.setToY(-imagesHBox.getHeight()); // Move off-screen
-      transition.setOnFinished(event -> imagesHBox.setVisible(false)); // Hide after animation
+      transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
+      transition.setOnFinished(event -> imagesVBox.setVisible(false)); // Hide after animation
     } else {
       // Slide in
-      imagesHBox.setVisible(true); // Show before animation
-      transition.setFromY(-imagesHBox.getHeight()); // Start off-screen
-      transition.setToY(0); // Move to visible position
+      imagesVBox.setVisible(true); // Show before animation
+      transition.setFromX(imagesVBox.getWidth() + 30); // Start off-screen
+      transition.setToX(0); // Move to visible position
     }
 
     // Play the transition
     transition.play();
+  }
+
+  public void setPersonImage(MouseEvent event, String id) throws IOException {
+    switch (id) {
+      case "ownerImage":
+        if (currentImage != null && currentImage.getId().equals("ownerImage")) {
+          return;
+        }
+        displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
+        currentImage = ownerImage;
+        currentImageManager.setImageView(currentImage);
+        context.person1Talked();
+        context.handleRectangleClick(event, "rectPerson2");
+        break;
+      case "workerImage":
+        if (currentImage != null && currentImage.getId().equals("workerImage")) {
+          return;
+        }
+        displayImage.setImage(new Image(workerImage.getImage().getUrl()));
+        currentImage = workerImage;
+        currentImageManager.setImageView(currentImage);
+        context.person2Talked();
+        context.handleRectangleClick(event, "rectPerson1");
+        break;
+      case "brotherImage":
+        if (currentImage != null && currentImage.getId().equals("brotherImage")) {
+          return;
+        }
+        displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
+        currentImage = brotherImage;
+        currentImageManager.setImageView(currentImage);
+        context.person3Talked();
+        context.handleRectangleClick(event, "rectPerson3");
+        break;
+    }
+  }
+
+  public void setContext(GameStateContext context) {
+    this.context = context;
   }
 }

@@ -11,7 +11,9 @@ public class Person {
   private String profession;
   private String color = "";
   private Voice voice;
-  private Boolean talked = false;
+  private boolean talked = false;
+  private boolean isInterviewed = false;
+
   private ChatCompletionRequest chatCompletionRequest;
 
   public Person(String name, String role, String profession, Voice voice) {
@@ -19,8 +21,8 @@ public class Person {
     this.name = name;
     this.role = role;
     this.profession = profession;
-    try{
-    ApiProxyConfig config = ApiProxyConfig.readConfig();
+    try {
+      ApiProxyConfig config = ApiProxyConfig.readConfig();
       chatCompletionRequest =
           new ChatCompletionRequest(config)
               .setN(1)
@@ -52,12 +54,20 @@ public class Person {
     return voice;
   }
 
-  public Boolean hasTalked() {
+  public boolean hasTalked() {
     return talked;
   }
 
   public void talked() {
     talked = true;
+  }
+
+  public void setIsInterviewed() {
+    isInterviewed = true;
+  }
+
+  public boolean hasBeenInterviewed() {
+    return isInterviewed;
   }
 
   public ChatCompletionRequest getChatCompletionRequest() {

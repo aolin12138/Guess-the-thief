@@ -18,6 +18,7 @@ public class GameOverController {
     @FXML private TextArea txtAChat;
     private static String explanation;
     @FXML private Label lblExplanation;
+    @FXML private TextArea txtArea;
 
 
     @FXML
@@ -46,13 +47,17 @@ public class GameOverController {
     // statsPane.getChildren().add(statsIndicator);
 
 
-    lblExplanation.setText(explanation);
+    // lblExplanation.setText(explanation);
+    if(txtArea != null) {
+        txtArea.setWrapText(true);
+        txtArea.setText(explanation);
+    }
     
    
     if (GuessController.getThiefFound()) {
-        lblStats.setText("You WIN!");
+        lblStats.setText("The guess is correct!");
     } else {
-        lblStats.setText("You LOSE!");
+        lblStats.setText("You Lose!");
     }
     
         
