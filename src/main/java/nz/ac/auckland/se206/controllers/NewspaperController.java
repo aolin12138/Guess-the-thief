@@ -83,4 +83,12 @@ public class NewspaperController {
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
   }
+
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
+  public static void passTimeToCrimeScene(double timeToCount) {
+    CrimeSceneController.setTimeToCount(timeToCount);
+  }
 }
