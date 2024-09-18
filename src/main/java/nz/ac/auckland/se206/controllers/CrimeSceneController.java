@@ -43,7 +43,6 @@ public class CrimeSceneController {
   private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
-
   private static Timeline timeline = new Timeline();
 
   @FXML private Rectangle CCTVClue;
