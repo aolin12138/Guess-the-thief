@@ -30,6 +30,8 @@ public class ImageManager {
 
   public int originalX;
 
+  private boolean isClicked = false;
+
   public ImageManager(ImageView imageView) {
     this.imageView = imageView;
 
@@ -115,6 +117,9 @@ public class ImageManager {
   }
 
   public void hoverIn() {
+    if (isClicked) {
+      return;
+    }
     imageView.setEffect(dropShadowIn);
 
     scaleTransitionOut.stop();
@@ -128,6 +133,9 @@ public class ImageManager {
   }
 
   public void hoverOut() {
+    if (isClicked) {
+      return;
+    }
     imageView.setEffect(dropShadowOut);
 
     scaleTransitionIn.stop();
@@ -150,5 +158,28 @@ public class ImageManager {
 
   public ImageView getImageView() {
     return imageView;
+  }
+
+  public void clicked() {
+    DropShadow dropShadow = new DropShadow();
+    dropShadow.setRadius(10);
+    dropShadow.setOffsetX(0);
+    dropShadow.setOffsetY(0);
+    dropShadow.setColor(javafx.scene.paint.Color.WHITE);
+
+    ColorAdjust colorAdjust = new ColorAdjust();
+    colorAdjust.setBrightness(0);
+
+    dropShadow.setInput(colorAdjust);
+
+    imageView.setEffect(dropShadow);
+    imageView.setScaleX(1.1);
+    imageView.setScaleY(1.1);
+    isClicked = true;
+  }
+
+  public void unclicked() {
+    isClicked = false;
+    hoverOut();
   }
 }

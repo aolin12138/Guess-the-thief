@@ -60,10 +60,12 @@ public class App extends Application {
     FXMLLoader startLoader = new FXMLLoader(App.class.getResource("/fxml/start.fxml"));
     FXMLLoader roomLoader = new FXMLLoader(App.class.getResource("/fxml/room.fxml"));
     FXMLLoader crimeSceneLoader = new FXMLLoader(App.class.getResource("/fxml/crime.fxml"));
+    FXMLLoader guessLoader = new FXMLLoader(App.class.getResource("/fxml/guess.fxml"));
 
     SceneManager.addRoot(SceneManager.Scene.START, startLoader.load());
     SceneManager.addRoot(SceneManager.Scene.ROOM, roomLoader.load());
     SceneManager.addRoot(SceneManager.Scene.CRIME, crimeSceneLoader.load());
+    SceneManager.addRoot(SceneManager.Scene.GUESS, guessLoader.load());
 
     SceneManager.setRoomLoader(roomLoader);
     SceneManager.setCrimeSceneLoader(crimeSceneLoader);

@@ -11,6 +11,7 @@ public class SceneManager {
     CRIME,
     ROOM,
     Chat,
+    GUESS
   }
 
   public static FXMLLoader roomLoader;

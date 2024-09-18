@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="room" focusTraversable="true" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.StartController">
+<Pane fx:id="room" focusTraversable="true" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="576.0" prefWidth="799.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.StartController">
    <children>
-      <ImageView fitHeight="416.0" fitWidth="796.0" layoutY="53.0" pickOnBounds="true">
+      <ImageView fitHeight="577.0" fitWidth="799.0" layoutX="-1.0" layoutY="-1.0" pickOnBounds="true">
          <image>
-            <Image url="@../images/start_scene.png" />
+            <Image url="@../images/crime_scene4.png" />
          </image>
       </ImageView>
       <Label layoutX="154.0" text="PI Masters: Detective Training ">
@@ -20,39 +20,39 @@
             <Font size="38.0" />
          </font>
       </Label>
-      <Button fx:id="startButton" disable="true" layoutX="417.0" layoutY="161.0" mnemonicParsing="false" onAction="#onEnterPressed" text="Begin Investigation" />
+      <Button fx:id="startButton" disable="true" layoutX="5.0" layoutY="378.0" mnemonicParsing="false" onAction="#onEnterPressed" text="Begin Investigation" />
       <Label layoutX="135.0" layoutY="57.0">
          <font>
             <Font size="21.0" />
          </font>
       </Label>
-      <Label layoutX="235.0" layoutY="479.0" text="Scoreboard">
+      <Label layoutX="245.0" layoutY="221.0" text="Scoreboard" textFill="#fffefe">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="instructionsButton" layoutX="260.0" layoutY="161.0" mnemonicParsing="false" onAction="#onViewInstructions" text="View Instructions" />
-      <TextField fx:id="playerNameWindow" layoutX="235.0" layoutY="70.0" prefHeight="26.0" prefWidth="193.0" promptText="(Optional) Enter detective name" />
-      <Label layoutX="147.0" layoutY="494.0" text="1st">
+      <Button fx:id="instructionsButton" layoutX="10.0" layoutY="339.0" mnemonicParsing="false" onAction="#onViewInstructions" text="View Instructions" />
+      <TextField fx:id="playerNameWindow" layoutX="292.0" layoutY="175.0" prefHeight="26.0" prefWidth="193.0" promptText="(Optional) Enter detective name" />
+      <Label layoutX="218.0" layoutY="295.0" text="1st" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="142.0" layoutY="535.0" text="2nd">
+      <Label layoutX="213.0" layoutY="336.0" text="2nd" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="144.0" layoutY="566.0" text="3rd">
+      <Label layoutX="215.0" layoutY="367.0" text="3rd" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="ScoreboardNameLabel1" layoutX="209.0" layoutY="508.0" text="Play to generate scores" />
-      <Label fx:id="ScoreboardNameLabel2" layoutX="209.0" layoutY="541.0" text="Play to generate scores" />
-      <Label fx:id="ScoreboardNameLabel3" layoutX="209.0" layoutY="572.0" text="Play to generate scores" />
-      <Label fx:id="ScoreboardTimeLabel1" layoutX="381.0" layoutY="508.0" text="00:00" />
-      <Label fx:id="ScoreboardTimeLabel2" layoutX="377.0" layoutY="541.0" text="00:00" />
-      <Label fx:id="ScoreboardTimeLabel3" layoutX="377.0" layoutY="572.0" text="00:00" />
+      <Label fx:id="ScoreboardNameLabel1" layoutX="280.0" layoutY="309.0" text="Play to generate scores" textFill="WHITE" />
+      <Label fx:id="ScoreboardNameLabel2" layoutX="280.0" layoutY="342.0" text="Play to generate scores" textFill="WHITE" />
+      <Label fx:id="ScoreboardNameLabel3" layoutX="280.0" layoutY="373.0" text="Play to generate scores" textFill="WHITE" />
+      <Label fx:id="ScoreboardTimeLabel1" layoutX="452.0" layoutY="309.0" text="00:00" textFill="WHITE" />
+      <Label fx:id="ScoreboardTimeLabel2" layoutX="448.0" layoutY="342.0" text="00:00" textFill="WHITE" />
+      <Label fx:id="ScoreboardTimeLabel3" layoutX="448.0" layoutY="373.0" text="00:00" textFill="WHITE" />
    </children>
 </Pane>

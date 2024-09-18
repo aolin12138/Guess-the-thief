@@ -237,9 +237,7 @@ public class GameStateContext {
     return gameState;
   }
 
-public void setGuessController(GuessController guessController) {
+  public void setGuessController(GuessController guessController) {
     this.guessController = guessController;
-}
-
-  
+  }
 }
