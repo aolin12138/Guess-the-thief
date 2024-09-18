@@ -120,6 +120,8 @@ public class GuessController {
    */
   @FXML
   public void initialize() {
+    txtInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
+
     btnSend
         .sceneProperty()
         .addListener(
