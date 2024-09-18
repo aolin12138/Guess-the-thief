@@ -403,7 +403,7 @@ public class GuessController {
                         } catch (IOException e) {
                           e.printStackTrace();
                         }
-                      } else {
+              } else {
                         context.setState(context.getGameOverState());
 
                         try {
