@@ -46,8 +46,6 @@ public class GuessController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 300000;
-  private static double timeToCountTo = 360000;
   private static double maxTimeforGuessing = 60000;
   private static double timeForGuessing = 60000;
   private static int progress = 0;
@@ -121,7 +119,7 @@ public class GuessController {
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(60);
     // Timer label is updated here
-    if (timeToCount % 1000 == 0) {
+    if (timeForGuessing % 1000 == 0) {
       timerLabel.setText(Utils.formatTime(timeForGuessing));
     }
 
@@ -132,6 +130,7 @@ public class GuessController {
                 Duration.millis(1),
                 event -> {
                   if (timeForGuessing > 0) {
+                    // This runs when there is still time on the clock
                     timeForGuessing--;
                     progress =
                         (int)
@@ -140,12 +139,25 @@ public class GuessController {
                                     * 100
                                     / (maxTimeforGuessing)));
                   } else if ((timeForGuessing == 0)) {
-                    System.out.println("Switching to game over scene and and state");
-                    context.setState(context.getGameOverState());
-                    try {
-                      App.setRoot("gameover");
-                    } catch (IOException e) {
-                      e.printStackTrace();
+                    // When timer reaches 0, this code runs. Ideally, the user will have already
+                    // clicked the submit guess button.
+                    // If they haven't and the timer runs out, this code will handle all scenarios.
+                    if (!selectedSuspect) {
+                      // User didn't click on a suspect, therefore they cannot possibly win the
+                      // game.
+
+                      System.out.println("Switching to game over scene and and state");
+                      context.setState(context.getGameOverState());
+                      GameOverController.setOutputText(
+                          "You did not guess any of the suspects within the time limit!\n"
+                              + "Next time you play, make sure to click on your suspected thief and"
+                              + " type an explanation to support your decision.\n"
+                              + "Click play again to replay.");
+                      try {
+                        App.setRoot("gameover");
+                      } catch (IOException e) {
+                        e.printStackTrace();
+                      }
                     }
                     // Here we need to implement functionality that happens when the guessing time
                     // runs out.
