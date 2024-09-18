@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="room" focusTraversable="true" minHeight="608.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="633.0" prefWidth="796.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.GuessController">
+<Pane fx:id="room" focusTraversable="true" minHeight="608.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="580.0" prefWidth="796.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.GuessController">
    <children>
-      <ImageView fitHeight="416.0" fitWidth="796.0" layoutY="47.0" pickOnBounds="true">
+      <ImageView fx:id="crimeScene" fitHeight="583.0" fitWidth="800.0" layoutX="2.0" layoutY="-2.0" pickOnBounds="true">
          <image>
-            <Image url="@../images/crime_scene.jpeg" />
+            <Image url="@../images/crime_scene3.png" />
          </image>
       </ImageView>
       <StackPane fx:id="indicatorPane" layoutX="637.0" layoutY="477.0" prefHeight="109.0" prefWidth="104.0" />
-      <TextField fx:id="txtInput" alignment="TOP_LEFT" layoutY="500.0" prefHeight="118.0" prefWidth="596.0" />
-      <Button fx:id="btnSend" layoutX="602.0" layoutY="586.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send" />
+
+      <TextField fx:id="txtInput" layoutX="-2.0" layoutY="490.0" prefHeight="118.0" prefWidth="596.0" />
+      <Button fx:id="btnSend" layoutX="595.0" layoutY="579.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send" />
+
       <Label fx:id="chatStats" layoutX="8.0" layoutY="466.0" prefHeight="25.0" prefWidth="312.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
       <Pane fx:id="statsPane" layoutX="14.0" layoutY="58.0" prefHeight="30.0" prefWidth="26.0" />
-      <Button fx:id="sus1btn" layoutX="116.0" layoutY="332.0" mnemonicParsing="false" onAction="#selectSuspect1" text="Suspect1" />
-      <Button fx:id="sus2btn" layoutX="370.0" layoutY="332.0" mnemonicParsing="false" onAction="#selectSuspect2" text="Suspect2" />
-      <Button fx:id="sus3btn" layoutX="625.0" layoutY="332.0" mnemonicParsing="false" onAction="#selectSuspect3" text="Suspect3" />
-      <Label layoutX="-1.0" layoutY="4.0" prefHeight="38.0" prefWidth="765.0" text="Select who you think the Recipe Thief is and explain why you've guessed that suspect below!">
+      <Label layoutX="-1.0" layoutY="4.0" prefHeight="38.0" prefWidth="765.0" text="Select who you think the Recipe Thief is and explain why you've guessed that suspect below!" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
@@ -43,5 +45,60 @@
             <Font size="16.0" />
          </font>
       </Label>
+      <HBox layoutX="71.0" layoutY="157.0" prefHeight="176.0" prefWidth="322.0" spacing="150.0">
+         <children>
+            <VBox prefHeight="177.0" prefWidth="115.0">
+               <children>
+                  <ImageView fx:id="ownerImage" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#selectSuspect1" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/owner.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="ownerLabel" text="Owner" textFill="WHITE">
+                     <font>
+                        <Font name="Bai Jamjuree Regular" size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="29.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="166.0" prefWidth="130.0">
+               <children>
+                  <ImageView fx:id="workerImage" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#selectSuspect2" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/worker.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="workerLabel" text="Worker" textFill="WHITE">
+                     <font>
+                        <Font name="Bai Jamjuree Regular" size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="34.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <ImageView fx:id="brotherImage" fitHeight="166.0" fitWidth="91.0" onMouseClicked="#selectSuspect3" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/brother.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="brotherLabel" text="Brother" textFill="WHITE">
+                     <font>
+                        <Font name="Bai Jamjuree Regular" size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="18.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </Pane>

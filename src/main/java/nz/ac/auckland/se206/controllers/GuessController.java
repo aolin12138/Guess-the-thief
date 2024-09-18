@@ -17,13 +17,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
@@ -32,6 +35,7 @@ import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
+import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
@@ -46,8 +50,6 @@ public class GuessController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 300000;
-  private static double timeToCountTo = 360000;
   private static double maxTimeforGuessing = 60000;
   private static double timeForGuessing = 60000;
   private static int progress = 0;
@@ -80,19 +82,31 @@ public class GuessController {
   @FXML private TextField txtInput;
 
   @FXML private ImageView carImage;
+  @FXML private ImageView ownerImage;
+  @FXML private ImageView workerImage;
+  @FXML private ImageView brotherImage;
+  @FXML private ImageView crimeScene;
 
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
   @FXML private Label lblDescription;
+  @FXML private Label ownerLabel;
+  @FXML private Label workerLabel;
+  @FXML private Label brotherLabel;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
 
   private Timeline timeline = new Timeline();
   private int currentSuspect = 0;
-  private boolean selectedSuspect = false;
+  private boolean isSuspectSelected = false;
   private static boolean isThiefFound = false;
   private static GuessController guessController;
+
+  ImageManager ownerImageManager;
+  ImageManager workerImageManager;
+  ImageManager brotherImageManager;
+  ImageManager currentImageManager;
 
   /**
    * Initializes the room view. If it's the first time initialization, it will provide instructions
@@ -100,6 +114,15 @@ public class GuessController {
    */
   @FXML
   public void initialize() {
+    btnSend
+        .sceneProperty()
+        .addListener(
+            (observable, oldScene, newScene) -> {
+              if (newScene != null) {
+                Stage stage = (Stage) newScene.getWindow();
+                stage.sizeToScene();
+              }
+            });
 
     // Adding the event handler for 'Enter' key on txtInput
     txtInput.setOnKeyPressed(
@@ -117,11 +140,23 @@ public class GuessController {
           }
         });
 
+    ownerImageManager = new ImageManager(ownerImage);
+    workerImageManager = new ImageManager(workerImage);
+    brotherImageManager = new ImageManager(brotherImage);
+
+    ColorAdjust colorAdjust = new ColorAdjust();
+    colorAdjust.setBrightness(-0.45);
+    ownerImage.setEffect(colorAdjust);
+    workerImage.setEffect(colorAdjust);
+    brotherImage.setEffect(colorAdjust);
+
+    styleScene();
+
     context.setGuessController(this);
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(60);
     // Timer label is updated here
-    if (timeToCount % 1000 == 0) {
+    if (timeForGuessing % 1000 == 0) {
       timerLabel.setText(Utils.formatTime(timeForGuessing));
     }
 
@@ -132,6 +167,7 @@ public class GuessController {
                 Duration.millis(1),
                 event -> {
                   if (timeForGuessing > 0) {
+                    // This runs when there is still time on the clock
                     timeForGuessing--;
                     progress =
                         (int)
@@ -140,17 +176,15 @@ public class GuessController {
                                     * 100
                                     / (maxTimeforGuessing)));
                   } else if ((timeForGuessing == 0)) {
-                    System.out.println("Switching to game over scene and and state");
-                    context.setState(context.getGameOverState());
+                    isTimeOver = true;
+                    // Call the onSendMessage without clicking button (input therefore null, but
+                    // isn't required anyway.)
                     try {
-                      App.setRoot("gameover");
-                    } catch (IOException e) {
+                      onSendMessage(null);
+                    } catch (ApiProxyException | IOException e) {
                       e.printStackTrace();
                     }
-                    // Here we need to implement functionality that happens when the guessing time
-                    // runs out.
-                    // Either the user has guessed and explained, or they haven't(immediately report
-                    // a loss), so we should account for each case.
+
                     timeline.stop();
                   }
 
@@ -174,7 +208,7 @@ public class GuessController {
   }
 
   public Boolean getSuspectSelected() {
-    return selectedSuspect;
+    return isSuspectSelected;
   }
 
   public void stopTimeLine() {
@@ -231,33 +265,39 @@ public class GuessController {
   }
 
   @FXML
-  private void selectSuspect1(ActionEvent event) throws ApiProxyException, IOException {
-    sus1btn.setDisable(true);
-    sus2btn.setDisable(false);
-    sus3btn.setDisable(false);
+  private void selectSuspect1(MouseEvent event) throws ApiProxyException, IOException {
+    if (currentImageManager != null) {
+      currentImageManager.unclicked();
+    }
+    ownerImageManager.clicked();
+    currentImageManager = ownerImageManager;
     currentSuspect = 1;
     isThiefFound = false;
-    selectedSuspect = true;
+    isSuspectSelected = true;
   }
 
   @FXML
-  private void selectSuspect2(ActionEvent event) throws ApiProxyException, IOException {
-    sus1btn.setDisable(false);
-    sus2btn.setDisable(true);
-    sus3btn.setDisable(false);
+  private void selectSuspect2(MouseEvent event) throws ApiProxyException, IOException {
+    if (currentImageManager != null) {
+      currentImageManager.unclicked();
+    }
+    workerImageManager.clicked();
+    currentImageManager = workerImageManager;
     currentSuspect = 2;
-    isThiefFound = false;
-    selectedSuspect = true;
+    isThiefFound = true;
+    isSuspectSelected = true;
   }
 
   @FXML
-  private void selectSuspect3(ActionEvent event) throws ApiProxyException, IOException {
-    sus1btn.setDisable(false);
-    sus2btn.setDisable(false);
-    sus3btn.setDisable(true);
+  private void selectSuspect3(MouseEvent event) throws ApiProxyException, IOException {
+    if (currentImageManager != null) {
+      currentImageManager.unclicked();
+    }
+    brotherImageManager.clicked();
+    currentImageManager = brotherImageManager;
     currentSuspect = 3;
-    isThiefFound = true;
-    selectedSuspect = true;
+    isThiefFound = false;
+    isSuspectSelected = true;
   }
 
   /**
@@ -272,27 +312,70 @@ public class GuessController {
 
     String message = txtInput.getText().trim();
 
-    if (message.isEmpty()) {
-      lblDescription.setText("Empty message");
-      System.out.println("Empty message");
+    // No time remaining
+    if ((!isSuspectSelected) && (message.isEmpty()) && (isTimeOver)) {
+      context.setState(context.getGameOverState());
+      GameOverController.setOutputText(
+          "You did not guess any of the suspects within the time limit!\n"
+              + "Next time you play, make sure to click on your suspected thief and"
+              + " type an explanation to support your decision.\n"
+              + "Click play again to replay.");
+      try {
+        App.setRoot("gamelost");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      return;
+    } else if ((!isSuspectSelected) && (!message.isEmpty()) && (isTimeOver)) {
+      context.setState(context.getGameOverState());
+      GameOverController.setOutputText(
+          "Even though you typed your explanation, you did not guess any of the suspects within the"
+              + " time limit!\n"
+              + "Click play again to replay.");
+      try {
+        App.setRoot("gamelost");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      return;
+    } else if ((isSuspectSelected) && (message.isEmpty()) && (isTimeOver)) {
+      context.setState(context.getGameOverState());
+      GameOverController.setOutputText(
+          "Even though you guessed a suspect, you did not type any explanation within the"
+              + " time limit.\n\n"
+              + " Because of this, it is unlikely that the authortities will accept your"
+              + " decision.\n\n"
+              + "Click play again to replay.");
+      try {
+        App.setRoot("gamelost");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
       return;
     }
 
-    if (selectedSuspect == false) {
-      lblDescription.setText("No suspect selected");
-      System.out.println("No suspect selected");
+    // Time remaining, checking that suspect is guessed and explanation is entered.
+    if ((!isSuspectSelected) && (message.isEmpty()) && (!isTimeOver)) {
+      lblDescription.setText(
+          "You must click on your suspected thief and type a brief explanation to support your"
+              + " decision.");
+      return;
+    } else if ((!isSuspectSelected) && (!message.isEmpty()) && (!isTimeOver)) {
+      lblDescription.setText("You must click on your suspected thief first!");
+      return;
+    } else if ((isSuspectSelected) && (message.isEmpty()) && (!isTimeOver)) {
+      lblDescription.setText("You must type an explanation to support your decision.");
       return;
     }
 
     // gameOverController.setGuessController(this);
 
-    if (selectedSuspect) {
+    if (isSuspectSelected) {
 
       ProgressIndicator statsIndicator = new ProgressIndicator();
       statsIndicator.setMinSize(1, 1);
       statsPane.getChildren().add(statsIndicator);
 
-      
       lblDescription.setText("Loading...");
 
       Task<Void> task =
@@ -301,10 +384,8 @@ public class GuessController {
             protected Void call() throws Exception {
               try {
                 String validExplanation = isExplanationValid();
-            String[] split = validExplanation.trim().split("");
-            boolean valid = 
-            currentSuspect == 3;
-
+                String[] split = validExplanation.trim().split("");
+                boolean valid = currentSuspect == 3;
 
                 Platform.runLater(
                     () -> {
@@ -338,10 +419,6 @@ public class GuessController {
               return null;
             }
           };
-
-      sus1btn.setDisable(true);
-      sus2btn.setDisable(true);
-      sus3btn.setDisable(true);
       txtInput.setDisable(true);
 
       new Thread(task).start();
@@ -356,13 +433,12 @@ public class GuessController {
     }
   }
 
-        public String isExplanationValid() throws ApiProxyException, IOException {
-            try {
-              String evidencePrompt =
-              new String(Files.readAllBytes(Paths.get("src/main/resources/prompts/guessing.txt")));
+  public String isExplanationValid() throws ApiProxyException, IOException {
+    try {
+      String evidencePrompt =
+          new String(Files.readAllBytes(Paths.get("src/main/resources/prompts/guessing.txt")));
 
-      String fullPrompt =
-          evidencePrompt + "\nUser Reasoning:\n" + txtInput.getText() + "\n";
+      String fullPrompt = evidencePrompt + "\nUser Reasoning:\n" + txtInput.getText() + "\n";
 
       ChatCompletionRequest request =
           new ChatCompletionRequest(ApiProxyConfig.readConfig())
@@ -396,5 +472,40 @@ public class GuessController {
 
   public GuessController getGuessController() {
     return this.guessController;
+  }
+
+  public void styleScene() {
+    ownerImage.setOnMouseEntered(
+        e -> {
+          ownerImageManager.hoverIn();
+          ownerLabel.setVisible(true);
+        });
+    ownerImage.setOnMouseExited(
+        e -> {
+          ownerImageManager.hoverOut();
+          ownerLabel.setVisible(false);
+        });
+
+    workerImage.setOnMouseEntered(
+        e -> {
+          workerImageManager.hoverIn();
+          workerLabel.setVisible(true);
+        });
+    workerImage.setOnMouseExited(
+        e -> {
+          workerImageManager.hoverOut();
+          workerLabel.setVisible(false);
+        });
+
+    brotherImage.setOnMouseEntered(
+        e -> {
+          brotherImageManager.hoverIn();
+          brotherLabel.setVisible(true);
+        });
+    brotherImage.setOnMouseExited(
+        e -> {
+          brotherImageManager.hoverOut();
+          brotherLabel.setVisible(false);
+        });
   }
 }

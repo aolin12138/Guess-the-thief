@@ -4,20 +4,26 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
+import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
@@ -48,11 +54,31 @@ public class CrimeSceneController {
   @FXML private Rectangle phoneClue;
   @FXML private Rectangle newspaperClue;
   @FXML private Button btnGuess;
+  @FXML private Button btnSlide;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
-  @FXML private Rectangle suscpect2Scene;
+  @FXML private Rectangle suspect2Scene;
   @FXML private Rectangle suspect1Scene;
   @FXML private Rectangle suspect3Scene;
+
+  @FXML private VBox imagesVBox;
+
+  @FXML private ImageView ownerImage;
+  @FXML private ImageView workerImage;
+  @FXML private ImageView brotherImage;
+  @FXML private ImageView crimeImage;
+
+  @FXML private Label crimeLabel;
+  @FXML private Label workerLabel;
+  @FXML private Label ownerLabel;
+  @FXML private Label brotherLabel;
+
+  public ImageManager currentImageManager;
+  public ImageManager ownerImageManager;
+  public ImageManager workerImageManager;
+  public ImageManager brotherImageManager;
+  public ImageManager crimeImageManager;
+  public String id;
 
   @FXML
   public void initialize() {
@@ -64,6 +90,29 @@ public class CrimeSceneController {
     if (timeToCount % 1000 == 0) {
       timerLabel.setText(Utils.formatTime(timeToCount - timeForGuessing));
     }
+
+    btnGuess
+        .sceneProperty()
+        .addListener(
+            (observable, oldScene, newScene) -> {
+              if (newScene != null) {
+                Stage stage = (Stage) newScene.getWindow();
+                stage.sizeToScene();
+              }
+            });
+
+    ownerImageManager = new ImageManager(ownerImage);
+    workerImageManager = new ImageManager(workerImage);
+    brotherImageManager = new ImageManager(brotherImage);
+    crimeImageManager = new ImageManager(crimeImage);
+
+    ColorAdjust colorAdjust = new ColorAdjust();
+    colorAdjust.setBrightness(-0.45);
+    ownerImage.setEffect(colorAdjust);
+    workerImage.setEffect(colorAdjust);
+    brotherImage.setEffect(colorAdjust);
+    crimeImage.setEffect(colorAdjust);
+    styleScene();
 
     timeline
         .getKeyFrames()
@@ -236,5 +285,106 @@ public class CrimeSceneController {
 
   public static boolean isAnyClueFound() {
     return isAnyClueFound;
+  }
+
+  @FXML
+  public void styleScene() {
+
+    ownerImage.setOnMouseEntered(
+        e -> {
+          ownerImageManager.hoverIn();
+          ownerLabel.setVisible(true);
+        });
+    ownerImage.setOnMouseExited(
+        e -> {
+          ownerImageManager.hoverOut();
+          ownerLabel.setVisible(false);
+        });
+
+    workerImage.setOnMouseEntered(
+        e -> {
+          workerImageManager.hoverIn();
+          workerLabel.setVisible(true);
+        });
+    workerImage.setOnMouseExited(
+        e -> {
+          workerImageManager.hoverOut();
+          workerLabel.setVisible(false);
+        });
+
+    brotherImage.setOnMouseEntered(
+        e -> {
+          brotherImageManager.hoverIn();
+          brotherLabel.setVisible(true);
+        });
+    brotherImage.setOnMouseExited(
+        e -> {
+          brotherImageManager.hoverOut();
+          brotherLabel.setVisible(false);
+        });
+
+    crimeImage.setOnMouseEntered(
+        e -> {
+          crimeImageManager.hoverIn();
+          crimeLabel.setVisible(true);
+        });
+    crimeImage.setOnMouseExited(
+        e -> {
+          crimeImageManager.hoverOut();
+          crimeLabel.setVisible(false);
+        });
+
+    btnSlide.setOnAction(event -> toggleHBox());
+  }
+
+  private void toggleHBox() {
+    // Create the transition
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesVBox);
+
+    if (imagesVBox.isVisible()) {
+      // Slide out
+      transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
+      transition.setOnFinished(event -> imagesVBox.setVisible(false)); // Hide after animation
+    } else {
+      // Slide in
+      imagesVBox.setVisible(true); // Show before animation
+      transition.setFromX(imagesVBox.getWidth() + 30); // Start off-screen
+      transition.setToX(0); // Move to visible position
+    }
+
+    // Play the transition
+    transition.play();
+  }
+
+  @FXML
+  public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {
+    ImageView clickedImage = (ImageView) event.getSource();
+    id = clickedImage.getId();
+
+    ImageView imageView = (ImageView) event.getSource();
+    Scene sceneOfButton = imageView.getScene();
+
+    RoomController roomController = SceneManager.getRoomLoader().getController();
+
+    SceneManager.getRoot(SceneManager.Scene.ROOM)
+        .sceneProperty()
+        .addListener(
+            (obs, oldScene, newScene) -> {
+              if (newScene != null) {
+                try {
+                  roomController.setPersonImage(event, id);
+                } catch (IOException e) {
+                  // TODO Auto-generated catch block
+                  e.printStackTrace();
+                } // Call the method only when entering root2
+              }
+            });
+
+    imagesVBox.setVisible(false);
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
+  }
+
+  public String getId() {
+    return id;
   }
 }
