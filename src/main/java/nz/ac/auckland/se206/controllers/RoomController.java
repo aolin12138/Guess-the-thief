@@ -11,8 +11,6 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -31,7 +29,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
@@ -43,6 +40,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
+import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
@@ -60,8 +58,8 @@ public class RoomController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 80000;
-  private static double timeToCountTo = 80000;
+  private static double timeToCount = 360000;
+  private static double timeToCountTo = 360000;
   private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
@@ -132,8 +130,8 @@ public class RoomController {
         .sceneProperty()
         .addListener(
             (observable, oldScene, newScene) -> {
-              Stage stage = (Stage) newScene.getWindow();
-              stage.sizeToScene();
+              // Stage stage = (Stage) newScene.getWindow();
+              // stage.sizeToScene();
               if (newScene != null) {
                 newScene.addEventHandler(
                     KeyEvent.KEY_PRESSED,
@@ -219,8 +217,8 @@ public class RoomController {
     timeToCount = timeFromPreviousScene;
   }
 
-  public static void setProgress(int progressFromPreviousScene) {
-    progress = progressFromPreviousScene;
+  public static void passTimeToCrimeScene(double timeToCount) {
+    CrimeSceneController.setTimeToCount(timeToCount);
   }
 
   public Pane getStatsPane() {
@@ -376,6 +374,22 @@ public class RoomController {
   }
 
   /**
+   * Handles the event when the crime scene icon is clicked. This method is triggered by a mouse
+   * click event on the crime scene element. It performs the necessary actions to transition to the
+   * crime scene view.
+   *
+   * @param event the MouseEvent that triggered this handler
+   * @throws IOException if an input or output exception occurs
+   * @throws ApiProxyException if there is an issue with the API proxy
+   */
+  @FXML
+  void onCrimeSceneClicked(MouseEvent event) throws ApiProxyException, IOException {
+    Scene sceneOfButton = btnGuess.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
+    passTimeToCrimeScene(timeToCount);
+  }
+
+  /**
    * Handles mouse clicks on rectangles representing people in the room.
    *
    * @param event the mouse event triggered by clicking a rectangle
@@ -395,8 +409,6 @@ public class RoomController {
    */
   @FXML
   private void handleGuessClick(ActionEvent event) throws IOException {
-    // Need to pass current timer values into Guess timer
-    setGuessTime((timeToCount - timeForGuessing));
     // context.handleGuessClick();
     App.setRoot("guess");
   }
@@ -411,10 +423,21 @@ public class RoomController {
     map.put("profession", person.getProfession());
     map.put("name", person.getName());
     map.put("role", person.getRole());
-    if (person.hasTalked()) {
+    // if (person.hasTalked()) {
+    //   return PromptEngineering.getPrompt("chat3.txt", map, person);
+    // }
+    // return PromptEngineering.getPrompt("chat2.txt", map, person);
+
+    if (person.getName().equals("John")) {
+      return PromptEngineering.getPrompt("chat1.txt", map, person);
+    } else if (person.getName().equals("Bob")) {
+      return PromptEngineering.getPrompt("chat2.txt", map, person);
+    } else if (person.getName().equals("Jason")) {
       return PromptEngineering.getPrompt("chat3.txt", map, person);
+    } else {
+      return "That name doesn't exist";
     }
-    return PromptEngineering.getPrompt("chat2.txt", map, person);
+
   }
 
   /**
@@ -450,6 +473,7 @@ public class RoomController {
               .setMaxTokens(100);
       runGpt(new ChatMessage("system", getSystemPrompt()));
       person.talked();
+      person.setChatCompletionRequest(chatCompletionRequest);
     } catch (ApiProxyException e) {
       e.printStackTrace();
     }
@@ -472,6 +496,7 @@ public class RoomController {
    * @throws ApiProxyException if there is an error communicating with the API proxy
    */
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
+    chatCompletionRequest = person.getChatCompletionRequest();
     chatCompletionRequest.addMessage(msg);
     try {
       ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
@@ -488,7 +513,7 @@ public class RoomController {
     } catch (ApiProxyException e) {
       e.printStackTrace();
       return null;
-    }
+    } 
   }
 
   /**
@@ -505,15 +530,16 @@ public class RoomController {
       return;
     }
 
-    if (context.getGameState() == context.getGameOverState()) {
-      Alert alert = new Alert(AlertType.INFORMATION);
-      alert.setTitle("Game Over");
-      alert.setHeaderText("Game Over");
-      alert.setContentText("You can not talk to the suspects anymore.");
-      alert.showAndWait();
-      txtInput.clear();
-      return;
-    }
+    // Won't need this anymore as gameover state is a different scene
+    // if (context.getGameState() == context.getGameOverState()) {
+    //   Alert alert = new Alert(AlertType.INFORMATION);
+    //   alert.setTitle("Game Over");
+    //   alert.setHeaderText("Game Over");
+    //   alert.setContentText("You can not talk to the suspects anymore.");
+    //   alert.showAndWait();
+    //   txtInput.clear();
+    //   return;
+    // }
 
     txtInput.clear();
     ChatMessage msg = new ChatMessage("user", message);
@@ -676,9 +702,5 @@ public class RoomController {
 
     // Play the transition
     transition.play();
-  }
-
-  public static void setGuessTime(double time) {
-    GuessController.setTimeToGuess(time);
   }
 }

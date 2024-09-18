@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.Utils;
 
@@ -27,7 +28,7 @@ public class StartController {
   @FXML private Label ScoreboardTimeLabel3;
   @FXML private TextField playerNameWindow;
 
-  Media media = new Media(getClass().getResource("/sounds/opening_voice.mp3").toExternalForm());
+  Media media = new Media(getClass().getResource("/sounds/Intro_brief.mp3").toExternalForm());
   MediaPlayer mediaPlayer = new MediaPlayer(media);
 
   // This method will add a score to the scoreboard arraylist.
@@ -71,13 +72,15 @@ public class StartController {
   }
 
   @FXML
-  public void onEnterPressed(ActionEvent event) {
+  public void onEnterPressed(ActionEvent event) throws IOException {
     // Store the player name
     if (playerNameWindow.getText().isEmpty()) {
       Utils.setPlayerName("Guest Player");
     } else {
       Utils.setPlayerName(playerNameWindow.getText());
     }
+    // Loads CRIME scene here because timer starts when it is initialised
+    SceneManager.addRoot(SceneManager.Scene.CRIME, App.loadFxml("crime"));
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));

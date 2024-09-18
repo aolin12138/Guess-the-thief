@@ -26,6 +26,7 @@ public class CrimeSceneController {
   private static boolean cameraFound = false;
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
+  private static boolean isAnyClueFound = false;
   private static boolean isClue1Found = false;
   private static boolean isClue2Found = false;
   private static boolean isClue3Found = false;
@@ -37,11 +38,11 @@ public class CrimeSceneController {
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
 
-  private Timeline timeline = new Timeline();
+  private static Timeline timeline = new Timeline();
 
-  @FXML private Rectangle clue1;
-  @FXML private Rectangle clue2;
-  @FXML private Rectangle clue3;
+  @FXML private Rectangle CCTVClue;
+  @FXML private Rectangle phoneClue;
+  @FXML private Rectangle newspaperClue;
   @FXML private Button btnGuess;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
@@ -51,10 +52,7 @@ public class CrimeSceneController {
 
   @FXML
   public void initialize() {
-    if (isFirstTimeInit) {
-      isFirstTimeInit = false;
-    }
-
+    if (isFirstTimeInit) {}
     // context.setCrimeController(this); *******NEED THIS
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
@@ -81,11 +79,9 @@ public class CrimeSceneController {
                   } else if ((timeToCount > 0)) {
                     // Here the timer has exceeded the time for investigation and the game must
                     // switch to the guess scene.
-                    // Program switch to guess scene here.
                     System.out.println("Switching to guessing state");
                     context.setState(context.getGuessingState());
-                    // Stop the timer here, as once the suer switch to guessing state, they aren't
-                    // coming back
+                    // Once in guess state, player will never return to crime scene
                     timeline.stop();
                   }
 
@@ -99,22 +95,46 @@ public class CrimeSceneController {
     // MediaPlayer mediaPlayer = new MediaPlayer(media);
     // mediaPlayer.play();
     // isFirstTimeInit = false;
-    // }
+    // }}
+  }
+
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
+  public static void setProgress(int progressFromPreviousScene) {
+    progress = progressFromPreviousScene;
+  }
+
+  public static void passTimeToSuspectScene(double timeToCount) {
+    RoomController.setTimeToCount(timeToCount);
   }
 
   @FXML
-  void onClue1Clicked(MouseEvent event) {
+  void onCCTVClueClicked(MouseEvent event) {
     isClue1Found = true;
+    // Satisfies requirement of at least one clue being discovered
+    isAnyClueFound = true;
+    Scene sceneOfButton = phoneClue.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
   }
 
   @FXML
-  void onClue2Clicked(MouseEvent event) {
+  void onPhoneClueClicked(MouseEvent event) {
     isClue2Found = true;
+    // Satisfies requirement of at least one clue being discovered
+    isAnyClueFound = true;
+    Scene sceneOfButton = phoneClue.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
   }
 
   @FXML
-  void onClue3Clicked(MouseEvent event) {
+  void onNewspaperClueClicked(MouseEvent event) {
     isClue3Found = true;
+    // Satisfies requirement of at least one clue being discovered
+    isAnyClueFound = true;
+    Scene sceneOfButton = btnGuess.getScene();
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.NEWSPAPER));
   }
 
   @FXML
@@ -126,18 +146,21 @@ public class CrimeSceneController {
   void onSuspect1Clicked(MouseEvent event) throws IOException, ApiProxyException {
     Scene sceneOfButton = btnGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
+    passTimeToSuspectScene(timeToCount);
   }
 
   @FXML
   void onSuspect2Clicked(MouseEvent event) throws IOException, ApiProxyException {
     Scene sceneOfButton = btnGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
+    passTimeToSuspectScene(timeToCount);
   }
 
   @FXML
   void onSuspect3Clicked(MouseEvent event) throws IOException, ApiProxyException {
     Scene sceneOfButton = btnGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
+    passTimeToSuspectScene(timeToCount);
   }
 
   public static char getClueInvestigationStatus() {

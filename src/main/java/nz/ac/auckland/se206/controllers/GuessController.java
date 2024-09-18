@@ -28,7 +28,6 @@ import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
 import nz.ac.auckland.apiproxy.chat.openai.ChatMessage;
-import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
@@ -231,8 +230,6 @@ public class GuessController {
     return PromptEngineering.getPrompt("chat2.txt", map, person);
   }
 
-
-
   @FXML
   private void selectSuspect1(ActionEvent event) throws ApiProxyException, IOException {
     sus1btn.setDisable(true);
@@ -287,82 +284,78 @@ public class GuessController {
       return;
     }
 
+    // gameOverController.setGuessController(this);
 
-      // gameOverController.setGuessController(this);
-    
-    if(selectedSuspect) {
+    if (selectedSuspect) {
 
       ProgressIndicator statsIndicator = new ProgressIndicator();
       statsIndicator.setMinSize(1, 1);
       statsPane.getChildren().add(statsIndicator);
 
+      
       lblDescription.setText("Loading...");
-    
-      Task<Void> task = new Task<Void>(){
-        @Override 
-        protected Void call() throws Exception{
-          try{
-            String validExplanation = isExplanationValid();
 
-            GameOverController.setOutputText(validExplanation);
-
+      Task<Void> task =
+          new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+              try {
+                String validExplanation = isExplanationValid();
             String[] split = validExplanation.trim().split("");
             boolean valid = 
             currentSuspect == 3;
 
-            Platform.runLater(
-              () -> {
 
-                // GuessTimeLimitManager.stopTimer();
+                Platform.runLater(
+                    () -> {
 
-                if(valid) {
-                  context.setState(context.getGameOverState());
+                      // GuessTimeLimitManager.stopTimer();
 
-                  try {
+                      if (valid) {
+                        context.setState(context.getGameOverState());
 
-                    App.setRoot("gameover");
-                  }catch(IOException e) {
-                    e.printStackTrace();
-                  }
-                } else {
-                  context.setState(context.getGameOverState());
+                        try {
 
-                  try{
-                    // GameOverController.setCorrectSuspect(true);
+                          App.setRoot("gameover");
+                        } catch (IOException e) {
+                          e.printStackTrace();
+                        }
+                      } else {
+                        context.setState(context.getGameOverState());
 
-                    App.setRoot("gamelost");
-                  }catch(IOException e) {
-                    e.printStackTrace();
-                  }
-                }
-              });
-            }catch(ApiProxyException e) {
-              e.printStackTrace();
-                }
-                return null;
+                        try {
+                          // GameOverController.setCorrectSuspect(true);
+
+                          App.setRoot("gamelost");
+                        } catch (IOException e) {
+                          e.printStackTrace();
+                        }
+                      }
+                    });
+              } catch (ApiProxyException e) {
+                e.printStackTrace();
               }
+              return null;
+            }
+          };
 
-            };
+      sus1btn.setDisable(true);
+      sus2btn.setDisable(true);
+      sus3btn.setDisable(true);
+      txtInput.setDisable(true);
 
-            sus1btn.setDisable(true);
-            sus2btn.setDisable(true);
-            sus3btn.setDisable(true);
-            txtInput.setDisable(true);
+      new Thread(task).start();
+    } else {
 
-            new Thread(task).start();
-          } else {
+      // GameOverController.setCorrectSuspect(false);
 
-            // GameOverController.setCorrectSuspect(false);
+      // GuessTimeLimitManager.stopTimer();
 
-            // GuessTimeLimitManager.stopTimer();
+      context.setState(context.getGameOverState());
+      App.setRoot("gamelost");
+    }
+  }
 
-            context.setState(context.getGameOverState());
-            App.setRoot("gamelost");
-          }
-        }
-
-              
-    
         public String isExplanationValid() throws ApiProxyException, IOException {
             try {
               String evidencePrompt =
@@ -391,11 +384,7 @@ public class GuessController {
       e.printStackTrace();
       return null;
     }
-
-        }
- 
-        
-        
+  }
 
   public int getSuspectNumber() {
     return currentSuspect;
@@ -407,12 +396,5 @@ public class GuessController {
 
   public GuessController getGuessController() {
     return this.guessController;
-  }
-
-
-  public static void setTimeToGuess(double time) {
-    // Adds any leftover time from the investigation scene to the time available for guessing.
-    timeForGuessing = timeForGuessing + time;
-    maxTimeforGuessing = maxTimeforGuessing + time;
   }
 }
