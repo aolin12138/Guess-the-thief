@@ -45,7 +45,7 @@
                         <Image url="@../images/owner.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="ownerLabel" text="Owner" textFill="WHITE">
+                  <Label fx:id="ownerLabel" text="Owner" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="20.0" />
                      </font>
@@ -62,7 +62,7 @@
                         <Image url="@../images/worker.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="workerLabel" text="Worker" textFill="WHITE">
+                  <Label fx:id="workerLabel" text="Worker" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="20.0" />
                      </font>
@@ -79,7 +79,7 @@
                         <Image url="@../images/brother.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="brotherLabel" text="Brother" textFill="WHITE">
+                  <Label fx:id="brotherLabel" text="Brother" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="20.0" />
                      </font>

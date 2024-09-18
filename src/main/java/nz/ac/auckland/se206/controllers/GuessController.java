@@ -107,6 +107,7 @@ public class GuessController {
   private boolean isSuspectSelected = false;
   private static boolean isThiefFound = false;
   private static GuessController guessController;
+  private Label currentLabel;
 
   ImageManager ownerImageManager;
   ImageManager workerImageManager;
@@ -272,10 +273,20 @@ public class GuessController {
   @FXML
   private void selectSuspect1(MouseEvent event) throws ApiProxyException, IOException {
     toggleHBox();
+    if (currentImageManager == ownerImageManager) {
+      return;
+    }
+
+    if (currentLabel != null) {
+      currentLabel.setVisible(false);
+    }
+
     if (currentImageManager != null) {
       currentImageManager.unclicked();
     }
     ownerImageManager.clicked();
+    ownerLabel.setVisible(true);
+    currentLabel = ownerLabel;
     currentImageManager = ownerImageManager;
     currentSuspect = 1;
     isThiefFound = false;
@@ -285,10 +296,20 @@ public class GuessController {
   @FXML
   private void selectSuspect2(MouseEvent event) throws ApiProxyException, IOException {
     toggleHBox();
+    if (currentImageManager == workerImageManager) {
+      return;
+    }
+
+    if (currentLabel != null) {
+      currentLabel.setVisible(false);
+    }
+
     if (currentImageManager != null) {
       currentImageManager.unclicked();
     }
     workerImageManager.clicked();
+    workerLabel.setVisible(true);
+    currentLabel = workerLabel;
     currentImageManager = workerImageManager;
     currentSuspect = 2;
     isThiefFound = true;
@@ -298,10 +319,20 @@ public class GuessController {
   @FXML
   private void selectSuspect3(MouseEvent event) throws ApiProxyException, IOException {
     toggleHBox();
+    if (currentImageManager == brotherImageManager) {
+      return;
+    }
+
+    if (currentLabel != null) {
+      currentLabel.setVisible(false);
+    }
+
     if (currentImageManager != null) {
       currentImageManager.unclicked();
     }
     brotherImageManager.clicked();
+    brotherLabel.setVisible(true);
+    currentLabel = brotherLabel;
     currentImageManager = brotherImageManager;
     currentSuspect = 3;
     isThiefFound = false;
@@ -491,7 +522,9 @@ public class GuessController {
     ownerImage.setOnMouseExited(
         e -> {
           ownerImageManager.hoverOut();
-          ownerLabel.setVisible(false);
+          if (currentLabel != ownerLabel) {
+            ownerLabel.setVisible(false);
+          }
         });
 
     workerImage.setOnMouseEntered(
@@ -502,7 +535,9 @@ public class GuessController {
     workerImage.setOnMouseExited(
         e -> {
           workerImageManager.hoverOut();
-          workerLabel.setVisible(false);
+          if (currentLabel != workerLabel) {
+            workerLabel.setVisible(false);
+          }
         });
 
     brotherImage.setOnMouseEntered(
@@ -513,7 +548,9 @@ public class GuessController {
     brotherImage.setOnMouseExited(
         e -> {
           brotherImageManager.hoverOut();
-          brotherLabel.setVisible(false);
+          if (currentLabel != brotherLabel) {
+            brotherLabel.setVisible(false);
+          }
         });
   }
 
