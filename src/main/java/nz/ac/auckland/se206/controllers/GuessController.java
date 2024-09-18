@@ -46,8 +46,8 @@ public class GuessController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static double maxTimeforGuessing = 6000;
-  private static double timeForGuessing = 6000;
+  private static double maxTimeforGuessing = 60000;
+  private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
 
@@ -268,9 +268,6 @@ public class GuessController {
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
 
     String message = txtInput.getText().trim();
-    System.out.println("isSuspectSelected: " + isSuspectSelected);
-    System.out.println("isMessageEmpty: " + message.isEmpty());
-    System.out.println("isTimeOver: " + isTimeOver);
 
     // No time remaining
     if ((!isSuspectSelected) && (message.isEmpty()) && (isTimeOver)) {
@@ -331,7 +328,6 @@ public class GuessController {
     // gameOverController.setGuessController(this);
 
     if (isSuspectSelected) {
-      System.out.println("Suspect is selected");
 
       ProgressIndicator statsIndicator = new ProgressIndicator();
       statsIndicator.setMinSize(1, 1);
