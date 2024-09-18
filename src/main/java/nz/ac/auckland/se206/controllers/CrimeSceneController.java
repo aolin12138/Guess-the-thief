@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -14,6 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -43,6 +46,7 @@ public class CrimeSceneController {
   private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
+  private MediaPlayer player;
 
   private static Timeline timeline = new Timeline();
 
@@ -128,12 +132,57 @@ public class CrimeSceneController {
                   } else if ((timeToCount > 0)) {
                     // Here the timer has exceeded the time for investigation and the game must
                     // switch to the guess scene.
-                    System.out.println("Switching to guessing state");
-                    context.setState(context.getGuessingState());
+                    if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
+                      context.setState(context.getGuessingState());
+                      try {
+                        App.setRoot("guess");
+                      } catch (IOException e) {
+                        e.printStackTrace();
+                      }
+                      // Stop the timer here, as once the suer switch to guessing state, they aren't
+                      // coming back
+                      timeline.stop();
+                    } else if (!context.isAllSuspectsSpokenTo()
+                        && CrimeSceneController.isAnyClueFound()) {
+                      context.setState(context.getGameOverState());
+                      GameOverController.setOutputText(
+                          "You did not speak to every suspect during your investigation!\nWithout"
+                              + " doing this, the investigation is incomplete!\n"
+                              + "Click play again to replay.");
+                      try {
+                        App.setRoot("gamelost");
+                      } catch (IOException e) {
+                        e.printStackTrace();
+                      }
+                    } else if (context.isAllSuspectsSpokenTo()
+                        && !CrimeSceneController.isAnyClueFound()) {
+                      context.setState(context.getGameOverState());
+                      GameOverController.setOutputText(
+                          "You did not find any clues in the crime scene!\n"
+                              + "Finding clues is vital to conduting a good investigation!\n"
+                              + "Click play again to replay");
+                      try {
+                        App.setRoot("gamelost");
+                      } catch (IOException e) {
+                        e.printStackTrace();
+                      }
+                    } else if (!context.isAllSuspectsSpokenTo()
+                        && !CrimeSceneController.isAnyClueFound()) {
+                      context.setState(context.getGameOverState());
+                      GameOverController.setOutputText(
+                          "You did not inspect the crime scene for clues or speak to every"
+                              + " suspect!\n"
+                              + "These steps are vital in any investigation.\n"
+                              + "Click play again to replay.");
+                      try {
+                        App.setRoot("gamelost");
+                      } catch (IOException e) {
+                        e.printStackTrace();
+                      }
+                    }
                     // Once in guess state, player will never return to crime scene
                     timeline.stop();
                   }
-
                   ringProgressIndicator.setProgress(progress);
                   timerLabel.setText(Utils.formatTime(timeToCount - timeForGuessing));
                 }));
@@ -187,8 +236,30 @@ public class CrimeSceneController {
   }
 
   @FXML
-  void onGuessClick(ActionEvent event) throws IOException {
-    App.setRoot("guess");
+  void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
+    // Check all 3 suspects have been spoken to and at least 1 clue has been clicked
+    if (context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
+      // context.handleGuessClick();
+      App.setRoot("guess");
+    } else if (!context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
+      Media sound =
+          new Media(App.class.getResource("/sounds/missing_suspect.mp3").toURI().toString());
+      player = new MediaPlayer(sound);
+      player.play();
+      return;
+    } else if (context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
+      Media sound =
+          new Media(App.class.getResource("/sounds/clue_reminder_1.mp3").toURI().toString());
+      player = new MediaPlayer(sound);
+      player.play();
+      return;
+    } else if (!context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
+      Media sound =
+          new Media(App.class.getResource("/sounds/keep_investigating.mp3").toURI().toString());
+      player = new MediaPlayer(sound);
+      player.play();
+      return;
+    }
   }
 
   @FXML
@@ -212,11 +283,8 @@ public class CrimeSceneController {
     passTimeToSuspectScene(timeToCount);
   }
 
-  public static char getClueInvestigationStatus() {
-    // 8 possible combinations of clue interaction. From 0 all the way to 3 interacted.
-    // Will implement functionality here to return a char based on the number of clues interacted.
-
-    return 'A';
+  public static boolean isAnyClueFound() {
+    return isAnyClueFound;
   }
 
   @FXML

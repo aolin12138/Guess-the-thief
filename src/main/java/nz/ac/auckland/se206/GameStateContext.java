@@ -28,6 +28,7 @@ public class GameStateContext {
   private GameState gameState;
   private RoomController roomController;
   private GuessController guessController;
+  private int talkedCounter = 0;
 
   /**
    * Constructs a new GameStateContext and initializes the game states and professions.
@@ -244,5 +245,30 @@ public class GameStateContext {
 
   public void setGuessController(GuessController guessController) {
     this.guessController = guessController;
+  }
+
+  /**
+   * Checks if all suspects have been spoken to. This method iterates through the hashmap of
+   * suspects and checks if each suspect has been spoken to. If all suspects have been spoken to, it
+   * returns true; otherwise, it returns false.
+   *
+   * @return true if all suspects have been spoken to, false otherwise
+   */
+  public boolean isAllSuspectsSpokenTo() {
+    // Iterate through the hashmap and check if all suspects have been spoken to
+    for (Map.Entry<String, Person> person : rectanglesToProfession.entrySet()) {
+      if (person.getValue().hasTalked()) {
+        talkedCounter++;
+      }
+    }
+    if (talkedCounter == 3) {
+      // Reset counter to 0, to prevent user from clicking guess button 3 times and it cumulatively
+      // adding to the counter
+      talkedCounter = 0;
+      return true;
+    } else {
+      talkedCounter = 0;
+      return false;
+    }
   }
 }
