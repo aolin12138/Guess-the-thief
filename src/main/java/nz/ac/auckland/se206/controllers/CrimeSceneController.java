@@ -79,7 +79,6 @@ public class CrimeSceneController {
                   } else if ((timeToCount > 0)) {
                     // Here the timer has exceeded the time for investigation and the game must
                     // switch to the guess scene.
-                    System.out.println("Switching to guessing state");
                     context.setState(context.getGuessingState());
                     // Once in guess state, player will never return to crime scene
                     timeline.stop();
@@ -163,10 +162,11 @@ public class CrimeSceneController {
     passTimeToSuspectScene(timeToCount);
   }
 
-  public static char getClueInvestigationStatus() {
-    // 8 possible combinations of clue interaction. From 0 all the way to 3 interacted.
-    // Will implement functionality here to return a char based on the number of clues interacted.
+  public boolean isAnyClueFound() {
+    return isAnyClueFound;
+  }
 
-    return 'A';
+  public boolean isAllSuspectsSpokenTo() {
+    return true;
   }
 }
