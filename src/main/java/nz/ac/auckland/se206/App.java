@@ -60,8 +60,6 @@ public class App extends Application {
 
     FXMLLoader startLoader = new FXMLLoader(App.class.getResource("/fxml/start.fxml"));
     FXMLLoader roomLoader = new FXMLLoader(App.class.getResource("/fxml/room.fxml"));
-    FXMLLoader crimeSceneLoader = new FXMLLoader(App.class.getResource("/fxml/crime.fxml"));
-    FXMLLoader guessLoader = new FXMLLoader(App.class.getResource("/fxml/guess.fxml"));
     FXMLLoader instructionLoader = new FXMLLoader(App.class.getResource("/fxml/instructions.fxml"));
     FXMLLoader phoneLoader = new FXMLLoader(App.class.getResource("/fxml/phone.fxml"));
     FXMLLoader newspaperLoader = new FXMLLoader(App.class.getResource("/fxml/newspaper.fxml"));
@@ -71,15 +69,12 @@ public class App extends Application {
     SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, instructionLoader.load());
     SceneManager.addRoot(SceneManager.Scene.START, startLoader.load());
     SceneManager.addRoot(SceneManager.Scene.ROOM, roomLoader.load());
-    SceneManager.addRoot(SceneManager.Scene.CRIME, crimeSceneLoader.load());
-    SceneManager.addRoot(SceneManager.Scene.GUESS, guessLoader.load());
     SceneManager.addRoot(SceneManager.Scene.PHONE, phoneLoader.load());
     SceneManager.addRoot(SceneManager.Scene.NEWSPAPER, newspaperLoader.load());
     SceneManager.addRoot(SceneManager.Scene.CALL_HISTORY, callHistoryLoader.load());
     SceneManager.addRoot(SceneManager.Scene.CCTV, cctvLoader.load());
 
     SceneManager.setRoomLoader(roomLoader);
-    SceneManager.setCrimeSceneLoader(crimeSceneLoader);
 
     scene = new Scene(SceneManager.getRoot(SceneManager.Scene.START));
     stage.setScene(scene);

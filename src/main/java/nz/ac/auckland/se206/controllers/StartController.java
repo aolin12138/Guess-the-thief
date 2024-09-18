@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.Utils;
 
@@ -80,6 +82,10 @@ public class StartController {
     } else {
       Utils.setPlayerName(playerNameWindow.getText());
     }
+
+    FXMLLoader crimeSceneLoader = new FXMLLoader(App.class.getResource("/fxml/crime.fxml"));
+    SceneManager.addRoot(SceneManager.Scene.CRIME, crimeSceneLoader.load());
+    SceneManager.setCrimeSceneLoader(crimeSceneLoader);
     // Loads CRIME scene here because timer starts when it is initialised
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();

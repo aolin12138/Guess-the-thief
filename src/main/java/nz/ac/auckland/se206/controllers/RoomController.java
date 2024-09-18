@@ -413,9 +413,7 @@ public class RoomController {
    */
   @FXML
   private void handleGuessClick(ActionEvent event) throws IOException {
-    Button button = (Button) event.getSource();
-    Scene sceneOfButton = button.getScene();
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.GUESS));
+    App.setRoot("root");
   }
 
   /**
