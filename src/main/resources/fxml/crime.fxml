@@ -20,7 +20,7 @@
             <Image url="@../images/crime_scene2.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGuess" layoutX="696.0" layoutY="504.0" mnemonicParsing="false" onAction="#onGuessClick" prefHeight="23.0" prefWidth="91.0" text="Make a Guess">
+      <Button fx:id="btnGuess" layoutX="694.0" layoutY="503.0" mnemonicParsing="false" onAction="#onGuessClick" prefHeight="26.0" prefWidth="91.0" text="Make a Guess">
          <font>
             <Font size="10.0" />
          </font></Button>
