@@ -291,7 +291,7 @@ public class GuessController {
     currentLabel = ownerLabel;
     currentImageManager = ownerImageManager;
     currentSuspect = 1;
-    isThiefFound = false;
+    // isThiefFound = false;
     isSuspectSelected = true;
   }
 
@@ -314,7 +314,7 @@ public class GuessController {
     currentLabel = workerLabel;
     currentImageManager = workerImageManager;
     currentSuspect = 2;
-    isThiefFound = true;
+    // isThiefFound = false;
     isSuspectSelected = true;
   }
 
@@ -337,7 +337,7 @@ public class GuessController {
     currentLabel = brotherLabel;
     currentImageManager = brotherImageManager;
     currentSuspect = 3;
-    isThiefFound = false;
+    // isThiefFound = true;
     isSuspectSelected = true;
   }
 
@@ -412,7 +412,7 @@ public class GuessController {
 
     // gameOverController.setGuessController(this);
 
-    if (isSuspectSelected) {
+    // if (currentSuspect == 3) {
 
       ProgressIndicator statsIndicator = new ProgressIndicator();
       statsIndicator.setMinSize(1, 1);
@@ -426,16 +426,18 @@ public class GuessController {
             protected Void call() throws Exception {
               try {
                 String validExplanation = isExplanationValid();
+                GameOverController.setOutputText(validExplanation);
                 String[] split = validExplanation.trim().split("");
-                boolean valid = currentSuspect == 3;
-
+                boolean valid = split[0].toLowerCase().contains("true");
+                
                 Platform.runLater(
-                    () -> {
-
-                      // GuessTimeLimitManager.stopTimer();
-
-                      if (valid) {
-                        context.setState(context.getGameOverState());
+                  () -> {
+                    
+                    // GuessTimeLimitManager.stopTimer();
+                    
+                    if (valid && currentSuspect == 3) {
+                      context.setState(context.getGameOverState());
+                      isThiefFound = true;
 
                         try {
 
@@ -443,7 +445,7 @@ public class GuessController {
                         } catch (IOException e) {
                           e.printStackTrace();
                         }
-                      } else {
+              } else {
                         context.setState(context.getGameOverState());
 
                         try {
@@ -464,15 +466,15 @@ public class GuessController {
       txtInput.setDisable(true);
 
       new Thread(task).start();
-    } else {
+    // } else {
+      
+    //   // GameOverController.setCorrectSuspect(false);
 
-      // GameOverController.setCorrectSuspect(false);
+    //   // GuessTimeLimitManager.stopTimer();
 
-      // GuessTimeLimitManager.stopTimer();
-
-      context.setState(context.getGameOverState());
-      App.setRoot("gamelost");
-    }
+    //   context.setState(context.getGameOverState());
+    //   App.setRoot("gamelost");
+    // }
   }
 
   public String isExplanationValid() throws ApiProxyException, IOException {
