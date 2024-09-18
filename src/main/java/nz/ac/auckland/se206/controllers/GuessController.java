@@ -366,7 +366,7 @@ public class GuessController {
         public String isExplanationValid() throws ApiProxyException, IOException {
             try {
               String evidencePrompt =
-              new String(Files.readAllBytes(Paths.get("src/main/resources/prompts/chat2.txt")));
+              new String(Files.readAllBytes(Paths.get("src/main/resources/prompts/guessing.txt")));
 
       String fullPrompt =
           evidencePrompt + "\nUser Reasoning:\n" + txtInput.getText() + "\n";
