@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Ellipse;
@@ -93,6 +95,9 @@ public class GuessController {
   @FXML private Label ownerLabel;
   @FXML private Label workerLabel;
   @FXML private Label brotherLabel;
+  @FXML private Label explanationLabel;
+
+  @FXML private HBox chatHBox;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
@@ -102,6 +107,7 @@ public class GuessController {
   private boolean isSuspectSelected = false;
   private static boolean isThiefFound = false;
   private static GuessController guessController;
+  private Label currentLabel;
 
   ImageManager ownerImageManager;
   ImageManager workerImageManager;
@@ -114,6 +120,8 @@ public class GuessController {
    */
   @FXML
   public void initialize() {
+    txtInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
+
     btnSend
         .sceneProperty()
         .addListener(
@@ -266,10 +274,21 @@ public class GuessController {
 
   @FXML
   private void selectSuspect1(MouseEvent event) throws ApiProxyException, IOException {
+    toggleHBox();
+    if (currentImageManager == ownerImageManager) {
+      return;
+    }
+
+    if (currentLabel != null) {
+      currentLabel.setVisible(false);
+    }
+
     if (currentImageManager != null) {
       currentImageManager.unclicked();
     }
     ownerImageManager.clicked();
+    ownerLabel.setVisible(true);
+    currentLabel = ownerLabel;
     currentImageManager = ownerImageManager;
     currentSuspect = 1;
     isThiefFound = false;
@@ -278,10 +297,21 @@ public class GuessController {
 
   @FXML
   private void selectSuspect2(MouseEvent event) throws ApiProxyException, IOException {
+    toggleHBox();
+    if (currentImageManager == workerImageManager) {
+      return;
+    }
+
+    if (currentLabel != null) {
+      currentLabel.setVisible(false);
+    }
+
     if (currentImageManager != null) {
       currentImageManager.unclicked();
     }
     workerImageManager.clicked();
+    workerLabel.setVisible(true);
+    currentLabel = workerLabel;
     currentImageManager = workerImageManager;
     currentSuspect = 2;
     isThiefFound = true;
@@ -290,10 +320,21 @@ public class GuessController {
 
   @FXML
   private void selectSuspect3(MouseEvent event) throws ApiProxyException, IOException {
+    toggleHBox();
+    if (currentImageManager == brotherImageManager) {
+      return;
+    }
+
+    if (currentLabel != null) {
+      currentLabel.setVisible(false);
+    }
+
     if (currentImageManager != null) {
       currentImageManager.unclicked();
     }
     brotherImageManager.clicked();
+    brotherLabel.setVisible(true);
+    currentLabel = brotherLabel;
     currentImageManager = brotherImageManager;
     currentSuspect = 3;
     isThiefFound = false;
@@ -484,7 +525,9 @@ public class GuessController {
     ownerImage.setOnMouseExited(
         e -> {
           ownerImageManager.hoverOut();
-          ownerLabel.setVisible(false);
+          if (currentLabel != ownerLabel) {
+            ownerLabel.setVisible(false);
+          }
         });
 
     workerImage.setOnMouseEntered(
@@ -495,7 +538,9 @@ public class GuessController {
     workerImage.setOnMouseExited(
         e -> {
           workerImageManager.hoverOut();
-          workerLabel.setVisible(false);
+          if (currentLabel != workerLabel) {
+            workerLabel.setVisible(false);
+          }
         });
 
     brotherImage.setOnMouseEntered(
@@ -506,7 +551,30 @@ public class GuessController {
     brotherImage.setOnMouseExited(
         e -> {
           brotherImageManager.hoverOut();
-          brotherLabel.setVisible(false);
+          if (currentLabel != brotherLabel) {
+            brotherLabel.setVisible(false);
+          }
         });
+  }
+
+  private void toggleHBox() {
+    // Create the transition
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), chatHBox);
+
+    if (!chatHBox.isVisible()) {
+      chatHBox.setVisible(true); // Show before animation
+      transition.setFromY(chatHBox.getHeight() + 50); // Start off-screen
+      transition.setToY(0); // Move to visible position
+    }
+
+    transition
+        .onFinishedProperty()
+        .set(
+            e -> {
+              explanationLabel.setVisible(true);
+            });
+
+    // Play the transition
+    transition.play();
   }
 }

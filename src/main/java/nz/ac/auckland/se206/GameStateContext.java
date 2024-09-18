@@ -28,9 +28,21 @@ public class GameStateContext {
   private GameState gameState;
   private RoomController roomController;
   private GuessController guessController;
+  private int talkedCounter = 0;
 
-  /** Constructs a new GameStateContext and initializes the game states and professions. 
-   * @throws ApiProxyException */
+  private boolean isAnyClueFound = false;
+  private boolean isClue1Found = false;
+  private boolean isClue2Found = false;
+  private boolean isClue3Found = false;
+  private boolean isPerson1Talked = false;
+  private boolean isPerson2Talked = false;
+  private boolean isPerson3Talked = false;
+
+  /**
+   * Constructs a new GameStateContext and initializes the game states and professions.
+   *
+   * @throws ApiProxyException
+   */
   public GameStateContext() {
     gameStartedState = new GameStarted(this);
     guessingState = new Guessing(this);
@@ -241,5 +253,49 @@ public class GameStateContext {
 
   public void setGuessController(GuessController guessController) {
     this.guessController = guessController;
+  }
+
+  /**
+   * Checks if all suspects have been spoken to. This method iterates through the hashmap of
+   * suspects and checks if each suspect has been spoken to. If all suspects have been spoken to, it
+   * returns true; otherwise, it returns false.
+   *
+   * @return true if all suspects have been spoken to, false otherwise
+   */
+  public boolean isAllSuspectsSpokenTo() {
+    // Iterate through the hashmap and check if all suspects have been spoken to
+    return isPerson1Talked && isPerson2Talked && isPerson3Talked;
+  }
+
+  public void person1Talked() {
+    isPerson1Talked = true;
+  }
+
+  public void person2Talked() {
+    isPerson2Talked = true;
+  }
+
+  public void person3Talked() {
+    isPerson3Talked = true;
+  }
+
+  public void clueFound() {
+    isAnyClueFound = true;
+  }
+
+  public void clue1Found() {
+    isClue1Found = true;
+  }
+
+  public void clue2Found() {
+    isClue2Found = true;
+  }
+
+  public void clue3Found() {
+    isClue3Found = true;
+  }
+
+  public boolean isAnyClueFound() {
+    return isAnyClueFound;
   }
 }
