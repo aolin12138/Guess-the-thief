@@ -30,6 +30,14 @@ public class GameStateContext {
   private GuessController guessController;
   private int talkedCounter = 0;
 
+  private boolean isAnyClueFound = false;
+  private boolean isClue1Found = false;
+  private boolean isClue2Found = false;
+  private boolean isClue3Found = false;
+  private boolean isPerson1Talked = false;
+  private boolean isPerson2Talked = false;
+  private boolean isPerson3Talked = false;
+
   /**
    * Constructs a new GameStateContext and initializes the game states and professions.
    *
@@ -256,19 +264,38 @@ public class GameStateContext {
    */
   public boolean isAllSuspectsSpokenTo() {
     // Iterate through the hashmap and check if all suspects have been spoken to
-    for (Map.Entry<String, Person> person : rectanglesToProfession.entrySet()) {
-      if (person.getValue().hasTalked()) {
-        talkedCounter++;
-      }
-    }
-    if (talkedCounter == 3) {
-      // Reset counter to 0, to prevent user from clicking guess button 3 times and it cumulatively
-      // adding to the counter
-      talkedCounter = 0;
-      return true;
-    } else {
-      talkedCounter = 0;
-      return false;
-    }
+    return isPerson1Talked && isPerson2Talked && isPerson3Talked;
+  }
+
+  public void person1Talked() {
+    isPerson1Talked = true;
+  }
+
+  public void person2Talked() {
+    isPerson2Talked = true;
+  }
+
+  public void person3Talked() {
+    isPerson3Talked = true;
+  }
+
+  public void clueFound() {
+    isAnyClueFound = true;
+  }
+
+  public void clue1Found() {
+    isClue1Found = true;
+  }
+
+  public void clue2Found() {
+    isClue2Found = true;
+  }
+
+  public void clue3Found() {
+    isClue3Found = true;
+  }
+
+  public boolean isAnyClueFound() {
+    return isAnyClueFound;
   }
 }
