@@ -9,8 +9,10 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CallHistoryController">
    <children>
       <Button fx:id="HomeBtn" layoutX="373.0" layoutY="336.0" mnemonicParsing="false" onAction="#onHomeButtonClicked" text="Home" />
-      <StackPane fx:id="indicatorPane" layoutX="108.0" layoutY="290.0" prefHeight="109.0" prefWidth="104.0" />
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="83.0" layoutY="309.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#4effb2">
+      <Label layoutX="343.0" layoutY="158.0" text="Missed Calls" />
+      <Label layoutX="343.0" layoutY="184.0" prefHeight="17.0" prefWidth="165.0" text="+64  021 123 777" />
+      <StackPane fx:id="indicatorPane" layoutX="76.0" layoutY="264.0" prefHeight="109.0" prefWidth="104.0" />
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="283.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#4effb2">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
