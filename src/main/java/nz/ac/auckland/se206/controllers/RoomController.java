@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.animation.KeyFrame;
@@ -27,6 +28,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -63,6 +66,7 @@ public class RoomController {
   private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
+  private MediaPlayer player;
 
   @FXML private Rectangle rectPerson1;
   @FXML private Rectangle rectPerson2;
@@ -406,14 +410,28 @@ public class RoomController {
    *
    * @param event the action event triggered by clicking the guess button
    * @throws IOException if there is an I/O error
+   * @throws URISyntaxException
    */
   @FXML
-  private void handleGuessClick(ActionEvent event) throws IOException {
-    // Before switching to guess scene, check the user has spoken to all 3 suspects and seen one
-    // clue;
+  private void handleGuessClick(ActionEvent event) throws IOException, URISyntaxException {
+    // Before switching to guess scene, check the user has spoken to all 3 suspects and seen at
+    // least one clue
     if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
       // context.handleGuessClick();
       App.setRoot("guess");
+    } else if (!context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
+      Media sound =
+          new Media(App.class.getResource("/sounds/missing_suspect.mp3").toURI().toString());
+      player = new MediaPlayer(sound);
+      player.play();
+    } else if (context.isAllSuspectsSpokenTo() && !CrimeSceneController.isAnyClueFound()) {
+      Media sound = new Media(App.class.getResource("/clue_reminder_1.mp3").toURI().toString());
+      player = new MediaPlayer(sound);
+      player.play();
+    } else if (!context.isAllSuspectsSpokenTo() && !CrimeSceneController.isAnyClueFound()) {
+      Media sound = new Media(App.class.getResource("/keep_investigating.mp3").toURI().toString());
+      player = new MediaPlayer(sound);
+      player.play();
     }
   }
 
