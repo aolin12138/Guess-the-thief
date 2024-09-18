@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.Utils;
 
@@ -82,7 +81,6 @@ public class StartController {
       Utils.setPlayerName(playerNameWindow.getText());
     }
     // Loads CRIME scene here because timer starts when it is initialised
-    SceneManager.addRoot(SceneManager.Scene.CRIME, App.loadFxml("crime"));
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));

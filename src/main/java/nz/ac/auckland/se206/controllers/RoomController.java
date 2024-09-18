@@ -14,19 +14,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -106,8 +103,6 @@ public class RoomController {
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
 
-  @FXML public ComboBox<HBox> imagesComboBox;
-
   @FXML private VBox imagesVBox;
 
   private ChatCompletionRequest chatCompletionRequest;
@@ -138,8 +133,10 @@ public class RoomController {
         .sceneProperty()
         .addListener(
             (observable, oldScene, newScene) -> {
-              Stage stage = (Stage) newScene.getWindow();
-              stage.sizeToScene();
+              if (newScene != null) {
+                Stage stage = (Stage) newScene.getWindow();
+                stage.sizeToScene();
+              }
               if (newScene != null) {
                 newScene.addEventHandler(
                     KeyEvent.KEY_PRESSED,
@@ -580,6 +577,24 @@ public class RoomController {
   @FXML
   public void styleScene() {
 
+    if (SceneManager.getCrimeSceneLoader() != null) {
+      CrimeSceneController crimeSceneController =
+          SceneManager.getCrimeSceneLoader().getController();
+      switch (crimeSceneController.getId()) {
+        case "ownerImage":
+          displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
+          setPerson(context.getPerson("rectPerson2"));
+
+        case "workerImage":
+          displayImage.setImage(new Image(workerImage.getImage().getUrl()));
+          setPerson(context.getPerson("rectPerson1"));
+
+        case "brotherImage":
+          displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
+          setPerson(context.getPerson("rectPerson3"));
+      }
+    }
+
     ownerImage.setOnMouseEntered(
         e -> {
           ownerImageManager.hoverIn();
@@ -639,15 +654,6 @@ public class RoomController {
   public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {
     ImageView clickedImage = (ImageView) event.getSource();
     String id = clickedImage.getId();
-
-    ColorAdjust colorAdjustOut = new ColorAdjust();
-    colorAdjustOut.setBrightness(0);
-    DropShadow dropShadowOut = new DropShadow();
-    dropShadowOut.setRadius(10);
-    dropShadowOut.setOffsetX(0);
-    dropShadowOut.setOffsetY(0);
-    dropShadowOut.setColor(javafx.scene.paint.Color.GRAY);
-    dropShadowOut.setInput(colorAdjustOut);
     TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesVBox);
     switch (id) {
       case "ownerImage":
@@ -709,5 +715,22 @@ public class RoomController {
 
     // Play the transition
     transition.play();
+  }
+
+  public void setPersonImage(MouseEvent event, String id) throws IOException {
+    switch (id) {
+      case "ownerImage":
+        displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
+        context.handleRectangleClick(event, "rectPerson2");
+        break;
+      case "workerImage":
+        displayImage.setImage(new Image(workerImage.getImage().getUrl()));
+        context.handleRectangleClick(event, "rectPerson1");
+        break;
+      case "brotherImage":
+        displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
+        context.handleRectangleClick(event, "rectPerson3");
+        break;
+    }
   }
 }

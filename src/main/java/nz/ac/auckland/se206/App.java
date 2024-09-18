@@ -57,12 +57,18 @@ public class App extends Application {
   @Override
   public void start(final Stage stage) throws IOException {
     // Store the stage in the SceneManager so it will be remembered
-    SceneManager.addRoot(SceneManager.Scene.START, loadFxml("start"));
-    SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, loadFxml("instructions"));
-    SceneManager.addRoot(SceneManager.Scene.ROOM, loadFxml("room"));
+    FXMLLoader startLoader = new FXMLLoader(App.class.getResource("/fxml/start.fxml"));
+    FXMLLoader roomLoader = new FXMLLoader(App.class.getResource("/fxml/room.fxml"));
+    FXMLLoader crimeSceneLoader = new FXMLLoader(App.class.getResource("/fxml/crime.fxml"));
 
-    Parent root = loadFxml("start");
-    scene = new Scene(root);
+    SceneManager.addRoot(SceneManager.Scene.START, startLoader.load());
+    SceneManager.addRoot(SceneManager.Scene.ROOM, roomLoader.load());
+    SceneManager.addRoot(SceneManager.Scene.CRIME, crimeSceneLoader.load());
+
+    SceneManager.setRoomLoader(roomLoader);
+    SceneManager.setCrimeSceneLoader(crimeSceneLoader);
+
+    scene = new Scene(SceneManager.getRoot(SceneManager.Scene.START));
     stage.setScene(scene);
 
     // // Set up the onShown event handler
@@ -81,6 +87,6 @@ public class App extends Application {
 
     stage.setTitle("PI Masters: Detective Training");
     stage.show();
-    root.requestFocus();
+    SceneManager.getRoot(SceneManager.Scene.START).requestFocus();
   }
 }
