@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -139,5 +141,9 @@ public class CallHistoryController {
   }
 
   @FXML
-  void onVoicemailClicked(MouseEvent event) {}
+  void onVoicemailClicked(MouseEvent event) throws URISyntaxException {
+    Media sound = new Media(App.class.getResource("/sounds/voicemail.mp3").toURI().toString());
+    player = new MediaPlayer(sound);
+    player.play();
+  }
 }
