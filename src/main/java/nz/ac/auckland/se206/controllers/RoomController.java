@@ -424,14 +424,19 @@ public class RoomController {
           new Media(App.class.getResource("/sounds/missing_suspect.mp3").toURI().toString());
       player = new MediaPlayer(sound);
       player.play();
+      return;
     } else if (context.isAllSuspectsSpokenTo() && !CrimeSceneController.isAnyClueFound()) {
-      Media sound = new Media(App.class.getResource("/clue_reminder_1.mp3").toURI().toString());
+      Media sound =
+          new Media(App.class.getResource("/sounds/clue_reminder_1.mp3").toURI().toString());
       player = new MediaPlayer(sound);
       player.play();
+      return;
     } else if (!context.isAllSuspectsSpokenTo() && !CrimeSceneController.isAnyClueFound()) {
-      Media sound = new Media(App.class.getResource("/keep_investigating.mp3").toURI().toString());
+      Media sound =
+          new Media(App.class.getResource("/sounds/keep_investigating.mp3").toURI().toString());
       player = new MediaPlayer(sound);
       player.play();
+      return;
     }
   }
 
