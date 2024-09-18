@@ -19,8 +19,8 @@ public class Person {
     this.name = name;
     this.role = role;
     this.profession = profession;
-    try{
-    ApiProxyConfig config = ApiProxyConfig.readConfig();
+    try {
+      ApiProxyConfig config = ApiProxyConfig.readConfig();
       chatCompletionRequest =
           new ChatCompletionRequest(config)
               .setN(1)
@@ -52,7 +52,7 @@ public class Person {
     return voice;
   }
 
-  public Boolean hasTalked() {
+  public boolean hasTalked() {
     return talked;
   }
 

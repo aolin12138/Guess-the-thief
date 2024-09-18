@@ -162,11 +162,7 @@ public class CrimeSceneController {
     passTimeToSuspectScene(timeToCount);
   }
 
-  public boolean isAnyClueFound() {
+  public static boolean isAnyClueFound() {
     return isAnyClueFound;
-  }
-
-  public boolean isAllSuspectsSpokenTo() {
-    return true;
   }
 }

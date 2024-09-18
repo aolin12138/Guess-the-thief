@@ -409,8 +409,12 @@ public class RoomController {
    */
   @FXML
   private void handleGuessClick(ActionEvent event) throws IOException {
-    // context.handleGuessClick();
-    App.setRoot("guess");
+    // Before switching to guess scene, check the user has spoken to all 3 suspects and seen one
+    // clue;
+    if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
+      // context.handleGuessClick();
+      App.setRoot("guess");
+    }
   }
 
   /**
@@ -437,7 +441,6 @@ public class RoomController {
     } else {
       return "That name doesn't exist";
     }
-
   }
 
   /**
@@ -503,6 +506,7 @@ public class RoomController {
       Choice result = chatCompletionResult.getChoices().iterator().next();
       chatCompletionRequest.addMessage(result.getChatMessage());
       appendChatMessage(result.getChatMessage());
+
       Platform.runLater(
           () -> {
             context.getRoomController().enableTalking();
@@ -513,7 +517,7 @@ public class RoomController {
     } catch (ApiProxyException e) {
       e.printStackTrace();
       return null;
-    } 
+    }
   }
 
   /**
