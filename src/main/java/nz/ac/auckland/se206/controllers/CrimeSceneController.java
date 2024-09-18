@@ -38,7 +38,6 @@ public class CrimeSceneController {
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private MediaPlayer player;
-
   private static Timeline timeline = new Timeline();
 
   @FXML private Rectangle CCTVClue;
@@ -206,6 +205,7 @@ public class CrimeSceneController {
     context.clueFound();
     Scene sceneOfButton = phoneClue.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
+    CCTVController.setTimeToCount(timeToCount);
   }
 
   @FXML
@@ -215,6 +215,7 @@ public class CrimeSceneController {
     context.clueFound();
     Scene sceneOfButton = phoneClue.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
+    PhoneController.setTimeToCount(timeToCount);
   }
 
   @FXML
@@ -224,6 +225,7 @@ public class CrimeSceneController {
     context.clueFound();
     Scene sceneOfButton = btnGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.NEWSPAPER));
+    NewspaperController.setTimeToCount(timeToCount);
   }
 
   @FXML

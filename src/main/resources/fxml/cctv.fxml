@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CCTVController">
    <children>
       <Button fx:id="ReturnButton" layoutX="373.0" layoutY="451.0" mnemonicParsing="false" onAction="#onReturnButtonClicked" text="Return to Crime Scene" />
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="435.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#4effb2">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Label>
+      <StackPane fx:id="indicatorPane" layoutX="60.0" layoutY="423.0" prefHeight="109.0" prefWidth="104.0" />
    </children>
 </AnchorPane>

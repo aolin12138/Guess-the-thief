@@ -408,6 +408,7 @@ public class GuessController {
       lblDescription.setText("You must type an explanation to support your decision.");
       return;
     }
+    timeline.stop();
 
     // gameOverController.setGuessController(this);
 
