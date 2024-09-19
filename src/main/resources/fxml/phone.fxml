@@ -12,13 +12,15 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="533.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.PhoneController">
    <children>
+
       <ImageView fitHeight="624.0" fitWidth="802.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/crime_scene3.png" />
          </image>
       </ImageView>
-      <Button fx:id="BackBtn" layoutX="329.0" layoutY="463.0" mnemonicParsing="false" onAction="#onReturnToCrimeScene" text="Return to Crime Scene " />
+      <Button fx:id="backButton" layoutX="329.0" layoutY="463.0" mnemonicParsing="false" onAction="#onReturnToCrimeScene" text="Return to Crime Scene " />
       <StackPane fx:id="phonePane" layoutX="293.0" layoutY="33.0" prefHeight="150.0" prefWidth="200.0">
+
          <children>
             <ImageView fx:id="screen" fitHeight="405.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true">
                <image>

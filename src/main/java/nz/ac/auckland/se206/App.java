@@ -76,7 +76,7 @@ public class App extends Application {
 
     SceneManager.setRoomLoader(roomLoader);
     SceneManager.setPhoneLoader(phoneLoader);
-    SceneManager.setCCTVLoader(cctvLoader);
+    SceneManager.setCameraLoader(cctvLoader);
     SceneManager.setCallHistoryLoader(callHistoryLoader);
     SceneManager.setNewspaperLoader(newspaperLoader);
 

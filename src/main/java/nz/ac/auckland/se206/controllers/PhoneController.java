@@ -4,6 +4,7 @@ import java.io.IOException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -23,8 +24,17 @@ import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 
 public class PhoneController {
+  private static boolean isFirstTimeInit = true;
+  private static double timeToCount = 300000;
+  private static double timeToCountTo = 300000;
+  private static int progress = 0;
+  private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
+  private static Timeline timeline = new Timeline();
+  private static GameStateContext context = new GameStateContext();
+
+  private double initialY;
+
   @FXML private StackPane indicatorPane;
-  @FXML private Button BackBtn;
 
   @FXML private Rectangle callRectangle;
   @FXML private Rectangle callNumberRectangle;
@@ -36,15 +46,8 @@ public class PhoneController {
   @FXML private StackPane phonePane;
   @FXML private Label timerLabel;
 
-  private static boolean isFirstTimeInit = true;
-  private static double timeToCount = 300000;
-  private static double timeToCountTo = 300000;
-  private static int progress = 0;
-  private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
-  private static Timeline timeline = new Timeline();
-  private static GameStateContext context = new GameStateContext();
-
-  private double initialY;
+  @FXML private Button backButton;
+  @FXML private Rectangle phoneAppRectangle;
 
   String audioPath = "/sounds/voicemail2.mp3";
   Media audio = new Media(getClass().getResource(audioPath).toString());
@@ -189,6 +192,7 @@ public class PhoneController {
         () -> {
           callScreen.setVisible(false);
           callNumberRectangle.setDisable(false);
+          mediaPlayer.stop();
         });
   }
 
@@ -213,6 +217,54 @@ public class PhoneController {
   }
 
   /**
+   * This method is called when the phone app is clicked. It will take the user to the call history
+   *
+   * @param event
+   */
+  @FXML
+  void onPhoneAppClicked(MouseEvent event) {
+    Scene sceneOfButton = phoneAppRectangle.getScene();
+    // initialize a call history controller
+    CallHistoryController callHistoryController =
+        SceneManager.getCallHistoryLoader().getController();
+    // set the context of the call history controller
+    callHistoryController.setContext(context);
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CALL_HISTORY));
+    // pass the time to the call history controller
+    passTimeToCallHistory(timeToCount);
+  }
+
+  /**
+   * This method is called when the back button is clicked. It will take the user back to the crime
+   *
+   * @param event
+   */
+  @FXML
+  void onReturnToCrimeScene(ActionEvent event) {
+    Button button = (Button) event.getSource();
+    Scene sceneOfButton = button.getScene();
+    Platform.runLater(
+        () -> {
+          mediaPlayer.stop();
+          restart();
+        });
+    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
+    passTimeToCrimeScene(timeToCount);
+  }
+
+  public void disableAll() {
+    callRectangle.setDisable(true);
+    callNumberRectangle.setDisable(true);
+  }
+
+  public void restart() {
+    if (callScreen.isVisible()) {
+      callScreen.setVisible(false);
+      callNumberRectangle.setDisable(false);
+    }
+  }
+
+  /**
    * This method passes the time to the crime scene
    *
    * @param timeToCount
@@ -228,33 +280,5 @@ public class PhoneController {
    */
   public static void passTimeToCallHistory(double timeToCount) {
     CallHistoryController.setTimeToCount(timeToCount);
-  }
-
-  /**
-   * This method is called when the phone app is clicked. It will take the user to the call history
-   *
-   * @param event
-   */
-  @FXML
-  void onPhoneAppClicked(MouseEvent event) {
-    Scene sceneOfButton = screen.getScene();
-    CallHistoryController callHistoryController =
-        SceneManager.getCallHistoryLoader().getController();
-    callHistoryController.setContext(context);
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CALL_HISTORY));
-    passTimeToCallHistory(timeToCount);
-  }
-
-  /**
-   * This method is called when the back button is clicked. It will take the user back to the crime
-   *
-   * @param event
-   */
-  @FXML
-  void onReturnToCrimeScene(ActionEvent event) {
-    Button button = (Button) event.getSource();
-    Scene sceneOfButton = button.getScene();
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
-    passTimeToCrimeScene(timeToCount);
   }
 }

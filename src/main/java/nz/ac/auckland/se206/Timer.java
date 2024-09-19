@@ -14,15 +14,19 @@ public class Timer {
 
   private static Timeline timeline = new Timeline();
 
+  /** Starts the countdown timer. */
   public static void startTimer() {
+    // create a new timeline
     timeline
         .getKeyFrames()
         .add(
             new KeyFrame(
                 Duration.millis(1),
+                // event handler for the timeline
                 event -> {
                   if (timeToCount > 0) {
                     timeToCount--;
+                    // calculate the progress of the timer
                     progress = (int) (100 - ((timeToCountTo - timeToCount) * 100 / timeToCountTo));
                     System.out.println(progress);
                     if ((timeToCount % 1000) == 0) {
@@ -36,14 +40,25 @@ public class Timer {
                     progress = 100;
                   }
                 }));
+    // set the cycle count of the timeline to indefinite
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
   }
 
+  /**
+   * Sets the time to count to a specified number of seconds.
+   *
+   * @param seconds
+   */
   public static void setTimeToCountTo(int seconds) {
     timeToCountTo = seconds;
   }
 
+  /**
+   * Sets the time to count to a specified number of seconds for guessing
+   *
+   * @param seconds
+   */
   public static void setGuessTime(int seconds) {
     guessTime = seconds;
   }
