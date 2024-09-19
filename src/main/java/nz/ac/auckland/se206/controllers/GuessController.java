@@ -437,6 +437,8 @@ public class GuessController {
       lblDescription.setText("You must type an explanation to support your decision.");
       return;
     }
+    // Passes the amount of time used to Utils for the scoreboard
+    Utils.setTimeUsed(timeForGuessing);
     timeline.stop();
 
     // gameOverController.setGuessController(this);

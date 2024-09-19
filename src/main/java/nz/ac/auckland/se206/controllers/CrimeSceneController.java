@@ -260,7 +260,7 @@ public class CrimeSceneController {
   void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
     // Check all 3 suspects have been spoken to and at least 1 clue has been clicked
     if (context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
-      // context.handleGuessClick();
+      Utils.setTimeUsed(timeToCount);
       timeline.stop();
       context.setState(context.getGuessingState());
       App.setRoot("guess");

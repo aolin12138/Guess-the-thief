@@ -482,7 +482,7 @@ public class RoomController {
     if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
       timeline.stop();
       context.setState(context.getGuessingState());
-      // context.handleGuessClick();
+      Utils.setTimeUsed(timeToCount);
       App.setRoot("guess");
     } else if (!context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
       Media sound =

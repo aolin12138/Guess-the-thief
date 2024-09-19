@@ -321,6 +321,7 @@ public class Utils {
    */
   public static void setTimeUsed(double time) {
     timeUsed = timeUsed + time;
+    System.out.println(timeUsed);
   }
 
   public static double getTimeUsed(
