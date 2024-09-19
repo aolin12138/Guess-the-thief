@@ -432,7 +432,33 @@ public class CrimeSceneController {
           crimeImageManager.hoverOut();
           crimeLabel.setVisible(false);
         });
-    buttonSlide.setOnAction(event -> toggleHorizontalBox());
+    // Makes the camera image hoverable
+    cameraImage.setOnMouseEntered(
+        e -> {
+          cameraImageManager.hoverIn();
+        });
+    cameraImage.setOnMouseExited(
+        e -> {
+          cameraImageManager.hoverOut();
+        });
+    // Makes the phone image hoverable
+    phoneImage.setOnMouseEntered(
+        e -> {
+          phoneImageManager.hoverIn();
+        });
+    phoneImage.setOnMouseExited(
+        e -> {
+          phoneImageManager.hoverOut();
+        });
+    // Makes the newspaper image hoverable
+    newspaperImage.setOnMouseEntered(
+        e -> {
+          newspaperImageManager.hoverIn();
+        });
+    newspaperImage.setOnMouseExited(
+        e -> {
+          newspaperImageManager.hoverOut();
+        });
   }
 
   /** This method toggles the HBox */
