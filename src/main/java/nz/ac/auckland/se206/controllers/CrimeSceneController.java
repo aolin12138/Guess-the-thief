@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.ClueManager;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.SceneManager;
@@ -32,52 +33,13 @@ public class CrimeSceneController {
   private static boolean isFirstTimeInit = true;
 
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 80000;
-  private static double timeToCountTo = 80000;
+  private static double timeToCount = 300000;
+  private static double timeToCountTo = 300000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private MediaPlayer player;
   private static Timeline timeline = new Timeline();
 
-  /**
-   * This method is s setter that sets the time to count
-   *
-   * @param timeFromPreviousScene
-   */
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  /**
-   * This method is a setter that sets the progress
-   *
-   * @param progressFromPreviousScene
-   */
-  public static void setProgress(int progressFromPreviousScene) {
-    progress = progressFromPreviousScene;
-  }
-
-  /**
-   * This method is a method hat passes the time to the suspect scene
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToSuspectScene(double timeToCount) {
-    RoomController.setTimeToCount(timeToCount);
-  }
-
-  /**
-   * This method returns true if any clue is found
-   *
-   * @return
-   */
-  public static boolean isAnyClueFound() {
-    return context.isAnyClueFound();
-  }
-
-  @FXML private Rectangle CCTVClue;
-  @FXML private Rectangle phoneClue;
-  @FXML private Rectangle newspaperClue;
   @FXML private Button btnGuess;
   @FXML private Button btnSlide;
   @FXML private StackPane indicatorPane;
@@ -92,6 +54,9 @@ public class CrimeSceneController {
   @FXML private ImageView workerImage;
   @FXML private ImageView brotherImage;
   @FXML private ImageView crimeImage;
+  @FXML private ImageView cameraImage;
+  @FXML private ImageView phoneImage;
+  @FXML private ImageView newspaperImage;
 
   @FXML private Label crimeLabel;
   @FXML private Label workerLabel;
@@ -103,6 +68,10 @@ public class CrimeSceneController {
   public ImageManager workerImageManager;
   public ImageManager brotherImageManager;
   public ImageManager crimeImageManager;
+  public ClueManager cameraImageManager;
+  public ClueManager phoneImageManager;
+  public ClueManager newspaperImageManager;
+
   public String id;
 
   /**
@@ -134,6 +103,9 @@ public class CrimeSceneController {
     workerImageManager = new ImageManager(workerImage);
     brotherImageManager = new ImageManager(brotherImage);
     crimeImageManager = new ImageManager(crimeImage);
+    cameraImageManager = new ClueManager(cameraImage);
+    phoneImageManager = new ClueManager(phoneImage);
+    newspaperImageManager = new ClueManager(newspaperImage);
 
     ColorAdjust colorAdjust = new ColorAdjust();
     colorAdjust.setBrightness(-0.45);
@@ -251,7 +223,7 @@ public class CrimeSceneController {
     context.clue1Found();
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
-    Scene sceneOfButton = phoneClue.getScene();
+    Scene sceneOfButton = phoneImage.getScene();
     CCTVController cctvController = SceneManager.getCCTVLoader().getController();
     cctvController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
@@ -268,9 +240,12 @@ public class CrimeSceneController {
     context.clue2Found();
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
-    Scene sceneOfButton = phoneClue.getScene();
+
+    Scene sceneOfButton = phoneImage.getScene();
+
     PhoneController phoneController = SceneManager.getPhoneLoader().getController();
     phoneController.setContext(context);
+
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
     PhoneController.setTimeToCount(timeToCount);
   }
@@ -420,6 +395,33 @@ public class CrimeSceneController {
           crimeLabel.setVisible(false);
         });
 
+    cameraImage.setOnMouseEntered(
+        e -> {
+          cameraImageManager.hoverIn();
+        });
+    cameraImage.setOnMouseExited(
+        e -> {
+          cameraImageManager.hoverOut();
+        });
+
+    phoneImage.setOnMouseEntered(
+        e -> {
+          phoneImageManager.hoverIn();
+        });
+    phoneImage.setOnMouseExited(
+        e -> {
+          phoneImageManager.hoverOut();
+        });
+
+    newspaperImage.setOnMouseEntered(
+        e -> {
+          newspaperImageManager.hoverIn();
+        });
+    newspaperImage.setOnMouseExited(
+        e -> {
+          newspaperImageManager.hoverOut();
+        });
+
     btnSlide.setOnAction(event -> toggleHBox());
   }
 
@@ -497,5 +499,41 @@ public class CrimeSceneController {
    */
   public GameStateContext getContext() {
     return context;
+  }
+
+  /**
+   * This method is s setter that sets the time to count
+   *
+   * @param timeFromPreviousScene
+   */
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
+  /**
+   * This method is a setter that sets the progress
+   *
+   * @param progressFromPreviousScene
+   */
+  public static void setProgress(int progressFromPreviousScene) {
+    progress = progressFromPreviousScene;
+  }
+
+  /**
+   * This method is a method hat passes the time to the suspect scene
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToSuspectScene(double timeToCount) {
+    RoomController.setTimeToCount(timeToCount);
+  }
+
+  /**
+   * This method returns true if any clue is found
+   *
+   * @return
+   */
+  public static boolean isAnyClueFound() {
+    return context.isAnyClueFound();
   }
 }
