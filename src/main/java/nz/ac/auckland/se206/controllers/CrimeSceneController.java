@@ -114,77 +114,84 @@ public class CrimeSceneController {
                     progress = (int) (100 - ((timeToCountTo - timeToCount) * 100 / timeToCountTo));
                   } else {
                     System.out.println(timeToCount);
-                    // Here the timer has exceeded the time for investigation and the game must
-                    // switch to the guess scene.
+                    Utils.checkConditions(
+                        context,
+                        context.isAllSuspectsSpokenTo(),
+                        CrimeSceneController.isAnyClueFound(),
+                        timeline);
+                    // // Here the timer has exceeded the time for investigation and the game must
+                    // // switch to the guess scene.
 
-                    // Before switching state, make sure the game is still in the game started state
-                    // and that we havent already switched state. Otherwise it will cause a bug
-                    if (!(context.getGameState().equals(context.getGameStartedState()))) {
-                      System.out.println("hello e " + context.getGameState());
-                      timeline.stop();
-                      System.out.println(timeToCount);
-                      return;
-                    }
-                    if (context.isAllSuspectsSpokenTo()
-                        && CrimeSceneController.isAnyClueFound()
-                        && context.getGameState().equals(context.getGameStartedState())) {
-                      context.setState(context.getGuessingState());
-                      try {
-                        timeline.stop();
-                        App.setRoot("guess");
+                    // // Before switching state, make sure the game is still in the game started
+                    // state
+                    // // and that we havent already switched state. Otherwise it will cause a bug
+                    // if (!(context.getGameState().equals(context.getGameStartedState()))) {
+                    //   System.out.println("hello e " + context.getGameState());
+                    //   timeline.stop();
+                    //   System.out.println(timeToCount);
+                    //   return;
+                    // }
+                    // if (context.isAllSuspectsSpokenTo()
+                    //     && CrimeSceneController.isAnyClueFound()
+                    //     && context.getGameState().equals(context.getGameStartedState())) {
+                    //   context.setState(context.getGuessingState());
+                    //   try {
+                    //     timeline.stop();
+                    //     App.setRoot("guess");
 
-                      } catch (IOException e) {
-                        e.printStackTrace();
-                      }
-                      // Stop the timer here, as once the suer switch to guessing state, they aren't
-                      // coming back
-                      timeline.stop();
-                    } else if (!context.isAllSuspectsSpokenTo()
-                        && CrimeSceneController.isAnyClueFound()
-                        && context.getGameState().equals(context.getGameStartedState())) {
-                      System.out.println("Should be gameover: " + context.getGameState());
-                      context.setState(context.getGameOverState());
-                      GameOverController.setOutputText(
-                          "You did not speak to every suspect during your"
-                              + " investigation!\n"
-                              + "Without doing this, the investigation is incomplete!\n"
-                              + "Click play again to replay.");
-                      try {
-                        timeline.stop();
-                        App.setRoot("gamelost");
-                      } catch (IOException e) {
-                        e.printStackTrace();
-                      }
-                    } else if (context.isAllSuspectsSpokenTo()
-                        && !CrimeSceneController.isAnyClueFound()
-                        && context.getGameState().equals(context.getGameStartedState())) {
-                      context.setState(context.getGameOverState());
-                      GameOverController.setOutputText(
-                          "You did not find any clues in the crime scene!\n"
-                              + "Finding clues is vital to conduting a good investigation!\n"
-                              + "Click play again to replay");
-                      try {
-                        timeline.stop();
-                        App.setRoot("gamelost");
-                      } catch (IOException e) {
-                        e.printStackTrace();
-                      }
-                    } else if (!context.isAllSuspectsSpokenTo()
-                        && !CrimeSceneController.isAnyClueFound()
-                        && context.getGameState().equals(context.getGameStartedState())) {
-                      context.setState(context.getGameOverState());
-                      GameOverController.setOutputText(
-                          "You did not inspect the crime scene for clues or speak to every"
-                              + " suspect!\n"
-                              + "These steps are vital in any investigation.\n"
-                              + "Click play again to replay.");
-                      try {
-                        timeline.stop();
-                        App.setRoot("gamelost");
-                      } catch (IOException e) {
-                        e.printStackTrace();
-                      }
-                    }
+                    //   } catch (IOException e) {
+                    //     e.printStackTrace();
+                    //   }
+                    //   // Stop the timer here, as once the suer switch to guessing state, they
+                    // aren't
+                    //   // coming back
+                    //   timeline.stop();
+                    // } else if (!context.isAllSuspectsSpokenTo()
+                    //     && CrimeSceneController.isAnyClueFound()
+                    //     && context.getGameState().equals(context.getGameStartedState())) {
+                    //   System.out.println("Should be gameover: " + context.getGameState());
+                    //   context.setState(context.getGameOverState());
+                    //   GameOverController.setOutputText(
+                    //       "You did not speak to every suspect during your"
+                    //           + " investigation!\n"
+                    //           + "Without doing this, the investigation is incomplete!\n"
+                    //           + "Click play again to replay.");
+                    //   try {
+                    //     timeline.stop();
+                    //     App.setRoot("gamelost");
+                    //   } catch (IOException e) {
+                    //     e.printStackTrace();
+                    //   }
+                    // } else if (context.isAllSuspectsSpokenTo()
+                    //     && !CrimeSceneController.isAnyClueFound()
+                    //     && context.getGameState().equals(context.getGameStartedState())) {
+                    //   context.setState(context.getGameOverState());
+                    //   GameOverController.setOutputText(
+                    //       "You did not find any clues in the crime scene!\n"
+                    //           + "Finding clues is vital to conduting a good investigation!\n"
+                    //           + "Click play again to replay");
+                    //   try {
+                    //     timeline.stop();
+                    //     App.setRoot("gamelost");
+                    //   } catch (IOException e) {
+                    //     e.printStackTrace();
+                    //   }
+                    // } else if (!context.isAllSuspectsSpokenTo()
+                    //     && !CrimeSceneController.isAnyClueFound()
+                    //     && context.getGameState().equals(context.getGameStartedState())) {
+                    //   context.setState(context.getGameOverState());
+                    //   GameOverController.setOutputText(
+                    //       "You did not inspect the crime scene for clues or speak to every"
+                    //           + " suspect!\n"
+                    //           + "These steps are vital in any investigation.\n"
+                    //           + "Click play again to replay.");
+                    //   try {
+                    //     timeline.stop();
+                    //     App.setRoot("gamelost");
+                    //   } catch (IOException e) {
+                    //     e.printStackTrace();
+                    //   }
+                    // }
                     // Once in guess state, player will never return to crime scene
                     timeline.stop();
                   }

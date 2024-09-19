@@ -67,6 +67,11 @@ public class NewspaperController {
                     // correctly interacted with
                     // Before switching state, make sure the game is still in the game started state
                     // and that we havent already switched state. Otherwise it will cause a bug
+                    Utils.checkConditions(
+                        context,
+                        context.isAllSuspectsSpokenTo(),
+                        CrimeSceneController.isAnyClueFound(),
+                        timeline);
                     // if (!(context.getGameState().equals(context.getGameStartedState()))) {
                     //   System.out.println("hello f " + context.getGameState());
                     //   timeline.stop();
