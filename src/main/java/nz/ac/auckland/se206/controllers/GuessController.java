@@ -56,17 +56,6 @@ public class GuessController {
   private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
-  private static boolean isThiefFound = false;
-  private static GuessController guessController;
-
-  /**
-   * method for getting the thief found boolean
-   *
-   * @return
-   */
-  public static boolean getThiefFound() {
-    return isThiefFound;
-  }
 
   @FXML private Rectangle rectPerson1;
   @FXML private Rectangle rectPerson2;
@@ -116,6 +105,8 @@ public class GuessController {
   private Timeline timeline = new Timeline();
   private int currentSuspect = 0;
   private boolean isSuspectSelected = false;
+  private static boolean isThiefFound = false;
+  private static GuessController guessController;
   private Label currentLabel;
 
   private ImageManager ownerImageManager;
@@ -224,61 +215,30 @@ public class GuessController {
 
   }
 
-  /**
-   * sets the stats pane.
-   *
-   * @return
-   */
   public Pane getStatsPane() {
     return statsPane;
   }
 
-  /**
-   * getter method for the the timerover boolean.
-   *
-   * @return
-   */
   public Boolean getTimeOver() {
     return isTimeOver;
   }
 
-  /**
-   * getter method for the suspect selected boolean.
-   *
-   * @return
-   */
   public Boolean getSuspectSelected() {
     return isSuspectSelected;
   }
 
-  /** stop timeline method. */
   public void stopTimeLine() {
     timeline.stop();
   }
 
-  /**
-   * getter method for getting the context.
-   *
-   * @return
-   */
   public GameStateContext getContext() {
     return context;
   }
 
-  /**
-   * setter method for setting the stats of the chats
-   *
-   * @param stats
-   */
   public void setChatStats(String stats) {
     chatStats.setText(stats);
   }
 
-  /**
-   * getter method for getting the person
-   *
-   * @return
-   */
   public Person getPerson() {
     return person;
   }
@@ -320,13 +280,6 @@ public class GuessController {
     return PromptEngineering.getPrompt("chat2.txt", map, person);
   }
 
-  /**
-   * method for selecting the first suspect
-   *
-   * @param event
-   * @throws ApiProxyException
-   * @throws IOException
-   */
   @FXML
   private void selectSuspect1(MouseEvent event) throws ApiProxyException, IOException {
     toggleHorizontalBox();
@@ -350,13 +303,6 @@ public class GuessController {
     isSuspectSelected = true;
   }
 
-  /**
-   * method for selecting the second suspect
-   *
-   * @param event
-   * @throws ApiProxyException
-   * @throws IOException
-   */
   @FXML
   private void selectSuspect2(MouseEvent event) throws ApiProxyException, IOException {
     toggleHorizontalBox();
@@ -380,13 +326,6 @@ public class GuessController {
     isSuspectSelected = true;
   }
 
-  /**
-   * method for selecting the third suspect
-   *
-   * @param event
-   * @throws ApiProxyException
-   * @throws IOException
-   */
   @FXML
   private void selectSuspect3(MouseEvent event) throws ApiProxyException, IOException {
     toggleHorizontalBox();
@@ -502,11 +441,13 @@ public class GuessController {
 
     // gameOverController.setGuessController(this);
 
+    // if (currentSuspect == 3) {
+
     ProgressIndicator statsIndicator = new ProgressIndicator();
     statsIndicator.setMinSize(1, 1);
     statsPane.getChildren().add(statsIndicator);
 
-    lblDescription.setText("Loading...");
+    lblDescription.setText("Evaluating...");
 
     Task<Void> task =
         new Task<Void>() {
@@ -514,16 +455,17 @@ public class GuessController {
           protected Void call() throws Exception {
             try {
               String validExplanation = isExplanationValid();
-              GameOverController.setOutputText(validExplanation);
-              String[] split = validExplanation.trim().split("");
-              boolean valid = split[0].toLowerCase().contains("true");
+              String[] splitArray = validExplanation.split(" ", 2);
+              boolean isCorrectExplanation = splitArray[0].toLowerCase().contains("true");
+              GameOverController.setOutputText(splitArray[1]);
+              System.out.println("isCorrectExplanation: " + isCorrectExplanation);
 
               Platform.runLater(
                   () -> {
 
                     // GuessTimeLimitManager.stopTimer();
 
-                    if (valid && currentSuspect == 3) {
+                    if (isCorrectExplanation && currentSuspect == 3) {
                       context.setState(context.getGameOverState());
                       isThiefFound = true;
 
@@ -565,13 +507,6 @@ public class GuessController {
     // }
   }
 
-  /**
-   * method for checking if the explanation is valid or not by sending the explanation to the GPT
-   *
-   * @return
-   * @throws ApiProxyException
-   * @throws IOException
-   */
   public String isExplanationValid() throws ApiProxyException, IOException {
 
     try {
@@ -604,25 +539,18 @@ public class GuessController {
     }
   }
 
-  /**
-   * method for getting the suspect number
-   *
-   * @return
-   */
   public int getSuspectNumber() {
     return currentSuspect;
   }
 
-  /**
-   * method for getting the guess controller
-   *
-   * @return
-   */
+  public static boolean getThiefFound() {
+    return isThiefFound;
+  }
+
   public GuessController getGuessController() {
     return this.guessController;
   }
 
-  /** method for styling the scene */
   public void styleScene() {
     // set the owner image to be hovable
     ownerImage.setOnMouseEntered(

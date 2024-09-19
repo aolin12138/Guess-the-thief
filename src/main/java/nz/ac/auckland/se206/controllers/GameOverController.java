@@ -12,6 +12,8 @@ import nz.ac.auckland.se206.App;
 public class GameOverController {
 
   private static String explanation;
+  private static boolean isTextAlreadyDisplayed = false;
+  private static boolean isBannerAlreadyDisplayed = false;
 
   /** This method sets the output text to the explanation of the guess. */
   public static void setOutputText(String text) {
@@ -31,18 +33,24 @@ public class GameOverController {
   public void initialize() {
 
     // Set the text of the text area to the explanation of the game
-    if (textArea != null) {
+    if ((textArea != null) && !isTextAlreadyDisplayed) {
 
       textArea.setWrapText(true);
       textArea.setText(explanation);
+      textArea.setDisable(true);
+      isTextAlreadyDisplayed = true;
     }
 
     // Set the text of the label to the result of the game
 
-    if (GuessController.getThiefFound()) {
-      lblStats.setText("The guess is correct!");
-    } else {
-      lblStats.setText("You Lose!");
+    if (!isBannerAlreadyDisplayed) { // Prevents bug from changing gamestate to loss after timers
+      // run out
+      if (GuessController.getThiefFound()) {
+        lblStats.setText("Correct! You win!!");
+        lblStats.setDisable(true);
+      } else {
+        lblStats.setText("Oh no! You Lose!");
+      }
     }
   }
 
