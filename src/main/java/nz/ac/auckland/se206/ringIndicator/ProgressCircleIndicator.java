@@ -39,6 +39,41 @@ import javafx.scene.control.Control;
 abstract class ProgressCircleIndicator extends Control {
   private static final int INDETERMINATE_PROGRESS = -1;
 
+  private static class StyleableProperties {
+    private static final CssMetaData<ProgressCircleIndicator, Number> INNER_CIRCLE_RADIUS =
+        new CssMetaData<ProgressCircleIndicator, Number>(
+            "-fx-inner-radius", SizeConverter.getInstance(), 60) {
+
+          @Override
+          public boolean isSettable(ProgressCircleIndicator n) {
+            return n.innerCircleRadiusProperty() == null
+                || !n.innerCircleRadiusProperty().isBound();
+          }
+
+          @Override
+          public StyleableProperty<Number> getStyleableProperty(ProgressCircleIndicator n) {
+            return (StyleableProperty<Number>) n.innerCircleRadiusProperty();
+          }
+        };
+
+    public static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
+
+    static {
+      final List<CssMetaData<? extends Styleable, ?>> styleables =
+          new ArrayList<>(Control.getClassCssMetaData());
+      styleables.add(INNER_CIRCLE_RADIUS);
+      STYLEABLES = Collections.unmodifiableList(styleables);
+    }
+  }
+
+  /**
+   * @return The CssMetaData associated with this class, which may include the CssMetaData of its
+   *     super classes.
+   */
+  public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
+    return StyleableProperties.STYLEABLES;
+  }
+
   private ReadOnlyIntegerWrapper progress = new ReadOnlyIntegerWrapper(0);
   private ReadOnlyBooleanWrapper indeterminate = new ReadOnlyBooleanWrapper(false);
 
@@ -114,41 +149,6 @@ abstract class ProgressCircleIndicator extends Control {
 
   public final double getInnerCircleRadius() {
     return innerCircleRadiusProperty().get();
-  }
-
-  private static class StyleableProperties {
-    private static final CssMetaData<ProgressCircleIndicator, Number> INNER_CIRCLE_RADIUS =
-        new CssMetaData<ProgressCircleIndicator, Number>(
-            "-fx-inner-radius", SizeConverter.getInstance(), 60) {
-
-          @Override
-          public boolean isSettable(ProgressCircleIndicator n) {
-            return n.innerCircleRadiusProperty() == null
-                || !n.innerCircleRadiusProperty().isBound();
-          }
-
-          @Override
-          public StyleableProperty<Number> getStyleableProperty(ProgressCircleIndicator n) {
-            return (StyleableProperty<Number>) n.innerCircleRadiusProperty();
-          }
-        };
-
-    public static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
-
-    static {
-      final List<CssMetaData<? extends Styleable, ?>> styleables =
-          new ArrayList<>(Control.getClassCssMetaData());
-      styleables.add(INNER_CIRCLE_RADIUS);
-      STYLEABLES = Collections.unmodifiableList(styleables);
-    }
-  }
-
-  /**
-   * @return The CssMetaData associated with this class, which may include the CssMetaData of its
-   *     super classes.
-   */
-  public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
-    return StyleableProperties.STYLEABLES;
   }
 
   @Override

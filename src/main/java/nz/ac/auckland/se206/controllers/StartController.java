@@ -19,8 +19,8 @@ import nz.ac.auckland.se206.Utils;
 
 public class StartController {
 
-  @FXML Button startButton;
-  @FXML Button instructionsButton;
+  @FXML private Button startButton;
+  @FXML private Button instructionsButton;
   @FXML private Label ScoreBoardNameLabel1;
   @FXML private Label ScoreBoardNameLabel2;
   @FXML private Label ScoreBoardNameLabel3;
@@ -29,8 +29,9 @@ public class StartController {
   @FXML private Label ScoreBoardTimeLabel3;
   @FXML private TextField playerNameWindow;
 
-  Media media = new Media(getClass().getResource("/sounds/Intro_brief.mp3").toExternalForm());
-  MediaPlayer mediaPlayer = new MediaPlayer(media);
+  private Media media =
+      new Media(getClass().getResource("/sounds/Intro_brief.mp3").toExternalForm());
+  private MediaPlayer mediaPlayer = new MediaPlayer(media);
 
   // This method will add a score to the scoreboard arraylist.
   // public void addScore(PreviousScore score) {

@@ -118,10 +118,10 @@ public class GuessController {
   private boolean isSuspectSelected = false;
   private Label currentLabel;
 
-  ImageManager ownerImageManager;
-  ImageManager workerImageManager;
-  ImageManager brotherImageManager;
-  ImageManager currentImageManager;
+  private ImageManager ownerImageManager;
+  private ImageManager workerImageManager;
+  private ImageManager brotherImageManager;
+  private ImageManager currentImageManager;
 
   /**
    * Initializes the room view. If it's the first time initialization, it will provide instructions

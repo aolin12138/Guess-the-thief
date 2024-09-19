@@ -36,7 +36,6 @@ public class CrimeSceneController {
   private static double timeToCountTo = 80000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
-  private MediaPlayer player;
   private static Timeline timeline = new Timeline();
 
   /**
@@ -98,12 +97,13 @@ public class CrimeSceneController {
   @FXML private Label ownerLabel;
   @FXML private Label brotherLabel;
 
-  public ImageManager currentImageManager;
-  public ImageManager ownerImageManager;
-  public ImageManager workerImageManager;
-  public ImageManager brotherImageManager;
-  public ImageManager crimeImageManager;
-  public String id;
+  private MediaPlayer player;
+  private ImageManager currentImageManager;
+  private ImageManager ownerImageManager;
+  private ImageManager workerImageManager;
+  private ImageManager brotherImageManager;
+  private ImageManager crimeImageManager;
+  private String id;
 
   /**
    * This method is called when the crime scene is loaded. It will set the timer and the progress

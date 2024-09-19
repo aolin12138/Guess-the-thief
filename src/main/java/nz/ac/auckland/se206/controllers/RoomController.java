@@ -129,12 +129,12 @@ public class RoomController {
   private Person person;
   private ImageView currentImage = null;
 
-  public ImageManager currentImageManager;
-  public ImageManager ownerImageManager;
-  public ImageManager workerImageManager;
-  public ImageManager brotherImageManager;
-  public ImageManager crimeImageManager;
-  public Scene suspectScene;
+  private ImageManager currentImageManager;
+  private ImageManager ownerImageManager;
+  private ImageManager workerImageManager;
+  private ImageManager brotherImageManager;
+  private ImageManager crimeImageManager;
+  private Scene suspectScene;
 
   private Timeline timeline = new Timeline();
 
