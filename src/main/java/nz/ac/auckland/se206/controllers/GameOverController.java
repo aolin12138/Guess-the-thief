@@ -20,9 +20,9 @@ public class GameOverController {
 
   @FXML private Pane statsPane;
   @FXML private Label lblStats;
-  @FXML private TextArea txtAChat;
+  @FXML private TextArea textAChat;
   @FXML private Label lblExplanation;
-  @FXML private TextArea txtArea;
+  @FXML private TextArea textArea;
 
   /**
    * This method is called when the game over scene is loaded. It will set the text of the text area
@@ -31,10 +31,10 @@ public class GameOverController {
   public void initialize() {
 
     // Set the text of the text area to the explanation of the game
-    if (txtArea != null) {
+    if (textArea != null) {
 
-      txtArea.setWrapText(true);
-      txtArea.setText(explanation);
+      textArea.setWrapText(true);
+      textArea.setText(explanation);
     }
 
     // Set the text of the label to the result of the game

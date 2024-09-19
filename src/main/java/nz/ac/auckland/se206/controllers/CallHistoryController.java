@@ -50,7 +50,7 @@ public class CallHistoryController {
 
   private MediaPlayer player;
 
-  @FXML private Button HomeBtn;
+  @FXML private Button homeButton;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
   @FXML private Rectangle voiceMailRectangle;

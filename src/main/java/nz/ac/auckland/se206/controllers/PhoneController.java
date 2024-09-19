@@ -24,8 +24,17 @@ import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 
 public class PhoneController {
+  private static boolean isFirstTimeInit = true;
+  private static double timeToCount = 300000;
+  private static double timeToCountTo = 300000;
+  private static int progress = 0;
+  private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
+  private static Timeline timeline = new Timeline();
+  private static GameStateContext context = new GameStateContext();
+
+  private double initialY;
+
   @FXML private StackPane indicatorPane;
-  @FXML private Button BackBtn;
 
   @FXML private Rectangle callRectangle;
   @FXML private Rectangle callNumberRectangle;
@@ -37,16 +46,8 @@ public class PhoneController {
   @FXML private StackPane phonePane;
   @FXML private Label timerLabel;
 
-  private static boolean isFirstTimeInit = true;
-  private static double timeToCount = 300000;
-  private static double timeToCountTo = 300000;
-  private static int progress = 0;
-  private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
-  private static Timeline timeline = new Timeline();
-  private static GameStateContext context = new GameStateContext();
-
-  private double initialY2;
-  private double initialY;
+  @FXML private Button backButton;
+  @FXML private Rectangle phoneAppRectangle;
 
   String audioPath = "/sounds/voicemail2.mp3";
   Media audio = new Media(getClass().getResource(audioPath).toString());
@@ -58,8 +59,6 @@ public class PhoneController {
 
     Rectangle clip = new Rectangle(209, 400); // Clip rectangle matching the phone screen size
     phonePane.setClip(clip);
-
-    initialY2 = lockScreen.getLayoutY();
 
     lockScreen.setOnMousePressed(
         event -> {
@@ -218,35 +217,20 @@ public class PhoneController {
   }
 
   /**
-   * This method passes the time to the crime scene
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToCrimeScene(double timeToCount) {
-    CrimeSceneController.setTimeToCount(timeToCount);
-  }
-
-  /**
-   * This method passes the time to the call history
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToCallHistory(double timeToCount) {
-    CallHistoryController.setTimeToCount(timeToCount);
-  }
-
-  /**
    * This method is called when the phone app is clicked. It will take the user to the call history
    *
    * @param event
    */
   @FXML
   void onPhoneAppClicked(MouseEvent event) {
-    Scene sceneOfButton = screen.getScene();
+    Scene sceneOfButton = phoneAppRectangle.getScene();
+    // initialize a call history controller
     CallHistoryController callHistoryController =
         SceneManager.getCallHistoryLoader().getController();
+    // set the context of the call history controller
     callHistoryController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CALL_HISTORY));
+    // pass the time to the call history controller
     passTimeToCallHistory(timeToCount);
   }
 
@@ -278,5 +262,23 @@ public class PhoneController {
       callScreen.setVisible(false);
       callNumberRectangle.setDisable(false);
     }
+  }
+
+  /**
+   * This method passes the time to the crime scene
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToCrimeScene(double timeToCount) {
+    CrimeSceneController.setTimeToCount(timeToCount);
+  }
+
+  /**
+   * This method passes the time to the call history
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToCallHistory(double timeToCount) {
+    CallHistoryController.setTimeToCount(timeToCount);
   }
 }

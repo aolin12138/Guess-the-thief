@@ -10,25 +10,25 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class ImageManager {
-  public ImageView imageView;
+  private ImageView imageView;
 
-  public ScaleTransition scaleTransitionIn;
-  public ColorAdjust colorAdjustIn;
-  public DropShadow dropShadowIn;
-  public Timeline brightnessTransitionIn;
-  public Timeline shadowTransitionIn;
+  private ScaleTransition scaleTransitionIn;
+  private ColorAdjust colorAdjustIn;
+  private DropShadow dropShadowIn;
+  private Timeline brightnessTransitionIn;
+  private Timeline shadowTransitionIn;
 
-  public ScaleTransition scaleTransitionOut;
-  public ColorAdjust colorAdjustOut;
-  public DropShadow dropShadowOut;
-  public Timeline brightnessTransitionOut;
-  public Timeline shadowTransitionOut;
+  private ScaleTransition scaleTransitionOut;
+  private ColorAdjust colorAdjustOut;
+  private DropShadow dropShadowOut;
+  private Timeline brightnessTransitionOut;
+  private Timeline shadowTransitionOut;
 
-  public Timeline brightnessTransitionStay;
-  public Timeline shadowTransitionStay;
-  public ScaleTransition clickScale;
+  private Timeline brightnessTransitionStay;
+  private Timeline shadowTransitionStay;
+  private ScaleTransition clickScale;
 
-  public int originalX;
+  private int originalX;
 
   private boolean isClicked = false;
 
@@ -117,32 +117,43 @@ public class ImageManager {
   }
 
   public void hoverIn() {
+    // if the image is clicked, it will not hover in
     if (isClicked) {
       return;
     }
+    // sets the effect of the image view to the drop shadow effect
     imageView.setEffect(dropShadowIn);
-
+    // stops the scale transition in, brightness transition in, shadow transition in and brightness
     scaleTransitionOut.stop();
     brightnessTransitionOut.stop();
     shadowTransitionOut.stop();
     brightnessTransitionStay.stop();
-
+    // plays the scale transition in, brightness transition in and shadow transition in
     scaleTransitionIn.play();
     brightnessTransitionIn.play();
     shadowTransitionIn.play();
   }
 
+  /**
+   * This method is called when the mouse hovers out of the image. It will animate the image to
+   * hover out
+   */
   public void hoverOut() {
+    // if the image is clicked, it will not hover out
     if (isClicked) {
       return;
     }
+    // sets the effect of the image view to the drop shadow effect
     imageView.setEffect(dropShadowOut);
 
+    // stops the scale transition out, brightness transition out, shadow transition out and
+    // brightness
     scaleTransitionIn.stop();
     brightnessTransitionIn.stop();
     shadowTransitionIn.stop();
     brightnessTransitionStay.stop();
 
+    // plays the scale transition out, brightness transition out and shadow transition out
     scaleTransitionOut.play();
     brightnessTransitionOut.play();
     shadowTransitionOut.play();
@@ -160,18 +171,20 @@ public class ImageManager {
     return imageView;
   }
 
+  /** This method is called when the image is clicked */
   public void clicked() {
+    // creates a new drop shadow effect
     DropShadow dropShadow = new DropShadow();
     dropShadow.setRadius(10);
     dropShadow.setOffsetX(0);
     dropShadow.setOffsetY(0);
     dropShadow.setColor(javafx.scene.paint.Color.WHITE);
-
+    // creates a new color adjust effect
     ColorAdjust colorAdjust = new ColorAdjust();
     colorAdjust.setBrightness(0);
-
+    // sets the color adjust effect to the drop shadow effect
     dropShadow.setInput(colorAdjust);
-
+    // sets the drop shadow effect to the image view
     imageView.setEffect(dropShadow);
     imageView.setScaleX(1.1);
     imageView.setScaleY(1.1);
