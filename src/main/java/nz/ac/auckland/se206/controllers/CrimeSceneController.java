@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.ClueManager;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.SceneManager;
@@ -41,9 +42,6 @@ public class CrimeSceneController {
 
   private static Timeline timeline = new Timeline();
 
-  @FXML private Rectangle CCTVClue;
-  @FXML private Rectangle phoneClue;
-  @FXML private Rectangle newspaperClue;
   @FXML private Button btnGuess;
   @FXML private Button btnSlide;
   @FXML private StackPane indicatorPane;
@@ -58,6 +56,9 @@ public class CrimeSceneController {
   @FXML private ImageView workerImage;
   @FXML private ImageView brotherImage;
   @FXML private ImageView crimeImage;
+  @FXML private ImageView cameraImage;
+  @FXML private ImageView phoneImage;
+  @FXML private ImageView newspaperImage;
 
   @FXML private Label crimeLabel;
   @FXML private Label workerLabel;
@@ -69,6 +70,10 @@ public class CrimeSceneController {
   public ImageManager workerImageManager;
   public ImageManager brotherImageManager;
   public ImageManager crimeImageManager;
+  public ClueManager cameraImageManager;
+  public ClueManager phoneImageManager;
+  public ClueManager newspaperImageManager;
+
   public String id;
 
   @FXML
@@ -96,6 +101,9 @@ public class CrimeSceneController {
     workerImageManager = new ImageManager(workerImage);
     brotherImageManager = new ImageManager(brotherImage);
     crimeImageManager = new ImageManager(crimeImage);
+    cameraImageManager = new ClueManager(cameraImage);
+    phoneImageManager = new ClueManager(phoneImage);
+    newspaperImageManager = new ClueManager(newspaperImage);
 
     ColorAdjust colorAdjust = new ColorAdjust();
     colorAdjust.setBrightness(-0.45);
@@ -204,7 +212,7 @@ public class CrimeSceneController {
     context.clue1Found();
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
-    Scene sceneOfButton = phoneClue.getScene();
+    Scene sceneOfButton = phoneImage.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
   }
 
@@ -213,7 +221,7 @@ public class CrimeSceneController {
     context.clue2Found();
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
-    Scene sceneOfButton = phoneClue.getScene();
+    Scene sceneOfButton = phoneImage.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
   }
 
@@ -323,6 +331,33 @@ public class CrimeSceneController {
         e -> {
           crimeImageManager.hoverOut();
           crimeLabel.setVisible(false);
+        });
+
+    cameraImage.setOnMouseEntered(
+        e -> {
+          cameraImageManager.hoverIn();
+        });
+    cameraImage.setOnMouseExited(
+        e -> {
+          cameraImageManager.hoverOut();
+        });
+
+    phoneImage.setOnMouseEntered(
+        e -> {
+          phoneImageManager.hoverIn();
+        });
+    phoneImage.setOnMouseExited(
+        e -> {
+          phoneImageManager.hoverOut();
+        });
+
+    newspaperImage.setOnMouseEntered(
+        e -> {
+          newspaperImageManager.hoverIn();
+        });
+    newspaperImage.setOnMouseExited(
+        e -> {
+          newspaperImageManager.hoverOut();
         });
 
     btnSlide.setOnAction(event -> toggleHBox());
