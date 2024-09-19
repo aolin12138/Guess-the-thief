@@ -74,6 +74,10 @@ public class CrimeSceneController {
 
   public String id;
 
+  /**
+   * This method is called when the crime scene is loaded. It will set the timer and the progress
+   * bar
+   */
   @FXML
   public void initialize() {
     if (isFirstTimeInit) {}
@@ -209,18 +213,11 @@ public class CrimeSceneController {
     // }}
   }
 
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  public static void setProgress(int progressFromPreviousScene) {
-    progress = progressFromPreviousScene;
-  }
-
-  public static void passTimeToSuspectScene(double timeToCount) {
-    RoomController.setTimeToCount(timeToCount);
-  }
-
+  /**
+   * This method is called when the CCTV clue is clicked. It will take the user to the CCTV scene
+   *
+   * @param event
+   */
   @FXML
   void onCCTVClueClicked(MouseEvent event) {
     context.clue1Found();
@@ -233,6 +230,11 @@ public class CrimeSceneController {
     CCTVController.setTimeToCount(timeToCount);
   }
 
+  /**
+   * This method is called when the phone clue is clicked. It will take the user to the phone scene
+   *
+   * @param event
+   */
   @FXML
   void onPhoneClueClicked(MouseEvent event) {
     context.clue2Found();
@@ -248,6 +250,12 @@ public class CrimeSceneController {
     PhoneController.setTimeToCount(timeToCount);
   }
 
+  /**
+   * This method is called when the newspaper clue is clicked. It will take the user to the
+   * newspaper scene
+   *
+   * @param event
+   */
   @FXML
   void onNewspaperClueClicked(MouseEvent event) {
     context.clue3Found();
@@ -260,6 +268,14 @@ public class CrimeSceneController {
     NewspaperController.setTimeToCount(timeToCount);
   }
 
+  /**
+   * This method is called when the guess button is clicked. It will take the user to the guess
+   * scene
+   *
+   * @param event
+   * @throws IOException
+   * @throws URISyntaxException
+   */
   @FXML
   void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
     // Check all 3 suspects have been spoken to and at least 1 clue has been clicked
@@ -289,6 +305,13 @@ public class CrimeSceneController {
     }
   }
 
+  /**
+   * This method is called when the suspect 1 is clicked. It will take the user to the suspect scene
+   *
+   * @param event
+   * @throws IOException
+   * @throws ApiProxyException
+   */
   @FXML
   void onSuspect1Clicked(MouseEvent event) throws IOException, ApiProxyException {
     Scene sceneOfButton = btnGuess.getScene();
@@ -296,6 +319,13 @@ public class CrimeSceneController {
     passTimeToSuspectScene(timeToCount);
   }
 
+  /**
+   * This method is called when the suspect 2 is clicked. It will take the user to the suspect scene
+   *
+   * @param event
+   * @throws IOException
+   * @throws ApiProxyException
+   */
   @FXML
   void onSuspect2Clicked(MouseEvent event) throws IOException, ApiProxyException {
     Scene sceneOfButton = btnGuess.getScene();
@@ -303,6 +333,13 @@ public class CrimeSceneController {
     passTimeToSuspectScene(timeToCount);
   }
 
+  /**
+   * This method is called when the suspect 3 is clicked. It will take the user to the suspect scene
+   *
+   * @param event
+   * @throws IOException
+   * @throws ApiProxyException
+   */
   @FXML
   void onSuspect3Clicked(MouseEvent event) throws IOException, ApiProxyException {
     Scene sceneOfButton = btnGuess.getScene();
@@ -310,10 +347,7 @@ public class CrimeSceneController {
     passTimeToSuspectScene(timeToCount);
   }
 
-  public static boolean isAnyClueFound() {
-    return context.isAnyClueFound();
-  }
-
+  /** This method styles the scene */
   @FXML
   public void styleScene() {
 
@@ -391,6 +425,7 @@ public class CrimeSceneController {
     btnSlide.setOnAction(event -> toggleHBox());
   }
 
+  /** This method toggles the HBox */
   private void toggleHBox() {
     // Create the transition
     TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesVBox);
@@ -410,6 +445,14 @@ public class CrimeSceneController {
     transition.play();
   }
 
+  /**
+   * This method is called when an image is clicked. It will set the context and take the user to
+   * the image scene
+   *
+   * @param event
+   * @throws IOException
+   * @throws InterruptedException
+   */
   @FXML
   public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {
     ImageView clickedImage = (ImageView) event.getSource();
@@ -440,11 +483,57 @@ public class CrimeSceneController {
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
   }
 
+  /**
+   * This method is a getter that returns the id
+   *
+   * @return
+   */
   public String getId() {
     return id;
   }
 
+  /**
+   * This method is a getter that returns the context
+   *
+   * @return
+   */
   public GameStateContext getContext() {
     return context;
+  }
+
+  /**
+   * This method is s setter that sets the time to count
+   *
+   * @param timeFromPreviousScene
+   */
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
+  /**
+   * This method is a setter that sets the progress
+   *
+   * @param progressFromPreviousScene
+   */
+  public static void setProgress(int progressFromPreviousScene) {
+    progress = progressFromPreviousScene;
+  }
+
+  /**
+   * This method is a method hat passes the time to the suspect scene
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToSuspectScene(double timeToCount) {
+    RoomController.setTimeToCount(timeToCount);
+  }
+
+  /**
+   * This method returns true if any clue is found
+   *
+   * @return
+   */
+  public static boolean isAnyClueFound() {
+    return context.isAnyClueFound();
   }
 }

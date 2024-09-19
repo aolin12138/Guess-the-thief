@@ -64,6 +64,25 @@ public class RoomController {
   private static double timeToCountTo = 300000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
+
+  /**
+   * Sets the time to count down from.
+   *
+   * @param timeFromPreviousScene
+   */
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
+  /**
+   * Passes the time to the crime scene controller.
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToCrimeScene(double timeToCount) {
+    CrimeSceneController.setTimeToCount(timeToCount);
+  }
+
   private MediaPlayer player;
 
   @FXML private Rectangle rectPerson1;
@@ -154,6 +173,7 @@ public class RoomController {
               }
             });
 
+    // Set the images of the scene switches
     currentImageManager = new ImageManager(currentImage);
     ownerImageManager = new ImageManager(ownerImage);
     workerImageManager = new ImageManager(workerImage);
@@ -214,6 +234,7 @@ public class RoomController {
                         && CrimeSceneController.isAnyClueFound()
                         && context.getGameState().equals(context.getGameStartedState())) {
                       context.setState(context.getGameOverState());
+                      // prints the message when the user did not speak to all suspects
                       GameOverController.setOutputText(
                           "You did not speak to every suspect during your investigation!\n"
                               + "Without doing this, the investigation is incomplete!\n"
@@ -229,6 +250,7 @@ public class RoomController {
                         && !CrimeSceneController.isAnyClueFound()
                         && context.getGameState().equals(context.getGameStartedState())) {
                       context.setState(context.getGameOverState());
+                      // prints the message when the user did not find any clues
                       GameOverController.setOutputText(
                           "You did not find any clues in the crime scene!\n"
                               + "Finding clues is vital to conduting a good investigation!\n"
@@ -244,6 +266,8 @@ public class RoomController {
                         && !CrimeSceneController.isAnyClueFound()
                         && context.getGameState().equals(context.getGameStartedState())) {
                       context.setState(context.getGameOverState());
+                      // prints the message when the user did not find any clues and did not speak
+                      // to every suspects
                       GameOverController.setOutputText(
                           "You did not inspect the crime scene for clues or speak to every"
                               + " suspect!\n"
@@ -272,23 +296,16 @@ public class RoomController {
     // }
   }
 
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  public static void passTimeToCrimeScene(double timeToCount) {
-    CrimeSceneController.setTimeToCount(timeToCount);
-  }
-
+  /**
+   * Gets the rectangle representing the first person in the room.
+   *
+   * @return
+   */
   public Pane getStatsPane() {
     return statsPane;
   }
 
-  // Don't think this is needed anymore
-  // public Boolean getTimeOver() {
-  //   return isTimeOver;
-  // }
-
+  /** disables all the rectangles in the room */
   public void disableAll() {
     officer.setDisable(true);
     officer2.setDisable(true);
@@ -298,10 +315,12 @@ public class RoomController {
     car.setDisable(true);
   }
 
+  /** boolean variable to check if the user has talked the suspects */
   public void talked() {
     hasTalked = true;
   }
 
+  /** Disables all the rectangles in the room when called */
   public void noTalking() {
     rectPerson1.setDisable(true);
     rectPerson2.setDisable(true);
@@ -314,6 +333,7 @@ public class RoomController {
     brotherImage.setDisable(true);
   }
 
+  /** Enables all the rectangles in the room when called */
   public void enableTalking() {
     rectPerson1.setDisable(false);
     rectPerson2.setDisable(false);
@@ -326,66 +346,122 @@ public class RoomController {
     brotherImage.setDisable(false);
   }
 
+  /**
+   * Gets the rectangle representing the dashcam.
+   *
+   * @return
+   */
   public Rectangle getDashcam() {
     return dashcam;
   }
 
+  /**
+   * gets the Back button
+   *
+   * @return
+   */
   public Button getBtnBack() {
     return btnBack;
   }
 
+  /** boolean variable representing the wallet */
   public void foundWallet() {
     walletFound = true;
   }
 
+  /**
+   * boolean variable representing the found wallet
+   *
+   * @return
+   */
   public Boolean isWalletFound() {
     return walletFound;
   }
 
+  /** boolean variable representing the found camera */
   public void foundCamera() {
     cameraFound = true;
   }
 
+  /** boolean variable representing the found car */
   public void foundCar() {
     isCarFound = true;
   }
 
+  /**
+   * boolean variable representing the found camera found
+   *
+   * @return
+   */
   public Boolean isCameraFound() {
     return cameraFound;
   }
 
+  /**
+   * getter method for the hasTalked boolean variable
+   *
+   * @return
+   */
   public Boolean getHasTalked() {
     return hasTalked;
   }
 
+  /**
+   * boolean variable representing the found dashcam
+   *
+   * @return
+   */
   public Boolean isDashcamFound() {
     return dashcamFound;
   }
 
+  /**
+   * boolean variable representing the found car
+   *
+   * @return
+   */
   public Boolean isCarFound() {
     return isCarFound;
   }
 
+  /**
+   * getter method for the guess button
+   *
+   * @return
+   */
   public Button getBtnGuess() {
     return btnGuess;
   }
 
+  /** method for stopping the timeline */
   public void stopTimeLine() {
     timeline.stop();
   }
 
+  /** getter method for getting car image */
   public ImageView getCarImage() {
     return carImage;
   }
 
+  /**
+   * getter method for getting the context
+   *
+   * @return
+   */
   public GameStateContext getContext() {
     return context;
   }
 
+  /**
+   * setter method for setting chat stats
+   *
+   * @param stats
+   */
   public void setChatStats(String stats) {
     chatStats.setText(stats);
   }
 
+  /** method for disabling the rectangles in the room */
   public void diableRectangles() {
     rectPerson1.setDisable(true);
     rectPerson2.setDisable(true);
@@ -397,6 +473,7 @@ public class RoomController {
     car.setDisable(true);
   }
 
+  /** method for enabling the rectangles in the room */
   public void enableRectangles() {
     rectPerson1.setDisable(false);
     rectPerson2.setDisable(false);
@@ -408,6 +485,11 @@ public class RoomController {
     dashcam.setDisable(true);
   }
 
+  /**
+   * method for getting the person
+   *
+   * @return
+   */
   public Person getPerson() {
     return person;
   }
@@ -513,6 +595,7 @@ public class RoomController {
     // }
     // return PromptEngineering.getPrompt("chat2.txt", map, person);
 
+    // retrieves the prompt based on the profession of the person
     if (person.getProfession().equals("owner of the other restaurant")) {
       return PromptEngineering.getPrompt("chat.txt", map, person);
     } else if (person.getProfession().equals("worker at the restaurant")) {
@@ -617,17 +700,6 @@ public class RoomController {
       return;
     }
 
-    // Won't need this anymore as gameover state is a different scene
-    // if (context.getGameState() == context.getGameOverState()) {
-    //   Alert alert = new Alert(AlertType.INFORMATION);
-    //   alert.setTitle("Game Over");
-    //   alert.setHeaderText("Game Over");
-    //   alert.setContentText("You can not talk to the suspects anymore.");
-    //   alert.showAndWait();
-    //   txtInput.clear();
-    //   return;
-    // }
-
     txtInput.clear();
     ChatMessage msg = new ChatMessage("user", message);
     appendChatMessage(msg);
@@ -647,12 +719,6 @@ public class RoomController {
           }
         };
 
-    // task.setOnSucceeded(
-    //     event1 -> {
-    //       statsPane.getChildren().remove(statsIndicator);
-    //       // setChatStats("Talking to " + person.getName() + " who is in " + person.getColor());
-    //       enableTalking();
-    //     });
     Thread backgroundThread = new Thread(task);
     backgroundThread.start();
   }
@@ -665,6 +731,9 @@ public class RoomController {
     btnBack.setDisable(true);
   }
 
+  /**
+   * Handles the styles of the scene for the room view and sets the images of the scene switches.
+   */
   @FXML
   public void styleScene() {
 
@@ -733,6 +802,7 @@ public class RoomController {
     btnSlide.setOnAction(event -> toggleHBox());
   }
 
+  /** Enables the images of the scene switches. */
   @FXML
   public void enableImages() {
     ownerImage.setDisable(false);
@@ -741,6 +811,13 @@ public class RoomController {
     crimeImage.setDisable(false);
   }
 
+  /**
+   * Handles the event when an image is clicked. Depending on the clicked image, it either displays
+   *
+   * @param event
+   * @throws IOException
+   * @throws InterruptedException
+   */
   @FXML
   public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {
     ImageView clickedImage = (ImageView) event.getSource();
@@ -789,6 +866,7 @@ public class RoomController {
     }
   }
 
+  /** Toggles the visibility of the images VBox. */
   private void toggleHBox() {
     // Create the transition
     TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesVBox);
@@ -808,6 +886,13 @@ public class RoomController {
     transition.play();
   }
 
+  /**
+   * Sets the image of the person clicked.
+   *
+   * @param event
+   * @param id
+   * @throws IOException
+   */
   public void setPersonImage(MouseEvent event, String id) throws IOException {
     switch (id) {
       case "ownerImage":
@@ -843,6 +928,11 @@ public class RoomController {
     }
   }
 
+  /**
+   * Sets the context for the room controller.
+   *
+   * @param context
+   */
   public void setContext(GameStateContext context) {
     this.context = context;
   }
