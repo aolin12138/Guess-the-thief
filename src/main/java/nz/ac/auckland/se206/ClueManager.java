@@ -10,25 +10,25 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class ClueManager {
-  public ImageView imageView;
+  private ImageView imageView;
 
-  public ScaleTransition scaleTransitionIn;
-  public ColorAdjust colorAdjustIn;
-  public DropShadow dropShadowIn;
-  public Timeline brightnessTransitionIn;
-  public Timeline shadowTransitionIn;
+  private ScaleTransition scaleTransitionIn;
+  private ColorAdjust colorAdjustIn;
+  private DropShadow dropShadowIn;
+  private Timeline brightnessTransitionIn;
+  private Timeline shadowTransitionIn;
 
-  public ScaleTransition scaleTransitionOut;
-  public ColorAdjust colorAdjustOut;
-  public DropShadow dropShadowOut;
-  public Timeline brightnessTransitionOut;
-  public Timeline shadowTransitionOut;
+  private ScaleTransition scaleTransitionOut;
+  private ColorAdjust colorAdjustOut;
+  private DropShadow dropShadowOut;
+  private Timeline brightnessTransitionOut;
+  private Timeline shadowTransitionOut;
 
-  public Timeline brightnessTransitionStay;
-  public Timeline shadowTransitionStay;
-  public ScaleTransition clickScale;
+  private Timeline brightnessTransitionStay;
+  private Timeline shadowTransitionStay;
+  private ScaleTransition clickScale;
 
-  public int originalX;
+  private int originalX;
 
   private boolean isClicked = false;
 
@@ -116,33 +116,45 @@ public class ClueManager {
     clickScale.setToY(1.2);
   }
 
+  /**
+   * This method is called when the mouse hovers in the image. It will animate the image to hover in
+   */
   public void hoverIn() {
+    // check if the image is clicked
     if (isClicked) {
       return;
     }
+    // sets the effect of the image view to the drop shadow effect
     imageView.setEffect(dropShadowIn);
-
+    // stops the scale transition out, brightness transition out and shadow transition out
     scaleTransitionOut.stop();
     brightnessTransitionOut.stop();
     shadowTransitionOut.stop();
     brightnessTransitionStay.stop();
-
+    // plays the scale transition in, brightness transition in and shadow transition in
     scaleTransitionIn.play();
     brightnessTransitionIn.play();
     shadowTransitionIn.play();
   }
 
+  /**
+   * This method is called when the mouse hovers out of the image. It will animate the image to
+   * hover
+   */
   public void hoverOut() {
+    // check if the image is clicked
     if (isClicked) {
       return;
     }
+    // sets the effect of the image view to the drop shadow effect
     imageView.setEffect(dropShadowOut);
 
+    // stops the scale transition in, brightness transition in, shadow transition in and brightness
     scaleTransitionIn.stop();
     brightnessTransitionIn.stop();
     shadowTransitionIn.stop();
     brightnessTransitionStay.stop();
-
+    // plays the scale transition out, brightness transition out and shadow transition out
     scaleTransitionOut.play();
     brightnessTransitionOut.play();
     shadowTransitionOut.play();
@@ -160,18 +172,21 @@ public class ClueManager {
     return imageView;
   }
 
+  /** This method is called when the image is clicked. It will animate the image to be clicked */
   public void clicked() {
+    // new instance of a drop shadow effect
     DropShadow dropShadow = new DropShadow();
     dropShadow.setRadius(10);
     dropShadow.setOffsetX(0);
     dropShadow.setOffsetY(0);
     dropShadow.setColor(javafx.scene.paint.Color.WHITE);
 
+    // new instance of a color adjust effect
     ColorAdjust colorAdjust = new ColorAdjust();
     colorAdjust.setBrightness(0);
-
+    // sets the effect of the image view to the drop shadow effect
     dropShadow.setInput(colorAdjust);
-
+    // sets the scale of the image view to 1.1
     imageView.setEffect(dropShadow);
     imageView.setScaleX(1.1);
     imageView.setScaleY(1.1);

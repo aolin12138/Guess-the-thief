@@ -21,12 +21,12 @@ public class StartController {
 
   @FXML private Button startButton;
   @FXML private Button instructionsButton;
-  @FXML private Label ScoreBoardNameLabel1;
-  @FXML private Label ScoreBoardNameLabel2;
-  @FXML private Label ScoreBoardNameLabel3;
-  @FXML private Label ScoreBoardTimeLabel1;
-  @FXML private Label ScoreBoardTimeLabel2;
-  @FXML private Label ScoreBoardTimeLabel3;
+  @FXML private Label scoreBoardNameLabel1;
+  @FXML private Label scoreBoardNameLabel2;
+  @FXML private Label scoreBoardNameLabel3;
+  @FXML private Label scoreBoardTimeLabel1;
+  @FXML private Label scoreBoardTimeLabel2;
+  @FXML private Label scoreBoardTimeLabel3;
   @FXML private TextField playerNameWindow;
 
   private Media media =
@@ -49,20 +49,20 @@ public class StartController {
     // Check is the previousScores arraylist is empty, if it isn't, display the scores from previous
     // rounds.
     if (previousScores.size() == 2) {
-      ScoreBoardNameLabel1.setText(previousScores.get(0));
-      ScoreBoardTimeLabel1.setText(previousScores.get(1));
+      scoreBoardNameLabel1.setText(previousScores.get(0));
+      scoreBoardTimeLabel1.setText(previousScores.get(1));
     } else if (previousScores.size() == 4) {
-      ScoreBoardNameLabel1.setText(previousScores.get(0));
-      ScoreBoardTimeLabel1.setText(previousScores.get(1));
-      ScoreBoardNameLabel2.setText(previousScores.get(2));
-      ScoreBoardTimeLabel2.setText(previousScores.get(3));
+      scoreBoardNameLabel1.setText(previousScores.get(0));
+      scoreBoardTimeLabel1.setText(previousScores.get(1));
+      scoreBoardNameLabel2.setText(previousScores.get(2));
+      scoreBoardTimeLabel2.setText(previousScores.get(3));
     } else if (previousScores.size() == 6) {
-      ScoreBoardNameLabel1.setText(previousScores.get(0));
-      ScoreBoardTimeLabel1.setText(previousScores.get(1));
-      ScoreBoardNameLabel2.setText(previousScores.get(2));
-      ScoreBoardTimeLabel2.setText(previousScores.get(3));
-      ScoreBoardNameLabel3.setText(previousScores.get(4));
-      ScoreBoardTimeLabel3.setText(previousScores.get(5));
+      scoreBoardNameLabel1.setText(previousScores.get(0));
+      scoreBoardTimeLabel1.setText(previousScores.get(1));
+      scoreBoardNameLabel2.setText(previousScores.get(2));
+      scoreBoardTimeLabel2.setText(previousScores.get(3));
+      scoreBoardNameLabel3.setText(previousScores.get(4));
+      scoreBoardTimeLabel3.setText(previousScores.get(5));
     }
 
     Platform.runLater(
