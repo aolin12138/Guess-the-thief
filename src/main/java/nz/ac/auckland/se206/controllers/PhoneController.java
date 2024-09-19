@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
@@ -21,6 +23,19 @@ import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 
 public class PhoneController {
+  @FXML private StackPane indicatorPane;
+  @FXML private Button BackBtn;
+
+  @FXML private Rectangle callRectangle;
+  @FXML private Rectangle callNumberRectangle;
+  @FXML private ImageView lockScreen;
+  @FXML private ImageView screen;
+  @FXML private ImageView callHistory;
+  @FXML private ImageView callScreen;
+
+  @FXML private StackPane phonePane;
+  @FXML private Label timerLabel;
+
   private static boolean isFirstTimeInit = true;
   private static double timeToCount = 300000;
   private static double timeToCountTo = 300000;
@@ -29,17 +44,11 @@ public class PhoneController {
   private static Timeline timeline = new Timeline();
   private static GameStateContext context = new GameStateContext();
 
-  @FXML private StackPane indicatorPane;
-  @FXML private Button BackBtn;
-
-  @FXML private Rectangle callRectangle;
-  @FXML private ImageView lockScreen;
-  @FXML private ImageView screen;
-  @FXML private ImageView callHistory;
-  @FXML private StackPane phonePane;
-  @FXML private Label timerLabel;
-
   private double initialY;
+
+  String audioPath = "/sounds/voicemail2.mp3";
+  Media audio = new Media(getClass().getResource(audioPath).toString());
+  MediaPlayer mediaPlayer = new MediaPlayer(audio);
 
   @FXML
   public void initialize() {
@@ -166,6 +175,20 @@ public class PhoneController {
   @FXML
   private void onCallClicked(MouseEvent event) {
     callHistory.setVisible(true);
+    callRectangle.setDisable(true);
+    callNumberRectangle.setDisable(false);
+  }
+
+  @FXML
+  private void callNumber(MouseEvent event) {
+    callScreen.setVisible(true);
+    callNumberRectangle.setDisable(true);
+    mediaPlayer.play();
+    mediaPlayer.setOnEndOfMedia(
+        () -> {
+          callScreen.setVisible(false);
+          callNumberRectangle.setDisable(false);
+        });
   }
 
   @FXML
