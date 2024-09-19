@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.ClueManager;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.SceneManager;
@@ -32,8 +33,8 @@ public class CrimeSceneController {
   private static boolean isFirstTimeInit = true;
 
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 80000;
-  private static double timeToCountTo = 80000;
+  private static double timeToCount = 300000;
+  private static double timeToCountTo = 300000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
@@ -91,6 +92,9 @@ public class CrimeSceneController {
   @FXML private ImageView workerImage;
   @FXML private ImageView brotherImage;
   @FXML private ImageView crimeImage;
+  @FXML private ImageView cameraImage;
+  @FXML private ImageView phoneImage;
+  @FXML private ImageView newspaperImage;
 
   @FXML private Label crimeLabel;
   @FXML private Label workerLabel;
@@ -104,6 +108,9 @@ public class CrimeSceneController {
   private ImageManager brotherImageManager;
   private ImageManager crimeImageManager;
   private String id;
+  private ClueManager cameraImageManager;
+  private ClueManager phoneImageManager;
+  private ClueManager newspaperImageManager;
 
   /**
    * This method is called when the crime scene is loaded. It will set the timer and the progress
@@ -134,6 +141,9 @@ public class CrimeSceneController {
     workerImageManager = new ImageManager(workerImage);
     brotherImageManager = new ImageManager(brotherImage);
     crimeImageManager = new ImageManager(crimeImage);
+    cameraImageManager = new ClueManager(cameraImage);
+    phoneImageManager = new ClueManager(phoneImage);
+    newspaperImageManager = new ClueManager(newspaperImage);
 
     ColorAdjust colorAdjust = new ColorAdjust();
     colorAdjust.setBrightness(-0.45);
@@ -268,9 +278,12 @@ public class CrimeSceneController {
     context.clue2Found();
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
-    Scene sceneOfButton = phoneClue.getScene();
+
+    Scene sceneOfButton = phoneImage.getScene();
+
     PhoneController phoneController = SceneManager.getPhoneLoader().getController();
     phoneController.setContext(context);
+
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
     PhoneController.setTimeToCount(timeToCount);
   }
@@ -420,7 +433,6 @@ public class CrimeSceneController {
           crimeImageManager.hoverOut();
           crimeLabel.setVisible(false);
         });
-
     buttonSlide.setOnAction(event -> toggleHorizontalBox());
   }
 

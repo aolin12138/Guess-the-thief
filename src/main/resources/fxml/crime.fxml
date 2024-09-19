@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane layoutX="1.0" layoutY="-14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CrimeSceneController">
@@ -18,7 +17,7 @@
 
       <ImageView fx:id="displayImage" fitHeight="583.0" fitWidth="805.0" layoutX="-1.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/crime_scene2.png" />
+            <Image url="@../images/crime_scene5.png" />
          </image>
       </ImageView>
       <Button fx:id="buttonGuess" layoutX="694.0" layoutY="503.0" mnemonicParsing="false" onAction="#onGuessClick" prefHeight="26.0" prefWidth="91.0" text="Make a Guess">
@@ -26,10 +25,9 @@
          <font>
             <Font size="10.0" />
          </font></Button>
-      <Rectangle fx:id="cameraClue" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="79.0" layoutX="226.0" layoutY="173.0" onMouseClicked="#onCameraClueClicked" stroke="BLACK" strokeType="INSIDE" width="135.0" />
-      <Rectangle fx:id="phoneClue" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="79.0" layoutX="422.0" layoutY="242.0" onMouseClicked="#onPhoneClueClicked" stroke="BLACK" strokeType="INSIDE" width="135.0" />
-      <Rectangle fx:id="newspaperClue" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="79.0" layoutX="97.0" layoutY="282.0" onMouseClicked="#onNewspaperClueClicked" stroke="BLACK" strokeType="INSIDE" width="135.0" />
-      <VBox fx:id="imagesVerticalBox" layoutX="661.0" layoutY="25.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" visible="false">
+
+      <VBox fx:id="imagesVBox" layoutX="661.0" layoutY="25.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" visible="false">
+
          <children>
             <VBox prefHeight="88.0" prefWidth="132.0">
                <children>
@@ -127,5 +125,29 @@
             <Font size="10.0" />
          </font>
       </Button>
+      <ImageView fx:id="newspaperImage" fitHeight="62.0" fitWidth="133.0" layoutX="416.0" layoutY="421.0" onMouseClicked="#onNewspaperClueClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/newsPaperImage.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="phoneImage" fitHeight="18.0" fitWidth="11.0" layoutX="36.0" layoutY="362.0" onMouseClicked="#onPhoneClueClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/phoneImage.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="cameraImage" fitHeight="17.0" fitWidth="21.0" layoutX="573.0" layoutY="101.0" onMouseClicked="#onCCTVClueClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/cameraImage.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </AnchorPane>
