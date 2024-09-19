@@ -34,6 +34,34 @@ import javafx.scene.control.Skin;
  * @author Andrea Vacondio
  */
 public class RingProgressIndicator extends ProgressCircleIndicator {
+
+  private static class StyleableProperties {
+    private static final CssMetaData<RingProgressIndicator, Number> RING_WIDTH =
+        new CssMetaData<RingProgressIndicator, Number>(
+            "-fx-ring-width", SizeConverter.getInstance(), 22) {
+
+          @Override
+          public boolean isSettable(RingProgressIndicator n) {
+            return n.ringWidth == null || !n.ringWidth.isBound();
+          }
+
+          @Override
+          public StyleableProperty<Number> getStyleableProperty(RingProgressIndicator n) {
+            return (StyleableProperty<Number>) n.ringWidth;
+          }
+        };
+
+    public static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
+
+    static {
+      final List<CssMetaData<? extends Styleable, ?>> styleables =
+          new ArrayList<>(Control.getClassCssMetaData());
+      styleables.addAll(ProgressCircleIndicator.getClassCssMetaData());
+      styleables.add(RING_WIDTH);
+      STYLEABLES = Collections.unmodifiableList(styleables);
+    }
+  }
+
   /** thickness of the ring indicator. */
   private DoubleProperty ringWidth =
       new StyleableDoubleProperty(22) {
@@ -73,33 +101,6 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
 
   public final double getRingWidth() {
     return ringWidthProperty().get();
-  }
-
-  private static class StyleableProperties {
-    private static final CssMetaData<RingProgressIndicator, Number> RING_WIDTH =
-        new CssMetaData<RingProgressIndicator, Number>(
-            "-fx-ring-width", SizeConverter.getInstance(), 22) {
-
-          @Override
-          public boolean isSettable(RingProgressIndicator n) {
-            return n.ringWidth == null || !n.ringWidth.isBound();
-          }
-
-          @Override
-          public StyleableProperty<Number> getStyleableProperty(RingProgressIndicator n) {
-            return (StyleableProperty<Number>) n.ringWidth;
-          }
-        };
-
-    public static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
-
-    static {
-      final List<CssMetaData<? extends Styleable, ?>> styleables =
-          new ArrayList<>(Control.getClassCssMetaData());
-      styleables.addAll(ProgressCircleIndicator.getClassCssMetaData());
-      styleables.add(RING_WIDTH);
-      STYLEABLES = Collections.unmodifiableList(styleables);
-    }
   }
 
   @Override

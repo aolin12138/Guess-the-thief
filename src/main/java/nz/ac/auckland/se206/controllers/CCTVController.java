@@ -43,7 +43,7 @@ public class CCTVController {
     CrimeSceneController.setTimeToCount(timeToCount);
   }
 
-  @FXML private Button ReturnButton;
+  @FXML private Button returnButton;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
 
@@ -55,7 +55,7 @@ public class CCTVController {
    */
   @FXML
   void onReturnButtonClicked(ActionEvent event) {
-    Scene sceneOfButton = ReturnButton.getScene();
+    Scene sceneOfButton = returnButton.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
   }
