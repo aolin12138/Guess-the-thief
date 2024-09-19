@@ -455,16 +455,17 @@ public class GuessController {
           protected Void call() throws Exception {
             try {
               String validExplanation = isExplanationValid();
-              GameOverController.setOutputText(validExplanation);
-              String[] split = validExplanation.trim().split("");
-              boolean valid = split[0].toLowerCase().contains("true");
+              String[] splitArray = validExplanation.split(" ", 2);
+              boolean isCorrectExplanation = splitArray[0].toLowerCase().contains("true");
+              GameOverController.setOutputText(splitArray[1]);
+              System.out.println("isCorrectExplanation: " + isCorrectExplanation);
 
               Platform.runLater(
                   () -> {
 
                     // GuessTimeLimitManager.stopTimer();
 
-                    if (valid && currentSuspect == 3) {
+                    if (isCorrectExplanation && currentSuspect == 3) {
                       context.setState(context.getGameOverState());
                       isThiefFound = true;
 
