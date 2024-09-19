@@ -28,11 +28,43 @@ public class PhoneController {
   private static Timeline timeline = new Timeline();
   private static GameStateContext context = new GameStateContext();
 
+  /**
+   * This method sets the time to count
+   *
+   * @param timeFromPreviousScene
+   */
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
+  /**
+   * This method passes the time to the crime scene
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToCrimeScene(double timeToCount) {
+    CrimeSceneController.setTimeToCount(timeToCount);
+  }
+
+  /**
+   * This method passes the time to the call history
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToCallHistory(double timeToCount) {
+    CallHistoryController.setTimeToCount(timeToCount);
+  }
+
   @FXML private StackPane indicatorPane;
   @FXML private Button BackBtn;
   @FXML private Rectangle PhoneAppRectangle;
   @FXML private Label timerLabel;
 
+  /**
+   * This method is called when the phone app is clicked. It will take the user to the call history
+   *
+   * @param event
+   */
   @FXML
   void onPhoneAppClicked(MouseEvent event) {
     Scene sceneOfButton = PhoneAppRectangle.getScene();
@@ -40,6 +72,11 @@ public class PhoneController {
     passTimeToCallHistory(timeToCount);
   }
 
+  /**
+   * This method is called when the back button is clicked. It will take the user back to the crime
+   *
+   * @param event
+   */
   @FXML
   void onReturnToCrimeScene(ActionEvent event) {
     Button button = (Button) event.getSource();
@@ -48,6 +85,7 @@ public class PhoneController {
     passTimeToCrimeScene(timeToCount);
   }
 
+  /** This method intializes the phone controller */
   @FXML
   public void initialize() {
     if (isFirstTimeInit) {}
@@ -133,17 +171,5 @@ public class PhoneController {
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-  }
-
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  public static void passTimeToCrimeScene(double timeToCount) {
-    CrimeSceneController.setTimeToCount(timeToCount);
-  }
-
-  public static void passTimeToCallHistory(double timeToCount) {
-    CallHistoryController.setTimeToCount(timeToCount);
   }
 }

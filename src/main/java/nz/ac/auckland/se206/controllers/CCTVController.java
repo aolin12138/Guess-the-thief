@@ -26,10 +26,34 @@ public class CCTVController {
   private static Timeline timeline = new Timeline();
   private static GameStateContext context = new GameStateContext();
 
+  /**
+   * This method sets the time to count
+   *
+   * @param timeFromPreviousScene
+   */
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
+  /**
+   * This method passes the time to the crime scene
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToCrimeScene(double timeToCount) {
+    CrimeSceneController.setTimeToCount(timeToCount);
+  }
+
   @FXML private Button ReturnButton;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
 
+  /**
+   * This method is called when the return button is clicked. It will take the user back to the
+   * crime
+   *
+   * @param event
+   */
   @FXML
   void onReturnButtonClicked(ActionEvent event) {
     Scene sceneOfButton = ReturnButton.getScene();
@@ -37,6 +61,7 @@ public class CCTVController {
     passTimeToCrimeScene(timeToCount);
   }
 
+  /** This method intitializes the CCTV scene */
   @FXML
   public void initialize() {
     if (isFirstTimeInit) {}
@@ -121,13 +146,5 @@ public class CCTVController {
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-  }
-
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  public static void passTimeToCrimeScene(double timeToCount) {
-    CrimeSceneController.setTimeToCount(timeToCount);
   }
 }
