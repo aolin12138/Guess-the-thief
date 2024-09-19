@@ -655,7 +655,7 @@ public class RoomController {
   }
 
   private void appendChatMessage(ChatMessage msg, Person person) {
-    txtaChat.appendText(person.getName() + ": " + msg + "\n\n");
+    txtaChat.appendText(person.getName() + ": " + msg.getContent() + "\n\n");
   }
 
   /**
