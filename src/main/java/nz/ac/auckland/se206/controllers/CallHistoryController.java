@@ -22,19 +22,43 @@ import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 
 public class CallHistoryController {
   private static boolean isFirstTimeInit = true;
-  private static double timeToCount = 80000;
-  private static double timeToCountTo = 80000;
+  private static double timeToCount = 300000;
+  private static double timeToCountTo = 300000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
   private static GameStateContext context = new GameStateContext();
+
+  /**
+   * This method sets the time to count
+   *
+   * @param timeFromPreviousScene
+   */
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
+  /**
+   * This method passes the time to the phone scene
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToPhoneScene(double timeToCount) {
+    PhoneController.setTimeToCount(timeToCount);
+  }
+
   private MediaPlayer player;
 
-  @FXML private Button HomeBtn;
+  @FXML private Button homeButton;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
   @FXML private Rectangle voiceMailRectangle;
 
+  /**
+   * This method is called when the home button is clicked. It will take the user back to the phone
+   *
+   * @param event
+   */
   @FXML
   void onHomeButtonClicked(ActionEvent event) {
     Button button = (Button) event.getSource();
@@ -43,6 +67,9 @@ public class CallHistoryController {
     passTimeToPhoneScene(timeToCount);
   }
 
+  /**
+   * This method is called when the phone app is clicked. It will take the user to the call history
+   */
   @FXML
   public void initialize() {
     if (isFirstTimeInit) {}
@@ -151,14 +178,12 @@ public class CallHistoryController {
     timeline.play();
   }
 
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  public static void passTimeToPhoneScene(double timeToCount) {
-    PhoneController.setTimeToCount(timeToCount);
-  }
-
+  /**
+   * This method is called when the voicemail is clicked. It will play the voicemail sound
+   *
+   * @param event
+   * @throws URISyntaxException
+   */
   @FXML
   void onVoicemailClicked(MouseEvent event) throws URISyntaxException {
     Media sound = new Media(App.class.getResource("/sounds/voicemail.mp3").toURI().toString());

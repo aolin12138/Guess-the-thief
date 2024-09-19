@@ -1,23 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.PhoneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.PhoneController">
    <children>
-      <Rectangle fx:id="PhoneAppRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="54.0" layoutX="311.0" layoutY="246.0" onMouseClicked="#onPhoneAppClicked" stroke="BLACK" strokeType="INSIDE" width="66.0" />
-      <Button fx:id="BackBtn" layoutX="216.0" layoutY="373.0" mnemonicParsing="false" onAction="#onReturnToCrimeScene" text="Return to Crime Scene " />
-      <StackPane fx:id="indicatorPane" layoutX="66.0" layoutY="144.0" prefHeight="109.0" prefWidth="104.0">
+
+      <ImageView fitHeight="583.0" fitWidth="805.0" layoutX="-1.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/crime_scene3.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="backButton" layoutX="329.0" layoutY="463.0" mnemonicParsing="false" onAction="#onReturnToCrimeScene" text="Return to Crime Scene " />
+      <StackPane fx:id="phonePane" layoutX="293.0" layoutY="33.0" prefHeight="150.0" prefWidth="200.0">
+
          <children>
-            <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#4effb2">
-               <font>
-                  <Font name="System Bold" size="26.0" />
-               </font>
-            </Label>
-         </children></StackPane>
+            <ImageView fx:id="screen" fitHeight="405.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/screen.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="callHistory" fitHeight="392.0" fitWidth="219.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/call_history.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="lockScreen" fitHeight="402.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/LockScreen.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="callScreen" fitHeight="404.0" fitWidth="268.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/callScreen.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="phoneCase" disable="true" fitHeight="404.0" fitWidth="232.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/phone.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <Rectangle fx:id="callNumberRectangle" arcHeight="5.0" arcWidth="5.0" disable="true" fill="DODGERBLUE" height="55.0" layoutX="318.0" layoutY="83.0" onMouseClicked="#callNumber" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="167.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+      <Rectangle fx:id="callRectangle" arcHeight="5.0" arcWidth="5.0" disable="true" fill="DODGERBLUE" height="28.0" layoutX="315.0" layoutY="83.0" onMouseClicked="#onCallClicked" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="31.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
+      <StackPane fx:id="indicatorPane" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0" />
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#24f59b">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

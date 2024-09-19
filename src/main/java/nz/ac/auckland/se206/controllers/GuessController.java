@@ -72,16 +72,16 @@ public class GuessController {
   @FXML private Label timerLabel;
   @FXML private Label chatStats;
 
-  @FXML private Button btnGuess;
-  @FXML private Button btnSend;
-  @FXML private Button btnBack;
+  @FXML private Button buttonGuess;
+  @FXML private Button buttonSend;
+  @FXML private Button buttonBack;
   @FXML private Button sus1btn;
   @FXML private Button sus2btn;
   @FXML private Button sus3btn;
 
-  @FXML private TextArea txtaChat;
+  @FXML private TextArea textaChat;
 
-  @FXML private TextField txtInput;
+  @FXML private TextField textInput;
 
   @FXML private ImageView carImage;
   @FXML private ImageView ownerImage;
@@ -97,7 +97,7 @@ public class GuessController {
   @FXML private Label brotherLabel;
   @FXML private Label explanationLabel;
 
-  @FXML private HBox chatHBox;
+  @FXML private HBox chatHorizontalBox;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
@@ -109,10 +109,10 @@ public class GuessController {
   private static GuessController guessController;
   private Label currentLabel;
 
-  ImageManager ownerImageManager;
-  ImageManager workerImageManager;
-  ImageManager brotherImageManager;
-  ImageManager currentImageManager;
+  private ImageManager ownerImageManager;
+  private ImageManager workerImageManager;
+  private ImageManager brotherImageManager;
+  private ImageManager currentImageManager;
 
   /**
    * Initializes the room view. If it's the first time initialization, it will provide instructions
@@ -121,9 +121,9 @@ public class GuessController {
   @FXML
   public void initialize() {
     context.setState(context.getGuessingState());
-    txtInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
+    textInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
 
-    btnSend
+    buttonSend
         .sceneProperty()
         .addListener(
             (observable, oldScene, newScene) -> {
@@ -134,7 +134,7 @@ public class GuessController {
             });
 
     // Adding the event handler for 'Enter' key on txtInput
-    txtInput.setOnKeyPressed(
+    textInput.setOnKeyPressed(
         new EventHandler<KeyEvent>() {
           @Override
           public void handle(KeyEvent keyEvent) {
@@ -282,7 +282,7 @@ public class GuessController {
 
   @FXML
   private void selectSuspect1(MouseEvent event) throws ApiProxyException, IOException {
-    toggleHBox();
+    toggleHorizontalBox();
     if (currentImageManager == ownerImageManager) {
       return;
     }
@@ -305,7 +305,7 @@ public class GuessController {
 
   @FXML
   private void selectSuspect2(MouseEvent event) throws ApiProxyException, IOException {
-    toggleHBox();
+    toggleHorizontalBox();
     if (currentImageManager == workerImageManager) {
       return;
     }
@@ -328,7 +328,7 @@ public class GuessController {
 
   @FXML
   private void selectSuspect3(MouseEvent event) throws ApiProxyException, IOException {
-    toggleHBox();
+    toggleHorizontalBox();
     if (currentImageManager == brotherImageManager) {
       return;
     }
@@ -359,7 +359,7 @@ public class GuessController {
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
 
-    String message = txtInput.getText().trim();
+    String message = textInput.getText().trim();
 
     // No time remaining
     if ((!isSuspectSelected)
@@ -449,7 +449,7 @@ public class GuessController {
     statsIndicator.setMinSize(1, 1);
     statsPane.getChildren().add(statsIndicator);
 
-    lblDescription.setText("Loading...");
+    lblDescription.setText("Evaluating...");
 
     Task<Void> task =
         new Task<Void>() {
@@ -457,16 +457,17 @@ public class GuessController {
           protected Void call() throws Exception {
             try {
               String validExplanation = isExplanationValid();
-              GameOverController.setOutputText(validExplanation);
-              String[] split = validExplanation.trim().split("");
-              boolean valid = split[0].toLowerCase().contains("true");
+              String[] splitArray = validExplanation.split(" ", 2);
+              boolean isCorrectExplanation = splitArray[0].toLowerCase().contains("true");
+              GameOverController.setOutputText(splitArray[1]);
+              System.out.println("isCorrectExplanation: " + isCorrectExplanation);
 
               Platform.runLater(
                   () -> {
 
                     // GuessTimeLimitManager.stopTimer();
 
-                    if (valid && currentSuspect == 3) {
+                    if (isCorrectExplanation && currentSuspect == 3) {
                       context.setState(context.getGameOverState());
                       isThiefFound = true;
 
@@ -494,7 +495,7 @@ public class GuessController {
             return null;
           }
         };
-    txtInput.setDisable(true);
+    textInput.setDisable(true);
 
     new Thread(task).start();
     // } else {
@@ -509,12 +510,15 @@ public class GuessController {
   }
 
   public String isExplanationValid() throws ApiProxyException, IOException {
+
     try {
+      // read the evidence prompt from the file
       String evidencePrompt =
           new String(Files.readAllBytes(Paths.get("src/main/resources/prompts/guessing.txt")));
 
-      String fullPrompt = evidencePrompt + "\nUser Reasoning:\n" + txtInput.getText() + "\n";
-
+      // generate a full prompt by fetching the user's reasoning
+      String fullPrompt = evidencePrompt + "\nUser Reasoning:\n" + textInput.getText() + "\n";
+      // Set the chat completion request
       ChatCompletionRequest request =
           new ChatCompletionRequest(ApiProxyConfig.readConfig())
               .setN(1)
@@ -527,7 +531,7 @@ public class GuessController {
                       "You are an expert at evaluating reasoning based on clues and evidence."));
 
       request.addMessage(new ChatMessage("user", fullPrompt));
-
+      // Execute the request
       ChatCompletionResult result = request.execute();
       String response = result.getChoices().iterator().next().getChatMessage().getContent().trim();
       return response;
@@ -550,6 +554,7 @@ public class GuessController {
   }
 
   public void styleScene() {
+    // set the owner image to be hovable
     ownerImage.setOnMouseEntered(
         e -> {
           ownerImageManager.hoverIn();
@@ -562,7 +567,7 @@ public class GuessController {
             ownerLabel.setVisible(false);
           }
         });
-
+    // set the worker image to be hovable
     workerImage.setOnMouseEntered(
         e -> {
           workerImageManager.hoverIn();
@@ -575,7 +580,7 @@ public class GuessController {
             workerLabel.setVisible(false);
           }
         });
-
+    // set the brother image to be hovable
     brotherImage.setOnMouseEntered(
         e -> {
           brotherImageManager.hoverIn();
@@ -590,13 +595,15 @@ public class GuessController {
         });
   }
 
-  private void toggleHBox() {
+  /** method for toggling the HBox */
+  private void toggleHorizontalBox() {
     // Create the transition
-    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), chatHBox);
+    TranslateTransition transition =
+        new TranslateTransition(Duration.seconds(0.5), chatHorizontalBox);
 
-    if (!chatHBox.isVisible()) {
-      chatHBox.setVisible(true); // Show before animation
-      transition.setFromY(chatHBox.getHeight() + 50); // Start off-screen
+    if (!chatHorizontalBox.isVisible()) {
+      chatHorizontalBox.setVisible(true); // Show before animation
+      transition.setFromY(chatHorizontalBox.getHeight() + 50); // Start off-screen
       transition.setToY(0); // Move to visible position
     }
 

@@ -16,24 +16,49 @@ import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 
 public class CCTVController {
   private static boolean isFirstTimeInit = true;
-  private static double timeToCount = 80000;
-  private static double timeToCountTo = 80000;
+  private static double timeToCount = 300000;
+  private static double timeToCountTo = 300000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
   private static GameStateContext context = new GameStateContext();
 
-  @FXML private Button ReturnButton;
+  /**
+   * This method sets the time to count
+   *
+   * @param timeFromPreviousScene
+   */
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
+  /**
+   * This method passes the time to the crime scene
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToCrimeScene(double timeToCount) {
+    CrimeSceneController.setTimeToCount(timeToCount);
+  }
+
+  @FXML private Button returnButton;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
 
+  /**
+   * This method is called when the return button is clicked. It will take the user back to the
+   * crime
+   *
+   * @param event
+   */
   @FXML
   void onReturnButtonClicked(ActionEvent event) {
-    Scene sceneOfButton = ReturnButton.getScene();
+    Scene sceneOfButton = returnButton.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
   }
 
+  /** This method intitializes the CCTV scene */
   @FXML
   public void initialize() {
     if (isFirstTimeInit) {}
@@ -139,14 +164,6 @@ public class CCTVController {
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-  }
-
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  public static void passTimeToCrimeScene(double timeToCount) {
-    CrimeSceneController.setTimeToCount(timeToCount);
   }
 
   public void setContext(GameStateContext context) {

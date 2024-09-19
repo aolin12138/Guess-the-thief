@@ -19,18 +19,19 @@ import nz.ac.auckland.se206.Utils;
 
 public class StartController {
 
-  @FXML Button startButton;
-  @FXML Button instructionsButton;
-  @FXML private Label ScoreboardNameLabel1;
-  @FXML private Label ScoreboardNameLabel2;
-  @FXML private Label ScoreboardNameLabel3;
-  @FXML private Label ScoreboardTimeLabel1;
-  @FXML private Label ScoreboardTimeLabel2;
-  @FXML private Label ScoreboardTimeLabel3;
+  @FXML private Button startButton;
+  @FXML private Button instructionsButton;
+  @FXML private Label scoreBoardNameLabel1;
+  @FXML private Label scoreBoardNameLabel2;
+  @FXML private Label scoreBoardNameLabel3;
+  @FXML private Label scoreBoardTimeLabel1;
+  @FXML private Label scoreBoardTimeLabel2;
+  @FXML private Label scoreBoardTimeLabel3;
   @FXML private TextField playerNameWindow;
 
-  Media media = new Media(getClass().getResource("/sounds/Intro_brief.mp3").toExternalForm());
-  MediaPlayer mediaPlayer = new MediaPlayer(media);
+  private Media media =
+      new Media(getClass().getResource("/sounds/Intro_brief.mp3").toExternalForm());
+  private MediaPlayer mediaPlayer = new MediaPlayer(media);
 
   // This method will add a score to the scoreboard arraylist.
   // public void addScore(PreviousScore score) {
@@ -48,20 +49,20 @@ public class StartController {
     // Check is the previousScores arraylist is empty, if it isn't, display the scores from previous
     // rounds.
     if (previousScores.size() == 2) {
-      ScoreboardNameLabel1.setText(previousScores.get(0));
-      ScoreboardTimeLabel1.setText(previousScores.get(1));
+      scoreBoardNameLabel1.setText(previousScores.get(0));
+      scoreBoardTimeLabel1.setText(previousScores.get(1));
     } else if (previousScores.size() == 4) {
-      ScoreboardNameLabel1.setText(previousScores.get(0));
-      ScoreboardTimeLabel1.setText(previousScores.get(1));
-      ScoreboardNameLabel2.setText(previousScores.get(2));
-      ScoreboardTimeLabel2.setText(previousScores.get(3));
+      scoreBoardNameLabel1.setText(previousScores.get(0));
+      scoreBoardTimeLabel1.setText(previousScores.get(1));
+      scoreBoardNameLabel2.setText(previousScores.get(2));
+      scoreBoardTimeLabel2.setText(previousScores.get(3));
     } else if (previousScores.size() == 6) {
-      ScoreboardNameLabel1.setText(previousScores.get(0));
-      ScoreboardTimeLabel1.setText(previousScores.get(1));
-      ScoreboardNameLabel2.setText(previousScores.get(2));
-      ScoreboardTimeLabel2.setText(previousScores.get(3));
-      ScoreboardNameLabel3.setText(previousScores.get(4));
-      ScoreboardTimeLabel3.setText(previousScores.get(5));
+      scoreBoardNameLabel1.setText(previousScores.get(0));
+      scoreBoardTimeLabel1.setText(previousScores.get(1));
+      scoreBoardNameLabel2.setText(previousScores.get(2));
+      scoreBoardTimeLabel2.setText(previousScores.get(3));
+      scoreBoardNameLabel3.setText(previousScores.get(4));
+      scoreBoardTimeLabel3.setText(previousScores.get(5));
     }
 
     Platform.runLater(
@@ -96,11 +97,14 @@ public class StartController {
   // button
   @FXML
   public void onViewInstructions(ActionEvent event) throws IOException {
+    // print the class of the source of the event
     System.out.println(event.getSource().getClass() + "\n\n");
     System.out.println(event.getSource());
+    // print the source of the event
     Button button = (Button) event.getSource();
     System.out.println(button.getScene());
     Scene sceneOfButton = button.getScene();
+    // set the root of the scene to the instructions page
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.INSTRUCTIONS));
   }
 

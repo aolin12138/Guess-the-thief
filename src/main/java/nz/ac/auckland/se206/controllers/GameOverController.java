@@ -11,78 +11,75 @@ import nz.ac.auckland.se206.App;
 
 public class GameOverController {
 
+  private static String explanation;
+  private static boolean isTextAlreadyDisplayed = false;
+  private static boolean isBannerAlreadyDisplayed = false;
+
+  /** This method sets the output text to the explanation of the guess. */
+  public static void setOutputText(String text) {
+    explanation = text;
+  }
+
   @FXML private Pane statsPane;
   @FXML private Label lblStats;
-  @FXML private TextArea txtAChat;
-  private static String explanation;
-  private static boolean isTxtAreaTyped = false;
+  @FXML private TextArea textChat;
   @FXML private Label lblExplanation;
-  @FXML private TextArea txtArea;
+  @FXML private TextArea textArea;
 
+  /**
+   * This method is called when the game over scene is loaded. It will set the text of the text area
+   */
   @FXML
   public void initialize() {
 
-    // Check is the previousScores arraylist is empty, if it isn't, display the scores from previous
-    // rounds.
-    // if (previousScores.isEmpty()) {
-    //     // scoreboardArea1.setText("Previous scores will appear here once you play more
-    // rounds!");
-    // } else {
-    //     for (PreviousScore score : previousScores) {
-    //         // scoreboardArea1.appendText(score.getRoundNumber() + " " + score.getTimeUsed() +
-    // "\n");
-    //     }
-    // }
-    // to store the scoreboard values.
-    // If this is the first round, scoreboard should display a message saying that there are no
-    // scores
-    // yet.
+    // Set the text of the text area to the explanation of the game
+    if ((textArea != null) && !isTextAlreadyDisplayed) {
 
-    //     ProgressIndicator statsIndicator = new ProgressIndicator();
-    // statsIndicator.setMinSize(1, 1);
-    // statsPane.getChildren().add(statsIndicator);
-
-    // ProgressIndicator statsIndicator = new ProgressIndicator();
-    // statsIndicator.setMinSize(1, 1);
-    // statsPane.getChildren().add(statsIndicator);
-
-    // lblExplanation.setText(explanation);
-    if ((txtArea != null) && !isTxtAreaTyped) {
-      txtArea.setWrapText(true);
-      txtArea.setText(explanation);
+      textArea.setWrapText(true);
+      textArea.setText(explanation);
+      textArea.setDisable(true);
+      isTextAlreadyDisplayed = true;
     }
 
-    if (GuessController.getThiefFound()) {
-      lblStats.setText("The guess is correct!");
-    } else {
-      lblStats.setText("You Lose!");
+    // Set the text of the label to the result of the game
+
+    if (!isBannerAlreadyDisplayed) { // Prevents bug from changing gamestate to loss after timers
+      // run out
+      if (GuessController.getThiefFound()) {
+        lblStats.setText("Correct! You win!!");
+        lblStats.setDisable(true);
+      } else {
+        lblStats.setText("Oh no! You Lose!");
+      }
     }
   }
 
+  /**
+   * This method is called when the restart button is clicked. It will take the user back to the
+   * start scene.
+   *
+   * @param event
+   * @throws ApiProxyException
+   * @throws IOException
+   */
   @FXML
   public void handleRestartClick(ActionEvent event) throws ApiProxyException, IOException {
     App.setRoot("start");
   }
 
+  /**
+   * This method is a placeholder for the key pressed event.
+   *
+   * @param event
+   */
   @FXML
   public void onKeyPressed(ActionEvent event) {}
 
+  /**
+   * This method is a placeholder for the key released event.
+   *
+   * @param event
+   */
   @FXML
   public void onKeyReleased(ActionEvent event) {}
-
-  public static void setOutputText(String text) {
-    if (!isTxtAreaTyped) {
-      explanation = text;
-    }
-  }
-
-  // public static void winStatus(int num) {
-  // if (num == 2) {
-  //     lblStats.setText("You WIN!");
-  // } else {
-  //     lblStats.setText("You LOSE!");
-  // }
-
-  // }
-
 }

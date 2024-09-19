@@ -19,14 +19,14 @@
             <Image url="@../images/crime_scene3.png" />
          </image>
       </ImageView>
-      <StackPane fx:id="indicatorPane" layoutX="23.0" layoutY="416.0" prefHeight="109.0" prefWidth="104.0" />
+      <StackPane fx:id="indicatorPane" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0" />
       <Pane fx:id="statsPane" layoutX="14.0" layoutY="58.0" prefHeight="30.0" prefWidth="26.0" />
       <Label layoutX="187.0" layoutY="9.0" prefHeight="27.0" prefWidth="423.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Select who you think the Recipe Thief is!" textFill="WHITE">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-12.0" layoutY="435.0" prefHeight="71.0" prefWidth="173.0" text="120" textAlignment="CENTER" textFill="#24f59b">
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" text="120" textAlignment="CENTER" textFill="#24f59b">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
@@ -91,11 +91,11 @@
             </VBox>
          </children>
       </HBox>
-      <HBox fx:id="chatHBox" layoutX="152.0" layoutY="392.0" prefHeight="167.0" prefWidth="610.0" visible="false">
+      <HBox fx:id="chatHorizontalBox" layoutX="152.0" layoutY="392.0" prefHeight="167.0" prefWidth="610.0" visible="false">
          <children>
       
-            <TextField fx:id="txtInput" prefHeight="159.0" prefWidth="512.0" />
-            <Button fx:id="btnSend" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send">
+            <TextField fx:id="textInput" prefHeight="159.0" prefWidth="512.0" />
+            <Button fx:id="buttonSend" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

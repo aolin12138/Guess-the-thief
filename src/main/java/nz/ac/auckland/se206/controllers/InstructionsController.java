@@ -11,6 +11,13 @@ public class InstructionsController {
 
   @FXML private Button backButton;
 
+  /**
+   * This method is called when the go back button is clicked. It will take the user back to the
+   * start scene.
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   void onGoBackButtonPressed(ActionEvent event) throws IOException {
     Button button = (Button) event.getSource();

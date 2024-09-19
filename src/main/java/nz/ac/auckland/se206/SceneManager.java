@@ -39,7 +39,7 @@ public class SceneManager {
     SceneManager.phoneLoader = phoneLoader;
   }
 
-  public static void setCCTVLoader(FXMLLoader cctvLoader) {
+  public static void setCameraLoader(FXMLLoader cctvLoader) {
     SceneManager.cctvLoader = cctvLoader;
   }
 
@@ -71,7 +71,7 @@ public class SceneManager {
     return callhistoryLoader;
   }
 
-  public static FXMLLoader getCCTVLoader() {
+  public static FXMLLoader getCameraLoader() {
     return cctvLoader;
   }
 
