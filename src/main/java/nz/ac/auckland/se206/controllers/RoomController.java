@@ -60,8 +60,8 @@ public class RoomController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 80000;
-  private static double timeToCountTo = 80000;
+  private static double timeToCount = 300000;
+  private static double timeToCountTo = 300000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private MediaPlayer player;
@@ -215,7 +215,7 @@ public class RoomController {
                         && context.getGameState().equals(context.getGameStartedState())) {
                       context.setState(context.getGameOverState());
                       GameOverController.setOutputText(
-                          "You  ABCD did not speak to every suspect during your investigation!\n"
+                          "You did not speak to every suspect during your investigation!\n"
                               + "Without doing this, the investigation is incomplete!\n"
                               + "Click play again to replay.");
                       try {

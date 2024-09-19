@@ -33,8 +33,8 @@ public class CrimeSceneController {
   private static boolean isFirstTimeInit = true;
 
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 80000;
-  private static double timeToCountTo = 80000;
+  private static double timeToCount = 300000;
+  private static double timeToCountTo = 300000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private MediaPlayer player;
