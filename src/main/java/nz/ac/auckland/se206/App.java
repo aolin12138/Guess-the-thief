@@ -75,6 +75,10 @@ public class App extends Application {
     SceneManager.addRoot(SceneManager.Scene.CCTV, cctvLoader.load());
 
     SceneManager.setRoomLoader(roomLoader);
+    SceneManager.setPhoneLoader(phoneLoader);
+    SceneManager.setCCTVLoader(cctvLoader);
+    SceneManager.setCallHistoryLoader(callHistoryLoader);
+    SceneManager.setNewspaperLoader(newspaperLoader);
 
     scene = new Scene(SceneManager.getRoot(SceneManager.Scene.START));
     stage.setScene(scene);

@@ -32,11 +32,13 @@ public class GameOverController {
 
     // Set the text of the text area to the explanation of the game
     if (txtArea != null) {
+
       txtArea.setWrapText(true);
       txtArea.setText(explanation);
     }
 
     // Set the text of the label to the result of the game
+
     if (GuessController.getThiefFound()) {
       lblStats.setText("The guess is correct!");
     } else {

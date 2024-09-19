@@ -129,6 +129,7 @@ public class GuessController {
    */
   @FXML
   public void initialize() {
+    context.setState(context.getGuessingState());
     txtInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
 
     btnSend
@@ -196,6 +197,13 @@ public class GuessController {
                     isTimeOver = true;
                     // Call the onSendMessage without clicking button (input therefore null, but
                     // isn't required anyway.)
+                    // Before switching state, make sure the game is still in the game started state
+                    // and that we havent already switched state. Otherwise it will cause a bug
+                    if (!(context.getGameState().equals(context.getGuessingState()))) {
+                      System.out.println(context.getGameState());
+                      timeline.stop();
+                      return;
+                    }
                     try {
                       onSendMessage(null);
                     } catch (ApiProxyException | IOException e) {
@@ -415,7 +423,10 @@ public class GuessController {
     String message = txtInput.getText().trim();
 
     // No time remaining
-    if ((!isSuspectSelected) && (message.isEmpty()) && (isTimeOver)) {
+    if ((!isSuspectSelected)
+        && (message.isEmpty())
+        && (isTimeOver)
+        && context.getGameState().equals(context.getGuessingState())) {
       context.setState(context.getGameOverState());
       GameOverController.setOutputText(
           "You did not guess any of the suspects within the time limit!\n"
@@ -423,24 +434,32 @@ public class GuessController {
               + " type an explanation to support your decision.\n"
               + "Click play again to replay.");
       try {
+        timeline.stop();
         App.setRoot("gamelost");
       } catch (IOException e) {
         e.printStackTrace();
       }
       return;
-    } else if ((!isSuspectSelected) && (!message.isEmpty()) && (isTimeOver)) {
+    } else if ((!isSuspectSelected)
+        && (!message.isEmpty())
+        && (isTimeOver)
+        && context.getGameState().equals(context.getGuessingState())) {
       context.setState(context.getGameOverState());
       GameOverController.setOutputText(
           "Even though you typed your explanation, you did not guess any of the suspects within the"
               + " time limit!\n"
               + "Click play again to replay.");
       try {
+        timeline.stop();
         App.setRoot("gamelost");
       } catch (IOException e) {
         e.printStackTrace();
       }
       return;
-    } else if ((isSuspectSelected) && (message.isEmpty()) && (isTimeOver)) {
+    } else if ((isSuspectSelected)
+        && (message.isEmpty())
+        && (isTimeOver)
+        && context.getGameState().equals(context.getGuessingState())) {
       context.setState(context.getGameOverState());
       GameOverController.setOutputText(
           "Even though you guessed a suspect, you did not type any explanation within the"
@@ -449,6 +468,7 @@ public class GuessController {
               + " decision.\n\n"
               + "Click play again to replay.");
       try {
+        timeline.stop();
         App.setRoot("gamelost");
       } catch (IOException e) {
         e.printStackTrace();
@@ -457,15 +477,24 @@ public class GuessController {
     }
 
     // Time remaining, checking that suspect is guessed and explanation is entered.
-    if ((!isSuspectSelected) && (message.isEmpty()) && (!isTimeOver)) {
+    if ((!isSuspectSelected)
+        && (message.isEmpty())
+        && (!isTimeOver)
+        && context.getGameState().equals(context.getGuessingState())) {
       lblDescription.setText(
           "You must click on your suspected thief and type a brief explanation to support your"
               + " decision.");
       return;
-    } else if ((!isSuspectSelected) && (!message.isEmpty()) && (!isTimeOver)) {
+    } else if ((!isSuspectSelected)
+        && (!message.isEmpty())
+        && (!isTimeOver)
+        && context.getGameState().equals(context.getGuessingState())) {
       lblDescription.setText("You must click on your suspected thief first!");
       return;
-    } else if ((isSuspectSelected) && (message.isEmpty()) && (!isTimeOver)) {
+    } else if ((isSuspectSelected)
+        && (message.isEmpty())
+        && (!isTimeOver)
+        && context.getGameState().equals(context.getGuessingState())) {
       lblDescription.setText("You must type an explanation to support your decision.");
       return;
     }
@@ -525,6 +554,15 @@ public class GuessController {
     txtInput.setDisable(true);
 
     new Thread(task).start();
+    // } else {
+
+    //   // GameOverController.setCorrectSuspect(false);
+
+    //   // GuessTimeLimitManager.stopTimer();
+
+    //   context.setState(context.getGameOverState());
+    //   App.setRoot("gamelost");
+    // }
   }
 
   /**
@@ -643,5 +681,9 @@ public class GuessController {
 
     // Play the transition
     transition.play();
+  }
+
+  public void setContext(GameStateContext context) {
+    this.context = context;
   }
 }

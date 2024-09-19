@@ -159,6 +159,7 @@ public class GameStateContext {
    * Sets the current state of the game.
    *
    * @param state the new state to set
+   * @return
    */
   public void setState(GameState state) {
     this.gameState = state;

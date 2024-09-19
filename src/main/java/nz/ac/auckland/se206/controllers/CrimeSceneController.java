@@ -32,9 +32,8 @@ public class CrimeSceneController {
   private static boolean isFirstTimeInit = true;
 
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 360000;
-  private static double timeToCountTo = 360000;
-  private static double timeForGuessing = 60000;
+  private static double timeToCount = 80000;
+  private static double timeToCountTo = 80000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private MediaPlayer player;
@@ -118,7 +117,7 @@ public class CrimeSceneController {
     ringProgressIndicator.setRingWidth(50);
     // Timer label is updated here
     if (timeToCount % 1000 == 0) {
-      timerLabel.setText(Utils.formatTime(timeToCount - timeForGuessing));
+      timerLabel.setText(Utils.formatTime(timeToCount));
     }
 
     btnGuess
@@ -150,22 +149,30 @@ public class CrimeSceneController {
             new KeyFrame(
                 Duration.millis(1),
                 event -> {
-                  if (timeToCount > timeForGuessing) {
+                  if (timeToCount > 0) {
                     timeToCount--;
-                    progress =
-                        (int)
-                            (100
-                                - (((timeToCountTo - timeForGuessing)
-                                        - (timeToCount - timeForGuessing))
-                                    * 100
-                                    / (timeToCountTo - timeForGuessing)));
-                  } else if ((timeToCount > 0)) {
+                    progress = (int) (100 - ((timeToCountTo - timeToCount) * 100 / timeToCountTo));
+                  } else {
+                    System.out.println(timeToCount);
                     // Here the timer has exceeded the time for investigation and the game must
                     // switch to the guess scene.
-                    if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
+
+                    // Before switching state, make sure the game is still in the game started state
+                    // and that we havent already switched state. Otherwise it will cause a bug
+                    if (!(context.getGameState().equals(context.getGameStartedState()))) {
+                      System.out.println("hello e " + context.getGameState());
+                      timeline.stop();
+                      System.out.println(timeToCount);
+                      return;
+                    }
+                    if (context.isAllSuspectsSpokenTo()
+                        && CrimeSceneController.isAnyClueFound()
+                        && context.getGameState().equals(context.getGameStartedState())) {
                       context.setState(context.getGuessingState());
                       try {
+                        timeline.stop();
                         App.setRoot("guess");
+
                       } catch (IOException e) {
                         e.printStackTrace();
                       }
@@ -173,31 +180,38 @@ public class CrimeSceneController {
                       // coming back
                       timeline.stop();
                     } else if (!context.isAllSuspectsSpokenTo()
-                        && CrimeSceneController.isAnyClueFound()) {
+                        && CrimeSceneController.isAnyClueFound()
+                        && context.getGameState().equals(context.getGameStartedState())) {
+                      System.out.println("Should be gameover: " + context.getGameState());
                       context.setState(context.getGameOverState());
                       GameOverController.setOutputText(
-                          "You did not speak to every suspect during your investigation!\nWithout"
-                              + " doing this, the investigation is incomplete!\n"
+                          "You did not speak to every suspect during your"
+                              + " investigation!\n"
+                              + "Without doing this, the investigation is incomplete!\n"
                               + "Click play again to replay.");
                       try {
+                        timeline.stop();
                         App.setRoot("gamelost");
                       } catch (IOException e) {
                         e.printStackTrace();
                       }
                     } else if (context.isAllSuspectsSpokenTo()
-                        && !CrimeSceneController.isAnyClueFound()) {
+                        && !CrimeSceneController.isAnyClueFound()
+                        && context.getGameState().equals(context.getGameStartedState())) {
                       context.setState(context.getGameOverState());
                       GameOverController.setOutputText(
                           "You did not find any clues in the crime scene!\n"
                               + "Finding clues is vital to conduting a good investigation!\n"
                               + "Click play again to replay");
                       try {
+                        timeline.stop();
                         App.setRoot("gamelost");
                       } catch (IOException e) {
                         e.printStackTrace();
                       }
                     } else if (!context.isAllSuspectsSpokenTo()
-                        && !CrimeSceneController.isAnyClueFound()) {
+                        && !CrimeSceneController.isAnyClueFound()
+                        && context.getGameState().equals(context.getGameStartedState())) {
                       context.setState(context.getGameOverState());
                       GameOverController.setOutputText(
                           "You did not inspect the crime scene for clues or speak to every"
@@ -205,6 +219,7 @@ public class CrimeSceneController {
                               + "These steps are vital in any investigation.\n"
                               + "Click play again to replay.");
                       try {
+                        timeline.stop();
                         App.setRoot("gamelost");
                       } catch (IOException e) {
                         e.printStackTrace();
@@ -214,7 +229,7 @@ public class CrimeSceneController {
                     timeline.stop();
                   }
                   ringProgressIndicator.setProgress(progress);
-                  timerLabel.setText(Utils.formatTime(timeToCount - timeForGuessing));
+                  timerLabel.setText(Utils.formatTime(timeToCount));
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
@@ -237,6 +252,8 @@ public class CrimeSceneController {
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
     Scene sceneOfButton = phoneClue.getScene();
+    CCTVController cctvController = SceneManager.getCCTVLoader().getController();
+    cctvController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
     CCTVController.setTimeToCount(timeToCount);
   }
@@ -252,6 +269,8 @@ public class CrimeSceneController {
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
     Scene sceneOfButton = phoneClue.getScene();
+    PhoneController phoneController = SceneManager.getPhoneLoader().getController();
+    phoneController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
     PhoneController.setTimeToCount(timeToCount);
   }
@@ -268,6 +287,8 @@ public class CrimeSceneController {
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
     Scene sceneOfButton = btnGuess.getScene();
+    NewspaperController newspaperController = SceneManager.getNewspaperLoader().getController();
+    newspaperController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.NEWSPAPER));
     NewspaperController.setTimeToCount(timeToCount);
   }
@@ -285,6 +306,8 @@ public class CrimeSceneController {
     // Check all 3 suspects have been spoken to and at least 1 clue has been clicked
     if (context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
       // context.handleGuessClick();
+      timeline.stop();
+      context.setState(context.getGuessingState());
       App.setRoot("guess");
     } else if (!context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
       Media sound =

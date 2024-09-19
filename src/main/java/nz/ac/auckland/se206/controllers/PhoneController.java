@@ -20,9 +20,8 @@ import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 
 public class PhoneController {
   private static boolean isFirstTimeInit = true;
-  private static double timeToCount = 360000;
-  private static double timeToCountTo = 360000;
-  private static double timeForGuessing = 60000;
+  private static double timeToCount = 80000;
+  private static double timeToCountTo = 80000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
@@ -68,6 +67,9 @@ public class PhoneController {
   @FXML
   void onPhoneAppClicked(MouseEvent event) {
     Scene sceneOfButton = PhoneAppRectangle.getScene();
+    CallHistoryController callHistoryController =
+        SceneManager.getCallHistoryLoader().getController();
+    callHistoryController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CALL_HISTORY));
     passTimeToCallHistory(timeToCount);
   }
@@ -94,7 +96,7 @@ public class PhoneController {
     ringProgressIndicator.setRingWidth(50);
     // Timer label is updated here
     if (timeToCount % 1000 == 0) {
-      timerLabel.setText(Utils.formatTime(timeToCount - timeForGuessing));
+      timerLabel.setText(Utils.formatTime(timeToCount));
     }
 
     timeline
@@ -103,22 +105,27 @@ public class PhoneController {
             new KeyFrame(
                 Duration.millis(1),
                 event -> {
-                  if (timeToCount > timeForGuessing) {
+                  if (timeToCount > 0) {
                     timeToCount--;
-                    progress =
-                        (int)
-                            (100
-                                - (((timeToCountTo - timeForGuessing)
-                                        - (timeToCount - timeForGuessing))
-                                    * 100
-                                    / (timeToCountTo - timeForGuessing)));
+                    progress = (int) (100 - ((timeToCountTo - timeToCount) * 100 / timeToCountTo));
                   } else if ((timeToCount > 0)) {
                     // Program switch to guess scene here ONLY if clues and suspects have been
                     // correctly interacted with
-                    if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
+                    // Before switching state, make sure the game is still in the game started state
+                    // and that we havent already switched state. Otherwise it will cause a bug
+                    if (!(context.getGameState().equals(context.getGameStartedState()))) {
+                      System.out.println("hello a " + context.getGameState());
+                      timeline.stop();
+                      return;
+                    }
+                    if (context.isAllSuspectsSpokenTo()
+                        && CrimeSceneController.isAnyClueFound()
+                        && context.getGameState().equals(context.getGameStartedState())) {
                       context.setState(context.getGuessingState());
                       try {
+                        timeline.stop();
                         App.setRoot("guess");
+                        return;
                       } catch (IOException e) {
                         e.printStackTrace();
                       }
@@ -126,31 +133,38 @@ public class PhoneController {
                       // coming back
                       timeline.stop();
                     } else if (!context.isAllSuspectsSpokenTo()
-                        && CrimeSceneController.isAnyClueFound()) {
+                        && CrimeSceneController.isAnyClueFound()
+                        && context.getGameState().equals(context.getGameStartedState())) {
                       context.setState(context.getGameOverState());
                       GameOverController.setOutputText(
-                          "You did not speak to every suspect during your investigation!\nWithout"
-                              + " doing this, the investigation is incomplete!\n"
+                          "You did  XYZ not speak to every suspect during your investigation!\n"
+                              + "Without doing this, the investigation is incomplete!\n"
                               + "Click play again to replay.");
                       try {
+                        timeline.stop();
                         App.setRoot("gamelost");
+                        return;
                       } catch (IOException e) {
                         e.printStackTrace();
                       }
                     } else if (context.isAllSuspectsSpokenTo()
-                        && !CrimeSceneController.isAnyClueFound()) {
+                        && !CrimeSceneController.isAnyClueFound()
+                        && context.getGameState().equals(context.getGameStartedState())) {
                       context.setState(context.getGameOverState());
                       GameOverController.setOutputText(
                           "You did not find any clues in the crime scene!\n"
                               + "Finding clues is vital to conduting a good investigation!\n"
                               + "Click play again to replay");
                       try {
+                        timeline.stop();
                         App.setRoot("gamelost");
+                        return;
                       } catch (IOException e) {
                         e.printStackTrace();
                       }
                     } else if (!context.isAllSuspectsSpokenTo()
-                        && !CrimeSceneController.isAnyClueFound()) {
+                        && !CrimeSceneController.isAnyClueFound()
+                        && context.getGameState().equals(context.getGameStartedState())) {
                       context.setState(context.getGameOverState());
                       GameOverController.setOutputText(
                           "You did not inspect the crime scene for clues or speak to every"
@@ -158,7 +172,9 @@ public class PhoneController {
                               + "These steps are vital in any investigation.\n"
                               + "Click play again to replay.");
                       try {
+                        timeline.stop();
                         App.setRoot("gamelost");
+                        return;
                       } catch (IOException e) {
                         e.printStackTrace();
                       }
@@ -167,9 +183,13 @@ public class PhoneController {
                   }
 
                   ringProgressIndicator.setProgress(progress);
-                  timerLabel.setText(Utils.formatTime(timeToCount - timeForGuessing));
+                  timerLabel.setText(Utils.formatTime(timeToCount));
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
+  }
+
+  public void setContext(GameStateContext context) {
+    this.context = context;
   }
 }
