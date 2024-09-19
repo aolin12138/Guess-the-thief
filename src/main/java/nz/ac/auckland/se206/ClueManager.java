@@ -10,25 +10,25 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class ClueManager {
-  public ImageView imageView;
+  private ImageView imageView;
 
-  public ScaleTransition scaleTransitionIn;
-  public ColorAdjust colorAdjustIn;
-  public DropShadow dropShadowIn;
-  public Timeline brightnessTransitionIn;
-  public Timeline shadowTransitionIn;
+  private ScaleTransition scaleTransitionIn;
+  private ColorAdjust colorAdjustIn;
+  private DropShadow dropShadowIn;
+  private Timeline brightnessTransitionIn;
+  private Timeline shadowTransitionIn;
 
-  public ScaleTransition scaleTransitionOut;
-  public ColorAdjust colorAdjustOut;
-  public DropShadow dropShadowOut;
-  public Timeline brightnessTransitionOut;
-  public Timeline shadowTransitionOut;
+  private ScaleTransition scaleTransitionOut;
+  private ColorAdjust colorAdjustOut;
+  private DropShadow dropShadowOut;
+  private Timeline brightnessTransitionOut;
+  private Timeline shadowTransitionOut;
 
-  public Timeline brightnessTransitionStay;
-  public Timeline shadowTransitionStay;
-  public ScaleTransition clickScale;
+  private Timeline brightnessTransitionStay;
+  private Timeline shadowTransitionStay;
+  private ScaleTransition clickScale;
 
-  public int originalX;
+  private int originalX;
 
   private boolean isClicked = false;
 

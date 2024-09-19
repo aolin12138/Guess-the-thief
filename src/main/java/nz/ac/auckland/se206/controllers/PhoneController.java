@@ -49,9 +49,9 @@ public class PhoneController {
   @FXML private Button backButton;
   @FXML private Rectangle phoneAppRectangle;
 
-  String audioPath = "/sounds/voicemail2.mp3";
-  Media audio = new Media(getClass().getResource(audioPath).toString());
-  MediaPlayer mediaPlayer = new MediaPlayer(audio);
+  private String audioPath = "/sounds/voicemail2.mp3";
+  private Media audio = new Media(getClass().getResource(audioPath).toString());
+  private MediaPlayer mediaPlayer = new MediaPlayer(audio);
 
   /** This method intializes the phone controller */
   @FXML
