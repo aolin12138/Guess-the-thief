@@ -75,18 +75,18 @@ public class CrimeSceneController {
     return context.isAnyClueFound();
   }
 
-  @FXML private Rectangle CCTVClue;
+  @FXML private Rectangle cameraClue;
   @FXML private Rectangle phoneClue;
   @FXML private Rectangle newspaperClue;
-  @FXML private Button btnGuess;
-  @FXML private Button btnSlide;
+  @FXML private Button buttonGuess;
+  @FXML private Button buttonSlide;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
   @FXML private Rectangle suspect2Scene;
   @FXML private Rectangle suspect1Scene;
   @FXML private Rectangle suspect3Scene;
 
-  @FXML private VBox imagesVBox;
+  @FXML private VBox imagesVerticalBox;
 
   @FXML private ImageView ownerImage;
   @FXML private ImageView workerImage;
@@ -120,7 +120,7 @@ public class CrimeSceneController {
       timerLabel.setText(Utils.formatTime(timeToCount));
     }
 
-    btnGuess
+    buttonGuess
         .sceneProperty()
         .addListener(
             (observable, oldScene, newScene) -> {
@@ -247,12 +247,12 @@ public class CrimeSceneController {
    * @param event
    */
   @FXML
-  void onCCTVClueClicked(MouseEvent event) {
+  void onCameraClueClicked(MouseEvent event) {
     context.clue1Found();
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
     Scene sceneOfButton = phoneClue.getScene();
-    CCTVController cctvController = SceneManager.getCCTVLoader().getController();
+    CCTVController cctvController = SceneManager.getCameraLoader().getController();
     cctvController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
     CCTVController.setTimeToCount(timeToCount);
@@ -286,7 +286,7 @@ public class CrimeSceneController {
     context.clue3Found();
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
-    Scene sceneOfButton = btnGuess.getScene();
+    Scene sceneOfButton = buttonGuess.getScene();
     NewspaperController newspaperController = SceneManager.getNewspaperLoader().getController();
     newspaperController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.NEWSPAPER));
@@ -339,7 +339,7 @@ public class CrimeSceneController {
    */
   @FXML
   void onSuspect1Clicked(MouseEvent event) throws IOException, ApiProxyException {
-    Scene sceneOfButton = btnGuess.getScene();
+    Scene sceneOfButton = buttonGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
     passTimeToSuspectScene(timeToCount);
   }
@@ -353,7 +353,7 @@ public class CrimeSceneController {
    */
   @FXML
   void onSuspect2Clicked(MouseEvent event) throws IOException, ApiProxyException {
-    Scene sceneOfButton = btnGuess.getScene();
+    Scene sceneOfButton = buttonGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
     passTimeToSuspectScene(timeToCount);
   }
@@ -367,7 +367,7 @@ public class CrimeSceneController {
    */
   @FXML
   void onSuspect3Clicked(MouseEvent event) throws IOException, ApiProxyException {
-    Scene sceneOfButton = btnGuess.getScene();
+    Scene sceneOfButton = buttonGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
     passTimeToSuspectScene(timeToCount);
   }
@@ -376,6 +376,7 @@ public class CrimeSceneController {
   @FXML
   public void styleScene() {
 
+    // Makes the owner image hoverable
     ownerImage.setOnMouseEntered(
         e -> {
           ownerImageManager.hoverIn();
@@ -386,7 +387,7 @@ public class CrimeSceneController {
           ownerImageManager.hoverOut();
           ownerLabel.setVisible(false);
         });
-
+    // Makes the worker image hoverable
     workerImage.setOnMouseEntered(
         e -> {
           workerImageManager.hoverIn();
@@ -397,7 +398,7 @@ public class CrimeSceneController {
           workerImageManager.hoverOut();
           workerLabel.setVisible(false);
         });
-
+    // Makes the brother image hoverable
     brotherImage.setOnMouseEntered(
         e -> {
           brotherImageManager.hoverIn();
@@ -408,7 +409,7 @@ public class CrimeSceneController {
           brotherImageManager.hoverOut();
           brotherLabel.setVisible(false);
         });
-
+    // Makes the crime image hoverable
     crimeImage.setOnMouseEntered(
         e -> {
           crimeImageManager.hoverIn();
@@ -420,23 +421,24 @@ public class CrimeSceneController {
           crimeLabel.setVisible(false);
         });
 
-    btnSlide.setOnAction(event -> toggleHBox());
+    buttonSlide.setOnAction(event -> toggleHorizontalBox());
   }
 
   /** This method toggles the HBox */
-  private void toggleHBox() {
+  private void toggleHorizontalBox() {
     // Create the transition
-    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesVBox);
+    TranslateTransition transition =
+        new TranslateTransition(Duration.seconds(0.5), imagesVerticalBox);
 
-    if (imagesVBox.isVisible()) {
+    if (imagesVerticalBox.isVisible()) {
       // Slide out
-      transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
-      transition.setOnFinished(event -> imagesVBox.setVisible(false)); // Hide after animation
+      transition.setToX(imagesVerticalBox.getWidth() + 30);
+      transition.setOnFinished(event -> imagesVerticalBox.setVisible(false));
     } else {
       // Slide in
-      imagesVBox.setVisible(true); // Show before animation
-      transition.setFromX(imagesVBox.getWidth() + 30); // Start off-screen
-      transition.setToX(0); // Move to visible position
+      imagesVerticalBox.setVisible(true);
+      transition.setFromX(imagesVerticalBox.getWidth() + 30);
+      transition.setToX(0);
     }
 
     // Play the transition
@@ -477,7 +479,7 @@ public class CrimeSceneController {
               }
             });
 
-    imagesVBox.setVisible(false);
+    imagesVerticalBox.setVisible(false);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
   }
 

@@ -104,14 +104,14 @@ public class RoomController {
   @FXML private Label ownerLabel;
   @FXML private Label brotherLabel;
 
-  @FXML private Button btnGuess;
-  @FXML private Button btnSend;
-  @FXML private Button btnBack;
-  @FXML private Button btnSlide;
+  @FXML private Button buttonGuess;
+  @FXML private Button buttonSend;
+  @FXML private Button buttonBack;
+  @FXML private Button buttonSlide;
 
-  @FXML private TextArea txtaChat;
+  @FXML private TextArea textaChat;
 
-  @FXML private TextField txtInput;
+  @FXML private TextField textInput;
 
   @FXML private ImageView carImage;
   @FXML private ImageView ownerImage;
@@ -123,7 +123,7 @@ public class RoomController {
   @FXML private StackPane indicatorPane;
   @FXML private Pane statsPane;
 
-  @FXML private VBox imagesVBox;
+  @FXML private VBox imagesVerticalBox;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
@@ -148,9 +148,9 @@ public class RoomController {
     if (isFirstTimeInit) {
       isFirstTimeInit = false;
     }
-    txtInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
+    textInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
 
-    btnSend
+    buttonSend
         .sceneProperty()
         .addListener(
             (observable, oldScene, newScene) -> {
@@ -322,12 +322,16 @@ public class RoomController {
 
   /** Disables all the rectangles in the room when called */
   public void noTalking() {
+    // Rectangle person 1 2 3 are disabled to talk
     rectPerson1.setDisable(true);
     rectPerson2.setDisable(true);
     rectPerson3.setDisable(true);
+    // officer and officer 2 are disabled to talk
     officer.setDisable(true);
     officer2.setDisable(true);
-    btnSend.setDisable(true);
+    // send button is disabled to send messages
+    buttonSend.setDisable(true);
+    // images are disabled to be clicked
     workerImage.setDisable(true);
     ownerImage.setDisable(true);
     brotherImage.setDisable(true);
@@ -335,12 +339,16 @@ public class RoomController {
 
   /** Enables all the rectangles in the room when called */
   public void enableTalking() {
+    // Rectangle person 1 2 3 are enabled to talk again
     rectPerson1.setDisable(false);
     rectPerson2.setDisable(false);
     rectPerson3.setDisable(false);
+    // officer and officer 2 are enabled to talk again
     officer.setDisable(false);
     officer2.setDisable(false);
-    btnSend.setDisable(false);
+    // send button is enabled to send messages
+    buttonSend.setDisable(false);
+    // images are enabled to be clicked
     workerImage.setDisable(false);
     ownerImage.setDisable(false);
     brotherImage.setDisable(false);
@@ -361,7 +369,7 @@ public class RoomController {
    * @return
    */
   public Button getBtnBack() {
-    return btnBack;
+    return buttonBack;
   }
 
   /** boolean variable representing the wallet */
@@ -430,7 +438,7 @@ public class RoomController {
    * @return
    */
   public Button getBtnGuess() {
-    return btnGuess;
+    return buttonGuess;
   }
 
   /** method for stopping the timeline */
@@ -463,25 +471,35 @@ public class RoomController {
 
   /** method for disabling the rectangles in the room */
   public void diableRectangles() {
+    // disables the rectangles in the room
     rectPerson1.setDisable(true);
     rectPerson2.setDisable(true);
     rectPerson3.setDisable(true);
+    // disables the officer and officer 2
     officer.setDisable(true);
     officer2.setDisable(true);
+    // disables the trash bin
     trashBin.setDisable(true);
+    // disables the camera and dashcam
     dashcam.setDisable(false);
+    // disables the car
     car.setDisable(true);
   }
 
   /** method for enabling the rectangles in the room */
   public void enableRectangles() {
+    // enables the rectangles in the room
     rectPerson1.setDisable(false);
     rectPerson2.setDisable(false);
     rectPerson3.setDisable(false);
+    // enables the officer and officer 2
     officer.setDisable(false);
     officer2.setDisable(false);
+    // enables the trash bin
     trashBin.setDisable(false);
+    // enables the camera and dashcam
     car.setDisable(false);
+    // enables the car
     dashcam.setDisable(true);
   }
 
@@ -525,8 +543,8 @@ public class RoomController {
    */
   @FXML
   void onCrimeSceneClicked(MouseEvent event) throws ApiProxyException, IOException {
-    Scene sceneOfButton = btnGuess.getScene();
-    imagesVBox.setVisible(false);
+    Scene sceneOfButton = buttonGuess.getScene();
+    imagesVerticalBox.setVisible(false);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
   }
@@ -616,20 +634,22 @@ public class RoomController {
     if (this.person == person) {
       return;
     }
-
-    txtaChat.clear();
+    // clear the chat text area
+    textaChat.clear();
     this.person = person;
 
     Platform.runLater(
         () -> {
+          // start the progress indicator
           ProgressIndicator statsIndicator = new ProgressIndicator();
           statsIndicator.setMinSize(1, 1);
           statsPane.getChildren().add(statsIndicator);
-
+          // set the chat stats
           context
               .getRoomController()
               .setChatStats("Talking to " + context.getRoomController().getPerson().getName());
         });
+    // initialize the chat completion request
     try {
       ApiProxyConfig config = ApiProxyConfig.readConfig();
       chatCompletionRequest =
@@ -638,6 +658,7 @@ public class RoomController {
               .setTemperature(0.2)
               .setTopP(0.5)
               .setMaxTokens(100);
+      // run the GPT model
       runGpt(new ChatMessage("system", getSystemPrompt()));
       person.talked();
     } catch (ApiProxyException e) {
@@ -651,7 +672,7 @@ public class RoomController {
    * @param msg the chat message to append
    */
   private void appendChatMessage(ChatMessage msg) {
-    txtaChat.appendText(Utils.getPlayerName() + ": " + msg.getContent() + "\n\n");
+    textaChat.appendText(Utils.getPlayerName() + ": " + msg.getContent() + "\n\n");
   }
 
   /**
@@ -662,18 +683,23 @@ public class RoomController {
    * @throws ApiProxyException if there is an error communicating with the API proxy
    */
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
+    // get the specific persons chat completion request
     chatCompletionRequest = person.getChatCompletionRequest();
+    // add the message to the chat completion request
     chatCompletionRequest.addMessage(msg);
     try {
+      // execute the chat completion request
       ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
       Choice result = chatCompletionResult.getChoices().iterator().next();
       chatCompletionRequest.addMessage(result.getChatMessage());
+      // append the chat message to the chat text area
       appendChatMessage(result.getChatMessage());
       Platform.runLater(
           () -> {
             context.getRoomController().enableTalking();
             context.getRoomController().getStatsPane().getChildren().clear();
           });
+      // speak the chat message
       TextToSpeech.speak(result.getChatMessage().getContent(), context);
       return result.getChatMessage();
     } catch (ApiProxyException e) {
@@ -691,25 +717,30 @@ public class RoomController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
-    String message = txtInput.getText().trim();
+    // get the message from the text field
+    String message = textInput.getText().trim();
     if (message.isEmpty()) {
       return;
     }
 
-    txtInput.clear();
+    // clear the text field
+    textInput.clear();
     ChatMessage msg = new ChatMessage("user", message);
     appendChatMessage(msg);
 
+    // start the progress indicator
     ProgressIndicator statsIndicator = new ProgressIndicator();
     statsIndicator.setMinSize(1, 1);
     statsPane.getChildren().add(statsIndicator);
 
     noTalking();
+    // start task to avoid blocking the UI thread
     Task<Void> task =
         new Task<Void>() {
 
           @Override
           protected Void call() throws Exception {
+            // run the GPT model
             runGpt(msg);
             return null;
           }
@@ -723,8 +754,8 @@ public class RoomController {
   public void onBackPressed() {
     enableRectangles();
     carImage.setVisible(false);
-    btnBack.setVisible(false);
-    btnBack.setDisable(true);
+    buttonBack.setVisible(false);
+    buttonBack.setDisable(true);
   }
 
   /**
@@ -732,25 +763,26 @@ public class RoomController {
    */
   @FXML
   public void styleScene() {
-
+    // if the crime scene loader is not null, get the crime scene controller
     if (SceneManager.getCrimeSceneLoader() != null) {
       CrimeSceneController crimeSceneController =
           SceneManager.getCrimeSceneLoader().getController();
       switch (crimeSceneController.getId()) {
+        // if the id is owner image, set the person to the owner
         case "ownerImage":
           displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
           setPerson(context.getPerson("rectPerson2"));
-
+        // if the id is worker image, set the person to the worker
         case "workerImage":
           displayImage.setImage(new Image(workerImage.getImage().getUrl()));
           setPerson(context.getPerson("rectPerson1"));
-
+        // if the id is brother image, set the person to the brother
         case "brotherImage":
           displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
           setPerson(context.getPerson("rectPerson3"));
       }
     }
-
+    // set the owners images to be hoverable
     ownerImage.setOnMouseEntered(
         e -> {
           ownerImageManager.hoverIn();
@@ -761,7 +793,7 @@ public class RoomController {
           ownerImageManager.hoverOut();
           ownerLabel.setVisible(false);
         });
-
+    // set the workers images to be hoverable
     workerImage.setOnMouseEntered(
         e -> {
           workerImageManager.hoverIn();
@@ -772,7 +804,7 @@ public class RoomController {
           workerImageManager.hoverOut();
           workerLabel.setVisible(false);
         });
-
+    // set the brothers images to be hoverable
     brotherImage.setOnMouseEntered(
         e -> {
           brotherImageManager.hoverIn();
@@ -783,7 +815,7 @@ public class RoomController {
           brotherImageManager.hoverOut();
           brotherLabel.setVisible(false);
         });
-
+    // set the crime images to be hoverable
     crimeImage.setOnMouseEntered(
         e -> {
           crimeImageManager.hoverIn();
@@ -795,7 +827,7 @@ public class RoomController {
           crimeLabel.setVisible(false);
         });
 
-    btnSlide.setOnAction(event -> toggleHBox());
+    buttonSlide.setOnAction(event -> toggleHorizontalBox());
   }
 
   /** Enables the images of the scene switches. */
@@ -819,7 +851,8 @@ public class RoomController {
     ImageView clickedImage = (ImageView) event.getSource();
     String id = clickedImage.getId();
 
-    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesVBox);
+    TranslateTransition transition =
+        new TranslateTransition(Duration.seconds(0.5), imagesVerticalBox);
     switch (id) {
       case "ownerImage":
         if (currentImage != null && currentImage.getId().equals("ownerImage")) {
@@ -829,8 +862,8 @@ public class RoomController {
         currentImage = ownerImage;
         currentImageManager.setImageView(currentImage);
         context.person1Talked();
-        transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
-        transition.setOnFinished(e -> imagesVBox.setVisible(false)); // Hide after animation
+        transition.setToX(imagesVerticalBox.getWidth() + 30); // Move off-screen
+        transition.setOnFinished(e -> imagesVerticalBox.setVisible(false)); // Hide after animation
         transition.play();
         context.handleRectangleClick(event, "rectPerson2");
         break;
@@ -842,8 +875,8 @@ public class RoomController {
         currentImage = workerImage;
         currentImageManager.setImageView(currentImage);
         context.person2Talked();
-        transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
-        transition.setOnFinished(e -> imagesVBox.setVisible(false)); // Hide after animation
+        transition.setToX(imagesVerticalBox.getWidth() + 30); // Move off-screen
+        transition.setOnFinished(e -> imagesVerticalBox.setVisible(false)); // Hide after animation
         transition.play();
         context.handleRectangleClick(event, "rectPerson1");
         break;
@@ -855,27 +888,28 @@ public class RoomController {
         currentImage = brotherImage;
         currentImageManager.setImageView(currentImage);
         context.person3Talked();
-        transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
-        transition.setOnFinished(e -> imagesVBox.setVisible(false)); // Hide after animation
+        transition.setToX(imagesVerticalBox.getWidth() + 30); // Move off-screen
+        transition.setOnFinished(e -> imagesVerticalBox.setVisible(false)); // Hide after animation
         transition.play();
         context.handleRectangleClick(event, "rectPerson3");
     }
   }
 
   /** Toggles the visibility of the images VBox. */
-  private void toggleHBox() {
+  private void toggleHorizontalBox() {
     // Create the transition
-    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), imagesVBox);
+    TranslateTransition transition =
+        new TranslateTransition(Duration.seconds(0.5), imagesVerticalBox);
 
-    if (imagesVBox.isVisible()) {
+    if (imagesVerticalBox.isVisible()) {
       // Slide out
-      transition.setToX(imagesVBox.getWidth() + 30); // Move off-screen
-      transition.setOnFinished(event -> imagesVBox.setVisible(false)); // Hide after animation
+      transition.setToX(imagesVerticalBox.getWidth() + 30);
+      transition.setOnFinished(event -> imagesVerticalBox.setVisible(false));
     } else {
       // Slide in
-      imagesVBox.setVisible(true); // Show before animation
-      transition.setFromX(imagesVBox.getWidth() + 30); // Start off-screen
-      transition.setToX(0); // Move to visible position
+      imagesVerticalBox.setVisible(true);
+      transition.setFromX(imagesVerticalBox.getWidth() + 30);
+      transition.setToX(0);
     }
 
     // Play the transition
@@ -891,32 +925,41 @@ public class RoomController {
    */
   public void setPersonImage(MouseEvent event, String id) throws IOException {
     switch (id) {
+      // if the id is owner image, set the person to the owner
       case "ownerImage":
         if (currentImage != null && currentImage.getId().equals("ownerImage")) {
           return;
         }
+        // set the image of the owner
         displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
         currentImage = ownerImage;
+        // set the image of the owner
         currentImageManager.setImageView(currentImage);
         context.person1Talked();
         context.handleRectangleClick(event, "rectPerson2");
         break;
+      // if the id is worker image, set the person to the worker
       case "workerImage":
         if (currentImage != null && currentImage.getId().equals("workerImage")) {
           return;
         }
+        // set the image of the worker
         displayImage.setImage(new Image(workerImage.getImage().getUrl()));
         currentImage = workerImage;
+        // set the image of the worker
         currentImageManager.setImageView(currentImage);
         context.person2Talked();
         context.handleRectangleClick(event, "rectPerson1");
         break;
+      // if the id is brother image, set the person to the brother
       case "brotherImage":
         if (currentImage != null && currentImage.getId().equals("brotherImage")) {
           return;
         }
+        // set the image of the brother
         displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
         currentImage = brotherImage;
+        // set the image of the brother
         currentImageManager.setImageView(currentImage);
         context.person3Talked();
         context.handleRectangleClick(event, "rectPerson3");

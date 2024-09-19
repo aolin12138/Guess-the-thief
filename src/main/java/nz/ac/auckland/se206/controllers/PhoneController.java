@@ -55,8 +55,8 @@ public class PhoneController {
   }
 
   @FXML private StackPane indicatorPane;
-  @FXML private Button BackBtn;
-  @FXML private Rectangle PhoneAppRectangle;
+  @FXML private Button backButton;
+  @FXML private Rectangle phoneAppRectangle;
   @FXML private Label timerLabel;
 
   /**
@@ -66,11 +66,14 @@ public class PhoneController {
    */
   @FXML
   void onPhoneAppClicked(MouseEvent event) {
-    Scene sceneOfButton = PhoneAppRectangle.getScene();
+    Scene sceneOfButton = phoneAppRectangle.getScene();
+    // initialize a call history controller
     CallHistoryController callHistoryController =
         SceneManager.getCallHistoryLoader().getController();
+    // set the context of the call history controller
     callHistoryController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CALL_HISTORY));
+    // pass the time to the call history controller
     passTimeToCallHistory(timeToCount);
   }
 

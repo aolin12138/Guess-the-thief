@@ -93,7 +93,7 @@ abstract class ProgressCircleIndicator extends Control {
     setProgress(INDETERMINATE_PROGRESS);
   }
 
-  public ReadOnlyBooleanProperty indeterminateProperty() {
+  public ReadOnlyBooleanProperty getIndeterminateProperty() {
     return indeterminate.getReadOnlyProperty();
   }
 

@@ -66,7 +66,7 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     updateRadii();
 
     this.indicator
-        .indeterminateProperty()
+        .getIndeterminateProperty()
         .addListener(
             (o, oldVal, newVal) -> {
               initIndeterminate(newVal);
@@ -142,13 +142,17 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     container.setMaxWidth(Region.USE_PREF_SIZE);
   }
 
+  /** This method updates the radii of the circles and the arc */
   private void updateRadii() {
+    // The width of the ring
     double ringWidth = indicator.getRingWidth();
     double innerCircleHalfStrokeWidth = innerCircle.getStrokeWidth() / 2;
     double innerCircleRadius = indicator.getInnerCircleRadius();
+    // The outer circle is the circle that contains the filler arc
     outerCircle.setRadius(innerCircleRadius + innerCircleHalfStrokeWidth + ringWidth);
     fillerArc.setRadiusY(innerCircleRadius + innerCircleHalfStrokeWidth - 1 + (ringWidth / 2));
     fillerArc.setRadiusX(innerCircleRadius + innerCircleHalfStrokeWidth - 1 + (ringWidth / 2));
+    // The inner circle is the circle that contains the filler arc
     fillerArc.setStrokeWidth(ringWidth);
     innerCircle.setRadius(innerCircleRadius);
   }
@@ -158,14 +162,23 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     percentLabel.getStyleClass().add("circleindicator-label");
   }
 
+  /**
+   * This method initializes the indeterminate progress
+   *
+   * @param newVal
+   */
   private void initIndeterminate(boolean newVal) {
+    // This makes the percent label visible only when the progress is not indeterminate
     percentLabel.setVisible(!newVal);
+    // If new val is true, the arc will be filled and the transition will play
     if (newVal) {
       fillerArc.setLength(360);
       fillerArc.getStyleClass().add("indeterminate");
+      // if the indicator is visible, the transition will play
       if (indicator.isVisible()) {
         transition.play();
       }
+      // if the indicator is not visible, the transition will stop
     } else {
       fillerArc.getStyleClass().remove("indeterminate");
       fillerArc.setRotate(0);

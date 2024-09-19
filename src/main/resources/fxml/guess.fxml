@@ -91,11 +91,11 @@
             </VBox>
          </children>
       </HBox>
-      <HBox fx:id="chatHBox" layoutX="152.0" layoutY="392.0" prefHeight="167.0" prefWidth="610.0" visible="false">
+      <HBox fx:id="chatHorizontalBox" layoutX="152.0" layoutY="392.0" prefHeight="167.0" prefWidth="610.0" visible="false">
          <children>
       
-            <TextField fx:id="txtInput" prefHeight="159.0" prefWidth="512.0" />
-            <Button fx:id="btnSend" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send">
+            <TextField fx:id="textInput" prefHeight="159.0" prefWidth="512.0" />
+            <Button fx:id="buttonSend" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

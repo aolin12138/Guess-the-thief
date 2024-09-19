@@ -42,9 +42,9 @@ public class NewspaperController {
   }
 
   @FXML private StackPane indicatorPane;
-  @FXML private Button NextPageBtn;
-  @FXML private Button PreviousPageBtn;
-  @FXML private Button ReturnBtn;
+  @FXML private Button nextPageButton;
+  @FXML private Button previousPageButton;
+  @FXML private Button returnButton;
   @FXML private Label timerLabel;
 
   /**
@@ -73,7 +73,7 @@ public class NewspaperController {
    */
   @FXML
   void onReturnToCrimeScene(ActionEvent event) {
-    Scene sceneOfButton = ReturnBtn.getScene();
+    Scene sceneOfButton = returnButton.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
   }
