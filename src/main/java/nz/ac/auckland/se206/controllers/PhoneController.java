@@ -4,6 +4,7 @@ import java.io.IOException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -31,23 +32,7 @@ public class PhoneController {
   private static Timeline timeline = new Timeline();
   private static GameStateContext context = new GameStateContext();
 
-  /**
-   * This method passes the time to the crime scene
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToCrimeScene(double timeToCount) {
-    CrimeSceneController.setTimeToCount(timeToCount);
-  }
-
-  /**
-   * This method passes the time to the call history
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToCallHistory(double timeToCount) {
-    CallHistoryController.setTimeToCount(timeToCount);
-  }
+  private double initialY;
 
   @FXML private StackPane indicatorPane;
 
@@ -60,8 +45,6 @@ public class PhoneController {
 
   @FXML private StackPane phonePane;
   @FXML private Label timerLabel;
-
-  private double initialY;
 
   @FXML private Button backButton;
   @FXML private Rectangle phoneAppRectangle;
@@ -209,6 +192,7 @@ public class PhoneController {
         () -> {
           callScreen.setVisible(false);
           callNumberRectangle.setDisable(false);
+          mediaPlayer.stop();
         });
   }
 
@@ -259,7 +243,42 @@ public class PhoneController {
   void onReturnToCrimeScene(ActionEvent event) {
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
+    Platform.runLater(
+        () -> {
+          mediaPlayer.stop();
+          restart();
+        });
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
+  }
+
+  public void disableAll() {
+    callRectangle.setDisable(true);
+    callNumberRectangle.setDisable(true);
+  }
+
+  public void restart() {
+    if (callScreen.isVisible()) {
+      callScreen.setVisible(false);
+      callNumberRectangle.setDisable(false);
+    }
+  }
+
+  /**
+   * This method passes the time to the crime scene
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToCrimeScene(double timeToCount) {
+    CrimeSceneController.setTimeToCount(timeToCount);
+  }
+
+  /**
+   * This method passes the time to the call history
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToCallHistory(double timeToCount) {
+    CallHistoryController.setTimeToCount(timeToCount);
   }
 }

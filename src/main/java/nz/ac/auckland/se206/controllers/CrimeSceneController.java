@@ -459,10 +459,12 @@ public class CrimeSceneController {
         e -> {
           newspaperImageManager.hoverOut();
         });
+    // Set handler for the slide button
+    buttonSlide.setOnAction(e -> toggleVerticalBox());
   }
 
-  /** This method toggles the HBox */
-  private void toggleHorizontalBox() {
+  /** This method toggles the VBox */
+  private void toggleVerticalBox() {
     // Create the transition
     TranslateTransition transition =
         new TranslateTransition(Duration.seconds(0.5), imagesVerticalBox);
