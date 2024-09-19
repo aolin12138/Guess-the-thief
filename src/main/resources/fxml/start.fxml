@@ -20,7 +20,7 @@
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f29d3c" height="53.0" layoutX="137.0" layoutY="1.0" opacity="0.46" stroke="#393939" strokeType="INSIDE" width="526.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="247.0" layoutX="171.0" layoutY="267.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="450.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="270.0" layoutX="171.0" layoutY="267.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="450.0" />
       <Label layoutX="165.0" layoutY="1.0" text="PI Masters: Detective Training ">
          <font>
             <Font size="38.0" />
