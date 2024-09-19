@@ -23,7 +23,6 @@ import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 
 public class PhoneController {
-
   private static boolean isFirstTimeInit = true;
   private static double timeToCount = 300000;
   private static double timeToCountTo = 300000;
@@ -50,6 +49,8 @@ public class PhoneController {
     CallHistoryController.setTimeToCount(timeToCount);
   }
 
+  @FXML private StackPane indicatorPane;
+
   @FXML private Rectangle callRectangle;
   @FXML private Rectangle callNumberRectangle;
   @FXML private ImageView lockScreen;
@@ -58,17 +59,16 @@ public class PhoneController {
   @FXML private ImageView callScreen;
 
   @FXML private StackPane phonePane;
+  @FXML private Label timerLabel;
 
   private double initialY;
 
-  @FXML private StackPane indicatorPane;
   @FXML private Button backButton;
   @FXML private Rectangle phoneAppRectangle;
-  @FXML private Label timerLabel;
 
-  private String audioPath = "/sounds/voicemail2.mp3";
-  private Media audio = new Media(getClass().getResource(audioPath).toString());
-  private MediaPlayer mediaPlayer = new MediaPlayer(audio);
+  String audioPath = "/sounds/voicemail2.mp3";
+  Media audio = new Media(getClass().getResource(audioPath).toString());
+  MediaPlayer mediaPlayer = new MediaPlayer(audio);
 
   /** This method intializes the phone controller */
   @FXML
@@ -239,11 +239,14 @@ public class PhoneController {
    */
   @FXML
   void onPhoneAppClicked(MouseEvent event) {
-    Scene sceneOfButton = screen.getScene();
+    Scene sceneOfButton = phoneAppRectangle.getScene();
+    // initialize a call history controller
     CallHistoryController callHistoryController =
         SceneManager.getCallHistoryLoader().getController();
+    // set the context of the call history controller
     callHistoryController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CALL_HISTORY));
+    // pass the time to the call history controller
     passTimeToCallHistory(timeToCount);
   }
 

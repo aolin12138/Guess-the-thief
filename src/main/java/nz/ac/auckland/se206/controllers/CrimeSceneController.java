@@ -75,7 +75,6 @@ public class CrimeSceneController {
     return context.isAnyClueFound();
   }
 
-  @FXML private Rectangle cameraClue;
   @FXML private Rectangle phoneClue;
   @FXML private Rectangle newspaperClue;
   @FXML private Button buttonGuess;
@@ -261,7 +260,7 @@ public class CrimeSceneController {
     context.clue1Found();
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
-    Scene sceneOfButton = phoneClue.getScene();
+    Scene sceneOfButton = cameraImage.getScene();
     CCTVController cctvController = SceneManager.getCameraLoader().getController();
     cctvController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
