@@ -4,6 +4,7 @@ import java.io.IOException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -44,6 +45,7 @@ public class PhoneController {
   private static Timeline timeline = new Timeline();
   private static GameStateContext context = new GameStateContext();
 
+  private double initialY2;
   private double initialY;
 
   String audioPath = "/sounds/voicemail2.mp3";
@@ -56,6 +58,8 @@ public class PhoneController {
 
     Rectangle clip = new Rectangle(209, 400); // Clip rectangle matching the phone screen size
     phonePane.setClip(clip);
+
+    initialY2 = lockScreen.getLayoutY();
 
     lockScreen.setOnMousePressed(
         event -> {
@@ -189,6 +193,7 @@ public class PhoneController {
         () -> {
           callScreen.setVisible(false);
           callNumberRectangle.setDisable(false);
+          mediaPlayer.stop();
         });
   }
 
@@ -254,7 +259,24 @@ public class PhoneController {
   void onReturnToCrimeScene(ActionEvent event) {
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
+    Platform.runLater(
+        () -> {
+          mediaPlayer.stop();
+          restart();
+        });
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
+  }
+
+  public void disableAll() {
+    callRectangle.setDisable(true);
+    callNumberRectangle.setDisable(true);
+  }
+
+  public void restart() {
+    if (callScreen.isVisible()) {
+      callScreen.setVisible(false);
+      callNumberRectangle.setDisable(false);
+    }
   }
 }
