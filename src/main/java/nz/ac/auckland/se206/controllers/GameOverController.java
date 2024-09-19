@@ -37,15 +37,17 @@ public class GameOverController {
 
       txtArea.setWrapText(true);
       txtArea.setText(explanation);
+      txtArea.setDisable(true);
       isTextAlreadyDisplayed = true;
     }
 
     // Set the text of the label to the result of the game
 
     if (!isBannerAlreadyDisplayed) { // Prevents bug from changing gamestate to loss after timers
-                                     // run out
+      // run out
       if (GuessController.getThiefFound()) {
         lblStats.setText("Correct! You win!!");
+        lblStats.setDisable(true);
       } else {
         lblStats.setText("Oh no! You Lose!");
       }
