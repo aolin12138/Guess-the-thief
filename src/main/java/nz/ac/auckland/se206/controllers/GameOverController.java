@@ -20,7 +20,7 @@ public class GameOverController {
 
   @FXML private Pane statsPane;
   @FXML private Label lblStats;
-  @FXML private TextArea textAChat;
+  @FXML private TextArea textChat;
   @FXML private Label lblExplanation;
   @FXML private TextArea textArea;
 
