@@ -143,4 +143,8 @@ public class CCTVController {
   public static void passTimeToCrimeScene(double timeToCount) {
     CrimeSceneController.setTimeToCount(timeToCount);
   }
+
+  public void setContext(GameStateContext context) {
+    this.context = context;
+  }
 }

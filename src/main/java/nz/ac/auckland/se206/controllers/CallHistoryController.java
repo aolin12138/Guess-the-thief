@@ -159,4 +159,8 @@ public class CallHistoryController {
     player = new MediaPlayer(sound);
     player.play();
   }
+
+  public void setContext(GameStateContext context) {
+    this.context = context;
+  }
 }

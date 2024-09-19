@@ -120,6 +120,7 @@ public class GuessController {
    */
   @FXML
   public void initialize() {
+    context.setState(context.getGuessingState());
     txtInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
 
     btnSend
@@ -606,5 +607,9 @@ public class GuessController {
 
     // Play the transition
     transition.play();
+  }
+
+  public void setContext(GameStateContext context) {
+    this.context = context;
   }
 }

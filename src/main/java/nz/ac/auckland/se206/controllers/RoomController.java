@@ -201,6 +201,7 @@ public class RoomController {
                       context.setState(context.getGuessingState());
                       try {
                         timeline.stop();
+
                         App.setRoot("guess");
                         return;
                       } catch (IOException e) {

@@ -132,6 +132,7 @@ public class CrimeSceneController {
                       try {
                         timeline.stop();
                         App.setRoot("guess");
+
                       } catch (IOException e) {
                         e.printStackTrace();
                       }
@@ -218,6 +219,8 @@ public class CrimeSceneController {
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
     Scene sceneOfButton = phoneClue.getScene();
+    CCTVController cctvController = SceneManager.getCCTVLoader().getController();
+    cctvController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
     CCTVController.setTimeToCount(timeToCount);
   }
@@ -228,6 +231,8 @@ public class CrimeSceneController {
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
     Scene sceneOfButton = phoneClue.getScene();
+    PhoneController phoneController = SceneManager.getPhoneLoader().getController();
+    phoneController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
     PhoneController.setTimeToCount(timeToCount);
   }
@@ -238,6 +243,8 @@ public class CrimeSceneController {
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
     Scene sceneOfButton = btnGuess.getScene();
+    NewspaperController newspaperController = SceneManager.getNewspaperLoader().getController();
+    newspaperController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.NEWSPAPER));
     NewspaperController.setTimeToCount(timeToCount);
   }

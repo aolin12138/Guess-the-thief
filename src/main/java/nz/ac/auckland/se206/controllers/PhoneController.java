@@ -35,6 +35,9 @@ public class PhoneController {
   @FXML
   void onPhoneAppClicked(MouseEvent event) {
     Scene sceneOfButton = PhoneAppRectangle.getScene();
+    CallHistoryController callHistoryController =
+        SceneManager.getCallHistoryLoader().getController();
+    callHistoryController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CALL_HISTORY));
     passTimeToCallHistory(timeToCount);
   }
@@ -158,5 +161,9 @@ public class PhoneController {
 
   public static void passTimeToCallHistory(double timeToCount) {
     CallHistoryController.setTimeToCount(timeToCount);
+  }
+
+  public void setContext(GameStateContext context) {
+    this.context = context;
   }
 }
