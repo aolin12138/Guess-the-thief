@@ -183,13 +183,21 @@ public class PhoneController {
     callNumberRectangle.setDisable(false);
   }
 
+  /**
+   * This method is called when the call number is clicked. It will take the user to the call screen
+   *
+   * @param event
+   */
   @FXML
   private void callNumber(MouseEvent event) {
+    // Set the call screen to visible
     callScreen.setVisible(true);
     callNumberRectangle.setDisable(true);
+    // Play the voicemail sound
     mediaPlayer.play();
     mediaPlayer.setOnEndOfMedia(
         () -> {
+          // Stop the voicemail sound if it has finished playing or player leaves the scene
           callScreen.setVisible(false);
           callNumberRectangle.setDisable(false);
           mediaPlayer.stop();
