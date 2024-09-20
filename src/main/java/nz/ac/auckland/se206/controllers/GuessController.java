@@ -56,6 +56,12 @@ public class GuessController {
   private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
+  private static boolean isThiefFound = false;
+  private static GuessController guessController;
+
+  public static boolean getThiefFound() {
+    return isThiefFound;
+  }
 
   @FXML private Rectangle rectPerson1;
   @FXML private Rectangle rectPerson2;
@@ -105,8 +111,6 @@ public class GuessController {
   private Timeline timeline = new Timeline();
   private int currentSuspect = 0;
   private boolean isSuspectSelected = false;
-  private static boolean isThiefFound = false;
-  private static GuessController guessController;
   private Label currentLabel;
 
   private ImageManager ownerImageManager;
@@ -209,10 +213,6 @@ public class GuessController {
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-    // Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
-    // MediaPlayer mediaPlayer = new MediaPlayer(media);
-    // mediaPlayer.play();
-
   }
 
   public Pane getStatsPane() {
@@ -270,13 +270,8 @@ public class GuessController {
    */
   private String getSystemPrompt() {
     Map<String, String> map = new HashMap<>();
-    // map.put("profession", person.getProfession());
     map.put("name", person.getName());
-    // map.put("role", person.getRole());
 
-    // if (person.hasTalked()) {
-    //   return PromptEngineering.getPrompt("chat3.txt", map, person);
-    // }
     return PromptEngineering.getPrompt("chat2.txt", map, person);
   }
 
@@ -299,7 +294,6 @@ public class GuessController {
     currentLabel = ownerLabel;
     currentImageManager = ownerImageManager;
     currentSuspect = 1;
-    // isThiefFound = false;
     isSuspectSelected = true;
   }
 
@@ -322,7 +316,6 @@ public class GuessController {
     currentLabel = workerLabel;
     currentImageManager = workerImageManager;
     currentSuspect = 2;
-    // isThiefFound = false;
     isSuspectSelected = true;
   }
 
@@ -345,7 +338,6 @@ public class GuessController {
     currentLabel = brotherLabel;
     currentImageManager = brotherImageManager;
     currentSuspect = 3;
-    // isThiefFound = true;
     isSuspectSelected = true;
   }
 
@@ -439,10 +431,6 @@ public class GuessController {
     }
     timeline.stop();
 
-    // gameOverController.setGuessController(this);
-
-    // if (currentSuspect == 3) {
-
     ProgressIndicator statsIndicator = new ProgressIndicator();
     statsIndicator.setMinSize(1, 1);
     statsPane.getChildren().add(statsIndicator);
@@ -462,9 +450,6 @@ public class GuessController {
 
               Platform.runLater(
                   () -> {
-
-                    // GuessTimeLimitManager.stopTimer();
-
                     if (isCorrectExplanation && currentSuspect == 3) {
                       context.setState(context.getGameOverState());
                       isThiefFound = true;
@@ -479,7 +464,6 @@ public class GuessController {
                       context.setState(context.getGameOverState());
 
                       try {
-                        // GameOverController.setCorrectSuspect(true);
 
                         App.setRoot("gamelost");
                       } catch (IOException e) {
@@ -496,15 +480,6 @@ public class GuessController {
     textInput.setDisable(true);
 
     new Thread(task).start();
-    // } else {
-
-    //   // GameOverController.setCorrectSuspect(false);
-
-    //   // GuessTimeLimitManager.stopTimer();
-
-    //   context.setState(context.getGameOverState());
-    //   App.setRoot("gamelost");
-    // }
   }
 
   public String isExplanationValid() throws ApiProxyException, IOException {
@@ -541,10 +516,6 @@ public class GuessController {
 
   public int getSuspectNumber() {
     return currentSuspect;
-  }
-
-  public static boolean getThiefFound() {
-    return isThiefFound;
   }
 
   public GuessController getGuessController() {

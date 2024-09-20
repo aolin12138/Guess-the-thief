@@ -63,8 +63,6 @@ public class CCTVController {
   /** This method intitializes the CCTV scene */
   @FXML
   public void initialize() {
-    if (isFirstTimeInit) {}
-    // context.setCrimeController(this); *******NEED THIS
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
     // Timer label is updated here

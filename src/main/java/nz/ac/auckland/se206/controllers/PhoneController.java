@@ -50,6 +50,15 @@ public class PhoneController {
     CallHistoryController.setTimeToCount(timeToCount);
   }
 
+  /**
+   * This method sets the time to count
+   *
+   * @param timeFromPreviousScene
+   */
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
   private double initialY;
 
   @FXML private StackPane indicatorPane;
@@ -95,7 +104,6 @@ public class PhoneController {
           }
         });
 
-    if (isFirstTimeInit) {}
     // context.setCrimeController(this); *******NEED THIS
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
@@ -234,15 +242,6 @@ public class PhoneController {
   }
 
   /**
-   * This method sets the time to count
-   *
-   * @param timeFromPreviousScene
-   */
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  /**
    * This method is called when the phone app is clicked. It will take the user to the call history
    *
    * @param event
@@ -267,13 +266,16 @@ public class PhoneController {
    */
   @FXML
   private void onReturnToCrimeScene(ActionEvent event) {
+    // create a button instance
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     Platform.runLater(
         () -> {
+          // stop the voicemail sound
           mediaPlayer.stop();
           restart();
         });
+    // set the root of the scene to the crime scene
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
   }

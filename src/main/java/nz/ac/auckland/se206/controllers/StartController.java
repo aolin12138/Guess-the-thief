@@ -33,11 +33,6 @@ public class StartController {
       new Media(getClass().getResource("/sounds/Intro_brief.mp3").toExternalForm());
   private MediaPlayer mediaPlayer = new MediaPlayer(media);
 
-  // This method will add a score to the scoreboard arraylist.
-  // public void addScore(PreviousScore score) {
-  //   previousScores.add(score);
-  // }
-
   @FXML
   public void initialize() {
     // enter the scene immediately
@@ -45,7 +40,7 @@ public class StartController {
 
     // This ArrayList will store the scores of the previous rounds.
     ArrayList<String> previousScores = new ArrayList<>();
-    // previousScores = Utils.getScoresForStartPage();
+
     // Check is the previousScores arraylist is empty, if it isn't, display the scores from previous
     // rounds.
     if (previousScores.size() == 2) {

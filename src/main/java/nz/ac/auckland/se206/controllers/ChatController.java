@@ -38,38 +38,6 @@ public class ChatController {
   }
 
   /**
-   * Generates the system prompt based on the profession.
-   *
-   * @return the system prompt string
-   */
-  // private String getSystemPrompt() {
-  //   Map<String, String> map = new HashMap<>();
-  //   map.put("profession", profession);
-  //   return PromptEngineering.getPrompt("chat.txt", map);
-  // }
-
-  /**
-   * Sets the profession for the chat context and initializes the ChatCompletionRequest.
-   *
-   * @param profession the profession to set
-   */
-  // public void setProfession(String profession) {
-  //   this.profession = profession;
-  //   try {
-  //     ApiProxyConfig config = ApiProxyConfig.readConfig();
-  //     chatCompletionRequest =
-  //         new ChatCompletionRequest(config)
-  //             .setN(1)
-  //             .setTemperature(0.2)
-  //             .setTopP(0.5)
-  //             .setMaxTokens(100);
-  //     runGpt(new ChatMessage("system", getSystemPrompt()));
-  //   } catch (ApiProxyException e) {
-  //     e.printStackTrace();
-  //   }
-  // }
-
-  /**
    * Appends a chat message to the chat text area.
    *
    * @param msg the chat message to append

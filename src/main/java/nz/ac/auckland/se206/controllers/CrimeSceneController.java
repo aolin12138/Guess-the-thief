@@ -117,8 +117,6 @@ public class CrimeSceneController {
    */
   @FXML
   public void initialize() {
-    if (isFirstTimeInit) {}
-    // context.setCrimeController(this); *******NEED THIS
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
     // Timer label is updated here
@@ -242,12 +240,6 @@ public class CrimeSceneController {
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-    // play an instruction sound when entering the room for the first time
-    // Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
-    // MediaPlayer mediaPlayer = new MediaPlayer(media);
-    // mediaPlayer.play();
-    // isFirstTimeInit = false;
-    // }}
   }
 
   /**
@@ -317,7 +309,6 @@ public class CrimeSceneController {
   private void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
     // Check all 3 suspects have been spoken to and at least 1 clue has been clicked
     if (context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
-      // context.handleGuessClick();
       timeline.stop();
       context.setState(context.getGuessingState());
       App.setRoot("guess");

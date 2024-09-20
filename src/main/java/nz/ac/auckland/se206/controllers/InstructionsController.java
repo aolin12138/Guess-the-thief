@@ -23,7 +23,6 @@ public class InstructionsController {
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.START));
-    // App.setRoot("start"); Creates a new instance of the start scene every time, which means any
     // intro music will play again
   }
 }
