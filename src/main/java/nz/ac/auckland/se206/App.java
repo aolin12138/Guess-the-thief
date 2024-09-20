@@ -83,20 +83,6 @@ public class App extends Application {
     scene = new Scene(SceneManager.getRoot(SceneManager.Scene.START));
     stage.setScene(scene);
 
-    // // Set up the onShown event handler
-    // stage.setOnShown(
-    //     event -> {
-    //       // Determine which controller is currently active and call its onSceneShown method
-    //       if (scene.getRoot().getUserData() instanceof RoomController) {
-    //         RoomController controller = (RoomController) scene.getRoot().getUserData();
-    //         controller.onSceneShown();
-    //       } else if (scene.getRoot().getUserData() instanceof InstructionsController) {
-    //         InstructionsController controller =
-    //             (InstructionsController) scene.getRoot().getUserData();
-    //         controller.onSceneShown();
-    //       }
-    //     });
-
     stage.setTitle("PI Masters: Detective Training");
     stage.show();
     SceneManager.getRoot(SceneManager.Scene.START).requestFocus();

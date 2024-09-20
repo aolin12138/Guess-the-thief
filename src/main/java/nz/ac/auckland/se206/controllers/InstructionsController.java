@@ -19,11 +19,10 @@ public class InstructionsController {
    * @throws IOException
    */
   @FXML
-  void onGoBackButtonPressed(ActionEvent event) throws IOException {
+  private void onGoBackButtonPressed(ActionEvent event) throws IOException {
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.START));
-    // App.setRoot("start"); Creates a new instance of the start scene every time, which means any
     // intro music will play again
   }
 }

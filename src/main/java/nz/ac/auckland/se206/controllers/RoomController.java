@@ -291,12 +291,6 @@ public class RoomController {
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-    // play an instruction sound when entering the room for the first time
-    // Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
-    // MediaPlayer mediaPlayer = new MediaPlayer(media);
-    // mediaPlayer.play();
-    // isFirstTimeInit = false;
-    // }
   }
 
   /**
@@ -572,7 +566,7 @@ public class RoomController {
    * @throws URISyntaxException
    */
   @FXML
-  private void handleGuessClick(ActionEvent event) throws IOException, URISyntaxException {
+  private void onHandleGuessClick(ActionEvent event) throws IOException, URISyntaxException {
     // Before switching to guess scene, check the user has spoken to all 3 suspects and seen at
     // least one clue
     if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
@@ -608,13 +602,7 @@ public class RoomController {
    */
   private String getSystemPrompt() {
     Map<String, String> map = new HashMap<>();
-    // map.put("profession", person.getProfession());
-    // map.put("name", person.getName());
     map.put("role", person.getRole());
-    // if (person.hasTalked()) {
-    //   return PromptEngineering.getPrompt("chat3.txt", map, person);
-    // }
-    // return PromptEngineering.getPrompt("chat2.txt", map, person);
 
     // retrieves the prompt based on the profession of the person
     if (person.getProfession().equals("owner of the other restaurant")) {
@@ -758,7 +746,7 @@ public class RoomController {
   }
 
   @FXML
-  public void onBackPressed() {
+  private void onBackPressed() {
     enableRectangles();
     carImage.setVisible(false);
     buttonBack.setVisible(false);
@@ -779,14 +767,17 @@ public class RoomController {
         case "ownerImage":
           displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
           setPerson(context.getPerson("rectPerson2"));
+          break;
         // if the id is worker image, set the person to the worker
         case "workerImage":
           displayImage.setImage(new Image(workerImage.getImage().getUrl()));
           setPerson(context.getPerson("rectPerson1"));
+          break;
         // if the id is brother image, set the person to the brother
         case "brotherImage":
           displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
           setPerson(context.getPerson("rectPerson3"));
+          break;
       }
     }
     // set the owners images to be hoverable

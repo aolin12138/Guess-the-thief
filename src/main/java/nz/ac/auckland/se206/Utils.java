@@ -247,24 +247,6 @@ public class Utils {
     }
   }
 
-  /**
-   * Returns the list of scoreboard names.
-   *
-   * @return an ArrayList of scoreboard names
-   */
-  public ArrayList<String> getScoresNames() {
-    return previousScoresNames;
-  }
-
-  /**
-   * Returns the list of scoreboard times.
-   *
-   * @return an ArrayList of scoreboard times
-   */
-  public ArrayList<String> getScoresTimes() {
-    return previousScoresTimes;
-  }
-
   public static void setPlayerName(String name) {
     playerName = name;
   }
@@ -408,5 +390,22 @@ public class Utils {
         e.printStackTrace();
       }
     }
+  }
+
+  /* Returns the list of scoreboard names.
+   *
+   * @return an ArrayList of scoreboard names
+   */
+  public ArrayList<String> getScoresNames() {
+    return previousScoresNames;
+  }
+
+  /**
+   * Returns the list of scoreboard times.
+   *
+   * @return an ArrayList of scoreboard times
+   */
+  public ArrayList<String> getScoresTimes() {
+    return previousScoresTimes;
   }
 }

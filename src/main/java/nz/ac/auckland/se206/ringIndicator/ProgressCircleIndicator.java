@@ -39,6 +39,14 @@ import javafx.scene.control.Control;
 abstract class ProgressCircleIndicator extends Control {
   private static final int INDETERMINATE_PROGRESS = -1;
 
+  /**
+   * @return The CssMetaData associated with this class, which may include the CssMetaData of its
+   *     super classes.
+   */
+  public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
+    return StyleableProperties.STYLEABLES;
+  }
+
   private static class StyleableProperties {
     private static final CssMetaData<ProgressCircleIndicator, Number> INNER_CIRCLE_RADIUS =
         new CssMetaData<ProgressCircleIndicator, Number>(
@@ -64,14 +72,6 @@ abstract class ProgressCircleIndicator extends Control {
       styleables.add(INNER_CIRCLE_RADIUS);
       STYLEABLES = Collections.unmodifiableList(styleables);
     }
-  }
-
-  /**
-   * @return The CssMetaData associated with this class, which may include the CssMetaData of its
-   *     super classes.
-   */
-  public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData() {
-    return StyleableProperties.STYLEABLES;
   }
 
   private ReadOnlyIntegerWrapper progress = new ReadOnlyIntegerWrapper(0);

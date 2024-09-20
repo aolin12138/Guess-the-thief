@@ -52,13 +52,6 @@ public class GameStarted implements GameState {
     ProgressIndicator statsIndicator = new ProgressIndicator();
     statsIndicator.setMinSize(1, 1);
     context.getRoomController().getStatsPane().getChildren().add(statsIndicator);
-    // context
-    //     .getRoomController()
-    //     .setChatStats(
-    //         "Walking to "
-    //             + context.getPerson(rectangleId).getName()
-    //             + " who is in "
-    //             + context.getPerson(rectangleId).getColor());
 
     context.getRoomController().noTalking();
     Task<Void> task =
@@ -70,19 +63,6 @@ public class GameStarted implements GameState {
             return null;
           }
         };
-
-    // task.setOnSucceeded(
-    //     event1 -> {
-    //       context
-    //           .getRoomController()
-    //           .setChatStats(
-    //               "Talking to "
-    //                   + context.getPerson(rectangleId).getName()
-    //                   + " who is in "
-    //                   + context.getPerson(rectangleId).getColor());
-    //       context.getRoomController().getStatsPane().getChildren().remove(statsIndicator);
-    //       context.getRoomController().enableTalking();
-    //     });
 
     context.getRoomController().talked();
     Thread backgrounThread = new Thread(task);

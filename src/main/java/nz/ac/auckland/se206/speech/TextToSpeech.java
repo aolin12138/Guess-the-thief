@@ -62,7 +62,6 @@ public class TextToSpeech {
 
     Thread backgroundThread = new Thread(backgroundTask);
     backgroundThread.setDaemon(true); // Ensure the thread does not prevent JVM shutdown
-    // backgroundThread.start();
 
     System.out.println(text);
   }
@@ -103,24 +102,8 @@ public class TextToSpeech {
           }
         };
 
-    // backgroundTask.setOnSucceeded(
-    //     event -> {
-    //       Platform.runLater(
-    //           () -> {
-    //             context
-    //                 .getRoomController()
-    //                 .setChatStats(
-    //                     "Talking to "
-    //                         + context.getRoomController().getPerson().getName()
-    //                         + " who is in "
-    //                         + context.getRoomController().getPerson().getColor());
-    //             context.getRoomController().getStatsPane().getChildren().clear();
-    //             context.getRoomController().enableTalking();
-    //           });
-    //     });
     Thread backgroundThread = new Thread(backgroundTask);
     backgroundThread.setDaemon(true); // Ensure the thread does not prevent JVM shutdown
-    // backgroundThread.start();
 
     System.out.println(text);
   }

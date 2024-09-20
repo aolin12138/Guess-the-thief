@@ -60,7 +60,7 @@ public class CallHistoryController {
    * @param event
    */
   @FXML
-  void onHomeButtonClicked(ActionEvent event) {
+  private void onHomeButtonClicked(ActionEvent event) {
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
@@ -72,8 +72,6 @@ public class CallHistoryController {
    */
   @FXML
   public void initialize() {
-    if (isFirstTimeInit) {}
-    // context.setCrimeController(this); *******NEED THIS
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
     // Timer label is updated here

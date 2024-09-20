@@ -52,7 +52,7 @@ public class CCTVController {
    * @param event
    */
   @FXML
-  void onReturnButtonClicked(ActionEvent event) {
+  private void onReturnButtonClicked(ActionEvent event) {
     Scene sceneOfButton = returnButton.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
@@ -61,8 +61,6 @@ public class CCTVController {
   /** This method intitializes the CCTV scene */
   @FXML
   public void initialize() {
-    if (isFirstTimeInit) {}
-    // context.setCrimeController(this); *******NEED THIS
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
     // Timer label is updated here

@@ -30,6 +30,33 @@ public class PhoneController {
   private static Timeline timeline = new Timeline();
   private static GameStateContext context = new GameStateContext();
 
+  /**
+   * This method passes the time to the crime scene
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToCrimeScene(double timeToCount) {
+    CrimeSceneController.setTimeToCount(timeToCount);
+  }
+
+  /**
+   * This method passes the time to the call history
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToCallHistory(double timeToCount) {
+    CallHistoryController.setTimeToCount(timeToCount);
+  }
+
+  /**
+   * This method sets the time to count
+   *
+   * @param timeFromPreviousScene
+   */
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
   private double initialY;
 
   @FXML private StackPane indicatorPane;
@@ -75,8 +102,6 @@ public class PhoneController {
           }
         });
 
-    if (isFirstTimeInit) {}
-    // context.setCrimeController(this); *******NEED THIS
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
     // Timer label is updated here
@@ -221,15 +246,6 @@ public class PhoneController {
   }
 
   /**
-   * This method sets the time to count
-   *
-   * @param timeFromPreviousScene
-   */
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  /**
    * This method is called when the phone app is clicked. It will take the user to the call history
    *
    * @param event
@@ -253,14 +269,17 @@ public class PhoneController {
    * @param event
    */
   @FXML
-  void onReturnToCrimeScene(ActionEvent event) {
+  private void onReturnToCrimeScene(ActionEvent event) {
+    // create a button instance
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     Platform.runLater(
         () -> {
+          // stop the voicemail sound
           mediaPlayer.stop();
           restart();
         });
+    // set the root of the scene to the crime scene
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
   }
@@ -275,23 +294,5 @@ public class PhoneController {
       callScreen.setVisible(false);
       callNumberRectangle.setDisable(false);
     }
-  }
-
-  /**
-   * This method passes the time to the crime scene
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToCrimeScene(double timeToCount) {
-    CrimeSceneController.setTimeToCount(timeToCount);
-  }
-
-  /**
-   * This method passes the time to the call history
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToCallHistory(double timeToCount) {
-    CallHistoryController.setTimeToCount(timeToCount);
   }
 }

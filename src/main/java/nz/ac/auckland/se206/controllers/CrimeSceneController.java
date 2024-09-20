@@ -117,8 +117,6 @@ public class CrimeSceneController {
    */
   @FXML
   public void initialize() {
-    if (isFirstTimeInit) {}
-    // context.setCrimeController(this); *******NEED THIS
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
     // Timer label is updated here
@@ -249,12 +247,6 @@ public class CrimeSceneController {
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-    // play an instruction sound when entering the room for the first time
-    // Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
-    // MediaPlayer mediaPlayer = new MediaPlayer(media);
-    // mediaPlayer.play();
-    // isFirstTimeInit = false;
-    // }}
   }
 
   /**
@@ -321,26 +313,33 @@ public class CrimeSceneController {
    * @throws URISyntaxException
    */
   @FXML
-  void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
+  private void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
     // Check all 3 suspects have been spoken to and at least 1 clue has been clicked
     if (context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
       Utils.setTimeUsed(timeToCount);
       timeline.stop();
       context.setState(context.getGuessingState());
+      // Play the guess scene
       App.setRoot("guess");
+      // if the user has not spoken to all suspects and has not found any clues
     } else if (!context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
+      // Play the sound for the user to keep investigating
       Media sound =
           new Media(App.class.getResource("/sounds/missing_suspect.mp3").toURI().toString());
       player = new MediaPlayer(sound);
       player.play();
       return;
+      // if the user has spoken to all suspects but has not found any clues
     } else if (context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
+      // Play the sound for the user to keep investigating
       Media sound =
           new Media(App.class.getResource("/sounds/clue_reminder_1.mp3").toURI().toString());
       player = new MediaPlayer(sound);
       player.play();
       return;
+      // if the user has not spoken to all suspects and has not found any clues
     } else if (!context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
+      // Play the sound for the user to keep investigating
       Media sound =
           new Media(App.class.getResource("/sounds/keep_investigating.mp3").toURI().toString());
       player = new MediaPlayer(sound);
