@@ -288,12 +288,6 @@ public class RoomController {
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-    // play an instruction sound when entering the room for the first time
-    // Media media = new Media(getClass().getResource("/sounds/enter_room.mp3").toExternalForm());
-    // MediaPlayer mediaPlayer = new MediaPlayer(media);
-    // mediaPlayer.play();
-    // isFirstTimeInit = false;
-    // }
   }
 
   /**
@@ -605,13 +599,7 @@ public class RoomController {
    */
   private String getSystemPrompt() {
     Map<String, String> map = new HashMap<>();
-    // map.put("profession", person.getProfession());
-    // map.put("name", person.getName());
     map.put("role", person.getRole());
-    // if (person.hasTalked()) {
-    //   return PromptEngineering.getPrompt("chat3.txt", map, person);
-    // }
-    // return PromptEngineering.getPrompt("chat2.txt", map, person);
 
     // retrieves the prompt based on the profession of the person
     if (person.getProfession().equals("owner of the other restaurant")) {

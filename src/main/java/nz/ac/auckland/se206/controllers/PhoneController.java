@@ -266,13 +266,16 @@ public class PhoneController {
    */
   @FXML
   private void onReturnToCrimeScene(ActionEvent event) {
+    // create a button instance
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     Platform.runLater(
         () -> {
+          // stop the voicemail sound
           mediaPlayer.stop();
           restart();
         });
+    // set the root of the scene to the crime scene
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
   }
