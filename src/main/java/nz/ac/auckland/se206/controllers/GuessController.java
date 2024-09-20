@@ -299,7 +299,7 @@ public class GuessController {
     currentLabel = ownerLabel;
     currentImageManager = ownerImageManager;
     currentSuspect = 1;
-    // isThiefFound = false;
+    isThiefFound = false;
     isSuspectSelected = true;
   }
 
@@ -322,7 +322,7 @@ public class GuessController {
     currentLabel = workerLabel;
     currentImageManager = workerImageManager;
     currentSuspect = 2;
-    // isThiefFound = false;
+    isThiefFound = false;
     isSuspectSelected = true;
   }
 
@@ -345,7 +345,7 @@ public class GuessController {
     currentLabel = brotherLabel;
     currentImageManager = brotherImageManager;
     currentSuspect = 3;
-    // isThiefFound = true;
+    isThiefFound = true;
     isSuspectSelected = true;
   }
 
