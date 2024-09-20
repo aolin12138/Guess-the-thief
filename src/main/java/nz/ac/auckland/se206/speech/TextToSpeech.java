@@ -66,27 +66,36 @@ public class TextToSpeech {
     System.out.println(text);
   }
 
+  /**
+   * Converts the given text to speech and plays the audio.
+   *
+   * @param text
+   * @param context
+   */
   public static void speak(String text, GameStateContext context) {
+    // Check if the text is null or empty
     if (text == null || text.isEmpty()) {
       throw new IllegalArgumentException("Text should not be null or empty");
     }
 
+    // Create a background task to convert the text to speech and play the audio
     Task<Void> backgroundTask =
         new Task<>() {
           @Override
           protected Void call() {
             try {
+              //
               ApiProxyConfig config = ApiProxyConfig.readConfig();
               Provider provider = Provider.OPENAI;
 
               Voice voice = context.getRoomController().getPerson().getVoice();
-
+              // Create a new TextToSpeechRequest with the given configuration
               TextToSpeechRequest ttsRequest = new TextToSpeechRequest(config);
               ttsRequest.setText(text).setProvider(provider).setVoice(voice);
-
+              // Execute the request and get the result
               TextToSpeechResult ttsResult = ttsRequest.execute();
               String audioUrl = ttsResult.getAudioUrl();
-
+              // Print the audio URL and play the audio
               try (InputStream inputStream =
                   new BufferedInputStream(new URL(audioUrl).openStream())) {
                 Player player = new Player(inputStream);

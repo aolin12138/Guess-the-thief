@@ -25,7 +25,6 @@ public class ChatController {
   @FXML private Button btnSend;
 
   private ChatCompletionRequest chatCompletionRequest;
-  private String profession;
 
   /**
    * Initializes the chat view.

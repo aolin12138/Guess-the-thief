@@ -15,7 +15,6 @@ import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 
 public class NewspaperController {
-  private static boolean isFirstTimeInit = true;
   private static double timeToCount = 300000;
   private static double timeToCountTo = 300000;
   private static int progress = 0;

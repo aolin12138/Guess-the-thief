@@ -3,8 +3,6 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -40,17 +38,10 @@ import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
 import nz.ac.auckland.se206.Utils;
-import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 
 public class GuessController {
-  private static boolean isFirstTimeInit = true;
   private static boolean isTimeOver = false;
-  private static boolean hasTalked = false;
-  private static boolean walletFound = false;
-  private static boolean cameraFound = false;
-  private static boolean dashcamFound = false;
-  private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
   private static double maxTimeforGuessing = 60000;
   private static double timeForGuessing = 60000;
@@ -58,6 +49,15 @@ public class GuessController {
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static boolean isThiefFound = false;
   private static GuessController guessController;
+  private static boolean isGameWon = false;
+
+  public static boolean getThiefFound() {
+    return isThiefFound;
+  }
+
+  public static boolean getIsGameWon() {
+    return isGameWon;
+  }
 
   @FXML private Rectangle rectPerson1;
   @FXML private Rectangle rectPerson2;
@@ -101,14 +101,11 @@ public class GuessController {
 
   @FXML private HBox chatHorizontalBox;
 
-  private ChatCompletionRequest chatCompletionRequest;
   private Person person;
 
   private Timeline timeline = new Timeline();
   private int currentSuspect = 0;
   private boolean isSuspectSelected = false;
-
-  private static boolean isGameWon = false;
 
   private Label currentLabel;
 
@@ -260,18 +257,6 @@ public class GuessController {
   @FXML
   public void onKeyReleased(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " released");
-  }
-
-  /**
-   * Generates the system prompt based on the profession.
-   *
-   * @return the system prompt string
-   */
-  private String getSystemPrompt() {
-    Map<String, String> map = new HashMap<>();
-    map.put("name", person.getName());
-
-    return PromptEngineering.getPrompt("chat2.txt", map, person);
   }
 
   /**
@@ -566,14 +551,6 @@ public class GuessController {
 
   public int getSuspectNumber() {
     return currentSuspect;
-  }
-
-  public static boolean getThiefFound() {
-    return isThiefFound;
-  }
-
-  public static boolean getIsGameWon() {
-    return isGameWon;
   }
 
   public GuessController getGuessController() {
