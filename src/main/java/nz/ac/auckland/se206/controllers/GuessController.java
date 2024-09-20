@@ -106,6 +106,7 @@ public class GuessController {
   private int currentSuspect = 0;
   private boolean isSuspectSelected = false;
   private static boolean isThiefFound = false;
+  private static boolean isGameWon = false;
   private static GuessController guessController;
   private Label currentLabel;
 
@@ -466,10 +467,12 @@ public class GuessController {
                   () -> {
 
                     // GuessTimeLimitManager.stopTimer();
-
+                    System.out.println("is Correct Explanation: " + isCorrectExplanation);
+                    System.out.println("currentSuspect: " + currentSuspect);
+                    System.out.println("isThiefFound: " + isThiefFound);
                     if (isCorrectExplanation && currentSuspect == 3) {
                       context.setState(context.getGameOverState());
-                      isThiefFound = true;
+                      isGameWon = true;
 
                       try {
 
@@ -547,6 +550,10 @@ public class GuessController {
 
   public static boolean getThiefFound() {
     return isThiefFound;
+  }
+
+  public static boolean getIsGameWon() {
+    return isGameWon;
   }
 
   public GuessController getGuessController() {

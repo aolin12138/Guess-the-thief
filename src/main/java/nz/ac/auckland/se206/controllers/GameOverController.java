@@ -45,7 +45,7 @@ public class GameOverController {
 
     if (!isBannerAlreadyDisplayed) { // Prevents bug from changing gamestate to loss after timers
       // run out
-      if (GuessController.getThiefFound()) {
+      if (GuessController.getIsGameWon()) {
         lblStats.setText("Correct! You win!!");
         lblStats.setDisable(true);
       } else {
