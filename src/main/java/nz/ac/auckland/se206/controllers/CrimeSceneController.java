@@ -530,7 +530,7 @@ public class CrimeSceneController {
                 } // Call the method only when entering root2
               }
             });
-
+    RoomController.setTimeToCount(timeToCount);
     imagesVerticalBox.setVisible(false);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
   }
