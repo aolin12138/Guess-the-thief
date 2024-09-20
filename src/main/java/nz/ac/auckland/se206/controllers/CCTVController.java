@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.SceneManager;
@@ -43,6 +44,8 @@ public class CCTVController {
   @FXML private Button returnButton;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
+  @FXML private Label recognition;
+  @FXML private Rectangle brotherFace;
 
   /**
    * This method is called when the return button is clicked. It will take the user back to the
@@ -94,6 +97,11 @@ public class CCTVController {
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
+  }
+
+  @FXML
+  private void onFaceClicked() {
+    recognition.setVisible(true);
   }
 
   public void setContext(GameStateContext context) {
