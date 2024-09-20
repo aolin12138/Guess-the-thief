@@ -324,8 +324,7 @@ public class Utils {
     System.out.println(timeUsed);
   }
 
-  public static double getTimeUsed(
-      GameStateContext context, boolean isAllSuspectsSpokenTo, boolean isAnyClueFound) {
+  public static int getTimeUsed() {
     return (int) (timeUsed / 1000);
   }
 
@@ -369,7 +368,7 @@ public class Utils {
               + "Click play again to replay.");
       try {
         timeline.stop();
-        App.setRoot("gamelost");
+        App.setRoot("gameover");
         return;
       } catch (IOException e) {
         e.printStackTrace();
@@ -385,7 +384,7 @@ public class Utils {
               + "Click play again to replay");
       try {
         timeline.stop();
-        App.setRoot("gamelost");
+        App.setRoot("gameover");
         return;
       } catch (IOException e) {
         e.printStackTrace();
@@ -403,7 +402,7 @@ public class Utils {
               + "Click play again to replay.");
       try {
         timeline.stop();
-        App.setRoot("gamelost");
+        App.setRoot("gameover");
         return;
       } catch (IOException e) {
         e.printStackTrace();

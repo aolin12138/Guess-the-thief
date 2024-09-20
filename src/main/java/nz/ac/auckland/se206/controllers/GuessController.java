@@ -375,7 +375,7 @@ public class GuessController {
               + "Click play again to replay.");
       try {
         timeline.stop();
-        App.setRoot("gamelost");
+        App.setRoot("gameover");
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -391,7 +391,7 @@ public class GuessController {
               + "Click play again to replay.");
       try {
         timeline.stop();
-        App.setRoot("gamelost");
+        App.setRoot("gameover");
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -409,7 +409,7 @@ public class GuessController {
               + "Click play again to replay.");
       try {
         timeline.stop();
-        App.setRoot("gamelost");
+        App.setRoot("gameover");
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -486,7 +486,7 @@ public class GuessController {
                       try {
                         // GameOverController.setCorrectSuspect(true);
 
-                        App.setRoot("gamelost");
+                        App.setRoot("gameover");
                       } catch (IOException e) {
                         e.printStackTrace();
                       }
