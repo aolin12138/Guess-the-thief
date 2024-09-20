@@ -25,9 +25,13 @@ public class ImageManager {
   private Timeline shadowTransitionOut;
 
   private Timeline brightnessTransitionStay;
+
+  @SuppressWarnings("unused")
   private Timeline shadowTransitionStay;
+
   private ScaleTransition clickScale;
 
+  @SuppressWarnings("unused")
   private int originalX;
 
   private boolean isClicked = false;

@@ -35,8 +35,14 @@ public class StartController {
 
   @FXML
   public void initialize() {
-    // enter the scene immediately
-    startButton.setDisable(false);
+    Platform.runLater(
+        () -> {
+          mediaPlayer.play();
+          mediaPlayer.setOnEndOfMedia(
+              () -> {
+                startButton.setDisable(false);
+              });
+        });
 
     // This ArrayList will store the scores of the previous rounds.
     ArrayList<String> previousScores = new ArrayList<>();
