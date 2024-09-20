@@ -64,13 +64,19 @@ public class NewspaperController {
     if (newspaper1.isVisible()) {
       newspaper1.setVisible(false);
       newspaper2.setVisible(true);
+      previousPageButton.setDisable(false);
+      nextPageButton.setDisable(false);
       // If the second newspaper is visible, hide it and show the third newspaper
     } else if (newspaper2.isVisible()) {
       newspaper2.setVisible(false);
       newspaper3.setVisible(true);
+      previousPageButton.setDisable(false);
+      nextPageButton.setDisable(true);
       // If the third newspaper is visible, hide it and show the first newspaper
     } else {
       newspaper3.setVisible(true);
+      nextPageButton.setDisable(true);
+      previousPageButton.setDisable(false);
     }
   }
 
@@ -86,13 +92,19 @@ public class NewspaperController {
     if (newspaper3.isVisible()) {
       newspaper3.setVisible(false);
       newspaper2.setVisible(true);
+      nextPageButton.setDisable(false);
+      previousPageButton.setDisable(false);
       // If the second newspaper is visible, hide it and show the first newspaper
     } else if (newspaper2.isVisible()) {
       newspaper2.setVisible(false);
       newspaper1.setVisible(true);
+      nextPageButton.setDisable(false);
+      previousPageButton.setDisable(true);
       // If the first newspaper is visible, hide it and show the third newspaper
     } else {
       newspaper1.setVisible(true);
+      previousPageButton.setDisable(true);
+      nextPageButton.setDisable(false);
     }
   }
 
@@ -116,6 +128,7 @@ public class NewspaperController {
     newspaper1.setVisible(true);
     newspaper2.setVisible(false);
     newspaper3.setVisible(false);
+    previousPageButton.setDisable(true);
 
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
