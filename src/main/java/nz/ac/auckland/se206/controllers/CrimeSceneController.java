@@ -311,20 +311,27 @@ public class CrimeSceneController {
     if (context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
       timeline.stop();
       context.setState(context.getGuessingState());
+      // Play the guess scene
       App.setRoot("guess");
+      // if the user has not spoken to all suspects and has not found any clues
     } else if (!context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
+      // Play the sound for the user to keep investigating
       Media sound =
           new Media(App.class.getResource("/sounds/missing_suspect.mp3").toURI().toString());
       player = new MediaPlayer(sound);
       player.play();
       return;
+      // if the user has spoken to all suspects but has not found any clues
     } else if (context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
+      // Play the sound for the user to keep investigating
       Media sound =
           new Media(App.class.getResource("/sounds/clue_reminder_1.mp3").toURI().toString());
       player = new MediaPlayer(sound);
       player.play();
       return;
+      // if the user has not spoken to all suspects and has not found any clues
     } else if (!context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
+      // Play the sound for the user to keep investigating
       Media sound =
           new Media(App.class.getResource("/sounds/keep_investigating.mp3").toURI().toString());
       player = new MediaPlayer(sound);
