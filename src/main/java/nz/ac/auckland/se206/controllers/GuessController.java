@@ -56,6 +56,12 @@ public class GuessController {
   private static double timeForGuessing = 60000;
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
+  private static boolean isThiefFound = false;
+  private static GuessController guessController;
+
+  public static boolean getThiefFound() {
+    return isThiefFound;
+  }
 
   @FXML private Rectangle rectPerson1;
   @FXML private Rectangle rectPerson2;
@@ -105,8 +111,6 @@ public class GuessController {
   private Timeline timeline = new Timeline();
   private int currentSuspect = 0;
   private boolean isSuspectSelected = false;
-  private static boolean isThiefFound = false;
-  private static GuessController guessController;
   private Label currentLabel;
 
   private ImageManager ownerImageManager;
@@ -512,10 +516,6 @@ public class GuessController {
 
   public int getSuspectNumber() {
     return currentSuspect;
-  }
-
-  public static boolean getThiefFound() {
-    return isThiefFound;
   }
 
   public GuessController getGuessController() {

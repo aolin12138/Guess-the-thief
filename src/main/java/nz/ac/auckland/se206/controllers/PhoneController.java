@@ -50,6 +50,15 @@ public class PhoneController {
     CallHistoryController.setTimeToCount(timeToCount);
   }
 
+  /**
+   * This method sets the time to count
+   *
+   * @param timeFromPreviousScene
+   */
+  public static void setTimeToCount(double timeFromPreviousScene) {
+    timeToCount = timeFromPreviousScene;
+  }
+
   private double initialY;
 
   @FXML private StackPane indicatorPane;
@@ -230,15 +239,6 @@ public class PhoneController {
     transition.setToY(-height); // Move the lock screen off the top
     transition.setOnFinished(event -> lockScreen.setVisible(false)); // Hide lock screen
     transition.play();
-  }
-
-  /**
-   * This method sets the time to count
-   *
-   * @param timeFromPreviousScene
-   */
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
   }
 
   /**
