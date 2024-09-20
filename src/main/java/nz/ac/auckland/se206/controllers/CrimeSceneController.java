@@ -74,6 +74,15 @@ public class CrimeSceneController {
     return context.isAnyClueFound();
   }
 
+  /**
+   * This method is a setter that sets the context
+   *
+   * @param context
+   */
+  public static void setContext(GameStateContext context) {
+    CrimeSceneController.context = context;
+  }
+
   @FXML private Rectangle phoneClue;
   @FXML private Rectangle newspaperClue;
   @FXML private Button buttonGuess;
@@ -542,14 +551,5 @@ public class CrimeSceneController {
    */
   public GameStateContext getContext() {
     return context;
-  }
-
-  /**
-   * This method is a setter that sets the context
-   *
-   * @param context
-   */
-  public static void setContext(GameStateContext context) {
-    CrimeSceneController.context = context;
   }
 }

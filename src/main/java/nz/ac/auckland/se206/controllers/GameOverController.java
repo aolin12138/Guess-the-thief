@@ -24,6 +24,9 @@ public class GameOverController {
 
   /** This method sets the output text to the explanation of the guess. */
   public static void setOutputText(String text) {
+    if (isTextAlreadyDisplayed) {
+      return;
+    }
     explanation = text;
   }
 
@@ -49,7 +52,6 @@ public class GameOverController {
 
       oldTextArea.setWrapText(true);
       oldTextArea.setText(spare);
-      oldTextArea.setDisable(true);
       isTextAlreadyDisplayed = true;
     }
 
