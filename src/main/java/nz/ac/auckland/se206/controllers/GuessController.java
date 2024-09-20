@@ -46,7 +46,8 @@ public class GuessController {
   private static double maxTimeforGuessing = 60000;
   private static double timeForGuessing = 60000;
   private static int progress = 0;
-  private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
+  private static nz.ac.auckland.se206.ringIndicator.RingProgressIndicator ringProgressIndicator =
+      new RingProgressIndicator();
   private static boolean isThiefFound = false;
   private static GuessController guessController;
   private static boolean isGameWon = false;
@@ -553,6 +554,7 @@ public class GuessController {
     return currentSuspect;
   }
 
+  @SuppressWarnings("static-access")
   public GuessController getGuessController() {
     return this.guessController;
   }
@@ -622,6 +624,7 @@ public class GuessController {
     transition.play();
   }
 
+  @SuppressWarnings("static-access")
   public void setContext(GameStateContext context) {
     this.context = context;
   }
