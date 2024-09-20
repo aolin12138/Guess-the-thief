@@ -73,7 +73,6 @@ public class CallHistoryController {
    */
   @FXML
   public void initialize() {
-    if (isFirstTimeInit) {}
     // context.setCrimeController(this); *******NEED THIS
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);

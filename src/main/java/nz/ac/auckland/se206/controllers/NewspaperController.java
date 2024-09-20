@@ -81,7 +81,6 @@ public class NewspaperController {
   /** This method initializes the newspaper scene */
   @FXML
   public void initialize() {
-    if (isFirstTimeInit) {}
     // context.setCrimeController(this); *******NEED THIS
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);

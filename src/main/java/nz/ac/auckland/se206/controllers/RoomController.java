@@ -776,14 +776,17 @@ public class RoomController {
         case "ownerImage":
           displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
           setPerson(context.getPerson("rectPerson2"));
+          break;
         // if the id is worker image, set the person to the worker
         case "workerImage":
           displayImage.setImage(new Image(workerImage.getImage().getUrl()));
           setPerson(context.getPerson("rectPerson1"));
+          break;
         // if the id is brother image, set the person to the brother
         case "brotherImage":
           displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
           setPerson(context.getPerson("rectPerson3"));
+          break;
       }
     }
     // set the owners images to be hoverable
