@@ -20,8 +20,8 @@
          </image>
       </ImageView>
       <StackPane fx:id="indicatorPane" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0" />
-      <Pane fx:id="statsPane" layoutX="14.0" layoutY="58.0" prefHeight="30.0" prefWidth="26.0" />
-      <Label layoutX="187.0" layoutY="9.0" prefHeight="27.0" prefWidth="423.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Select who you think the Recipe Thief is!" textFill="WHITE">
+      <Pane fx:id="statsPane" layoutX="28.0" layoutY="22.0" prefHeight="30.0" prefWidth="26.0" />
+      <Label alignment="CENTER" layoutX="152.0" layoutY="37.0" prefHeight="36.0" prefWidth="474.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Select who you think the Recipe Thief is!" textFill="WHITE">
          <font>
             <Font size="25.0" />
          </font>
@@ -31,7 +31,7 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <Label fx:id="lblDescription" alignment="CENTER" layoutX="104.0" layoutY="373.0" prefHeight="38.0" prefWidth="596.0" textAlignment="CENTER" textFill="RED">
+      <Label fx:id="lblDescription" alignment="CENTER" layoutX="491.0" layoutY="357.0" prefHeight="38.0" prefWidth="207.0" textAlignment="CENTER" textFill="RED">
          <font>
             <Font size="16.0" />
          </font>
@@ -94,7 +94,7 @@
       <HBox fx:id="chatHorizontalBox" layoutX="152.0" layoutY="392.0" prefHeight="167.0" prefWidth="610.0" visible="false">
          <children>
       
-            <TextField fx:id="textInput" prefHeight="159.0" prefWidth="512.0" />
+            <TextField fx:id="textInput" alignment="TOP_LEFT" prefHeight="159.0" prefWidth="512.0" />
             <Button fx:id="buttonSend" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send">
                <HBox.margin>
                   <Insets left="10.0" />
