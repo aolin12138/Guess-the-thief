@@ -45,7 +45,7 @@ public class StartController {
 
     // This ArrayList will store the scores of the previous rounds.
     ArrayList<String> previousScores = new ArrayList<>();
-    // previousScores = Utils.getScoresForStartPage();
+    previousScores = Utils.getScoresForStartPage();
     // Check is the previousScores arraylist is empty, if it isn't, display the scores from previous
     // rounds.
     if (previousScores.size() == 2) {
