@@ -63,7 +63,7 @@ public class GameOverController {
    * @throws IOException
    */
   @FXML
-  public void handleRestartClick(ActionEvent event) throws ApiProxyException, IOException {
+  private void onHandleRestartClick(ActionEvent event) throws ApiProxyException, IOException {
     App.setRoot("start");
   }
 

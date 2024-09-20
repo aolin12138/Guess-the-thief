@@ -21,7 +21,7 @@
             <Image url="@../images/car_close_up.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="rstbtn" layoutX="372.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleRestartClick" text="Restart" />
+      <Button fx:id="rstbtn" layoutX="372.0" layoutY="360.0" mnemonicParsing="false" onAction="#onHandleRestartClick" text="Restart" />
       <Label fx:id="lblStats" alignment="CENTER" contentDisplay="CENTER" layoutX="324.0" prefHeight="35.0" prefWidth="202.0" textAlignment="CENTER">
          <font>
             <Font size="18.0" />

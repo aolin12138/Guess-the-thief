@@ -569,7 +569,7 @@ public class RoomController {
    * @throws URISyntaxException
    */
   @FXML
-  private void handleGuessClick(ActionEvent event) throws IOException, URISyntaxException {
+  private void onHandleGuessClick(ActionEvent event) throws IOException, URISyntaxException {
     // Before switching to guess scene, check the user has spoken to all 3 suspects and seen at
     // least one clue
     if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
@@ -755,7 +755,7 @@ public class RoomController {
   }
 
   @FXML
-  public void onBackPressed() {
+  private void onBackPressed() {
     enableRectangles();
     carImage.setVisible(false);
     buttonBack.setVisible(false);
