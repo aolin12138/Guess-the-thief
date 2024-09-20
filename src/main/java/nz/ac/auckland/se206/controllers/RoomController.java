@@ -969,6 +969,7 @@ public class RoomController {
    *
    * @param context
    */
+  @SuppressWarnings("static-access")
   public void setContext(GameStateContext context) {
     this.context = context;
   }

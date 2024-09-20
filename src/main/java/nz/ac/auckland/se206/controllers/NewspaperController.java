@@ -117,6 +117,7 @@ public class NewspaperController {
     timeline.play();
   }
 
+  @SuppressWarnings("static-access")
   public void setContext(GameStateContext context) {
     this.context = context;
   }

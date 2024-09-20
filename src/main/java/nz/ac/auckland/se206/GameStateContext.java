@@ -27,12 +27,21 @@ public class GameStateContext {
   private final GameOver gameOverState;
   private GameState gameState;
   private RoomController roomController;
+
+  @SuppressWarnings("unused")
   private GuessController guessController;
 
   private boolean isAnyClueFound = false;
+
+  @SuppressWarnings("unused")
   private boolean isClue1Found = false;
+
+  @SuppressWarnings("unused")
   private boolean isClue2Found = false;
+
+  @SuppressWarnings("unused")
   private boolean isClue3Found = false;
+
   private boolean isPerson1Talked = false;
   private boolean isPerson2Talked = false;
   private boolean isPerson3Talked = false;

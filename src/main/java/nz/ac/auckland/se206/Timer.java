@@ -10,6 +10,8 @@ public class Timer {
   private static double timeToCount = 0;
   private static double guessTime = 60000;
   private static int progress = 100;
+
+  @SuppressWarnings("unused")
   private static boolean isTimeOver = false;
 
   private static Timeline timeline = new Timeline();
