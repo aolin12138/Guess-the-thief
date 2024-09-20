@@ -25,7 +25,6 @@ public class ClueManager {
   private Timeline shadowTransitionOut;
 
   private Timeline brightnessTransitionStay;
-  private Timeline shadowTransitionStay;
   private ScaleTransition clickScale;
 
   private int originalX = 0;
