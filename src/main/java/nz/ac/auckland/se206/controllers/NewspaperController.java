@@ -99,6 +99,15 @@ public class NewspaperController {
                     progress = (int) (100 - ((timeToCountTo - timeToCount) * 100 / timeToCountTo));
                   } else {
 
+                    // Program switch to guess scene here ONLY if clues and suspects have been
+                    // correctly interacted with
+                    // Before switching state, make sure the game is still in the game started state
+                    // and that we havent already switched state. Otherwise it will cause a bug
+                    Utils.checkConditions(
+                        context,
+                        context.isAllSuspectsSpokenTo(),
+                        CrimeSceneController.isAnyClueFound(),
+                        timeline);
                     timeline.stop();
                   }
 

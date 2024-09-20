@@ -59,10 +59,6 @@ public class GuessController {
   private static boolean isThiefFound = false;
   private static GuessController guessController;
 
-  public static boolean getThiefFound() {
-    return isThiefFound;
-  }
-
   @FXML private Rectangle rectPerson1;
   @FXML private Rectangle rectPerson2;
   @FXML private Rectangle rectPerson3;
@@ -111,6 +107,9 @@ public class GuessController {
   private Timeline timeline = new Timeline();
   private int currentSuspect = 0;
   private boolean isSuspectSelected = false;
+
+  private static boolean isGameWon = false;
+
   private Label currentLabel;
 
   private ImageManager ownerImageManager;
@@ -303,6 +302,7 @@ public class GuessController {
     currentLabel = ownerLabel;
     currentImageManager = ownerImageManager;
     currentSuspect = 1;
+    isThiefFound = false;
     isSuspectSelected = true;
   }
 
@@ -334,6 +334,7 @@ public class GuessController {
     currentLabel = workerLabel;
     currentImageManager = workerImageManager;
     currentSuspect = 2;
+    isThiefFound = false;
     isSuspectSelected = true;
   }
 
@@ -365,6 +366,7 @@ public class GuessController {
     currentLabel = brotherLabel;
     currentImageManager = brotherImageManager;
     currentSuspect = 3;
+    isThiefFound = true;
     isSuspectSelected = true;
   }
 
@@ -394,8 +396,7 @@ public class GuessController {
               + "Click play again to replay.");
       try {
         timeline.stop();
-        // Switch to the game lost scene
-        App.setRoot("gamelost");
+        App.setRoot("gameover");
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -413,8 +414,7 @@ public class GuessController {
               + "Click play again to replay.");
       try {
         timeline.stop();
-        // Switch to the game lost scene
-        App.setRoot("gamelost");
+        App.setRoot("gameover");
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -434,8 +434,7 @@ public class GuessController {
               + "Click play again to replay.");
       try {
         timeline.stop();
-        // Switch to the game lost scene
-        App.setRoot("gamelost");
+        App.setRoot("gameover");
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -469,6 +468,8 @@ public class GuessController {
       lblDescription.setText("You must type an explanation to support your decision.");
       return;
     }
+    // Passes the amount of time used to Utils for the scoreboard
+    Utils.setTimeUsed(timeForGuessing);
     timeline.stop();
     // Set the progress indicator to visible
     ProgressIndicator statsIndicator = new ProgressIndicator();
@@ -494,9 +495,14 @@ public class GuessController {
               // Set the chat stats to the explanation
               Platform.runLater(
                   () -> {
+
+                    // GuessTimeLimitManager.stopTimer();
+                    System.out.println("is Correct Explanation: " + isCorrectExplanation);
+                    System.out.println("currentSuspect: " + currentSuspect);
+                    System.out.println("isThiefFound: " + isThiefFound);
                     if (isCorrectExplanation && currentSuspect == 3) {
                       context.setState(context.getGameOverState());
-                      isThiefFound = true;
+                      isGameWon = true;
 
                       try {
                         // Switch to the game over scene
@@ -508,8 +514,7 @@ public class GuessController {
                       context.setState(context.getGameOverState());
 
                       try {
-                        // Switch to the game lost scene
-                        App.setRoot("gamelost");
+                        App.setRoot("gameover");
                       } catch (IOException e) {
                         e.printStackTrace();
                       }
@@ -561,6 +566,14 @@ public class GuessController {
 
   public int getSuspectNumber() {
     return currentSuspect;
+  }
+
+  public static boolean getThiefFound() {
+    return isThiefFound;
+  }
+
+  public static boolean getIsGameWon() {
+    return isGameWon;
   }
 
   public GuessController getGuessController() {

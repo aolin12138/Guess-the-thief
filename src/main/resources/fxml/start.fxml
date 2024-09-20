@@ -54,7 +54,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="ScoreboardNameLabel1" text="Play to generate scores" textFill="WHITE">
+                  <Label fx:id="scoreBoardNameLabel1" maxWidth="240.0" prefHeight="29.0" prefWidth="235.0" text="Play to generate scores" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -62,7 +62,7 @@
                         <Insets left="11.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="ScoreboardTimeLabel1" text="00:00" textFill="WHITE">
+                  <Label fx:id="scoreBoardTimeLabel1" text="00:00" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -76,12 +76,12 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="ScoreboardNameLabel2" text="Play to generate scores" textFill="WHITE">
+                  <Label fx:id="scoreBoardNameLabel2" prefHeight="29.0" prefWidth="235.0" text="Play to generate scores" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="ScoreboardTimeLabel2" text="00:00" textFill="WHITE">
+                  <Label fx:id="scoreBoardTimeLabel2" text="00:00" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -95,7 +95,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="ScoreboardNameLabel3" prefHeight="29.0" prefWidth="236.0" text="Play to generate scores" textFill="WHITE">
+                  <Label fx:id="scoreBoardNameLabel3" prefHeight="29.0" prefWidth="235.0" text="Play to generate scores" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -103,7 +103,7 @@
                         <Insets left="4.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="ScoreboardTimeLabel3" text="00:00" textFill="WHITE">
+                  <Label fx:id="scoreBoardTimeLabel3" text="00:00" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>

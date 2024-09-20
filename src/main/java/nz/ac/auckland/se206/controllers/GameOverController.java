@@ -8,12 +8,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.Utils;
 
 public class GameOverController {
 
   private static String explanation;
   private static boolean isTextAlreadyDisplayed = false;
   private static boolean isBannerAlreadyDisplayed = false;
+  private static String spare = "";
 
   /** This method sets the output text to the explanation of the guess. */
   public static void setOutputText(String text) {
@@ -24,20 +26,24 @@ public class GameOverController {
   @FXML private Label lblStats;
   @FXML private TextArea textChat;
   @FXML private Label lblExplanation;
-  @FXML private TextArea textArea;
+  @FXML private TextArea oldTextArea;
 
   /**
    * This method is called when the game over scene is loaded. It will set the text of the text area
    */
   @FXML
   public void initialize() {
+    System.out.println(oldTextArea);
+    System.out.println(isTextAlreadyDisplayed);
 
     // Set the text of the text area to the explanation of the game
-    if ((textArea != null) && !isTextAlreadyDisplayed) {
+    if ((oldTextArea != null) && (!isTextAlreadyDisplayed)) {
+      spare = explanation;
+      System.out.println(spare);
 
-      textArea.setWrapText(true);
-      textArea.setText(explanation);
-      textArea.setDisable(true);
+      oldTextArea.setWrapText(true);
+      oldTextArea.setText(spare);
+      oldTextArea.setDisable(true);
       isTextAlreadyDisplayed = true;
     }
 
@@ -45,11 +51,14 @@ public class GameOverController {
 
     if (!isBannerAlreadyDisplayed) { // Prevents bug from changing gamestate to loss after timers
       // run out
-      if (GuessController.getThiefFound()) {
+      if (GuessController.getIsGameWon()) {
         lblStats.setText("Correct! You win!!");
         lblStats.setDisable(true);
+        isBannerAlreadyDisplayed = true;
+        Utils.updateScoreBoard(Utils.getTimeUsed(), Utils.getPlayerName());
       } else {
         lblStats.setText("Oh no! You Lose!");
+        isBannerAlreadyDisplayed = true;
       }
     }
   }
