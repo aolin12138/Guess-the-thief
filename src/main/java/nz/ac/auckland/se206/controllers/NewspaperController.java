@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.GameStateContext;
@@ -46,6 +47,10 @@ public class NewspaperController {
   @FXML private Button returnButton;
   @FXML private Label timerLabel;
 
+  @FXML private ImageView newspaper1;
+  @FXML private ImageView newspaper2;
+  @FXML private ImageView newspaper3;
+
   /**
    * This method is called when the next page button is clicked. It will take the user to the next
    * page
@@ -53,7 +58,21 @@ public class NewspaperController {
    * @param event
    */
   @FXML
-  private void onNextPage(ActionEvent event) {}
+  private void onNextPage(ActionEvent event) {
+
+    // If the first newspaper is visible, hide it and show the second newspaper
+    if (newspaper1.isVisible()) {
+      newspaper1.setVisible(false);
+      newspaper2.setVisible(true);
+      // If the second newspaper is visible, hide it and show the third newspaper
+    } else if (newspaper2.isVisible()) {
+      newspaper2.setVisible(false);
+      newspaper3.setVisible(true);
+      // If the third newspaper is visible, hide it and show the first newspaper
+    } else {
+      newspaper3.setVisible(true);
+    }
+  }
 
   /**
    * This method is called when the previous page button is clicked. It will take the user to the
@@ -62,7 +81,20 @@ public class NewspaperController {
    * @param event
    */
   @FXML
-  private void onPreviousPage(ActionEvent event) {}
+  private void onPreviousPage(ActionEvent event) {
+    // If the third newspaper is visible, hide it and show the second newspaper
+    if (newspaper3.isVisible()) {
+      newspaper3.setVisible(false);
+      newspaper2.setVisible(true);
+      // If the second newspaper is visible, hide it and show the first newspaper
+    } else if (newspaper2.isVisible()) {
+      newspaper2.setVisible(false);
+      newspaper1.setVisible(true);
+      // If the first newspaper is visible, hide it and show the third newspaper
+    } else {
+      newspaper1.setVisible(true);
+    }
+  }
 
   /**
    * This method is called when the return button is clicked. It will take the user back to the
@@ -80,6 +112,11 @@ public class NewspaperController {
   /** This method initializes the newspaper scene */
   @FXML
   public void initialize() {
+    // Set the first newspaper to be visible and the other two to be invisible
+    newspaper1.setVisible(true);
+    newspaper2.setVisible(false);
+    newspaper3.setVisible(false);
+
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
     // Timer label is updated here

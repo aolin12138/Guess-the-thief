@@ -2,25 +2,44 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.NewspaperController">
    <children>
-      <Button fx:id="returnButton" layoutX="333.0" layoutY="451.0" mnemonicParsing="false" onAction="#onReturnToCrimeScene" text="Return to Crime Scene" />
-      <Button fx:id="previousPageButton" layoutX="35.0" layoutY="333.0" mnemonicParsing="false" onAction="#onPreviousPage" text="Previous Page" />
-      <Button fx:id="nextPageButton" layoutX="688.0" layoutY="333.0" mnemonicParsing="false" onAction="#onNextPage" text="Next Page" />
-      <Label layoutX="54.0" layoutY="57.0" prefHeight="17.0" prefWidth="457.0" text="PINEAPPLE PIZZA SALES SURGE IN ITALY" />
-      <Label alignment="TOP_LEFT" layoutX="54.0" layoutY="74.0" prefHeight="65.0" prefWidth="717.0" text="Sales of pineapple pizzas are up over 150% year over year across the country.  Food critics say the new toppings are reignited Italians love for pizza. Supermarkets across Italy are expecting to ship over 1 million units of frozen pineapple pizza this year alone, and the number is expected to rise." />
-      <Label layoutX="54.0" layoutY="116.0" prefHeight="17.0" prefWidth="560.0" text="STRUGGLING RESTAURANT OWNER MAY BE FORCED TO CLOSE DOWN RESTAURANT" />
-      <Label layoutX="54.0" layoutY="131.0" prefHeight="17.0" prefWidth="599.0" text="The owner of a struggling restaurant in town has said that if he can't get more customers in the door, he may be forced to shut down his restaurant. The owner said he is prepared to do anything it takes to ensure his restaurant survives, and is on the hunt for a new head chef to create a new and exciting menu to delight customers." />
-      <Label layoutX="54.0" layoutY="197.0" prefHeight="17.0" prefWidth="560.0" text="SUCCESSFUL RESTAURANT OWNER CELEBRATES MILESTONE SUCCESSThe successful restaurant owner reached a milestone today, celebrating his 2nd Michelin Star. The secret to this success, the owner says, “is our secret recipe, which not even our head chefs know.” Even the owners family, who helped him set up the restaurant, have never had access to the secret recipe. “My father entrusted me to carry on the business, and part of that means not letting anyone else see the recipe”, the owner says." />
-      <StackPane fx:id="indicatorPane" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0" />
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#4effb2">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-      </Label>
+      <ImageView fx:id="crimeScene" fitHeight="583.0" fitWidth="800.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/crime_scene3.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="newspaper1" fitHeight="447.0" fitWidth="742.0" layoutX="64.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/news1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="newspaper2" fitHeight="447.0" fitWidth="742.0" layoutX="64.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/news2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="newspaper3" fitHeight="447.0" fitWidth="742.0" layoutX="64.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/news3.png" />
+         </image>
+      </ImageView>
+      <StackPane fx:id="indicatorPane" layoutX="26.0" layoutY="424.0" prefHeight="109.0" prefWidth="104.0">
+         <children>
+            <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="408.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#4effb2">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+         </children></StackPane>
+      <Button fx:id="returnButton" layoutX="333.0" layoutY="484.0" mnemonicParsing="false" onAction="#onReturnToCrimeScene" text="Return to Crime Scene" />
+      <Button fx:id="previousPageButton" layoutX="169.0" layoutY="484.0" mnemonicParsing="false" onAction="#onPreviousPage" text="Previous Page" />
+      <Button fx:id="nextPageButton" layoutX="552.0" layoutY="484.0" mnemonicParsing="false" onAction="#onNextPage" text="Next Page" />
    </children>
 </AnchorPane>
