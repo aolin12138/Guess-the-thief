@@ -134,7 +134,6 @@ public class RoomController {
   private ImageManager workerImageManager;
   private ImageManager brotherImageManager;
   private ImageManager crimeImageManager;
-  private Scene suspectScene;
 
   private Timeline timeline = new Timeline();
 

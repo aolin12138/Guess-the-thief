@@ -30,7 +30,6 @@ import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 
 public class CrimeSceneController {
-  private static boolean isFirstTimeInit = true;
 
   private static GameStateContext context = new GameStateContext();
   private static double timeToCount = 300000;
@@ -101,7 +100,6 @@ public class CrimeSceneController {
   @FXML private Label brotherLabel;
 
   private MediaPlayer player;
-  private ImageManager currentImageManager;
   private ImageManager ownerImageManager;
   private ImageManager workerImageManager;
   private ImageManager brotherImageManager;

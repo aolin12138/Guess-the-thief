@@ -28,7 +28,6 @@ public class GameStateContext {
   private GameState gameState;
   private RoomController roomController;
   private GuessController guessController;
-  private int talkedCounter = 0;
 
   private boolean isAnyClueFound = false;
   private boolean isClue1Found = false;
