@@ -14,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.Utils;
 
@@ -88,6 +89,7 @@ public class StartController {
     FXMLLoader crimeSceneLoader = new FXMLLoader(App.class.getResource("/fxml/crime.fxml"));
     SceneManager.addRoot(SceneManager.Scene.CRIME, crimeSceneLoader.load());
     SceneManager.setCrimeSceneLoader(crimeSceneLoader);
+    CrimeSceneController.setContext(new GameStateContext());
     // Loads CRIME scene here because timer starts when it is initialised
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();

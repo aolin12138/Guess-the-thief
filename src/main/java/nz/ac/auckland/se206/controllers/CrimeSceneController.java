@@ -543,4 +543,13 @@ public class CrimeSceneController {
   public GameStateContext getContext() {
     return context;
   }
+
+  /**
+   * This method is a setter that sets the context
+   *
+   * @param context
+   */
+  public static void setContext(GameStateContext context) {
+    CrimeSceneController.context = context;
+  }
 }
