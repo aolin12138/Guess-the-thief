@@ -120,6 +120,7 @@ public class CallHistoryController {
     player.play();
   }
 
+  @SuppressWarnings("static-access")
   public void setContext(GameStateContext context) {
     this.context = context;
   }

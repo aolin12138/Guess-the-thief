@@ -27,6 +27,7 @@ public class ClueManager {
   private Timeline brightnessTransitionStay;
   private ScaleTransition clickScale;
 
+  @SuppressWarnings("unused")
   private int originalX = 0;
 
   private boolean isClicked = false;

@@ -166,6 +166,7 @@ public class PhoneController {
         });
   }
 
+  @SuppressWarnings("static-access")
   public void setContext(GameStateContext context) {
     this.context = context;
   }
