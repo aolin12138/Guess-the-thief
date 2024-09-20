@@ -76,7 +76,7 @@ public class StartController {
   }
 
   @FXML
-  public void onEnterPressed(ActionEvent event) throws IOException {
+  private void onEnterPressed(ActionEvent event) throws IOException {
     // Store the player name
     if (playerNameWindow.getText().isEmpty()) {
       Utils.setPlayerName("Guest Player");
@@ -96,7 +96,7 @@ public class StartController {
   // This method will take the user to the instructions page when they click on the Instructions
   // button
   @FXML
-  public void onViewInstructions(ActionEvent event) throws IOException {
+  private void onViewInstructions(ActionEvent event) throws IOException {
     // print the class of the source of the event
     System.out.println(event.getSource().getClass() + "\n\n");
     System.out.println(event.getSource());

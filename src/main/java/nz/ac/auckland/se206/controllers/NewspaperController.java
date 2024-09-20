@@ -54,7 +54,7 @@ public class NewspaperController {
    * @param event
    */
   @FXML
-  void onNextPage(ActionEvent event) {}
+  private void onNextPage(ActionEvent event) {}
 
   /**
    * This method is called when the previous page button is clicked. It will take the user to the
@@ -63,7 +63,7 @@ public class NewspaperController {
    * @param event
    */
   @FXML
-  void onPreviousPage(ActionEvent event) {}
+  private void onPreviousPage(ActionEvent event) {}
 
   /**
    * This method is called when the return button is clicked. It will take the user back to the
@@ -72,7 +72,7 @@ public class NewspaperController {
    * @param event
    */
   @FXML
-  void onReturnToCrimeScene(ActionEvent event) {
+  private void onReturnToCrimeScene(ActionEvent event) {
     Scene sceneOfButton = returnButton.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);

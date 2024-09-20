@@ -32,6 +32,24 @@ public class PhoneController {
   private static Timeline timeline = new Timeline();
   private static GameStateContext context = new GameStateContext();
 
+  /**
+   * This method passes the time to the crime scene
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToCrimeScene(double timeToCount) {
+    CrimeSceneController.setTimeToCount(timeToCount);
+  }
+
+  /**
+   * This method passes the time to the call history
+   *
+   * @param timeToCount
+   */
+  public static void passTimeToCallHistory(double timeToCount) {
+    CallHistoryController.setTimeToCount(timeToCount);
+  }
+
   private double initialY;
 
   @FXML private StackPane indicatorPane;
@@ -248,7 +266,7 @@ public class PhoneController {
    * @param event
    */
   @FXML
-  void onReturnToCrimeScene(ActionEvent event) {
+  private void onReturnToCrimeScene(ActionEvent event) {
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     Platform.runLater(
@@ -270,23 +288,5 @@ public class PhoneController {
       callScreen.setVisible(false);
       callNumberRectangle.setDisable(false);
     }
-  }
-
-  /**
-   * This method passes the time to the crime scene
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToCrimeScene(double timeToCount) {
-    CrimeSceneController.setTimeToCount(timeToCount);
-  }
-
-  /**
-   * This method passes the time to the call history
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToCallHistory(double timeToCount) {
-    CallHistoryController.setTimeToCount(timeToCount);
   }
 }

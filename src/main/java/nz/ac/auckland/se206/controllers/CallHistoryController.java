@@ -61,7 +61,7 @@ public class CallHistoryController {
    * @param event
    */
   @FXML
-  void onHomeButtonClicked(ActionEvent event) {
+  private void onHomeButtonClicked(ActionEvent event) {
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));

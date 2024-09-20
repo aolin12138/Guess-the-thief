@@ -314,7 +314,7 @@ public class CrimeSceneController {
    * @throws URISyntaxException
    */
   @FXML
-  void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
+  private void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
     // Check all 3 suspects have been spoken to and at least 1 clue has been clicked
     if (context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
       // context.handleGuessClick();

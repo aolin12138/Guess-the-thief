@@ -54,7 +54,7 @@ public class CCTVController {
    * @param event
    */
   @FXML
-  void onReturnButtonClicked(ActionEvent event) {
+  private void onReturnButtonClicked(ActionEvent event) {
     Scene sceneOfButton = returnButton.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
