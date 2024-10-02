@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.GameStateContext;
@@ -72,6 +73,7 @@ public class PhoneController {
 
   @FXML private Button backButton;
   @FXML private Rectangle phoneAppRectangle;
+  @FXML private Circle endCallButton;
 
   private String audioPath = "/sounds/voicemail2.mp3";
   private Media audio = new Media(getClass().getResource(audioPath).toString());
@@ -80,6 +82,8 @@ public class PhoneController {
   /** This method intializes the phone controller */
   @FXML
   public void initialize() {
+
+    endCallButton.setDisable(true);
 
     Rectangle clip = new Rectangle(209, 400); // Clip rectangle matching the phone screen size
     phonePane.setClip(clip);
@@ -155,6 +159,10 @@ public class PhoneController {
     // Set the call screen to visible
     callScreen.setVisible(true);
     callNumberRectangle.setDisable(true);
+
+    if (endCallButton.isDisable()) {
+      endCallButton.setDisable(false);
+    }
     // Play the voicemail sound
     mediaPlayer.play();
     mediaPlayer.setOnEndOfMedia(
@@ -215,6 +223,13 @@ public class PhoneController {
     // set the root of the scene to the crime scene
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
     passTimeToCrimeScene(timeToCount);
+  }
+
+  @FXML
+  private void onEndCallButtonClicked(MouseEvent event) {
+    callScreen.setVisible(false);
+    callNumberRectangle.setDisable(false);
+    mediaPlayer.stop();
   }
 
   public void disableAll() {
