@@ -10,12 +10,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CrimeSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" stylesheets="@../css/labeloutline.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CrimeSceneController">
    <children>
 
-      <ImageView fx:id="displayImage" fitHeight="583.0" fitWidth="805.0" layoutX="-1.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="displayImage" fitHeight="583.0" fitWidth="805.0" layoutX="-1.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true" styleClass="timer-label">
          <image>
             <Image url="@../images/crime_scene5.png" />
          </image>
@@ -114,8 +115,12 @@
             </VBox>
          </children>
       </VBox>
-      <StackPane fx:id="indicatorPane" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0" />
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#24f59b">
+      <StackPane fx:id="indicatorPane" disable="true" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0">
+         <children>
+            <Circle fill="#ffffff00" radius="50.0" stroke="#ba7438" strokeType="INSIDE" strokeWidth="3.0" />
+         </children>
+      </StackPane>
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="05:00" textAlignment="CENTER" textFill="#7d0600" wrapText="true">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>

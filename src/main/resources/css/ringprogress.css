@@ -4,10 +4,10 @@
 }
 
 .ringindicator-inner-circle {
-  -fx-opacity: 1;
+  -fx-opacity: 0.8;
   -fx-stroke: circleindicator-color;
-  -fx-stroke-width: 4.0px;
-  -fx-fill: -fx-background;
+  -fx-stroke-width: 0px;
+  -fx-fill: rgb(88, 46, 7);
 }
 
 .ringindicator-filler {
