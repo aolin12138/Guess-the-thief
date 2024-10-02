@@ -98,6 +98,7 @@ public class PhoneController {
           // Only move the lock screen if the drag distance is significant
           if (dragDistance > 40) { // Threshold to avoid triggering on small movements
             unlock(lockScreen, phonePane.getHeight());
+            arrow.setVisible(false);
             callRectangle.setDisable(false);
           }
         });
@@ -166,6 +167,7 @@ public class PhoneController {
 
   @FXML
   private void onCallClicked(MouseEvent event) {
+    arrow.setVisible(false);
     callHistory.setVisible(true);
     callRectangle.setDisable(true);
     callNumberRectangle.setDisable(false);
@@ -179,6 +181,7 @@ public class PhoneController {
   @FXML
   private void callNumber(MouseEvent event) {
     // Set the call screen to visible
+    arrow.setVisible(false);
     callScreen.setVisible(true);
     callNumberRectangle.setDisable(true);
     // Play the voicemail sound
