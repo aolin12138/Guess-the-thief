@@ -102,6 +102,23 @@ public class PhoneController {
           }
         });
 
+    arrow.setOnMousePressed(
+        event -> {
+          initialY = event.getSceneY(); // Store the initial Y position
+        });
+
+    arrow.setOnMouseDragged(
+        event -> {
+          double currentY = event.getSceneY(); // Get the current Y position during the drag
+          double dragDistance = initialY - currentY; // Calculate how far the user has dragged
+
+          // Only move the lock screen if the drag distance is significant
+          if (dragDistance > 40) { // Threshold to avoid triggering on small movements
+            unlock(lockScreen, phonePane.getHeight());
+            callRectangle.setDisable(false);
+          }
+        });
+
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
     // Timer label is updated here
