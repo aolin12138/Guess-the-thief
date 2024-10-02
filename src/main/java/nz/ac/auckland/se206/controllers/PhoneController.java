@@ -66,6 +66,7 @@ public class PhoneController {
   @FXML private ImageView screen;
   @FXML private ImageView callHistory;
   @FXML private ImageView callScreen;
+  @FXML private ImageView arrow;
 
   @FXML private StackPane phonePane;
   @FXML private Label timerLabel;
@@ -136,6 +137,14 @@ public class PhoneController {
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
+
+    TranslateTransition bouncingArrow = new TranslateTransition();
+    bouncingArrow.setNode(arrow);
+    bouncingArrow.setDuration(Duration.millis(1000));
+    bouncingArrow.setCycleCount(TranslateTransition.INDEFINITE);
+    bouncingArrow.setByY(-30);
+    bouncingArrow.setAutoReverse(true);
+    bouncingArrow.play();
   }
 
   @FXML
