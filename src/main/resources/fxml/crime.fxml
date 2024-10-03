@@ -117,7 +117,7 @@
       </VBox>
       <StackPane fx:id="indicatorPane" disable="true" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0">
          <children>
-            <Circle fill="#ffffff00" radius="50.0" stroke="#ba7438" strokeType="INSIDE" strokeWidth="3.0" />
+            <Circle fill="#ffffffcc" radius="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
          </children>
       </StackPane>
       <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="05:00" textAlignment="CENTER" textFill="#7d0600" wrapText="true">

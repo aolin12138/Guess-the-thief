@@ -4,7 +4,7 @@
 }
 
 .outline.label .text {
-  -fx-fill: white;
-  -fx-stroke: #7d0600;
-  -fx-stroke-width: 0.5px;
+  -fx-fill: #950303;
+  -fx-stroke: #950303;
+  -fx-stroke-width: 0.1px;
 }
