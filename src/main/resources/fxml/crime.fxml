@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" stylesheets="@../css/labeloutline.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CrimeSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CrimeSceneController">
    <children>
 
       <ImageView fx:id="displayImage" fitHeight="583.0" fitWidth="805.0" layoutX="-1.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true" styleClass="timer-label">
@@ -27,7 +27,7 @@
             <Font size="10.0" />
          </font></Button>
 
-      <VBox fx:id="imagesVerticalBox" layoutX="661.0" layoutY="25.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" visible="false">
+      <VBox fx:id="imagesVerticalBox" layoutX="661.0" layoutY="25.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" styleClass="outline" stylesheets="@../css/sidebarlabel.css" visible="false">
 
          <children>
             <VBox prefHeight="88.0" prefWidth="132.0">
@@ -40,7 +40,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="crimeLabel" text="Crime Scene" textFill="WHITE" visible="false">
+                  <Label fx:id="crimeLabel" prefHeight="30.0" prefWidth="121.0" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Crime Scene" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -60,7 +60,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="ownerLabel" text="Owner" textFill="WHITE" visible="false">
+                  <Label fx:id="ownerLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Owner" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -83,7 +83,7 @@
                         <Rectangle2D />
                      </viewport>
                   </ImageView>
-                  <Label fx:id="workerLabel" text="Worker" textFill="WHITE" visible="false">
+                  <Label fx:id="workerLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Worker" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -103,7 +103,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="brotherLabel" text="Brother" textFill="WHITE" visible="false">
+                  <Label fx:id="brotherLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Brother" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>

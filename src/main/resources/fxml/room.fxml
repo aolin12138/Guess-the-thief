@@ -65,7 +65,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="crimeLabel" text="Crime Scene" textFill="WHITE" visible="false">
+                  <Label fx:id="crimeLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Crime Scene" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -85,7 +85,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="ownerLabel" text="Owner" textFill="WHITE" visible="false">
+                  <Label fx:id="ownerLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Owner" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -108,7 +108,7 @@
                         <Rectangle2D />
                      </viewport>
                   </ImageView>
-                  <Label fx:id="workerLabel" text="Worker" textFill="WHITE" visible="false">
+                  <Label fx:id="workerLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Worker" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -128,7 +128,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="brotherLabel" text="Brother" textFill="WHITE" visible="false">
+                  <Label fx:id="brotherLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Brother" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
