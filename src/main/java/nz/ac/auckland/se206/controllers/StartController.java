@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -59,10 +62,26 @@ public class StartController {
       scoreBoardNameLabel3.setText(previousScores.get(4));
       scoreBoardTimeLabel3.setText(previousScores.get(5));
     }
+
+    // Adding the event handler for 'Enter' key on txtInput
+    playerNameWindow.setOnKeyPressed(
+        new EventHandler<KeyEvent>() {
+          @Override
+          public void handle(KeyEvent keyEvent) {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+              try {
+                // Calling the send message function
+                onEnterPressed(keyEvent);
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            }
+          }
+        });
   }
 
   @FXML
-  private void onEnterPressed(ActionEvent event) throws IOException {
+  private void onEnterPressed(Event event) throws IOException {
     // need to check that the user has entered a username, if they haven't, remind them
 
     // Store the player name
@@ -82,9 +101,15 @@ public class StartController {
     SceneManager.setCrimeSceneLoader(crimeSceneLoader);
     CrimeSceneController.setContext(new GameStateContext());
     // Loads CRIME scene here because timer starts when it is initialised
-    Button button = (Button) event.getSource();
-    Scene sceneOfButton = button.getScene();
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
+    try {
+      Button button = (Button) event.getSource();
+      Scene sceneOfButton = button.getScene();
+      sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
+    } catch (ClassCastException e) {
+      TextField field = (TextField) event.getSource();
+      Scene sceneOfField = field.getScene();
+      sceneOfField.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
+    }
   }
 
   // This method will take the user to the instructions page when they click on the Instructions
