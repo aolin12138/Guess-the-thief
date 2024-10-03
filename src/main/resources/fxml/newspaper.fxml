@@ -38,8 +38,8 @@
                </font>
             </Label>
          </children></StackPane>
-      <Button fx:id="returnButton" layoutX="333.0" layoutY="484.0" mnemonicParsing="false" onAction="#onReturnToCrimeScene" text="Return to Crime Scene" />
-      <Button fx:id="previousPageButton" layoutX="169.0" layoutY="484.0" mnemonicParsing="false" onAction="#onPreviousPage" text="Previous Page" />
-      <Button fx:id="nextPageButton" layoutX="552.0" layoutY="484.0" mnemonicParsing="false" onAction="#onNextPage" text="Next Page" />
+      <Button fx:id="returnButton" layoutX="333.0" layoutY="484.0" mnemonicParsing="false" onAction="#onReturnToCrimeScene" stylesheets="@../css/buttons.css" text="Return to Crime Scene" />
+      <Button fx:id="previousPageButton" layoutX="169.0" layoutY="484.0" mnemonicParsing="false" onAction="#onPreviousPage" stylesheets="@../css/buttons.css" text="Previous Page" />
+      <Button fx:id="nextPageButton" layoutX="552.0" layoutY="484.0" mnemonicParsing="false" onAction="#onNextPage" stylesheets="@../css/buttons.css" text="Next Page" />
    </children>
 </AnchorPane>

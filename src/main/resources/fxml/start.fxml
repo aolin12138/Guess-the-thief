@@ -26,13 +26,13 @@
             <Font size="38.0" />
          </font>
       </Label>
-      <Button fx:id="startButton" disable="true" layoutX="330.0" layoutY="142.0" mnemonicParsing="false" onAction="#onEnterPressed" prefHeight="37.0" prefWidth="148.0" text="Begin Investigation" />
+      <Button fx:id="startButton" disable="true" layoutX="330.0" layoutY="142.0" mnemonicParsing="false" onAction="#onEnterPressed" prefHeight="37.0" prefWidth="148.0" stylesheets="@../css/buttons.css" text="Begin Investigation" />
       <Label layoutX="135.0" layoutY="57.0">
          <font>
             <Font size="21.0" />
          </font>
       </Label>
-      <Button fx:id="instructionsButton" layoutX="337.0" layoutY="193.0" mnemonicParsing="false" onAction="#onViewInstructions" prefHeight="29.0" prefWidth="132.0" text="View Instructions" />
+      <Button fx:id="instructionsButton" layoutX="337.0" layoutY="193.0" mnemonicParsing="false" onAction="#onViewInstructions" prefHeight="29.0" prefWidth="132.0" stylesheets="@../css/buttons.css" text="View Instructions" />
       <TextField fx:id="playerNameWindow" layoutX="293.0" layoutY="89.0" prefHeight="37.0" prefWidth="225.0" promptText="(Optional) Enter detective name">
          <font>
             <Font size="15.0" />

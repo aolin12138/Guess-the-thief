@@ -25,7 +25,7 @@
          <font>
             <Font size="14.0" />
          </font></TextArea>
-      <Button fx:id="backButton" layoutX="573.0" layoutY="443.0" mnemonicParsing="false" onAction="#onGoBackButtonPressed" text="Go Back">
+      <Button fx:id="backButton" layoutX="573.0" layoutY="443.0" mnemonicParsing="false" onAction="#onGoBackButtonPressed" stylesheets="@../css/buttons.css" text="Go Back">
          <font>
             <Font size="14.0" />
          </font></Button>
