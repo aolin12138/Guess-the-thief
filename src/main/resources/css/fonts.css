@@ -15,3 +15,13 @@
   -fx-text-border: 1px;
   -fx-text-border-color: white;
 }
+
+#instructionsName {
+  -fx-background-color: transparent;
+  -fx-font-family: 'Impact';
+  -fx-font-size: 30px;
+  -fx-opacity: 1;
+  -fx-text-border: 1px;
+  -fx-text-color: white;
+  -fx-text-border-color: white;
+}
