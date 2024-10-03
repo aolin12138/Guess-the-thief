@@ -14,7 +14,7 @@
 
 <Pane fx:id="room" focusTraversable="true" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="576.0" prefWidth="799.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.StartController">
    <children>
-      <ImageView fitHeight="590.0" fitWidth="805.0" layoutX="-1.0" layoutY="-6.0" pickOnBounds="true">
+      <ImageView fitHeight="596.0" fitWidth="805.0" layoutX="-1.0" layoutY="-6.0" pickOnBounds="true">
          <image>
             <Image url="@../images/crime_scene4.png" />
          </image>

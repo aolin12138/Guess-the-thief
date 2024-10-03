@@ -1,0 +1,30 @@
+.button {
+  background-color: rgb(237, 190, 132);
+  -fx-background-radius: 0;
+  -fx-background-color: rgb(237, 190, 132);
+  -fx-border-color: black;
+  -fx-border-width: 3 3 3 3;
+  -fx-border-radius: 0.2em;
+  -fx-text-fill: black;
+  -fx-background-radius: 0.5em;
+  -fx-background-insets: 0;
+  font-size: 11px;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+  -fx-font-family: "Roboto Condensed";
+}
+
+.button:hover {
+  -fx-background-color: rgb(237, 190, 132);
+  -fx-background-radius: 0.5em;
+  -fx-border-radius: 0.2em;
+  /* -fx-background-insets: 0; */
+  -fx-border-color: white;
+  -fx-border-width: 3 3 3 3;
+}
+
+.text {
+  -fx-font-family: "Roboto Condensed";
+  -fx-fill: black;
+  -fx-font-size: 11px;
+}

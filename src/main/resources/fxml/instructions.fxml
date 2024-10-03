@@ -11,7 +11,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="805.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.InstructionsController">
    <children>
-      <ImageView fitHeight="596.0" fitWidth="805.0" pickOnBounds="true">
+      <ImageView fitHeight="596.0" fitWidth="805.0" layoutX="-1.0" layoutY="-6.0" pickOnBounds="true">
          <image>
             <Image url="@../images/crime_scene4.png" />
          </image>
