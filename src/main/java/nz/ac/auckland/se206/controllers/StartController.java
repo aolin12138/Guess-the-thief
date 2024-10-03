@@ -2,7 +2,6 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +21,7 @@ public class StartController {
 
   @FXML private Button startButton;
   @FXML private Button instructionsButton;
+  @FXML private Label gameTitle;
   @FXML private Label scoreBoardNameLabel1;
   @FXML private Label scoreBoardNameLabel2;
   @FXML private Label scoreBoardNameLabel3;
@@ -36,14 +36,6 @@ public class StartController {
 
   @FXML
   public void initialize() {
-    Platform.runLater(
-        () -> {
-          mediaPlayer.play();
-          mediaPlayer.setOnEndOfMedia(
-              () -> {
-                startButton.setDisable(false);
-              });
-        });
 
     // This ArrayList will store the scores of the previous rounds.
     ArrayList<String> previousScores = new ArrayList<>();
@@ -66,15 +58,6 @@ public class StartController {
       scoreBoardNameLabel3.setText(previousScores.get(4));
       scoreBoardTimeLabel3.setText(previousScores.get(5));
     }
-
-    Platform.runLater(
-        () -> {
-          mediaPlayer.play();
-          mediaPlayer.setOnEndOfMedia(
-              () -> {
-                startButton.setDisable(false);
-              });
-        });
   }
 
   @FXML

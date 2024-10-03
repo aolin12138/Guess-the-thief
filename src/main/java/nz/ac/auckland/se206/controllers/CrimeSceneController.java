@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -118,12 +119,20 @@ public class CrimeSceneController {
   private ClueManager phoneImageManager;
   private ClueManager newspaperImageManager;
 
+  private Media media =
+      new Media(getClass().getResource("/sounds/Intro_brief.mp3").toExternalForm());
+  private MediaPlayer mediaPlayer = new MediaPlayer(media);
+
   /**
    * This method is called when the crime scene is loaded. It will set the timer and the progress
    * bar
    */
   @FXML
   public void initialize() {
+    Platform.runLater(
+        () -> {
+          mediaPlayer.play();
+        });
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
     // Timer label is updated here

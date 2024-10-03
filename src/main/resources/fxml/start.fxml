@@ -19,25 +19,20 @@
             <Image url="@../images/crime_scene4.png" />
          </image>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f29d3c" height="53.0" layoutX="137.0" layoutY="1.0" opacity="0.46" stroke="#393939" strokeType="INSIDE" width="526.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="270.0" layoutX="171.0" layoutY="267.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="450.0" />
-      <Label layoutX="165.0" layoutY="1.0" text="PI Masters: Detective Training ">
-         <font>
-            <Font size="38.0" />
-         </font>
-      </Label>
-      <Button fx:id="startButton" disable="true" layoutX="330.0" layoutY="142.0" mnemonicParsing="false" onAction="#onEnterPressed" prefHeight="37.0" prefWidth="148.0" text="Begin Investigation" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9964a" height="53.0" layoutX="272.0" layoutY="13.0" opacity="0.46" stroke="#393939" strokeType="INSIDE" width="225.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="270.0" layoutX="170.0" layoutY="290.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="450.0" />
+      <Button fx:id="startButton" layoutX="325.0" layoutY="230.0" mnemonicParsing="false" onAction="#onEnterPressed" prefHeight="37.0" prefWidth="148.0" text="Begin Investigation" />
       <Label layoutX="135.0" layoutY="57.0">
          <font>
             <Font size="21.0" />
          </font>
       </Label>
-      <Button fx:id="instructionsButton" layoutX="337.0" layoutY="193.0" mnemonicParsing="false" onAction="#onViewInstructions" prefHeight="29.0" prefWidth="132.0" text="View Instructions" />
-      <TextField fx:id="playerNameWindow" layoutX="293.0" layoutY="89.0" prefHeight="37.0" prefWidth="225.0" promptText="(Optional) Enter detective name">
+      <Button fx:id="instructionsButton" layoutX="590.0" layoutY="179.0" mnemonicParsing="false" onAction="#onViewInstructions" prefHeight="29.0" prefWidth="132.0" text="View Instructions" />
+      <TextField fx:id="playerNameWindow" layoutX="286.0" layoutY="175.0" prefHeight="37.0" prefWidth="225.0" promptText="(Optional) Enter detective name">
          <font>
             <Font size="15.0" />
          </font></TextField>
-      <VBox layoutX="204.0" layoutY="290.0" prefHeight="200.0" prefWidth="404.0" spacing="20.0">
+      <VBox layoutX="199.0" layoutY="319.0" prefHeight="200.0" prefWidth="404.0" spacing="20.0">
          <children>
             <Label text="Scoreboard" textFill="#fffefe">
                <font>
@@ -112,5 +107,16 @@
             </HBox>
          </children>
       </VBox>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9964a" height="68.0" layoutX="69.0" layoutY="67.0" opacity="0.46" stroke="#393939" strokeType="INSIDE" width="653.0" />
+      <Label fx:id="gameTitle" alignment="CENTER" layoutX="87.0" layoutY="70.0" prefHeight="62.0" prefWidth="617.0" styleClass="gameTitle" stylesheets="@../css/fonts.css" text="Private Investigator Academy" textFill="WHITE">
+         <font>
+            <Font size="38.0" />
+         </font>
+      </Label>
+      <Label fx:id="companyName" alignment="CENTER" layoutX="290.0" layoutY="8.0" prefHeight="62.0" prefWidth="190.0" styleClass="companyName" stylesheets="@../css/fonts.css" text="P.I. Masters" textFill="WHITE">
+         <font>
+            <Font size="38.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
