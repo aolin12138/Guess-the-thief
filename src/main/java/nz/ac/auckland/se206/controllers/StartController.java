@@ -2,6 +2,7 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +32,7 @@ public class StartController {
   @FXML private TextField playerNameWindow;
 
   private Media media =
-      new Media(getClass().getResource("/sounds/Intro_brief.mp3").toExternalForm());
+      new Media(getClass().getResource("/sounds/enter_name.mp3").toExternalForm());
   private MediaPlayer mediaPlayer = new MediaPlayer(media);
 
   @FXML
@@ -62,9 +63,16 @@ public class StartController {
 
   @FXML
   private void onEnterPressed(ActionEvent event) throws IOException {
+    // need to check that the user has entered a username, if they haven't, remind them
+
     // Store the player name
-    if (playerNameWindow.getText().isEmpty()) {
-      Utils.setPlayerName("Guest Player");
+    if (playerNameWindow.getText().strip().isEmpty()) {
+      Platform.runLater(
+          () -> {
+            mediaPlayer.stop();
+            mediaPlayer.play();
+          });
+      return;
     } else {
       Utils.setPlayerName(playerNameWindow.getText());
     }

@@ -14,7 +14,7 @@
 
 <Pane fx:id="room" focusTraversable="true" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="576.0" prefWidth="799.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.StartController">
    <children>
-      <ImageView fitHeight="590.0" fitWidth="805.0" layoutX="-1.0" layoutY="-6.0" pickOnBounds="true">
+      <ImageView fx:id="usernameWindow" fitHeight="590.0" fitWidth="805.0" layoutX="-1.0" layoutY="-6.0" pickOnBounds="true">
          <image>
             <Image url="@../images/crime_scene4.png" />
          </image>
@@ -28,7 +28,7 @@
          </font>
       </Label>
       <Button fx:id="instructionsButton" layoutX="590.0" layoutY="179.0" mnemonicParsing="false" onAction="#onViewInstructions" prefHeight="29.0" prefWidth="132.0" text="View Instructions" />
-      <TextField fx:id="playerNameWindow" layoutX="286.0" layoutY="175.0" prefHeight="37.0" prefWidth="225.0" promptText="(Optional) Enter detective name">
+      <TextField fx:id="playerNameWindow" layoutX="286.0" layoutY="175.0" prefHeight="37.0" prefWidth="225.0" promptText="Enter detective name">
          <font>
             <Font size="15.0" />
          </font></TextField>
