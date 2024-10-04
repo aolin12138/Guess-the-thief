@@ -4,3 +4,11 @@
   -fx-pref-width: 1;
   -fx-opacity: 0;
 }
+
+.chatStats {
+  -fx-font-size: 20;
+  -fx-font-weight: bold;
+  -fx-text-fill: #000000;
+  -fx-background-radius: 10;
+  -fx-background-color: #edbe84;
+}
