@@ -719,6 +719,7 @@ public class RoomController {
 
     // clear the text field
     textInput.clear();
+    textaChat.clear();
     ChatMessage msg = new ChatMessage("user", message);
     appendChatMessage(msg);
 
