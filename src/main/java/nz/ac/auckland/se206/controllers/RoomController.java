@@ -143,6 +143,7 @@ public class RoomController {
    */
   @FXML
   public void initialize() {
+    buttonSlide.setText("Show Side Bar");
     // Probably delete this since we will only load this scene once
     if (isFirstTimeInit) {
       isFirstTimeInit = false;
@@ -856,6 +857,7 @@ public class RoomController {
         if (currentImage != null && currentImage.getId().equals("ownerImage")) {
           return;
         }
+        buttonSlide.setText("Show Side Bar");
         displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
         currentImage = ownerImage;
         currentImageManager.setImageView(currentImage);
@@ -869,6 +871,7 @@ public class RoomController {
         if (currentImage != null && currentImage.getId().equals("workerImage")) {
           return;
         }
+        buttonSlide.setText("Show Side Bar");
         displayImage.setImage(new Image(workerImage.getImage().getUrl()));
         currentImage = workerImage;
         currentImageManager.setImageView(currentImage);
@@ -882,6 +885,7 @@ public class RoomController {
         if (currentImage != null && currentImage.getId().equals("brotherImage")) {
           return;
         }
+        buttonSlide.setText("Show Side Bar");
         displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
         currentImage = brotherImage;
         currentImageManager.setImageView(currentImage);
