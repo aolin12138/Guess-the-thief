@@ -7,6 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -23,12 +24,16 @@
          </image>
       </ImageView>
       <Button fx:id="returnButton" layoutX="331.0" layoutY="486.0" mnemonicParsing="false" onAction="#onReturnButtonClicked" stylesheets="@../css/buttons.css" text="Return to Crime Scene" />
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#4effb2">
+      <StackPane fx:id="indicatorPane" layoutX="40.0" layoutY="409.0" prefHeight="109.0" prefWidth="104.0">
+         <children>
+            <Circle fill="#ffffffcc" radius="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+         </children></StackPane>
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="05:00" textAlignment="CENTER" textFill="#4effb2">
+
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <StackPane fx:id="indicatorPane" layoutX="40.0" layoutY="409.0" prefHeight="109.0" prefWidth="104.0" />
       <Label fx:id="recognition" layoutX="93.0" layoutY="-4.0" prefHeight="62.0" prefWidth="623.0" text="FACIAL RECOGNITION: THIS IS THE SUCCESSFUL OWNERS BROTHER" textFill="RED" visible="false">
          <font>
             <Font size="20.0" />

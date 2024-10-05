@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <Pane fx:id="room" focusTraversable="true" minHeight="579.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="579.0" prefWidth="796.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.GuessController">
@@ -19,14 +20,17 @@
             <Image url="@../images/crime_scene3.png" />
          </image>
       </ImageView>
-      <StackPane fx:id="indicatorPane" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0" />
+      <StackPane fx:id="indicatorPane" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0">
+         <children>
+            <Circle fill="#ffffffcc" radius="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+         </children></StackPane>
       <Pane fx:id="statsPane" layoutX="28.0" layoutY="22.0" prefHeight="30.0" prefWidth="26.0" />
-      <Label alignment="CENTER" layoutX="152.0" layoutY="37.0" prefHeight="36.0" prefWidth="474.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Select who you think the Recipe Thief is!" textFill="WHITE">
+      <Label fx:id="instructionLabel" alignment="CENTER" layoutX="170.0" layoutY="34.0" prefHeight="36.0" prefWidth="437.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" styleClass="instructionsLabel" stylesheets="@../css/suspect_scene.css" text="Select who you think the Recipe Thief is!" textFill="WHITE">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" text="120" textAlignment="CENTER" textFill="#24f59b">
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="120" textAlignment="CENTER" textFill="#24f59b">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
@@ -36,55 +40,64 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <HBox layoutX="71.0" layoutY="157.0" prefHeight="176.0" prefWidth="322.0" spacing="150.0">
+      <HBox layoutX="54.0" layoutY="158.0" prefHeight="232.0" prefWidth="636.0" spacing="125.0">
          <children>
-            <VBox prefHeight="177.0" prefWidth="115.0">
+            <VBox minWidth="-Infinity" prefHeight="232.0" prefWidth="150.0">
                <children>
                   <ImageView fx:id="ownerImage" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#selectSuspect1" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/owner.png" />
                      </image>
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
                   </ImageView>
-                  <Label fx:id="ownerLabel" text="Owner" textFill="WHITE" visible="false">
+                  <Label fx:id="ownerLabel" alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="72.0" prefWidth="150.0" text="Struggling Cafe Owner" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="20.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="29.0" top="10.0" />
+                        <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="166.0" prefWidth="130.0">
+            <VBox minWidth="-Infinity" prefHeight="232.0" prefWidth="150.0">
                <children>
                   <ImageView fx:id="workerImage" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#selectSuspect2" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/worker.png" />
                      </image>
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
                   </ImageView>
-                  <Label fx:id="workerLabel" text="Worker" textFill="WHITE" visible="false">
+                  <Label fx:id="workerLabel" alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="68.0" prefWidth="150.0" text="Restaurateur's Employee" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="20.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="34.0" top="10.0" />
+                        <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox minWidth="-Infinity" prefHeight="200.0" prefWidth="150.0">
                <children>
                   <ImageView fx:id="brotherImage" fitHeight="166.0" fitWidth="91.0" onMouseClicked="#selectSuspect3" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/brother.png" />
                      </image>
+                     <VBox.margin>
+                        <Insets left="15.0" />
+                     </VBox.margin>
                   </ImageView>
-                  <Label fx:id="brotherLabel" text="Brother" textFill="WHITE" visible="false">
+                  <Label fx:id="brotherLabel" alignment="TOP_CENTER" prefHeight="65.0" prefWidth="150.0" text="Restaurateur's Brother" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="20.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="18.0" top="10.0" />
+                        <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
                </children>

@@ -60,13 +60,22 @@ public class GameStateContext {
 
     Person person1 =
         new Person(
-            "John", "not the thief", "worker at the restaurant", Voice.GOOGLE_EN_AU_STANDARD_B);
+            "Successful Restaurateur's Employee",
+            "not the thief",
+            "worker at the restaurant",
+            Voice.GOOGLE_EN_AU_STANDARD_B);
     Person person2 =
         new Person(
-            "Bob", "not the thief", "owner of the other restaurant", Voice.GOOGLE_EN_AU_STANDARD_C);
+            "Struggling Cafe Owner",
+            "not the thief",
+            "owner of the other restaurant",
+            Voice.GOOGLE_EN_AU_STANDARD_C);
     Person person3 =
         new Person(
-            "Jason", "the thief", "Elder brother of the family", Voice.GOOGLE_EN_AU_STANDARD_D);
+            "Successful Restaurateur's Brother",
+            "the thief",
+            "Elder brother of the family",
+            Voice.GOOGLE_EN_AU_STANDARD_D);
 
     rectanglesToProfession = new HashMap<>();
     rectanglesToProfession.put("rectPerson1", person1);

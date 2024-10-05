@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -22,8 +23,11 @@
             <Image url="@../images/crime_scene.jpeg" />
          </image>
       </ImageView>
-      <StackPane fx:id="indicatorPane" layoutX="4.0" layoutY="449.0" prefHeight="109.0" prefWidth="104.0" />
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-19.0" layoutY="469.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#4effb2">
+      <StackPane fx:id="indicatorPane" layoutX="4.0" layoutY="449.0" prefHeight="109.0" prefWidth="104.0">
+         <children>
+            <Circle fill="#ffffffcc" radius="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+         </children></StackPane>
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-19.0" layoutY="469.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="05:00" textAlignment="CENTER" textFill="#4effb2">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
@@ -34,7 +38,8 @@
       <Rectangle fx:id="officer2" arcHeight="5.0" arcWidth="5.0" disable="true" fill="#1f93ff" focusTraversable="true" height="111.0" layoutX="170.0" layoutY="181.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="32.0" />
       <Rectangle fx:id="rectPerson2" arcHeight="5.0" arcWidth="5.0" disable="true" fill="#1f93ff" focusTraversable="true" height="274.0" layoutX="374.0" layoutY="111.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="93.0" />
       <Button fx:id="buttonGuess" layoutX="665.0" layoutY="549.0" mnemonicParsing="false" onAction="#onHandleGuessClick" prefHeight="35.0" prefWidth="119.0" stylesheets="@../css/buttons.css" text="Make a Guess" />
-      <TextArea fx:id="textaChat" editable="false" layoutX="116.0" layoutY="445.0" prefHeight="103.0" prefWidth="535.0" wrapText="true" />
+      <TextArea fx:id="textaChat" editable="false" layoutX="116.0" layoutY="445.0" prefHeight="103.0" prefWidth="535.0" styleClass="text-area" stylesheets="@../css/suspect_scene.css" wrapText="true" />
+
       <TextField fx:id="textInput" layoutX="115.0" layoutY="553.0" prefHeight="26.0" prefWidth="397.0" />
       <Button fx:id="buttonSend" layoutX="527.0" layoutY="551.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="32.0" prefWidth="119.0" stylesheets="@../css/buttons.css" text="Send" />
       <ImageView fx:id="carImage" fitHeight="416.0" fitWidth="633.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -43,11 +48,6 @@
          </image>
       </ImageView>
       <Button fx:id="buttonBack" disable="true" layoutX="324.0" layoutY="366.0" mnemonicParsing="false" onAction="#onBackPressed" text="Back" visible="false" />
-      <Label fx:id="chatStats" layoutX="4.0" layoutY="434.0" prefHeight="30.0" prefWidth="106.0" visible="false">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Label>
       <Pane fx:id="statsPane" layoutX="4.0" layoutY="27.0" prefHeight="25.0" prefWidth="26.0" />
       <VBox fx:id="imagesVerticalBox" layoutX="660.0" layoutY="10.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" visible="false">
          <children>
@@ -61,7 +61,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="crimeLabel" text="Crime Scene" textFill="WHITE" visible="false">
+                  <Label fx:id="crimeLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Crime Scene" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -81,7 +81,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="ownerLabel" text="Owner" textFill="WHITE" visible="false">
+                  <Label fx:id="ownerLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Owner" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -104,7 +104,7 @@
                         <Rectangle2D />
                      </viewport>
                   </ImageView>
-                  <Label fx:id="workerLabel" text="Worker" textFill="WHITE" visible="false">
+                  <Label fx:id="workerLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Worker" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -124,7 +124,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="brotherLabel" text="Brother" textFill="WHITE" visible="false">
+                  <Label fx:id="brotherLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Brother" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -137,6 +137,8 @@
          </children>
       </VBox>
       <VBox layoutX="673.0" layoutY="444.0" prefHeight="98.0" prefWidth="105.0" spacing="10.0" />
-      <Button fx:id="buttonSlide" layoutX="289.0" layoutY="413.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="225.0" stylesheets="@../css/buttons.css" text="Show Side Bar" />
+      <Button fx:id="buttonSlide" layoutX="289.0" layoutY="413.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="225.0" stylesheets="@../css/buttons.css" text="Switching Scenes" />
+      <Label fx:id="chatStats" alignment="CENTER" layoutX="243.0" layoutY="372.0" prefHeight="26.0" prefWidth="318.0" styleClass="chatStats" stylesheets="@../css/suspect_scene.css" text="Testing" textAlignment="CENTER" />
+
    </children>
 </Pane>
