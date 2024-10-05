@@ -27,7 +27,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextArea fx:id="oldTextArea" editable="false" layoutY="439.0" prefHeight="169.0" prefWidth="796.0">
+      <TextArea fx:id="oldTextArea" editable="false" layoutY="439.0" prefHeight="169.0" prefWidth="796.0" styleClass="text-area" stylesheets="@../css/suspect_scene.css">
          <font>
             <Font size="14.0" />
          </font>

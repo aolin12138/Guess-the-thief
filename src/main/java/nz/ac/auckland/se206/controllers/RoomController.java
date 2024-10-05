@@ -637,7 +637,7 @@ public class RoomController {
           // set the chat stats
           context
               .getRoomController()
-              .setChatStats("Talking to " + context.getRoomController().getPerson().getName());
+              .setChatStats(context.getRoomController().getPerson().getName());
         });
     // initialize the chat completion request
     try {
@@ -719,6 +719,7 @@ public class RoomController {
 
     // clear the text field
     textInput.clear();
+    textaChat.clear();
     ChatMessage msg = new ChatMessage("user", message);
     appendChatMessage(msg);
 
