@@ -2,22 +2,26 @@
   -fx-font-family: Consolas;
   -fx-font-size: 12px;
   -fx-text-fill: black;
-  -fx-display-caret:true;
+  -fx-display-caret: true;
   -fx-background-radius: 1em;
-  -fx-background-color:  transparent;
+  -fx-background-color: transparent;
   -fx-border-color: black;
   -fx-border-width: 0 0 0 0;
   -fx-border-radius: 2em;
   -fx-border-color: transparent;
   -fx-background-insets: 0;
-  
+  /* -fx-font-weight: bold; */
 
 }
 
-.text-area .content { 
+.text-area .content {
   -fx-background-radius: 20;
-  -fx-background-color:  rgb(237, 190, 132); 
+  -fx-background-color: rgb(188, 188, 188);
   -fx-border-color: black;
-  -fx-border-width: 0 0 0 0;
-  -fx-border-radius: 2em;
+  -fx-border-width: 1 1 1 1;
+  -fx-border-radius: 1.5em;
+}
+
+.text-area .viewport {
+  -fx-background-color: transparent;
 }
