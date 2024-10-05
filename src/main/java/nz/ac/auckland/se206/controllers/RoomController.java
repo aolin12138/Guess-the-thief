@@ -902,11 +902,13 @@ public class RoomController {
       // Slide out
       transition.setToX(imagesVerticalBox.getWidth() + 30);
       transition.setOnFinished(event -> imagesVerticalBox.setVisible(false));
+      buttonSlide.setText("Show Side Bar");
     } else {
       // Slide in
       imagesVerticalBox.setVisible(true);
       transition.setFromX(imagesVerticalBox.getWidth() + 30);
       transition.setToX(0);
+      buttonSlide.setText("Hide Side Bar");
     }
 
     // Play the transition
