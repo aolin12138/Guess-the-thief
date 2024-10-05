@@ -18,8 +18,8 @@
   -fx-background-radius: 0.5em;
   -fx-border-radius: 0.2em;
   /* -fx-background-insets: 0; */
-  -fx-border-color: white;
-  -fx-border-width: 3 3 3 3;
+  -fx-border-color: black;
+  -fx-border-width: 2 2 2 2;
 }
 
 .text {
