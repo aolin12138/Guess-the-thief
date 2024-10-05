@@ -1,0 +1,30 @@
+.button {
+  background-color: rgb(237, 190, 132);
+  -fx-background-radius: 0;
+  -fx-background-color: rgb(237, 190, 132);
+  -fx-border-color: black;
+  -fx-border-width: 0 0 0 0;
+  -fx-border-radius: 0.2em;
+  -fx-text-fill: black;
+  -fx-background-radius: 0.5em;
+  -fx-background-insets: 0;
+  font-size: 11px;
+  -fx-font-size: 11px;
+  -fx-font-weight: bold;
+}
+
+.button:hover {
+  -fx-background-color: rgb(237, 190, 132);
+  -fx-background-radius: 0.5em;
+  -fx-border-radius: 0.2em;
+  /* -fx-background-insets: 0; */
+  -fx-border-color: black;
+  -fx-border-width: 2 2 2 2;
+}
+
+.text {
+  -fx-font-family: "Times New Roman";
+  -fx-fill: black;
+  -fx-font-size: 13px;
+  -fx-font-weight: bold;
+}

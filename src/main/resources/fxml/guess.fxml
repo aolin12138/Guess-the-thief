@@ -108,7 +108,7 @@
          <children>
       
             <TextField fx:id="textInput" alignment="TOP_LEFT" prefHeight="159.0" prefWidth="512.0" />
-            <Button fx:id="buttonSend" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" text="Send">
+            <Button fx:id="buttonSend" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" stylesheets="@../css/buttons.css" text="Send">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

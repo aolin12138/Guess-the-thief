@@ -20,7 +20,7 @@
             <Image url="@../images/crime_scene3.png" />
          </image>
       </ImageView>
-      <Button fx:id="backButton" layoutX="329.0" layoutY="463.0" mnemonicParsing="false" onAction="#onReturnToCrimeScene" text="Return to Crime Scene " />
+      <Button fx:id="backButton" layoutX="329.0" layoutY="463.0" mnemonicParsing="false" onAction="#onReturnToCrimeScene" stylesheets="@../css/buttons.css" text="Return to Crime Scene " />
       <StackPane fx:id="phonePane" layoutX="293.0" layoutY="33.0" prefHeight="150.0" prefWidth="200.0">
 
          <children>

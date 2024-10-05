@@ -21,7 +21,7 @@
             <Image url="@../images/crime_scene5.png" />
          </image>
       </ImageView>
-      <Button fx:id="buttonGuess" layoutX="694.0" layoutY="503.0" mnemonicParsing="false" onAction="#onGuessClick" prefHeight="26.0" prefWidth="91.0" text="Make a Guess">
+      <Button fx:id="buttonGuess" layoutX="681.0" layoutY="499.0" mnemonicParsing="false" onAction="#onGuessClick" prefHeight="26.0" prefWidth="104.0" stylesheets="@../css/buttons.css" text="Make a Guess">
 
          <font>
             <Font size="10.0" />
@@ -125,9 +125,9 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <Button fx:id="buttonSlide" layoutX="278.0" layoutY="503.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="267.0" text="Switching Scenes">
+      <Button fx:id="buttonSlide" layoutX="276.0" layoutY="499.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="267.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
          <font>
-            <Font size="10.0" />
+            <Font name="Calibri" size="10.0" />
          </font>
       </Button>
       <ImageView fx:id="newspaperImage" fitHeight="62.0" fitWidth="133.0" layoutX="416.0" layoutY="421.0" onMouseClicked="#onNewspaperClueClicked" pickOnBounds="true" preserveRatio="true">
