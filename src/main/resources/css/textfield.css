@@ -1,0 +1,9 @@
+.text-field {
+  -fx-background-color: rgb(237, 190, 132);
+  -fx-background-insets: 0;
+  -fx-background-radius: 0;
+  -fx-text-fill: black;
+}
+.text-field .text {
+  -fx-background-color: rgb(237, 190, 132);
+}
