@@ -155,5 +155,11 @@
     <artifactId>jlayer</artifactId>
     <version>1.0.1</version>
 </dependency>
+  
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>3.1.0</version>
+    </dependency>
   </dependencies>
 </project>
