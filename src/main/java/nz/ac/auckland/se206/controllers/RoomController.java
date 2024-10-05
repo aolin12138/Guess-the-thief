@@ -43,6 +43,7 @@ import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
 import nz.ac.auckland.se206.SceneManager;
+import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
@@ -201,19 +202,8 @@ public class RoomController {
             new KeyFrame(
                 Duration.millis(1),
                 event -> {
-                  if (timeToCount > 0) {
-                    timeToCount--;
-                    progress = (int) (100 - ((timeToCountTo - timeToCount) * 100 / timeToCountTo));
-                  } else {
-                    Utils.checkConditions(
-                        context,
-                        context.isAllSuspectsSpokenTo(),
-                        CrimeSceneController.isAnyClueFound(),
-                        timeline);
-                    timeline.stop();
-                  }
-                  ringProgressIndicator.setProgress(progress);
-                  timerLabel.setText(Utils.formatTime(timeToCount));
+                  ringProgressIndicator.setProgress(TimelineManager.getProgress());
+                  timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();

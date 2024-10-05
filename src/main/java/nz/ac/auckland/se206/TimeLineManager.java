@@ -54,4 +54,12 @@ public class TimelineManager {
   public static void startTimer() {
     timeline.play();
   }
+
+  public static void stopTimer() {
+    timeline.stop();
+  }
+
+  public static void setContext(GameStateContext context) {
+    TimelineManager.context = context;
+  }
 }

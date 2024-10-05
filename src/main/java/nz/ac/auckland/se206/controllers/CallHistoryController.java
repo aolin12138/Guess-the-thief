@@ -17,6 +17,7 @@ import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.SceneManager;
+import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
 
@@ -84,24 +85,9 @@ public class CallHistoryController {
             new KeyFrame(
                 Duration.millis(1),
                 event -> {
-                  if (timeToCount > 0) {
-                    timeToCount--;
-                    progress = (int) (100 - ((timeToCountTo - timeToCount) * 100 / timeToCountTo));
-                  } else {
-                    // Program switch to guess scene here ONLY if clues and suspects have been
-                    // correctly interacted with
-                    // Before switching state, make sure the game is still in the game started state
-                    // and that we havent already switched state. Otherwise it will cause a bug
-                    Utils.checkConditions(
-                        context,
-                        context.isAllSuspectsSpokenTo(),
-                        CrimeSceneController.isAnyClueFound(),
-                        timeline);
-                    timeline.stop();
-                  }
                   // Update the progress indicator and timer label
-                  ringProgressIndicator.setProgress(progress);
-                  timerLabel.setText(Utils.formatTime(timeToCount));
+                  ringProgressIndicator.setProgress(TimelineManager.getProgress());
+                  timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
