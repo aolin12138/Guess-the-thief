@@ -6,6 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.NewspaperController">
@@ -32,12 +33,13 @@
       </ImageView>
       <StackPane fx:id="indicatorPane" layoutX="26.0" layoutY="424.0" prefHeight="109.0" prefWidth="104.0">
          <children>
-            <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="408.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#4effb2">
-               <font>
-                  <Font name="System Bold" size="26.0" />
-               </font>
-            </Label>
+            <Circle fill="#ffffffcc" radius="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
          </children></StackPane>
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="442.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="05:00" textAlignment="CENTER" textFill="#4effb2">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Label>
       <Button fx:id="returnButton" layoutX="333.0" layoutY="484.0" mnemonicParsing="false" onAction="#onReturnToCrimeScene" text="Return to Crime Scene" />
       <Button fx:id="previousPageButton" layoutX="169.0" layoutY="484.0" mnemonicParsing="false" onAction="#onPreviousPage" text="Previous Page" />
       <Button fx:id="nextPageButton" layoutX="552.0" layoutY="484.0" mnemonicParsing="false" onAction="#onNextPage" text="Next Page" />

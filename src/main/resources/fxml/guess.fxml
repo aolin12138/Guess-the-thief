@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <Pane fx:id="room" focusTraversable="true" minHeight="579.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="579.0" prefWidth="796.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.GuessController">
@@ -19,14 +20,17 @@
             <Image url="@../images/crime_scene3.png" />
          </image>
       </ImageView>
-      <StackPane fx:id="indicatorPane" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0" />
+      <StackPane fx:id="indicatorPane" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0">
+         <children>
+            <Circle fill="#ffffffcc" radius="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+         </children></StackPane>
       <Pane fx:id="statsPane" layoutX="28.0" layoutY="22.0" prefHeight="30.0" prefWidth="26.0" />
       <Label alignment="CENTER" layoutX="152.0" layoutY="37.0" prefHeight="36.0" prefWidth="474.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" text="Select who you think the Recipe Thief is!" textFill="WHITE">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" text="120" textAlignment="CENTER" textFill="#24f59b">
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="120" textAlignment="CENTER" textFill="#24f59b">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
