@@ -99,6 +99,7 @@ public class GuessController {
   @FXML private Label workerLabel;
   @FXML private Label brotherLabel;
   @FXML private Label explanationLabel;
+  @FXML private Label instructionLabel;
 
   @FXML private HBox chatHorizontalBox;
 

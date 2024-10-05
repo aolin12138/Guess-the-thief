@@ -637,7 +637,7 @@ public class RoomController {
           // set the chat stats
           context
               .getRoomController()
-              .setChatStats("Talking to " + context.getRoomController().getPerson().getName());
+              .setChatStats(context.getRoomController().getPerson().getName());
         });
     // initialize the chat completion request
     try {
