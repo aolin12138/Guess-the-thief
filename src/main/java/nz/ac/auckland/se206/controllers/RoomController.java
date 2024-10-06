@@ -511,6 +511,7 @@ public class RoomController {
           StackPane messageContainer = new StackPane();
           messageContainer.setPadding(new Insets(10));
           HBox hbox = new HBox(messageContainer);
+          hbox.setMaxWidth(400);
           messageContainer.setStyle(
               "-fx-background-color: white; -fx-background-radius: 15; -fx-effect:"
                   + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
@@ -818,7 +819,8 @@ public class RoomController {
   }
 
   private void appendMessage(ChatMessage message, boolean isUser) {
-    Text text = new Text(message.getContent());
+    Text text = new Text();
+
     if (text.getLayoutBounds().getWidth() > 400) {
       text.setWrappingWidth(400);
     }
@@ -826,8 +828,10 @@ public class RoomController {
     if (isUser) {
       StackPane messageContainer = new StackPane();
       messageContainer.setPadding(new Insets(10));
+      messageContainer.setMaxWidth(400);
       HBox hbox = new HBox(messageContainer);
       messageContainer.setAlignment(Pos.CENTER_LEFT);
+      messageContainer.getChildren().add(text);
       text.setStyle(
           "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: white;");
       messageContainer.setStyle(
@@ -835,9 +839,8 @@ public class RoomController {
               + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
       messageContainer.setMaxWidth(400);
       hbox.setAlignment(Pos.CENTER_RIGHT);
-      messageContainer.getChildren().add(text);
-      // Add the message to the message box
       messageBoxes.getChildren().add(hbox);
+      appendTextLetterByLetter(text, message.getContent(), 10);
     } else {
       text.setStyle(
           "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: black;");
@@ -845,6 +848,44 @@ public class RoomController {
       StackPane messageContainer = (StackPane) hbox.getChildren().get(0);
       messageContainer.getChildren().clear();
       messageContainer.getChildren().add(text);
+      appendTextLetterByLetter(text, message.getContent(), 10);
     }
+  }
+
+  public void appendTextLetterByLetter(Text textNode, String message, int delay) {
+    // Clear the current text in the Text node
+    textNode.setText("");
+
+    Text currentText = new Text();
+    currentText.setStyle(
+        "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: black;");
+
+    currentText.setText("");
+
+    // Timeline to append letters one by one
+    Timeline timeline = new Timeline();
+
+    // Create a KeyFrame that appends one letter at a time
+    for (int i = 0; i < message.length(); i++) {
+      final int index = i; // Must be final or effectively final for lambda
+
+      KeyFrame keyFrame =
+          new KeyFrame(
+              Duration.millis(delay * i),
+              event -> {
+                if (currentText.getLayoutBounds().getWidth() > 400) {
+                  currentText.setText("");
+                  textNode.setText(textNode.getText() + message.charAt(index) + "\n");
+                } else {
+                  currentText.setText(currentText.getText() + message.charAt(index));
+                  textNode.setText(textNode.getText() + message.charAt(index));
+                }
+              });
+
+      timeline.getKeyFrames().add(keyFrame);
+    }
+
+    // Start the Timeline animation
+    timeline.play();
   }
 }
