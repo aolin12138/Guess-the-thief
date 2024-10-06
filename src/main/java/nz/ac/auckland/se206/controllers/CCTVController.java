@@ -10,37 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
-import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
+import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
 public class CCTVController {
-  private static double timeToCount = 300000;
-  private static double timeToCountTo = 300000;
-  private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
-  private static GameStateContext context = new GameStateContext();
-
-  /**
-   * This method sets the time to count
-   *
-   * @param timeFromPreviousScene
-   */
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  /**
-   * This method passes the time to the crime scene
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToCrimeScene(double timeToCount) {
-    CrimeSceneController.setTimeToCount(timeToCount);
-  }
 
   @FXML private Button returnButton;
   @FXML private StackPane indicatorPane;
@@ -58,7 +35,6 @@ public class CCTVController {
   private void onReturnButtonClicked(ActionEvent event) {
     Scene sceneOfButton = returnButton.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
-    passTimeToCrimeScene(timeToCount);
   }
 
   /** This method intitializes the CCTV scene */
@@ -83,9 +59,5 @@ public class CCTVController {
   @FXML
   private void onFaceClicked() {
     recognition.setVisible(true);
-  }
-
-  public void setContext(GameStateContext context) {
-    this.context = context;
   }
 }

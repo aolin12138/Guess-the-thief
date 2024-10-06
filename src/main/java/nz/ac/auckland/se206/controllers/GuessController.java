@@ -38,7 +38,7 @@ import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
 import nz.ac.auckland.se206.Utils;
-import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
+import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
 public class GuessController {
   private static boolean isTimeOver = false;
@@ -46,8 +46,7 @@ public class GuessController {
   private static double maxTimeforGuessing = 60000;
   private static double timeForGuessing = 60000;
   private static int progress = 0;
-  private static nz.ac.auckland.se206.ringIndicator.RingProgressIndicator ringProgressIndicator =
-      new RingProgressIndicator();
+  private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static boolean isThiefFound = false;
   private static GuessController guessController;
   private static boolean isGameWon = false;

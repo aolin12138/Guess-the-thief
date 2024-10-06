@@ -10,37 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
-import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
-import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
+import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
 public class NewspaperController {
-  private static double timeToCount = 300000;
-  private static double timeToCountTo = 300000;
-  private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
-  private static GameStateContext context = new GameStateContext();
-
-  /**
-   * This method sets the time to count
-   *
-   * @param timeFromPreviousScene
-   */
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  /**
-   * This method passes the time to the crime scene
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToCrimeScene(double timeToCount) {
-    CrimeSceneController.setTimeToCount(timeToCount);
-  }
 
   @FXML private StackPane indicatorPane;
   @FXML private Button nextPageButton;
@@ -119,7 +96,6 @@ public class NewspaperController {
   private void onReturnToCrimeScene(ActionEvent event) {
     Scene sceneOfButton = returnButton.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
-    passTimeToCrimeScene(timeToCount);
   }
 
   /** This method initializes the newspaper scene */
@@ -133,10 +109,6 @@ public class NewspaperController {
 
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
-    // Timer label is updated here
-    if (timeToCount % 1000 == 0) {
-      timerLabel.setText(Utils.formatTime(timeToCount));
-    }
 
     timeline
         .getKeyFrames()
@@ -149,10 +121,5 @@ public class NewspaperController {
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-  }
-
-  @SuppressWarnings("static-access")
-  public void setContext(GameStateContext context) {
-    this.context = context;
   }
 }

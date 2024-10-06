@@ -51,7 +51,7 @@ import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
-import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
+import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /**
@@ -66,28 +66,7 @@ public class RoomController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 300000;
-  private static double timeToCountTo = 300000;
-  private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
-
-  /**
-   * Sets the time to count down from.
-   *
-   * @param timeFromPreviousScene
-   */
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  /**
-   * Passes the time to the crime scene controller.
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToCrimeScene(double timeToCount) {
-    CrimeSceneController.setTimeToCount(timeToCount);
-  }
 
   private MediaPlayer player;
 
@@ -112,7 +91,6 @@ public class RoomController {
 
   @FXML private Button buttonGuess;
   @FXML private Button buttonSend;
-  @FXML private Button buttonBack;
   @FXML private Button buttonSlide;
   @FXML private Button sendButton;
 
@@ -212,10 +190,6 @@ public class RoomController {
     context.setRoomController(this);
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(60);
-    // Timer label is updated here
-    if (timeToCount % 1000 == 0) {
-      timerLabel.setText(Utils.formatTime(timeToCount));
-    }
 
     timeline
         .getKeyFrames()
@@ -256,13 +230,6 @@ public class RoomController {
 
   /** Disables all the rectangles in the room when called */
   public void noTalking() {
-    // Rectangle person 1 2 3 are disabled to talk
-    rectPerson1.setDisable(true);
-    rectPerson2.setDisable(true);
-    rectPerson3.setDisable(true);
-    // officer and officer 2 are disabled to talk
-    officer.setDisable(true);
-    officer2.setDisable(true);
     // send button is disabled to send messages
     buttonSend.setDisable(true);
     // images are disabled to be clicked
@@ -273,13 +240,6 @@ public class RoomController {
 
   /** Enables all the rectangles in the room when called */
   public void enableTalking() {
-    // Rectangle person 1 2 3 are enabled to talk again
-    rectPerson1.setDisable(false);
-    rectPerson2.setDisable(false);
-    rectPerson3.setDisable(false);
-    // officer and officer 2 are enabled to talk again
-    officer.setDisable(false);
-    officer2.setDisable(false);
     // send button is enabled to send messages
     buttonSend.setDisable(false);
     // images are enabled to be clicked
@@ -295,15 +255,6 @@ public class RoomController {
    */
   public Rectangle getDashcam() {
     return dashcam;
-  }
-
-  /**
-   * gets the Back button
-   *
-   * @return
-   */
-  public Button getBtnBack() {
-    return buttonBack;
   }
 
   /** boolean variable representing the wallet */
@@ -403,40 +354,6 @@ public class RoomController {
     chatStats.setText(stats);
   }
 
-  /** method for disabling the rectangles in the room */
-  public void diableRectangles() {
-    // disables the rectangles in the room
-    rectPerson1.setDisable(true);
-    rectPerson2.setDisable(true);
-    rectPerson3.setDisable(true);
-    // disables the officer and officer 2
-    officer.setDisable(true);
-    officer2.setDisable(true);
-    // disables the trash bin
-    trashBin.setDisable(true);
-    // disables the camera and dashcam
-    dashcam.setDisable(false);
-    // disables the car
-    car.setDisable(true);
-  }
-
-  /** method for enabling the rectangles in the room */
-  public void enableRectangles() {
-    // enables the rectangles in the room
-    rectPerson1.setDisable(false);
-    rectPerson2.setDisable(false);
-    rectPerson3.setDisable(false);
-    // enables the officer and officer 2
-    officer.setDisable(false);
-    officer2.setDisable(false);
-    // enables the trash bin
-    trashBin.setDisable(false);
-    // enables the camera and dashcam
-    car.setDisable(false);
-    // enables the car
-    dashcam.setDisable(true);
-  }
-
   /**
    * method for getting the person
    *
@@ -480,7 +397,6 @@ public class RoomController {
     Scene sceneOfButton = buttonGuess.getScene();
     imagesVerticalBox.setVisible(false);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
-    passTimeToCrimeScene(timeToCount);
   }
 
   /**
@@ -509,7 +425,7 @@ public class RoomController {
     if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
       timeline.stop();
       context.setState(context.getGuessingState());
-      Utils.setTimeUsed(timeToCount);
+      Utils.setTimeUsed(TimelineManager.getTimeToCount());
       App.setRoot("guess");
     } else if (!context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
       Media sound =
@@ -572,10 +488,6 @@ public class RoomController {
           ProgressIndicator statsIndicator = new ProgressIndicator();
           statsIndicator.setMinSize(1, 1);
           statsPane.getChildren().add(statsIndicator);
-          // set the chat stats
-          context
-              .getRoomController()
-              .setChatStats("Talking to " + context.getRoomController().getPerson().getName());
         });
     // initialize the chat completion request
     try {
@@ -680,14 +592,6 @@ public class RoomController {
 
     Thread backgroundThread = new Thread(task);
     backgroundThread.start();
-  }
-
-  @FXML
-  private void onBackPressed() {
-    enableRectangles();
-    carImage.setVisible(false);
-    buttonBack.setVisible(false);
-    buttonBack.setDisable(true);
   }
 
   /**

@@ -20,7 +20,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.ClueManager;
 import nz.ac.auckland.se206.GameStateContext;
@@ -28,43 +27,13 @@ import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
-import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
+import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
 public class CrimeSceneController {
 
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 300000;
-  private static double timeToCountTo = 300000;
-  private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
-
-  /**
-   * This method is s setter that sets the time to count
-   *
-   * @param timeFromPreviousScene
-   */
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  /**
-   * This method is a setter that sets the progress
-   *
-   * @param progressFromPreviousScene
-   */
-  public static void setProgress(int progressFromPreviousScene) {
-    progress = progressFromPreviousScene;
-  }
-
-  /**
-   * This method is a method hat passes the time to the suspect scene
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToSuspectScene(double timeToCount) {
-    RoomController.setTimeToCount(timeToCount);
-  }
 
   /**
    * This method returns true if any clue is found
@@ -136,10 +105,6 @@ public class CrimeSceneController {
   public void initialize() {
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
-    // Timer label is updated here
-    if (timeToCount % 1000 == 0) {
-      timerLabel.setText(Utils.formatTime(timeToCount));
-    }
 
     buttonGuess
         .sceneProperty()
@@ -191,10 +156,7 @@ public class CrimeSceneController {
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
     Scene sceneOfButton = cameraImage.getScene();
-    CCTVController cctvController = SceneManager.getCameraLoader().getController();
-    cctvController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
-    CCTVController.setTimeToCount(timeToCount);
   }
 
   /**
@@ -210,11 +172,7 @@ public class CrimeSceneController {
 
     Scene sceneOfButton = phoneImage.getScene();
 
-    PhoneController phoneController = SceneManager.getPhoneLoader().getController();
-    phoneController.setContext(context);
-
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
-    PhoneController.setTimeToCount(timeToCount);
   }
 
   /**
@@ -229,10 +187,7 @@ public class CrimeSceneController {
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
     Scene sceneOfButton = buttonGuess.getScene();
-    NewspaperController newspaperController = SceneManager.getNewspaperLoader().getController();
-    newspaperController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.NEWSPAPER));
-    NewspaperController.setTimeToCount(timeToCount);
   }
 
   /**
@@ -247,7 +202,7 @@ public class CrimeSceneController {
   private void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
     // Check all 3 suspects have been spoken to and at least 1 clue has been clicked
     if (context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
-      Utils.setTimeUsed(timeToCount);
+      Utils.setTimeUsed(TimelineManager.getTimeToCount());
       timeline.stop();
       context.setState(context.getGuessingState());
       // Play the guess scene
@@ -277,48 +232,6 @@ public class CrimeSceneController {
       player.play();
       return;
     }
-  }
-
-  /**
-   * This method is called when the suspect 1 is clicked. It will take the user to the suspect scene
-   *
-   * @param event
-   * @throws IOException
-   * @throws ApiProxyException
-   */
-  @FXML
-  void onSuspect1Clicked(MouseEvent event) throws IOException, ApiProxyException {
-    Scene sceneOfButton = buttonGuess.getScene();
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
-    passTimeToSuspectScene(timeToCount);
-  }
-
-  /**
-   * This method is called when the suspect 2 is clicked. It will take the user to the suspect scene
-   *
-   * @param event
-   * @throws IOException
-   * @throws ApiProxyException
-   */
-  @FXML
-  void onSuspect2Clicked(MouseEvent event) throws IOException, ApiProxyException {
-    Scene sceneOfButton = buttonGuess.getScene();
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
-    passTimeToSuspectScene(timeToCount);
-  }
-
-  /**
-   * This method is called when the suspect 3 is clicked. It will take the user to the suspect scene
-   *
-   * @param event
-   * @throws IOException
-   * @throws ApiProxyException
-   */
-  @FXML
-  void onSuspect3Clicked(MouseEvent event) throws IOException, ApiProxyException {
-    Scene sceneOfButton = buttonGuess.getScene();
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
-    passTimeToSuspectScene(timeToCount);
   }
 
   /** This method styles the scene */
@@ -454,7 +367,6 @@ public class CrimeSceneController {
                 } // Call the method only when entering root2
               }
             });
-    RoomController.setTimeToCount(timeToCount);
     imagesVerticalBox.setVisible(false);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
   }
