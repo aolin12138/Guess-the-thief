@@ -506,6 +506,22 @@ public class RoomController {
    * @throws ApiProxyException if there is an error communicating with the API proxy
    */
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
+    Platform.runLater(
+        () -> {
+          StackPane messageContainer = new StackPane();
+          messageContainer.setPadding(new Insets(10));
+          HBox hbox = new HBox(messageContainer);
+          messageContainer.setStyle(
+              "-fx-background-color: white; -fx-background-radius: 15; -fx-effect:"
+                  + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
+          messageContainer.setAlignment(Pos.CENTER_LEFT);
+
+          ProgressIndicator statsIndicator2 = new ProgressIndicator();
+          statsIndicator2.setPrefSize(18, 18);
+
+          messageContainer.getChildren().add(statsIndicator2);
+          messageBoxes.getChildren().add(hbox);
+        });
     // get the specific persons chat completion request
     chatCompletionRequest = person.getChatCompletionRequest();
     // add the message to the chat completion request
@@ -547,6 +563,8 @@ public class RoomController {
 
     // clear the text field
     inputField.clear();
+    messageBoxes.getChildren().clear();
+
     ChatMessage msg = new ChatMessage("user", message);
     appendMessage(msg, true);
     // Platform.runLater(() -> scrollPane.setVvalue(1.0));
@@ -804,13 +822,12 @@ public class RoomController {
     if (text.getLayoutBounds().getWidth() > 400) {
       text.setWrappingWidth(400);
     }
-
-    StackPane messageContainer = new StackPane();
-    messageContainer.setPadding(new Insets(10));
-    HBox hbox = new HBox(messageContainer);
-    messageContainer.setAlignment(Pos.CENTER_LEFT);
     // Set background and alignment based on the sender
     if (isUser) {
+      StackPane messageContainer = new StackPane();
+      messageContainer.setPadding(new Insets(10));
+      HBox hbox = new HBox(messageContainer);
+      messageContainer.setAlignment(Pos.CENTER_LEFT);
       text.setStyle(
           "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: white;");
       messageContainer.setStyle(
@@ -818,18 +835,16 @@ public class RoomController {
               + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
       messageContainer.setMaxWidth(400);
       hbox.setAlignment(Pos.CENTER_RIGHT);
+      messageContainer.getChildren().add(text);
+      // Add the message to the message box
+      messageBoxes.getChildren().add(hbox);
     } else {
       text.setStyle(
           "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: black;");
-      messageContainer.setStyle(
-          "-fx-background-color: white; -fx-background-radius: 15; -fx-effect:"
-              + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
-      messageContainer.setMaxWidth(400);
-      hbox.setAlignment(Pos.CENTER_LEFT);
+      HBox hbox = (HBox) messageBoxes.getChildren().get(messageBoxes.getChildren().size() - 1);
+      StackPane messageContainer = (StackPane) hbox.getChildren().get(0);
+      messageContainer.getChildren().clear();
+      messageContainer.getChildren().add(text);
     }
-
-    messageContainer.getChildren().add(text);
-    // Add the message to the message box
-    messageBoxes.getChildren().add(hbox);
   }
 }
