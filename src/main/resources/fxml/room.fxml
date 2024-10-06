@@ -134,14 +134,23 @@
       <Button fx:id="buttonSlide" layoutX="289.0" layoutY="413.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="225.0" text="Switching Scenes" />
       <ScrollPane fx:id="scrollPane" layoutX="116.0" layoutY="130.0" prefHeight="227.0" prefWidth="580.0" stylesheets="@../css/scrollpane.css">
          <content>
-            <VBox fx:id="messageBoxes" prefHeight="224.0" prefWidth="549.0">
+            <VBox fx:id="messageBoxes" prefHeight="176.0" prefWidth="549.0" spacing="10.0">
                <opaqueInsets>
                   <Insets bottom="30.0" />
                </opaqueInsets>
+               <padding>
+                  <Insets bottom="40.0" />
+               </padding>
             </VBox>
          </content>
+         <padding>
+            <Insets bottom="40.0" />
+         </padding>
       </ScrollPane>
-      <TextField fx:id="inputField" layoutX="122.0" layoutY="318.0" opacity="0.45" prefHeight="30.0" prefWidth="452.0" style="-fx-background-color: black;" />
-      <Button fx:id="sendButton" layoutX="576.0" layoutY="317.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="101.0" text="Button" />
+      <TextField fx:id="inputField" layoutX="122.0" layoutY="318.0" prefHeight="30.0" prefWidth="452.0" style="-fx-background-color: rgba(0,0,0,0.45); -fx-text-fill: white; -fx-background-radius: 15;">
+         <padding>
+            <Insets left="15.0" />
+         </padding></TextField>
+      <Button fx:id="sendButton" layoutX="576.0" layoutY="317.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="101.0" text="Button" />
    </children>
 </Pane>

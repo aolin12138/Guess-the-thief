@@ -137,15 +137,7 @@ public class RoomController {
       isFirstTimeInit = false;
     }
 
-    sendButton.setOnAction(
-        event -> {
-          String userInput = inputField.getText();
-          if (!userInput.isEmpty()) {
-            appendMessage(userInput, true); // User text
-            inputField.clear(); // Clear input field
-            appendMessage("NPC response here", false); // NPC text
-          }
-        });
+    messageBoxes.heightProperty().addListener(observable -> scrollPane.setVvalue(1D));
 
     textInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
 
@@ -507,19 +499,6 @@ public class RoomController {
   }
 
   /**
-   * Appends a chat message to the chat text area.
-   *
-   * @param msg the chat message to append
-   */
-  private void appendChatMessage(ChatMessage msg) {
-    textaChat.appendText(Utils.getPlayerName() + ": " + msg.getContent() + "\n\n");
-  }
-
-  private void appendChatMessage(ChatMessage msg, Person person) {
-    textaChat.appendText(person.getName() + ": " + msg.getContent() + "\n\n");
-  }
-
-  /**
    * Runs the GPT model with a given chat message.
    *
    * @param msg the chat message to process
@@ -536,10 +515,9 @@ public class RoomController {
       ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
       Choice result = chatCompletionResult.getChoices().iterator().next();
       chatCompletionRequest.addMessage(result.getChatMessage());
-      // append the chat message to the chat text area
-      appendChatMessage(result.getChatMessage(), person);
       Platform.runLater(
           () -> {
+            appendMessage(result.getChatMessage(), false);
             context.getRoomController().enableTalking();
             context.getRoomController().getStatsPane().getChildren().clear();
           });
@@ -562,15 +540,16 @@ public class RoomController {
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
     // get the message from the text field
-    String message = textInput.getText().trim();
+    String message = inputField.getText().trim();
     if (message.isEmpty()) {
       return;
     }
 
     // clear the text field
-    textInput.clear();
+    inputField.clear();
     ChatMessage msg = new ChatMessage("user", message);
-    appendChatMessage(msg);
+    appendMessage(msg, true);
+    // Platform.runLater(() -> scrollPane.setVvalue(1.0));
 
     // start the progress indicator
     ProgressIndicator statsIndicator = new ProgressIndicator();
@@ -590,6 +569,10 @@ public class RoomController {
           }
         };
 
+    // task.setOnSucceeded(
+    //     e -> {
+    //       Platform.runLater(() -> scrollPane.setVvalue(1.0));
+    //     });
     Thread backgroundThread = new Thread(task);
     backgroundThread.start();
   }
@@ -816,35 +799,37 @@ public class RoomController {
     this.context = context;
   }
 
-  private void appendMessage(String message, boolean isUser) {
-    Text text = new Text(message);
-    if (text.getLayoutBounds().getWidth() > 280) {
-      text.setWrappingWidth(280);
+  private void appendMessage(ChatMessage message, boolean isUser) {
+    Text text = new Text(message.getContent());
+    if (text.getLayoutBounds().getWidth() > 400) {
+      text.setWrappingWidth(400);
     }
 
     StackPane messageContainer = new StackPane();
     messageContainer.setPadding(new Insets(10));
     HBox hbox = new HBox(messageContainer);
     messageContainer.setAlignment(Pos.CENTER_LEFT);
-
-    text.setStyle("-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial';");
     // Set background and alignment based on the sender
     if (isUser) {
+      text.setStyle(
+          "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: white;");
       messageContainer.setStyle(
-          "-fx-background-color: #87CEFA; -fx-background-radius: 15; -fx-effect:"
+          "-fx-background-color: #eeac5a; -fx-background-radius: 15; -fx-effect:"
               + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
-      messageContainer.setMaxWidth(280);
+      messageContainer.setMaxWidth(400);
       hbox.setAlignment(Pos.CENTER_RIGHT);
     } else {
+      text.setStyle(
+          "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: black;");
       messageContainer.setStyle(
-          "-fx-background-color: #FFD700; -fx-background-radius: 15; -fx-effect:"
+          "-fx-background-color: white; -fx-background-radius: 15; -fx-effect:"
               + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
+      messageContainer.setMaxWidth(400);
       hbox.setAlignment(Pos.CENTER_LEFT);
     }
 
     messageContainer.getChildren().add(text);
     // Add the message to the message box
     messageBoxes.getChildren().add(hbox);
-    scrollPane.setVvalue(1.0);
   }
 }

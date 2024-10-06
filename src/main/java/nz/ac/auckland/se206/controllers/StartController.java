@@ -37,6 +37,7 @@ public class StartController {
 
   @FXML
   public void initialize() {
+    startButton.setDisable(false);
     Platform.runLater(
         () -> {
           mediaPlayer.play();
