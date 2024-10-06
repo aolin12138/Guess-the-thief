@@ -11,10 +11,13 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
@@ -23,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -30,6 +34,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
@@ -109,10 +114,12 @@ public class RoomController {
   @FXML private Button buttonSend;
   @FXML private Button buttonBack;
   @FXML private Button buttonSlide;
+  @FXML private Button sendButton;
 
   @FXML private TextArea textaChat;
 
   @FXML private TextField textInput;
+  @FXML private TextField inputField;
 
   @FXML private ImageView carImage;
   @FXML private ImageView ownerImage;
@@ -125,6 +132,9 @@ public class RoomController {
   @FXML private Pane statsPane;
 
   @FXML private VBox imagesVerticalBox;
+  @FXML private VBox messageBoxes;
+
+  @FXML private ScrollPane scrollPane;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
@@ -148,6 +158,17 @@ public class RoomController {
     if (isFirstTimeInit) {
       isFirstTimeInit = false;
     }
+
+    sendButton.setOnAction(
+        event -> {
+          String userInput = inputField.getText();
+          if (!userInput.isEmpty()) {
+            appendMessage(userInput, true); // User text
+            inputField.clear(); // Clear input field
+            appendMessage("NPC response here", false); // NPC text
+          }
+        });
+
     textInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
 
     buttonSend
@@ -889,5 +910,37 @@ public class RoomController {
   @SuppressWarnings("static-access")
   public void setContext(GameStateContext context) {
     this.context = context;
+  }
+
+  private void appendMessage(String message, boolean isUser) {
+    Text text = new Text(message);
+    if (text.getLayoutBounds().getWidth() > 280) {
+      text.setWrappingWidth(280);
+    }
+
+    StackPane messageContainer = new StackPane();
+    messageContainer.setPadding(new Insets(10));
+    HBox hbox = new HBox(messageContainer);
+    messageContainer.setAlignment(Pos.CENTER_LEFT);
+
+    text.setStyle("-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial';");
+    // Set background and alignment based on the sender
+    if (isUser) {
+      messageContainer.setStyle(
+          "-fx-background-color: #87CEFA; -fx-background-radius: 15; -fx-effect:"
+              + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
+      messageContainer.setMaxWidth(280);
+      hbox.setAlignment(Pos.CENTER_RIGHT);
+    } else {
+      messageContainer.setStyle(
+          "-fx-background-color: #FFD700; -fx-background-radius: 15; -fx-effect:"
+              + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
+      hbox.setAlignment(Pos.CENTER_LEFT);
+    }
+
+    messageContainer.getChildren().add(text);
+    // Add the message to the message box
+    messageBoxes.getChildren().add(hbox);
+    scrollPane.setVvalue(1.0);
   }
 }
