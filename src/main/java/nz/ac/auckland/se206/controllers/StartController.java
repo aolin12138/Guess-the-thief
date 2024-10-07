@@ -19,6 +19,7 @@ import javafx.scene.media.MediaPlayer;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.SceneManager;
+import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 
 public class StartController {
@@ -105,10 +106,14 @@ public class StartController {
       Button button = (Button) event.getSource();
       Scene sceneOfButton = button.getScene();
       sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
+      TimelineManager.setContext(CrimeSceneController.getContext());
+      TimelineManager.startTimer();
     } catch (ClassCastException e) {
       TextField field = (TextField) event.getSource();
       Scene sceneOfField = field.getScene();
       sceneOfField.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
+      TimelineManager.setContext(CrimeSceneController.getContext());
+      TimelineManager.startTimer();
     }
   }
 

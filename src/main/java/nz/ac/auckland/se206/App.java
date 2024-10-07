@@ -80,6 +80,8 @@ public class App extends Application {
     SceneManager.setCallHistoryLoader(callHistoryLoader);
     SceneManager.setNewspaperLoader(newspaperLoader);
 
+    TimelineManager.initialiseTimeLine();
+
     scene = new Scene(SceneManager.getRoot(SceneManager.Scene.START));
     stage.setScene(scene);
 

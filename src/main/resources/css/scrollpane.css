@@ -1,0 +1,48 @@
+.scroll-pane {
+  -fx-background-color: rgba(255, 255, 255, 0.6);
+  /* White with 70% opacity */
+  -fx-padding: 3;
+  /* Add padding for better layout */
+}
+
+.scroll-pane .viewport {
+  -fx-background-color: transparent;
+  /* Make the viewport transparent */
+}
+
+.scroll-pane .scroll-bar:vertical {
+  -fx-background-color: transparent;
+  /* Makes the entire scrollbar background transparent */
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+  -fx-background-color: transparent;
+  /* Thumb color */
+  -fx-background-radius: 10px;
+  /* Rounded corners */
+  -fx-pref-width: 10px;
+  /* Width of the vertical scrollbar */
+}
+
+.scroll-pane .scroll-bar:vertical .track,
+.scroll-pane .scroll-bar:horizontal .track {
+  -fx-background-color: transparent;
+  /* Track color */
+  -fx-background-radius: 10px;
+  /* Rounded corners */
+}
+
+.scroll-pane .increment-button,
+.scroll-pane .decrement-button {
+  -fx-background-color: transparent;
+  -fx-pref-width: 15px;
+  /* Width of the buttons */
+  -fx-pref-height: 15px;
+  /* Height of the buttons */
+}
+
+.scroll-pane .increment-arrow,
+.scroll-pane .decrement-arrow {
+  -fx-background-color: transparent;
+  /* Hide arrows */
+}

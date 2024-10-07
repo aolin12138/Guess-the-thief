@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package nz.ac.auckland.se206.ringIndicator;
+package nz.ac.auckland.se206.ringindicator;
 
 import java.util.ArrayList;
 import java.util.Collections;

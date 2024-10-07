@@ -15,36 +15,14 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.SceneManager;
+import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
-import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
+import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
 public class CallHistoryController {
-  private static double timeToCount = 300000;
-  private static double timeToCountTo = 300000;
-  private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
-  private static GameStateContext context = new GameStateContext();
-
-  /**
-   * This method sets the time to count
-   *
-   * @param timeFromPreviousScene
-   */
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  /**
-   * This method passes the time to the phone scene
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToPhoneScene(double timeToCount) {
-    PhoneController.setTimeToCount(timeToCount);
-  }
 
   private MediaPlayer player;
 
@@ -63,7 +41,6 @@ public class CallHistoryController {
     Button button = (Button) event.getSource();
     Scene sceneOfButton = button.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
-    passTimeToPhoneScene(timeToCount);
   }
 
   /**
@@ -73,10 +50,6 @@ public class CallHistoryController {
   public void initialize() {
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
-    // Timer label is updated here
-    if (timeToCount % 1000 == 0) {
-      timerLabel.setText(Utils.formatTime(timeToCount));
-    }
 
     timeline
         .getKeyFrames()
@@ -84,24 +57,9 @@ public class CallHistoryController {
             new KeyFrame(
                 Duration.millis(1),
                 event -> {
-                  if (timeToCount > 0) {
-                    timeToCount--;
-                    progress = (int) (100 - ((timeToCountTo - timeToCount) * 100 / timeToCountTo));
-                  } else {
-                    // Program switch to guess scene here ONLY if clues and suspects have been
-                    // correctly interacted with
-                    // Before switching state, make sure the game is still in the game started state
-                    // and that we havent already switched state. Otherwise it will cause a bug
-                    Utils.checkConditions(
-                        context,
-                        context.isAllSuspectsSpokenTo(),
-                        CrimeSceneController.isAnyClueFound(),
-                        timeline);
-                    timeline.stop();
-                  }
                   // Update the progress indicator and timer label
-                  ringProgressIndicator.setProgress(progress);
-                  timerLabel.setText(Utils.formatTime(timeToCount));
+                  ringProgressIndicator.setProgress(TimelineManager.getProgress());
+                  timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
@@ -118,10 +76,5 @@ public class CallHistoryController {
     Media sound = new Media(App.class.getResource("/sounds/voicemail.mp3").toURI().toString());
     player = new MediaPlayer(sound);
     player.play();
-  }
-
-  @SuppressWarnings("static-access")
-  public void setContext(GameStateContext context) {
-    this.context = context;
   }
 }

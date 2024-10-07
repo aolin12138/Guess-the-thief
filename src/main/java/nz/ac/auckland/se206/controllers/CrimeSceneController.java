@@ -21,50 +21,20 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.ClueManager;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.SceneManager;
+import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
-import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
+import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
 public class CrimeSceneController {
 
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 300000;
-  private static double timeToCountTo = 300000;
-  private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
-
-  /**
-   * This method is s setter that sets the time to count
-   *
-   * @param timeFromPreviousScene
-   */
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  /**
-   * This method is a setter that sets the progress
-   *
-   * @param progressFromPreviousScene
-   */
-  public static void setProgress(int progressFromPreviousScene) {
-    progress = progressFromPreviousScene;
-  }
-
-  /**
-   * This method is a method hat passes the time to the suspect scene
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToSuspectScene(double timeToCount) {
-    RoomController.setTimeToCount(timeToCount);
-  }
 
   /**
    * This method returns true if any clue is found
@@ -82,6 +52,15 @@ public class CrimeSceneController {
    */
   public static void setContext(GameStateContext context) {
     CrimeSceneController.context = context;
+  }
+
+  /**
+   * This method is a getter that returns the context
+   *
+   * @return
+   */
+  public static GameStateContext getContext() {
+    return context;
   }
 
   @FXML private Rectangle phoneClue;
@@ -135,10 +114,6 @@ public class CrimeSceneController {
         });
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
-    // Timer label is updated here
-    if (timeToCount % 1000 == 0) {
-      timerLabel.setText(Utils.formatTime(timeToCount));
-    }
 
     buttonGuess
         .sceneProperty()
@@ -172,94 +147,8 @@ public class CrimeSceneController {
             new KeyFrame(
                 Duration.millis(1),
                 event -> {
-                  if (timeToCount > 0) {
-                    timeToCount--;
-                    progress = (int) (100 - ((timeToCountTo - timeToCount) * 100 / timeToCountTo));
-                  } else {
-                    System.out.println(timeToCount);
-                    Utils.checkConditions(
-                        context,
-                        context.isAllSuspectsSpokenTo(),
-                        CrimeSceneController.isAnyClueFound(),
-                        timeline);
-                    // // Here the timer has exceeded the time for investigation and the game must
-                    // // switch to the guess scene.
-
-                    // // Before switching state, make sure the game is still in the game started
-                    // state
-                    // // and that we havent already switched state. Otherwise it will cause a bug
-                    // if (!(context.getGameState().equals(context.getGameStartedState()))) {
-                    //   System.out.println("hello e " + context.getGameState());
-                    //   timeline.stop();
-                    //   System.out.println(timeToCount);
-                    //   return;
-                    // }
-                    // if (context.isAllSuspectsSpokenTo()
-                    //     && CrimeSceneController.isAnyClueFound()
-                    //     && context.getGameState().equals(context.getGameStartedState())) {
-                    //   context.setState(context.getGuessingState());
-                    //   try {
-                    //     timeline.stop();
-                    //     App.setRoot("guess");
-
-                    //   } catch (IOException e) {
-                    //     e.printStackTrace();
-                    //   }
-                    //   // Stop the timer here, as once the suer switch to guessing state, they
-                    // aren't
-                    //   // coming back
-                    //   timeline.stop();
-                    // } else if (!context.isAllSuspectsSpokenTo()
-                    //     && CrimeSceneController.isAnyClueFound()
-                    //     && context.getGameState().equals(context.getGameStartedState())) {
-                    //   System.out.println("Should be gameover: " + context.getGameState());
-                    //   context.setState(context.getGameOverState());
-                    //   GameOverController.setOutputText(
-                    //       "You did not speak to every suspect during your"
-                    //           + " investigation!\n"
-                    //           + "Without doing this, the investigation is incomplete!\n"
-                    //           + "Click play again to replay.");
-                    //   try {
-                    //     timeline.stop();
-                    //     App.setRoot("gamelost");
-                    //   } catch (IOException e) {
-                    //     e.printStackTrace();
-                    //   }
-                    // } else if (context.isAllSuspectsSpokenTo()
-                    //     && !CrimeSceneController.isAnyClueFound()
-                    //     && context.getGameState().equals(context.getGameStartedState())) {
-                    //   context.setState(context.getGameOverState());
-                    //   GameOverController.setOutputText(
-                    //       "You did not find any clues in the crime scene!\n"
-                    //           + "Finding clues is vital to conduting a good investigation!\n"
-                    //           + "Click play again to replay");
-                    //   try {
-                    //     timeline.stop();
-                    //     App.setRoot("gamelost");
-                    //   } catch (IOException e) {
-                    //     e.printStackTrace();
-                    //   }
-                    // } else if (!context.isAllSuspectsSpokenTo()
-                    //     && !CrimeSceneController.isAnyClueFound()
-                    //     && context.getGameState().equals(context.getGameStartedState())) {
-                    //   context.setState(context.getGameOverState());
-                    //   GameOverController.setOutputText(
-                    //       "You did not inspect the crime scene for clues or speak to every"
-                    //           + " suspect!\n"
-                    //           + "These steps are vital in any investigation.\n"
-                    //           + "Click play again to replay.");
-                    //   try {
-                    //     timeline.stop();
-                    //     App.setRoot("gamelost");
-                    //   } catch (IOException e) {
-                    //     e.printStackTrace();
-                    //   }
-                    // }
-                    // Once in guess state, player will never return to crime scene
-                    timeline.stop();
-                  }
-                  ringProgressIndicator.setProgress(progress);
-                  timerLabel.setText(Utils.formatTime(timeToCount));
+                  ringProgressIndicator.setProgress(TimelineManager.getProgress());
+                  timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
@@ -276,10 +165,7 @@ public class CrimeSceneController {
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
     Scene sceneOfButton = cameraImage.getScene();
-    CCTVController cctvController = SceneManager.getCameraLoader().getController();
-    cctvController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CCTV));
-    CCTVController.setTimeToCount(timeToCount);
   }
 
   /**
@@ -295,11 +181,7 @@ public class CrimeSceneController {
 
     Scene sceneOfButton = phoneImage.getScene();
 
-    PhoneController phoneController = SceneManager.getPhoneLoader().getController();
-    phoneController.setContext(context);
-
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.PHONE));
-    PhoneController.setTimeToCount(timeToCount);
   }
 
   /**
@@ -314,10 +196,7 @@ public class CrimeSceneController {
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
     Scene sceneOfButton = buttonGuess.getScene();
-    NewspaperController newspaperController = SceneManager.getNewspaperLoader().getController();
-    newspaperController.setContext(context);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.NEWSPAPER));
-    NewspaperController.setTimeToCount(timeToCount);
   }
 
   /**
@@ -332,7 +211,7 @@ public class CrimeSceneController {
   private void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
     // Check all 3 suspects have been spoken to and at least 1 clue has been clicked
     if (context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
-      Utils.setTimeUsed(timeToCount);
+      Utils.setTimeUsed(TimelineManager.getTimeToCount());
       timeline.stop();
       context.setState(context.getGuessingState());
       // Play the guess scene
@@ -362,48 +241,6 @@ public class CrimeSceneController {
       player.play();
       return;
     }
-  }
-
-  /**
-   * This method is called when the suspect 1 is clicked. It will take the user to the suspect scene
-   *
-   * @param event
-   * @throws IOException
-   * @throws ApiProxyException
-   */
-  @FXML
-  void onSuspect1Clicked(MouseEvent event) throws IOException, ApiProxyException {
-    Scene sceneOfButton = buttonGuess.getScene();
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
-    passTimeToSuspectScene(timeToCount);
-  }
-
-  /**
-   * This method is called when the suspect 2 is clicked. It will take the user to the suspect scene
-   *
-   * @param event
-   * @throws IOException
-   * @throws ApiProxyException
-   */
-  @FXML
-  void onSuspect2Clicked(MouseEvent event) throws IOException, ApiProxyException {
-    Scene sceneOfButton = buttonGuess.getScene();
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
-    passTimeToSuspectScene(timeToCount);
-  }
-
-  /**
-   * This method is called when the suspect 3 is clicked. It will take the user to the suspect scene
-   *
-   * @param event
-   * @throws IOException
-   * @throws ApiProxyException
-   */
-  @FXML
-  void onSuspect3Clicked(MouseEvent event) throws IOException, ApiProxyException {
-    Scene sceneOfButton = buttonGuess.getScene();
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
-    passTimeToSuspectScene(timeToCount);
   }
 
   /** This method styles the scene */
@@ -541,7 +378,6 @@ public class CrimeSceneController {
                 } // Call the method only when entering root2
               }
             });
-    RoomController.setTimeToCount(timeToCount);
     imagesVerticalBox.setVisible(false);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.ROOM));
   }
@@ -553,14 +389,5 @@ public class CrimeSceneController {
    */
   public String getId() {
     return id;
-  }
-
-  /**
-   * This method is a getter that returns the context
-   *
-   * @return
-   */
-  public GameStateContext getContext() {
-    return context;
   }
 }

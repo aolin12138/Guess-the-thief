@@ -10,7 +10,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.controllers.RoomController;
-import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /**
  * The GameStarted state of the game. Handles the initial interactions when the game starts,
@@ -39,16 +38,6 @@ public class GameStarted implements GameState {
    */
   @Override
   public void handleRectangleClick(MouseEvent event, String rectangleId) throws IOException {
-    // Transition to chat view or provide an introduction based on the clicked rectangle
-    switch (rectangleId) {
-      case "officer":
-        TextToSpeech.speak("Talk to the suspects and find the thief!");
-        return;
-      case "officer2":
-        TextToSpeech.speak("Emmm... What are in the crime scene?");
-        return;
-    }
-
     ProgressIndicator statsIndicator = new ProgressIndicator();
     statsIndicator.setMinSize(1, 1);
     context.getRoomController().getStatsPane().getChildren().add(statsIndicator);

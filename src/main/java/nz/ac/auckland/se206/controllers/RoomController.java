@@ -11,10 +11,13 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
@@ -23,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -30,6 +34,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
@@ -43,9 +48,10 @@ import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
 import nz.ac.auckland.se206.SceneManager;
+import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
-import nz.ac.auckland.se206.ringIndicator.RingProgressIndicator;
+import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /**
@@ -60,28 +66,7 @@ public class RoomController {
   private static boolean dashcamFound = false;
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
-  private static double timeToCount = 300000;
-  private static double timeToCountTo = 300000;
-  private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
-
-  /**
-   * Sets the time to count down from.
-   *
-   * @param timeFromPreviousScene
-   */
-  public static void setTimeToCount(double timeFromPreviousScene) {
-    timeToCount = timeFromPreviousScene;
-  }
-
-  /**
-   * Passes the time to the crime scene controller.
-   *
-   * @param timeToCount
-   */
-  public static void passTimeToCrimeScene(double timeToCount) {
-    CrimeSceneController.setTimeToCount(timeToCount);
-  }
 
   private MediaPlayer player;
 
@@ -106,12 +91,13 @@ public class RoomController {
 
   @FXML private Button buttonGuess;
   @FXML private Button buttonSend;
-  @FXML private Button buttonBack;
   @FXML private Button buttonSlide;
+  @FXML private Button sendButton;
 
   @FXML private TextArea textaChat;
 
   @FXML private TextField textInput;
+  @FXML private TextField inputField;
 
   @FXML private ImageView carImage;
   @FXML private ImageView ownerImage;
@@ -124,6 +110,9 @@ public class RoomController {
   @FXML private Pane statsPane;
 
   @FXML private VBox imagesVerticalBox;
+  @FXML private VBox messageBoxes;
+
+  @FXML private ScrollPane scrollPane;
 
   private ChatCompletionRequest chatCompletionRequest;
   private Person person;
@@ -148,6 +137,9 @@ public class RoomController {
     if (isFirstTimeInit) {
       isFirstTimeInit = false;
     }
+
+    messageBoxes.heightProperty().addListener(observable -> scrollPane.setVvalue(1D));
+
     textInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
 
     buttonSend
@@ -191,10 +183,6 @@ public class RoomController {
     context.setRoomController(this);
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(60);
-    // Timer label is updated here
-    if (timeToCount % 1000 == 0) {
-      timerLabel.setText(Utils.formatTime(timeToCount));
-    }
 
     timeline
         .getKeyFrames()
@@ -202,92 +190,8 @@ public class RoomController {
             new KeyFrame(
                 Duration.millis(1),
                 event -> {
-                  if (timeToCount > 0) {
-                    timeToCount--;
-                    progress = (int) (100 - ((timeToCountTo - timeToCount) * 100 / timeToCountTo));
-                  } else {
-                    Utils.checkConditions(
-                        context,
-                        context.isAllSuspectsSpokenTo(),
-                        CrimeSceneController.isAnyClueFound(),
-                        timeline);
-                    // // Program switch to guess scene here ONLY if clues and suspects have been
-                    // // correctly interacted with
-                    // // Before switching state, make sure the game is still in the game started
-                    // state
-                    // // and that we havent already switched state. Otherwise it will cause a bug
-                    // if (!(context.getGameState().equals(context.getGameStartedState()))) {
-                    //   System.out.println("hello g " + context.getGameState());
-                    //   timeline.stop();
-                    //   return;
-                    // }
-                    // if (context.isAllSuspectsSpokenTo()
-                    //     && CrimeSceneController.isAnyClueFound()
-                    //     && context.getGameState().equals(context.getGameStartedState())) {
-                    //   context.setState(context.getGuessingState());
-                    //   try {
-                    //     timeline.stop();
-                    //     App.setRoot("guess");
-                    //     return;
-                    //   } catch (IOException e) {
-                    //     e.printStackTrace();
-                    //   }
-                    //   // Stop the timer here, as once the suer switch to guessing state, they
-                    // aren't
-                    //   // coming back
-                    //   timeline.stop();
-                    // } else if (!context.isAllSuspectsSpokenTo()
-                    //     && CrimeSceneController.isAnyClueFound()
-                    //     && context.getGameState().equals(context.getGameStartedState())) {
-                    //   context.setState(context.getGameOverState());
-                    //   GameOverController.setOutputText(
-                    //       "You  ABCD did not speak to every suspect during your investigation!\n"
-                    //           + "Without doing this, the investigation is incomplete!\n"
-                    //           + "Click play again to replay.");
-                    //   try {
-                    //     timeline.stop();
-                    //     App.setRoot("gamelost");
-                    //     return;
-                    //   } catch (IOException e) {
-                    //     e.printStackTrace();
-                    //   }
-                    // } else if (context.isAllSuspectsSpokenTo()
-                    //     && !CrimeSceneController.isAnyClueFound()
-                    //     && context.getGameState().equals(context.getGameStartedState())) {
-                    //   context.setState(context.getGameOverState());
-                    //   GameOverController.setOutputText(
-                    //       "You did not find any clues in the crime scene!\n"
-                    //           + "Finding clues is vital to conduting a good investigation!\n"
-                    //           + "Click play again to replay");
-                    //   try {
-                    //     timeline.stop();
-                    //     App.setRoot("gamelost");
-                    //     return;
-                    //   } catch (IOException e) {
-                    //     e.printStackTrace();
-                    //   }
-                    // } else if (!context.isAllSuspectsSpokenTo()
-                    //     && !CrimeSceneController.isAnyClueFound()
-                    //     && context.getGameState().equals(context.getGameStartedState())) {
-                    //   context.setState(context.getGameOverState());
-                    //   GameOverController.setOutputText(
-                    //       "You did not inspect the crime scene for clues or speak to every"
-                    //           + " suspect!\n"
-                    //           + "These steps are vital in any investigation.\n"
-                    //           + "Click play again to replay.");
-                    //   try {
-                    //     timeline.stop();
-                    //     App.setRoot("gamelost");
-                    //     return;
-                    //   } catch (IOException e) {
-                    //     e.printStackTrace();
-                    //   }
-                    // }
-
-                    timeline.stop();
-                  }
-                  ringProgressIndicator.setProgress(progress);
-                  timerLabel.setText(Utils.formatTime(timeToCount));
+                  ringProgressIndicator.setProgress(TimelineManager.getProgress());
+                  timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
@@ -319,13 +223,6 @@ public class RoomController {
 
   /** Disables all the rectangles in the room when called */
   public void noTalking() {
-    // Rectangle person 1 2 3 are disabled to talk
-    rectPerson1.setDisable(true);
-    rectPerson2.setDisable(true);
-    rectPerson3.setDisable(true);
-    // officer and officer 2 are disabled to talk
-    officer.setDisable(true);
-    officer2.setDisable(true);
     // send button is disabled to send messages
     buttonSend.setDisable(true);
     // images are disabled to be clicked
@@ -336,13 +233,6 @@ public class RoomController {
 
   /** Enables all the rectangles in the room when called */
   public void enableTalking() {
-    // Rectangle person 1 2 3 are enabled to talk again
-    rectPerson1.setDisable(false);
-    rectPerson2.setDisable(false);
-    rectPerson3.setDisable(false);
-    // officer and officer 2 are enabled to talk again
-    officer.setDisable(false);
-    officer2.setDisable(false);
     // send button is enabled to send messages
     buttonSend.setDisable(false);
     // images are enabled to be clicked
@@ -358,15 +248,6 @@ public class RoomController {
    */
   public Rectangle getDashcam() {
     return dashcam;
-  }
-
-  /**
-   * gets the Back button
-   *
-   * @return
-   */
-  public Button getBtnBack() {
-    return buttonBack;
   }
 
   /** boolean variable representing the wallet */
@@ -466,40 +347,6 @@ public class RoomController {
     chatStats.setText(stats);
   }
 
-  /** method for disabling the rectangles in the room */
-  public void diableRectangles() {
-    // disables the rectangles in the room
-    rectPerson1.setDisable(true);
-    rectPerson2.setDisable(true);
-    rectPerson3.setDisable(true);
-    // disables the officer and officer 2
-    officer.setDisable(true);
-    officer2.setDisable(true);
-    // disables the trash bin
-    trashBin.setDisable(true);
-    // disables the camera and dashcam
-    dashcam.setDisable(false);
-    // disables the car
-    car.setDisable(true);
-  }
-
-  /** method for enabling the rectangles in the room */
-  public void enableRectangles() {
-    // enables the rectangles in the room
-    rectPerson1.setDisable(false);
-    rectPerson2.setDisable(false);
-    rectPerson3.setDisable(false);
-    // enables the officer and officer 2
-    officer.setDisable(false);
-    officer2.setDisable(false);
-    // enables the trash bin
-    trashBin.setDisable(false);
-    // enables the camera and dashcam
-    car.setDisable(false);
-    // enables the car
-    dashcam.setDisable(true);
-  }
-
   /**
    * method for getting the person
    *
@@ -543,7 +390,6 @@ public class RoomController {
     Scene sceneOfButton = buttonGuess.getScene();
     imagesVerticalBox.setVisible(false);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
-    passTimeToCrimeScene(timeToCount);
   }
 
   /**
@@ -572,7 +418,7 @@ public class RoomController {
     if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
       timeline.stop();
       context.setState(context.getGuessingState());
-      Utils.setTimeUsed(timeToCount);
+      Utils.setTimeUsed(TimelineManager.getTimeToCount());
       App.setRoot("guess");
     } else if (!context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
       Media sound =
@@ -635,10 +481,6 @@ public class RoomController {
           ProgressIndicator statsIndicator = new ProgressIndicator();
           statsIndicator.setMinSize(1, 1);
           statsPane.getChildren().add(statsIndicator);
-          // set the chat stats
-          context
-              .getRoomController()
-              .setChatStats(context.getRoomController().getPerson().getName());
         });
     // initialize the chat completion request
     try {
@@ -658,19 +500,6 @@ public class RoomController {
   }
 
   /**
-   * Appends a chat message to the chat text area.
-   *
-   * @param msg the chat message to append
-   */
-  private void appendChatMessage(ChatMessage msg) {
-    textaChat.appendText(Utils.getPlayerName() + ": " + msg.getContent() + "\n\n");
-  }
-
-  private void appendChatMessage(ChatMessage msg, Person person) {
-    textaChat.appendText(person.getName() + ": " + msg.getContent() + "\n\n");
-  }
-
-  /**
    * Runs the GPT model with a given chat message.
    *
    * @param msg the chat message to process
@@ -678,6 +507,23 @@ public class RoomController {
    * @throws ApiProxyException if there is an error communicating with the API proxy
    */
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
+    Platform.runLater(
+        () -> {
+          StackPane messageContainer = new StackPane();
+          messageContainer.setPadding(new Insets(10));
+          HBox hbox = new HBox(messageContainer);
+          hbox.setMaxWidth(400);
+          messageContainer.setStyle(
+              "-fx-background-color: white; -fx-background-radius: 15; -fx-effect:"
+                  + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
+          messageContainer.setAlignment(Pos.CENTER_LEFT);
+
+          ProgressIndicator statsIndicator2 = new ProgressIndicator();
+          statsIndicator2.setPrefSize(18, 18);
+
+          messageContainer.getChildren().add(statsIndicator2);
+          messageBoxes.getChildren().add(hbox);
+        });
     // get the specific persons chat completion request
     chatCompletionRequest = person.getChatCompletionRequest();
     // add the message to the chat completion request
@@ -687,10 +533,9 @@ public class RoomController {
       ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
       Choice result = chatCompletionResult.getChoices().iterator().next();
       chatCompletionRequest.addMessage(result.getChatMessage());
-      // append the chat message to the chat text area
-      appendChatMessage(result.getChatMessage(), person);
       Platform.runLater(
           () -> {
+            appendMessage(result.getChatMessage(), false);
             context.getRoomController().enableTalking();
             context.getRoomController().getStatsPane().getChildren().clear();
           });
@@ -713,16 +558,17 @@ public class RoomController {
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
     // get the message from the text field
-    String message = textInput.getText().trim();
+    String message = inputField.getText().trim();
     if (message.isEmpty()) {
       return;
     }
 
     // clear the text field
-    textInput.clear();
-    textaChat.clear();
+    inputField.clear();
+    messageBoxes.getChildren().clear();
     ChatMessage msg = new ChatMessage("user", message);
-    appendChatMessage(msg);
+    appendMessage(msg, true);
+    // Platform.runLater(() -> scrollPane.setVvalue(1.0));
 
     // start the progress indicator
     ProgressIndicator statsIndicator = new ProgressIndicator();
@@ -742,16 +588,12 @@ public class RoomController {
           }
         };
 
+    // task.setOnSucceeded(
+    //     e -> {
+    //       Platform.runLater(() -> scrollPane.setVvalue(1.0));
+    //     });
     Thread backgroundThread = new Thread(task);
     backgroundThread.start();
-  }
-
-  @FXML
-  private void onBackPressed() {
-    enableRectangles();
-    carImage.setVisible(false);
-    buttonBack.setVisible(false);
-    buttonBack.setDisable(true);
   }
 
   /**
@@ -979,5 +821,76 @@ public class RoomController {
   @SuppressWarnings("static-access")
   public void setContext(GameStateContext context) {
     this.context = context;
+  }
+
+  private void appendMessage(ChatMessage message, boolean isUser) {
+    Text text = new Text();
+
+    if (text.getLayoutBounds().getWidth() > 400) {
+      text.setWrappingWidth(400);
+    }
+    // Set background and alignment based on the sender
+    if (isUser) {
+      StackPane messageContainer = new StackPane();
+      messageContainer.setPadding(new Insets(10));
+      messageContainer.setMaxWidth(400);
+      HBox hbox = new HBox(messageContainer);
+      messageContainer.setAlignment(Pos.CENTER_LEFT);
+      messageContainer.getChildren().add(text);
+      text.setStyle(
+          "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: white;");
+      messageContainer.setStyle(
+          "-fx-background-color: #eeac5a; -fx-background-radius: 15; -fx-effect:"
+              + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
+      messageContainer.setMaxWidth(400);
+      hbox.setAlignment(Pos.CENTER_RIGHT);
+      messageBoxes.getChildren().add(hbox);
+      appendTextLetterByLetter(text, message.getContent(), 10);
+    } else {
+      text.setStyle(
+          "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: black;");
+      HBox hbox = (HBox) messageBoxes.getChildren().get(messageBoxes.getChildren().size() - 1);
+      StackPane messageContainer = (StackPane) hbox.getChildren().get(0);
+      messageContainer.getChildren().clear();
+      messageContainer.getChildren().add(text);
+      appendTextLetterByLetter(text, message.getContent(), 10);
+    }
+  }
+
+  public void appendTextLetterByLetter(Text textNode, String message, int delay) {
+    // Clear the current text in the Text node
+    textNode.setText("");
+
+    Text currentText = new Text();
+    currentText.setStyle(
+        "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: black;");
+
+    currentText.setText("");
+
+    // Timeline to append letters one by one
+    Timeline timeline = new Timeline();
+
+    // Create a KeyFrame that appends one letter at a time
+    for (int i = 0; i < message.length(); i++) {
+      final int index = i; // Must be final or effectively final for lambda
+
+      KeyFrame keyFrame =
+          new KeyFrame(
+              Duration.millis(delay * i),
+              event -> {
+                if (currentText.getLayoutBounds().getWidth() > 400) {
+                  currentText.setText("");
+                  textNode.setText(textNode.getText() + message.charAt(index) + "\n");
+                } else {
+                  currentText.setText(currentText.getText() + message.charAt(index));
+                  textNode.setText(textNode.getText() + message.charAt(index));
+                }
+              });
+
+      timeline.getKeyFrames().add(keyFrame);
+    }
+
+    // Start the Timeline animation
+    timeline.play();
   }
 }
