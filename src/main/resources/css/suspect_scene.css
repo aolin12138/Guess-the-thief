@@ -6,6 +6,7 @@
 }
 
 .chatStats {
+  -fx-font-family: "Times New Roman";
   -fx-font-size: 20;
   -fx-font-weight: bold;
   -fx-text-fill: #000000;
