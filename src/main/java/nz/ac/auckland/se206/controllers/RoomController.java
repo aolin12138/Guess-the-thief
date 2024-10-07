@@ -132,6 +132,7 @@ public class RoomController {
    */
   @FXML
   public void initialize() {
+    buttonSlide.setText("Show Side Bar");
     // Probably delete this since we will only load this scene once
     if (isFirstTimeInit) {
       isFirstTimeInit = false;
@@ -565,7 +566,6 @@ public class RoomController {
     // clear the text field
     inputField.clear();
     messageBoxes.getChildren().clear();
-
     ChatMessage msg = new ChatMessage("user", message);
     appendMessage(msg, true);
     // Platform.runLater(() -> scrollPane.setVvalue(1.0));
@@ -699,6 +699,7 @@ public class RoomController {
         if (currentImage != null && currentImage.getId().equals("ownerImage")) {
           return;
         }
+        buttonSlide.setText("Show Side Bar");
         displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
         currentImage = ownerImage;
         currentImageManager.setImageView(currentImage);
@@ -712,6 +713,7 @@ public class RoomController {
         if (currentImage != null && currentImage.getId().equals("workerImage")) {
           return;
         }
+        buttonSlide.setText("Show Side Bar");
         displayImage.setImage(new Image(workerImage.getImage().getUrl()));
         currentImage = workerImage;
         currentImageManager.setImageView(currentImage);
@@ -725,6 +727,7 @@ public class RoomController {
         if (currentImage != null && currentImage.getId().equals("brotherImage")) {
           return;
         }
+        buttonSlide.setText("Show Side Bar");
         displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
         currentImage = brotherImage;
         currentImageManager.setImageView(currentImage);
@@ -746,11 +749,13 @@ public class RoomController {
       // Slide out
       transition.setToX(imagesVerticalBox.getWidth() + 30);
       transition.setOnFinished(event -> imagesVerticalBox.setVisible(false));
+      buttonSlide.setText("Show Side Bar");
     } else {
       // Slide in
       imagesVerticalBox.setVisible(true);
       transition.setFromX(imagesVerticalBox.getWidth() + 30);
       transition.setToX(0);
+      buttonSlide.setText("Hide Side Bar");
     }
 
     // Play the transition

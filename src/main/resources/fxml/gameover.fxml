@@ -21,13 +21,13 @@
             <Image url="@../images/car_close_up.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="rstbtn" layoutX="372.0" layoutY="360.0" mnemonicParsing="false" onAction="#onHandleRestartClick" text="Restart" />
+      <Button fx:id="rstbtn" layoutX="372.0" layoutY="360.0" mnemonicParsing="false" onAction="#onHandleRestartClick" stylesheets="@../css/buttons.css" text="Restart" />
       <Label fx:id="lblStats" alignment="CENTER" contentDisplay="CENTER" layoutX="324.0" prefHeight="35.0" prefWidth="202.0" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextArea fx:id="oldTextArea" editable="false" layoutY="439.0" prefHeight="169.0" prefWidth="796.0">
+      <TextArea fx:id="oldTextArea" editable="false" layoutY="439.0" prefHeight="169.0" prefWidth="796.0" styleClass="text-area" stylesheets="@../css/suspect_scene.css">
          <font>
             <Font size="14.0" />
          </font>

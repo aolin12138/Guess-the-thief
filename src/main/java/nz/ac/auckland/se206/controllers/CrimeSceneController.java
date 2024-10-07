@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -97,12 +98,20 @@ public class CrimeSceneController {
   private ClueManager phoneImageManager;
   private ClueManager newspaperImageManager;
 
+  private Media media =
+      new Media(getClass().getResource("/sounds/Intro_brief.mp3").toExternalForm());
+  private MediaPlayer mediaPlayer = new MediaPlayer(media);
+
   /**
    * This method is called when the crime scene is loaded. It will set the timer and the progress
    * bar
    */
   @FXML
   public void initialize() {
+    Platform.runLater(
+        () -> {
+          mediaPlayer.play();
+        });
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
 
@@ -323,11 +332,13 @@ public class CrimeSceneController {
       // Slide out
       transition.setToX(imagesVerticalBox.getWidth() + 30);
       transition.setOnFinished(event -> imagesVerticalBox.setVisible(false));
+      buttonSlide.setText("Show Side Bar");
     } else {
       // Slide in
       imagesVerticalBox.setVisible(true);
       transition.setFromX(imagesVerticalBox.getWidth() + 30);
       transition.setToX(0);
+      buttonSlide.setText("Hide Side Bar");
     }
 
     // Play the transition

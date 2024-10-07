@@ -1,0 +1,14 @@
+.text-field {
+  -fx-background-color: rgb(188, 188, 188);
+  -fx-background-insets: 0;
+  -fx-background-radius: 0;
+  -fx-text-fill: black;
+  -fx-border-color: black;
+  -fx-border-width: 1 1 1 1;
+  -fx-border-radius: 1.5;
+  -fx-font-family: "Consolas";
+}
+
+.text-field .text {
+  -fx-background-color: rgb(188, 188, 188);
+}

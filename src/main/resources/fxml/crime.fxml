@@ -10,23 +10,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CrimeSceneController">
    <children>
 
-      <ImageView fx:id="displayImage" fitHeight="583.0" fitWidth="805.0" layoutX="-1.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="displayImage" fitHeight="583.0" fitWidth="805.0" layoutX="-1.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true" styleClass="timer-label">
          <image>
             <Image url="@../images/crime_scene5.png" />
          </image>
       </ImageView>
-      <Button fx:id="buttonGuess" layoutX="694.0" layoutY="503.0" mnemonicParsing="false" onAction="#onGuessClick" prefHeight="26.0" prefWidth="91.0" text="Make a Guess">
+      <Button fx:id="buttonGuess" layoutX="681.0" layoutY="499.0" mnemonicParsing="false" onAction="#onGuessClick" prefHeight="26.0" prefWidth="104.0" stylesheets="@../css/buttons.css" text="Make a Guess">
 
          <font>
             <Font size="10.0" />
          </font></Button>
 
-      <VBox fx:id="imagesVerticalBox" layoutX="661.0" layoutY="25.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" visible="false">
+      <VBox fx:id="imagesVerticalBox" layoutX="661.0" layoutY="25.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" styleClass="outline" stylesheets="@../css/sidebarlabel.css" visible="false">
 
          <children>
             <VBox prefHeight="88.0" prefWidth="132.0">
@@ -39,7 +40,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="crimeLabel" text="Crime Scene" textFill="WHITE" visible="false">
+                  <Label fx:id="crimeLabel" prefHeight="30.0" prefWidth="121.0" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Crime Scene" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -59,7 +60,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="ownerLabel" text="Owner" textFill="WHITE" visible="false">
+                  <Label fx:id="ownerLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Owner" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -82,7 +83,7 @@
                         <Rectangle2D />
                      </viewport>
                   </ImageView>
-                  <Label fx:id="workerLabel" text="Worker" textFill="WHITE" visible="false">
+                  <Label fx:id="workerLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Worker" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -102,7 +103,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="brotherLabel" text="Brother" textFill="WHITE" visible="false">
+                  <Label fx:id="brotherLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Brother" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -114,15 +115,19 @@
             </VBox>
          </children>
       </VBox>
-      <StackPane fx:id="indicatorPane" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0" />
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" text="05:00" textAlignment="CENTER" textFill="#24f59b">
+      <StackPane fx:id="indicatorPane" disable="true" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0">
+         <children>
+            <Circle fill="#ffffffcc" radius="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+         </children>
+      </StackPane>
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="05:00" textAlignment="CENTER" textFill="#7d0600" wrapText="true">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <Button fx:id="buttonSlide" layoutX="278.0" layoutY="503.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="267.0" text="Switching Scenes">
+      <Button fx:id="buttonSlide" layoutX="276.0" layoutY="499.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="267.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
          <font>
-            <Font size="10.0" />
+            <Font name="Calibri" size="10.0" />
          </font>
       </Button>
       <ImageView fx:id="newspaperImage" fitHeight="62.0" fitWidth="133.0" layoutX="416.0" layoutY="421.0" onMouseClicked="#onNewspaperClueClicked" pickOnBounds="true" preserveRatio="true">

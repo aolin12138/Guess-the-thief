@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -23,6 +26,7 @@ public class StartController {
 
   @FXML private Button startButton;
   @FXML private Button instructionsButton;
+  @FXML private Label gameTitle;
   @FXML private Label scoreBoardNameLabel1;
   @FXML private Label scoreBoardNameLabel2;
   @FXML private Label scoreBoardNameLabel3;
@@ -32,20 +36,11 @@ public class StartController {
   @FXML private TextField playerNameWindow;
 
   private Media media =
-      new Media(getClass().getResource("/sounds/Intro_brief.mp3").toExternalForm());
+      new Media(getClass().getResource("/sounds/enter_name.mp3").toExternalForm());
   private MediaPlayer mediaPlayer = new MediaPlayer(media);
 
   @FXML
   public void initialize() {
-    startButton.setDisable(false);
-    Platform.runLater(
-        () -> {
-          mediaPlayer.play();
-          mediaPlayer.setOnEndOfMedia(
-              () -> {
-                startButton.setDisable(false);
-              });
-        });
 
     // This ArrayList will store the scores of the previous rounds.
     ArrayList<String> previousScores = new ArrayList<>();
@@ -69,21 +64,35 @@ public class StartController {
       scoreBoardTimeLabel3.setText(previousScores.get(5));
     }
 
-    Platform.runLater(
-        () -> {
-          mediaPlayer.play();
-          mediaPlayer.setOnEndOfMedia(
-              () -> {
-                startButton.setDisable(false);
-              });
+    // Adding the event handler for 'Enter' key on txtInput
+    playerNameWindow.setOnKeyPressed(
+        new EventHandler<KeyEvent>() {
+          @Override
+          public void handle(KeyEvent keyEvent) {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+              try {
+                // Calling the send message function
+                onEnterPressed(keyEvent);
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            }
+          }
         });
   }
 
   @FXML
-  private void onEnterPressed(ActionEvent event) throws IOException {
+  private void onEnterPressed(Event event) throws IOException {
+    // need to check that the user has entered a username, if they haven't, remind them
+
     // Store the player name
-    if (playerNameWindow.getText().isEmpty()) {
-      Utils.setPlayerName("Guest Player");
+    if (playerNameWindow.getText().strip().isEmpty()) {
+      Platform.runLater(
+          () -> {
+            mediaPlayer.stop();
+            mediaPlayer.play();
+          });
+      return;
     } else {
       Utils.setPlayerName(playerNameWindow.getText());
     }
@@ -93,11 +102,19 @@ public class StartController {
     SceneManager.setCrimeSceneLoader(crimeSceneLoader);
     CrimeSceneController.setContext(new GameStateContext());
     // Loads CRIME scene here because timer starts when it is initialised
-    Button button = (Button) event.getSource();
-    Scene sceneOfButton = button.getScene();
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
-    TimelineManager.setContext(CrimeSceneController.getContext());
-    TimelineManager.startTimer();
+    try {
+      Button button = (Button) event.getSource();
+      Scene sceneOfButton = button.getScene();
+      sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
+      TimelineManager.setContext(CrimeSceneController.getContext());
+      TimelineManager.startTimer();
+    } catch (ClassCastException e) {
+      TextField field = (TextField) event.getSource();
+      Scene sceneOfField = field.getScene();
+      sceneOfField.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
+      TimelineManager.setContext(CrimeSceneController.getContext());
+      TimelineManager.startTimer();
+    }
   }
 
   // This method will take the user to the instructions page when they click on the Instructions
