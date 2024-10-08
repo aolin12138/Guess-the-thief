@@ -66,6 +66,7 @@ public class App extends Application {
     FXMLLoader callHistoryLoader = new FXMLLoader(App.class.getResource("/fxml/callhistory.fxml"));
     FXMLLoader cctvLoader = new FXMLLoader(App.class.getResource("/fxml/cctv.fxml"));
 
+    // Load the fxml files and add the roots to the SceneManager
     SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, instructionLoader.load());
     SceneManager.addRoot(SceneManager.Scene.START, startLoader.load());
     SceneManager.addRoot(SceneManager.Scene.ROOM, roomLoader.load());
@@ -73,18 +74,20 @@ public class App extends Application {
     SceneManager.addRoot(SceneManager.Scene.NEWSPAPER, newspaperLoader.load());
     SceneManager.addRoot(SceneManager.Scene.CALL_HISTORY, callHistoryLoader.load());
     SceneManager.addRoot(SceneManager.Scene.CCTV, cctvLoader.load());
-
+    // Set the loaders in the SceneManager
     SceneManager.setRoomLoader(roomLoader);
     SceneManager.setPhoneLoader(phoneLoader);
     SceneManager.setCameraLoader(cctvLoader);
     SceneManager.setCallHistoryLoader(callHistoryLoader);
     SceneManager.setNewspaperLoader(newspaperLoader);
 
+    // set the timeline manager to the initial timeline.
     TimelineManager.initialiseTimeLine();
 
     scene = new Scene(SceneManager.getRoot(SceneManager.Scene.START));
     stage.setScene(scene);
 
+    // Set the title of the stage
     stage.setTitle("PI Masters: Detective Training");
     stage.show();
     SceneManager.getRoot(SceneManager.Scene.START).requestFocus();

@@ -12,6 +12,7 @@ public class TimelineManager {
   private static Timeline timeline;
   private static GameStateContext context;
 
+  /** This method initialises the timeline */
   public static void initialiseTimeLine() {
     timeline = new Timeline();
     timeline
@@ -35,30 +36,57 @@ public class TimelineManager {
     timeline.setCycleCount(Timeline.INDEFINITE);
   }
 
+  /**
+   * This method sets the time to count
+   *
+   * @param timeFromPreviousScene
+   */
   public static void setTimeToCount(double timeFromPreviousScene) {
     timeToCount = timeFromPreviousScene;
   }
 
+  /**
+   * This method gets the time to count
+   *
+   * @return
+   */
   public static double getTimeToCount() {
     return timeToCount;
   }
 
+  /**
+   * This method sets the progress
+   *
+   * @param progress
+   */
   public static void setProgress(int progress) {
     TimelineManager.progress = progress;
   }
 
+  /**
+   * This method gets the progress
+   *
+   * @return
+   */
   public static int getProgress() {
     return progress;
   }
 
+  /** This method starts the timer */
   public static void startTimer() {
     timeline.play();
   }
 
+  /** This method stops the timer */
   public static void stopTimer() {
     timeline.stop();
   }
 
+  /**
+   * sets the context
+   *
+   * @param context
+   */
   public static void setContext(GameStateContext context) {
     TimelineManager.context = context;
   }

@@ -58,7 +58,7 @@ public class GameOverController {
     // Set the text of the label to the result of the game
 
     if (!isBannerAlreadyDisplayed) { // Prevents bug from changing gamestate to loss after timers
-      // run out
+      // if the game is won or lost, display the appropriate message
       if (GuessController.getIsGameWon()) {
         lblStats.setText("Correct! You win!!");
         lblStats.setDisable(true);
@@ -84,6 +84,7 @@ public class GameOverController {
     // Reset the game
     Platform.runLater(
         () -> {
+          // Load the fxml files
           FXMLLoader startLoader = new FXMLLoader(App.class.getResource("/fxml/start.fxml"));
           FXMLLoader roomLoader = new FXMLLoader(App.class.getResource("/fxml/room.fxml"));
           FXMLLoader instructionLoader =
@@ -94,7 +95,7 @@ public class GameOverController {
           FXMLLoader callHistoryLoader =
               new FXMLLoader(App.class.getResource("/fxml/callhistory.fxml"));
           FXMLLoader cctvLoader = new FXMLLoader(App.class.getResource("/fxml/cctv.fxml"));
-
+          // Load the fxml files
           try {
             SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, instructionLoader.load());
           } catch (IOException e) {
@@ -137,7 +138,7 @@ public class GameOverController {
             // TODO Auto-generated catch block
             e.printStackTrace();
           }
-
+          // Set the root of the scene to the start scene
           SceneManager.setRoomLoader(roomLoader);
           SceneManager.setPhoneLoader(phoneLoader);
           SceneManager.setCameraLoader(cctvLoader);

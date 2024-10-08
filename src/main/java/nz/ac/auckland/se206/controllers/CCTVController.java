@@ -42,7 +42,7 @@ public class CCTVController {
   public void initialize() {
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
-
+    // Update the progress indicator and timer label
     timeline
         .getKeyFrames()
         .add(
@@ -56,6 +56,7 @@ public class CCTVController {
     timeline.play();
   }
 
+  /** This method is called when the face is clicked. It will show the recognition label */
   @FXML
   private void onFaceClicked() {
     recognition.setVisible(true);

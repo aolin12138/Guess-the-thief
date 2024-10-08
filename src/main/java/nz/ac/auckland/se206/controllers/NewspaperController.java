@@ -106,7 +106,7 @@ public class NewspaperController {
     newspaper2.setVisible(false);
     newspaper3.setVisible(false);
     previousPageButton.setDisable(true);
-
+    // Add the ring progress indicator to the indicator pane
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
 

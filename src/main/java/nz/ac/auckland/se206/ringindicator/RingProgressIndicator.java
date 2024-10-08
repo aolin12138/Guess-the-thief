@@ -40,11 +40,13 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
         new CssMetaData<RingProgressIndicator, Number>(
             "-fx-ring-width", SizeConverter.getInstance(), 22) {
 
+          // returns whether if it is settable or not
           @Override
           public boolean isSettable(RingProgressIndicator n) {
             return n.ringWidth == null || !n.ringWidth.isBound();
           }
 
+          // gets the styleable property
           @Override
           public StyleableProperty<Number> getStyleableProperty(RingProgressIndicator n) {
             return (StyleableProperty<Number>) n.ringWidth;
@@ -65,44 +67,74 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
   /** thickness of the ring indicator. */
   private DoubleProperty ringWidth =
       new StyleableDoubleProperty(22) {
+        /**
+         * @return The Object that contains the property we are bound to.
+         */
         @Override
         public Object getBean() {
           return RingProgressIndicator.this;
         }
 
+        /**
+         * @return The name of the property we are bound to.
+         */
         @Override
         public String getName() {
           return "ringWidth";
         }
 
+        /**
+         * @return The CssMetaData associated with this class, which may include the CssMetaData of
+         *     its
+         */
         @Override
         public CssMetaData<RingProgressIndicator, Number> getCssMetaData() {
           return StyleableProperties.RING_WIDTH;
         }
       };
 
+  /** Creates a new instance of the RingProgressIndicator. */
   public RingProgressIndicator() {
     this.getStylesheets().add(getClass().getResource("/css/ringprogress.css").toExternalForm());
     this.getStyleClass().add("ringindicator");
   }
 
+  /** creates a default skin for the RingProgressIndicator. */
   @Override
   protected Skin<?> createDefaultSkin() {
     return new RingProgressIndicatorSkin(this);
   }
 
+  /**
+   * sets te ring width of the RingProgressIndicator.
+   *
+   * @param value
+   */
   public final void setRingWidth(int value) {
     ringWidthProperty().set(value);
   }
 
+  /**
+   * gets the ring width of the RingProgressIndicator.
+   *
+   * @return
+   */
   public final DoubleProperty ringWidthProperty() {
     return ringWidth;
   }
 
+  /**
+   * gets the ring width of the RingProgressIndicator.
+   *
+   * @return
+   */
   public final double getRingWidth() {
     return ringWidthProperty().get();
   }
 
+  /**
+   * @return The CssMetaData associated with this class, which may include the CssMetaData of its
+   */
   @Override
   public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
     return StyleableProperties.STYLEABLES;

@@ -112,6 +112,7 @@ public class CrimeSceneController {
         () -> {
           mediaPlayer.play();
         });
+    // Add the ring progress indicator to the pane
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
 
@@ -124,7 +125,7 @@ public class CrimeSceneController {
                 stage.sizeToScene();
               }
             });
-
+    // Initialize the image managers
     ownerImageManager = new ImageManager(ownerImage);
     workerImageManager = new ImageManager(workerImage);
     brotherImageManager = new ImageManager(brotherImage);
@@ -132,7 +133,7 @@ public class CrimeSceneController {
     cameraImageManager = new ClueManager(cameraImage);
     phoneImageManager = new ClueManager(phoneImage);
     newspaperImageManager = new ClueManager(newspaperImage);
-
+    // Set the brightness of the images
     ColorAdjust colorAdjust = new ColorAdjust();
     colorAdjust.setBrightness(-0.45);
     ownerImage.setEffect(colorAdjust);
@@ -140,7 +141,7 @@ public class CrimeSceneController {
     brotherImage.setEffect(colorAdjust);
     crimeImage.setEffect(colorAdjust);
     styleScene();
-
+    // set the progress bar and timer
     timeline
         .getKeyFrames()
         .add(
@@ -150,6 +151,7 @@ public class CrimeSceneController {
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
                 }));
+    // Set the cycle count to indefinite
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
   }
@@ -357,14 +359,14 @@ public class CrimeSceneController {
   public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {
     ImageView clickedImage = (ImageView) event.getSource();
     id = clickedImage.getId();
-
+    // get the source of the event
     ImageView imageView = (ImageView) event.getSource();
     Scene sceneOfButton = imageView.getScene();
-
+    // get the room controller
     RoomController roomController = SceneManager.getRoomLoader().getController();
     roomController.setContext(context);
     context.setRoomController(roomController);
-
+    // set the person image
     SceneManager.getRoot(SceneManager.Scene.ROOM)
         .sceneProperty()
         .addListener(

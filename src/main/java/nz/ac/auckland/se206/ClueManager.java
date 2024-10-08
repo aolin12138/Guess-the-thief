@@ -32,6 +32,11 @@ public class ClueManager {
 
   private boolean isClicked = false;
 
+  /**
+   * Constructor for the ClueManager class
+   *
+   * @param imageView
+   */
   public ClueManager(ImageView imageView) {
     this.imageView = imageView;
 
@@ -41,6 +46,7 @@ public class ClueManager {
       originalX = 0;
     }
 
+    // new instance of a scale transition
     scaleTransitionIn = new ScaleTransition(Duration.millis(100), imageView);
     scaleTransitionIn.setFromX(1.0);
     scaleTransitionIn.setFromY(1.0);
@@ -48,9 +54,11 @@ public class ClueManager {
     scaleTransitionIn.setToY(1.2);
     scaleTransitionIn.setCycleCount(1);
 
+    // new instance of a color adjust effect
     colorAdjustIn = new ColorAdjust();
     colorAdjustIn.setBrightness(0);
 
+    // new instance of a drop shadow effect
     dropShadowIn = new DropShadow();
     dropShadowIn.setRadius(0);
     dropShadowIn.setOffsetX(0);
@@ -59,19 +67,20 @@ public class ClueManager {
 
     dropShadowIn.setInput(colorAdjustIn);
 
+    // brigtness transition in new timeline
     brightnessTransitionIn =
         new Timeline(
             new KeyFrame(Duration.ZERO, new KeyValue(colorAdjustIn.brightnessProperty(), 0)),
             new KeyFrame(
                 Duration.millis(100), new KeyValue(colorAdjustIn.brightnessProperty(), 0.45)));
     brightnessTransitionIn.setCycleCount(1);
-
+    // shadow transition in new timeline
     shadowTransitionIn =
         new Timeline(
             new KeyFrame(Duration.ZERO, new KeyValue(dropShadowIn.radiusProperty(), 0)),
             new KeyFrame(Duration.millis(100), new KeyValue(dropShadowIn.radiusProperty(), 10)));
     shadowTransitionIn.setCycleCount(1);
-
+    // new instance of a scale transition out
     scaleTransitionOut = new ScaleTransition(Duration.millis(100), imageView);
     scaleTransitionOut.setFromX(1.2);
     scaleTransitionOut.setFromY(1.2);
@@ -81,7 +90,7 @@ public class ClueManager {
 
     colorAdjustOut = new ColorAdjust();
     colorAdjustOut.setBrightness(0);
-
+    // new instance of a drop shadow effect out
     dropShadowOut = new DropShadow();
     dropShadowOut.setRadius(10);
     dropShadowOut.setOffsetX(0);
@@ -89,20 +98,20 @@ public class ClueManager {
     dropShadowOut.setColor(javafx.scene.paint.Color.GRAY);
 
     dropShadowOut.setInput(colorAdjustOut);
-
+    // brightness transition out new timeline
     brightnessTransitionOut =
         new Timeline(
             new KeyFrame(Duration.ZERO, new KeyValue(colorAdjustOut.brightnessProperty(), 0.45)),
             new KeyFrame(
                 Duration.millis(100), new KeyValue(colorAdjustOut.brightnessProperty(), 0)));
     brightnessTransitionOut.setCycleCount(1);
-
+    // shadow transition out new timeline
     shadowTransitionOut =
         new Timeline(
             new KeyFrame(Duration.ZERO, new KeyValue(dropShadowOut.radiusProperty(), 10)),
             new KeyFrame(Duration.millis(100), new KeyValue(dropShadowOut.radiusProperty(), 0)));
     shadowTransitionOut.setCycleCount(1);
-
+    // brightness transition stay new timeline
     brightnessTransitionStay =
         new Timeline(
             new KeyFrame(
@@ -160,14 +169,25 @@ public class ClueManager {
     shadowTransitionOut.play();
   }
 
+  /** This method is called when it needs to stay at current effect */
   public void stayCurrentEffect() {
     imageView.setEffect(dropShadowOut);
   }
 
+  /**
+   * Set the image view to vew the image.
+   *
+   * @param imageView
+   */
   public void setImageView(ImageView imageView) {
     this.imageView = imageView;
   }
 
+  /**
+   * This method is called when the image is clicked. It will animate the image to be clicked
+   *
+   * @return
+   */
   public ImageView getImageView() {
     return imageView;
   }
@@ -193,6 +213,9 @@ public class ClueManager {
     isClicked = true;
   }
 
+  /**
+   * This method is called when the image is unclicked. It will animate the image to be unclicked
+   */
   public void unclicked() {
     isClicked = false;
     hoverOut();

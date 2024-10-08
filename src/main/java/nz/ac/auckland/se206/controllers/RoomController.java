@@ -172,6 +172,7 @@ public class RoomController {
     brotherImageManager = new ImageManager(brotherImage);
     crimeImageManager = new ImageManager(crimeImage);
 
+    // adjust the brightness of the images
     ColorAdjust colorAdjust = new ColorAdjust();
     colorAdjust.setBrightness(-0.45);
     ownerImage.setEffect(colorAdjust);
@@ -180,6 +181,7 @@ public class RoomController {
     crimeImage.setEffect(colorAdjust);
     styleScene();
 
+    // Set the ring progress indicator and set the room controller to this instance.
     context.setRoomController(this);
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(60);
@@ -419,19 +421,23 @@ public class RoomController {
       timeline.stop();
       context.setState(context.getGuessingState());
       Utils.setTimeUsed(TimelineManager.getTimeToCount());
+      // change to the guess scene
       App.setRoot("guess");
+      // if the suspects are not spoken to, play the missing suspect sound
     } else if (!context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
       Media sound =
           new Media(App.class.getResource("/sounds/missing_suspect.mp3").toURI().toString());
       player = new MediaPlayer(sound);
       player.play();
       return;
+      // if the clues are not found, play the clue reminder sound
     } else if (context.isAllSuspectsSpokenTo() && !CrimeSceneController.isAnyClueFound()) {
       Media sound =
           new Media(App.class.getResource("/sounds/clue_reminder_1.mp3").toURI().toString());
       player = new MediaPlayer(sound);
       player.play();
       return;
+      // if the suspects are not spoken to and the clues are not found, play the keep investigating
     } else if (!context.isAllSuspectsSpokenTo() && !CrimeSceneController.isAnyClueFound()) {
       Media sound =
           new Media(App.class.getResource("/sounds/keep_investigating.mp3").toURI().toString());
@@ -457,6 +463,7 @@ public class RoomController {
       return PromptEngineering.getPrompt("chat2.txt", map, person);
     } else if (person.getProfession().equals("Elder brother of the family")) {
       return PromptEngineering.getPrompt("chat3.txt", map, person);
+      // if the name is not found, return a message that the name doesn't exist
     } else {
       return "That name doesn't exist";
     }
@@ -517,7 +524,7 @@ public class RoomController {
               "-fx-background-color: white; -fx-background-radius: 15; -fx-effect:"
                   + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
           messageContainer.setAlignment(Pos.CENTER_LEFT);
-
+          // create a new ring progress indicator
           ProgressIndicator statsIndicator2 = new ProgressIndicator();
           statsIndicator2.setPrefSize(18, 18);
 
@@ -562,7 +569,7 @@ public class RoomController {
     if (message.isEmpty()) {
       return;
     }
-
+    // depending on the image clicked, set the boolean of person talked to true.
     if (currentImage == ownerImage) {
       context.person1Talked();
     } else if (currentImage == workerImage) {
@@ -700,9 +707,11 @@ public class RoomController {
     ImageView clickedImage = (ImageView) event.getSource();
     String id = clickedImage.getId();
 
+    // Create the transition
     TranslateTransition transition =
         new TranslateTransition(Duration.seconds(0.5), imagesVerticalBox);
     switch (id) {
+      // if the id is owner image, set the person to the owner
       case "ownerImage":
         if (currentImage != null && currentImage.getId().equals("ownerImage")) {
           return;
@@ -716,6 +725,7 @@ public class RoomController {
         transition.play();
         context.handleRectangleClick(event, "rectPerson2");
         break;
+      // if the id is worker image, set the person to the worker
       case "workerImage":
         if (currentImage != null && currentImage.getId().equals("workerImage")) {
           return;
@@ -729,6 +739,7 @@ public class RoomController {
         transition.play();
         context.handleRectangleClick(event, "rectPerson1");
         break;
+      // if the id is brother image, set the person to the brother
       case "brotherImage":
         if (currentImage != null && currentImage.getId().equals("brotherImage")) {
           return;
@@ -828,6 +839,7 @@ public class RoomController {
     this.context = context;
   }
 
+  // Append a message to the chat area
   private void appendMessage(ChatMessage message, boolean isUser) {
     Text text = new Text();
 
@@ -842,6 +854,7 @@ public class RoomController {
       HBox hbox = new HBox(messageContainer);
       messageContainer.setAlignment(Pos.CENTER_LEFT);
       messageContainer.getChildren().add(text);
+      // Set the style of the text
       text.setStyle(
           "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: white;");
       messageContainer.setStyle(
@@ -851,6 +864,7 @@ public class RoomController {
       hbox.setAlignment(Pos.CENTER_RIGHT);
       messageBoxes.getChildren().add(hbox);
       appendTextLetterByLetter(text, message.getContent(), 10);
+      // if the message is not from the user
     } else {
       text.setStyle(
           "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: black;");
@@ -862,6 +876,13 @@ public class RoomController {
     }
   }
 
+  /**
+   * Appends text to the chat area letter by letter.
+   *
+   * @param textNode
+   * @param message
+   * @param delay
+   */
   public void appendTextLetterByLetter(Text textNode, String message, int delay) {
     // Clear the current text in the Text node
     textNode.setText("");
