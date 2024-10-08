@@ -563,6 +563,14 @@ public class RoomController {
       return;
     }
 
+    if (currentImage == ownerImage) {
+      context.person1Talked();
+    } else if (currentImage == workerImage) {
+      context.person2Talked();
+    } else if (currentImage == brotherImage) {
+      context.person3Talked();
+    }
+
     // clear the text field
     inputField.clear();
     messageBoxes.getChildren().clear();
@@ -703,7 +711,6 @@ public class RoomController {
         displayImage.setImage(new Image(ownerImage.getImage().getUrl()));
         currentImage = ownerImage;
         currentImageManager.setImageView(currentImage);
-        context.person1Talked();
         transition.setToX(imagesVerticalBox.getWidth() + 30); // Move off-screen
         transition.setOnFinished(e -> imagesVerticalBox.setVisible(false)); // Hide after animation
         transition.play();
@@ -717,7 +724,6 @@ public class RoomController {
         displayImage.setImage(new Image(workerImage.getImage().getUrl()));
         currentImage = workerImage;
         currentImageManager.setImageView(currentImage);
-        context.person2Talked();
         transition.setToX(imagesVerticalBox.getWidth() + 30); // Move off-screen
         transition.setOnFinished(e -> imagesVerticalBox.setVisible(false)); // Hide after animation
         transition.play();
@@ -731,7 +737,6 @@ public class RoomController {
         displayImage.setImage(new Image(brotherImage.getImage().getUrl()));
         currentImage = brotherImage;
         currentImageManager.setImageView(currentImage);
-        context.person3Talked();
         transition.setToX(imagesVerticalBox.getWidth() + 30); // Move off-screen
         transition.setOnFinished(e -> imagesVerticalBox.setVisible(false)); // Hide after animation
         transition.play();
