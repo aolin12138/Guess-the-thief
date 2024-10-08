@@ -4,7 +4,15 @@
 }
 
 .outline.label .text {
-  -fx-fill: white;
-  -fx-stroke: #ba7438;
-  -fx-stroke-width: px;
+  -fx-fill: #39220e;
+  -fx-stroke: #39220e;
+  -fx-stroke-width: 0.5px;
+  -fx-font-family: "Times New Roman";
+}
+
+.label-container {
+  -fx-background-color: rgb(237, 190, 132);
+  /* Light gray background */
+  -fx-padding: 4px;
+  -fx-background-radius: 2px;
 }
