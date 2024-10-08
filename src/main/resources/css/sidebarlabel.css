@@ -13,6 +13,6 @@
 .label-container {
   -fx-background-color: rgb(237, 190, 132);
   /* Light gray background */
-  -fx-padding: 4px;
+  -fx-padding: 0.2px;
   -fx-background-radius: 2px;
 }
