@@ -6,6 +6,7 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -164,6 +165,7 @@ public class PhoneController {
 
     if (endCallButton.isDisable()) {
       endCallButton.setDisable(false);
+      endCallButton.setCursor(Cursor.HAND);
     }
     // Play the voicemail sound
     mediaPlayer.play();
