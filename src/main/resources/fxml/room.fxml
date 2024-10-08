@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <Pane fx:id="room" focusTraversable="true" minHeight="480.0" minWidth="633.0" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.RoomController">
@@ -152,12 +151,28 @@
             <Insets bottom="40.0" />
          </padding>
       </ScrollPane>
-      <TextField fx:id="inputField" layoutX="122.0" layoutY="318.0" prefHeight="30.0" prefWidth="452.0" style="-fx-background-color: rgba(0,0,0,0.45); -fx-text-fill: white; -fx-background-radius: 15;">
+      <TextField fx:id="inputField" layoutX="122.0" layoutY="318.0" prefHeight="30.0" prefWidth="559.0" style="-fx-background-color: rgba(0,0,0,0.45); -fx-text-fill: white; -fx-background-radius: 15;">
          <padding>
-            <Insets left="15.0" />
-         </padding></TextField>
-      <Button fx:id="sendButton" layoutX="576.0" layoutY="317.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="101.0" text="Button" />
-      <Button fx:id="buttonSlide" layoutX="664.0" layoutY="480.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="119.0" stylesheets="@../css/buttons.css" text="Switching Scenes" />
+            <Insets left="15.0" right="35.0" />
+         </padding>
+      </TextField>
+      <Button fx:id="buttonSlide" layoutX="621.0" layoutY="390.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="53.0" prefWidth="153.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
+         <graphic>
+            <ImageView fitHeight="43.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ios-menu-4.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <Label fx:id="chatStats" alignment="CENTER" layoutX="244.0" layoutY="412.0" prefHeight="26.0" prefWidth="318.0" styleClass="chatStats" stylesheets="@../css/suspect_scene.css" text="Testing" textAlignment="CENTER" />
+      <Button fx:id="sendButton" layoutX="653.0" layoutY="320.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="24.0" prefWidth="25.0" styleClass="sendButton" stylesheets="@../css/suspect_scene.css">
+         <graphic>
+            <ImageView fitHeight="16.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/message_arrow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </Pane>
