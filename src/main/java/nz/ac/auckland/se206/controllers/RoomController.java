@@ -481,6 +481,9 @@ public class RoomController {
           ProgressIndicator statsIndicator = new ProgressIndicator();
           statsIndicator.setMinSize(1, 1);
           statsPane.getChildren().add(statsIndicator);
+          context
+              .getRoomController()
+              .setChatStats(context.getRoomController().getPerson().getName());
         });
     // initialize the chat completion request
     try {
