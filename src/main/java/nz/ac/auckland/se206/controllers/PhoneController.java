@@ -56,6 +56,10 @@ public class PhoneController {
   public void initialize() {
 
     endCallButton.setDisable(true);
+    lockScreen.setCursor(Cursor.HAND);
+    arrow.setCursor(Cursor.HAND);
+    swipeUpText.setCursor(Cursor.HAND);
+    backButton.setCursor(Cursor.HAND);
 
     Rectangle clip = new Rectangle(209, 400); // Clip rectangle matching the phone screen size
     phonePane.setClip(clip);
