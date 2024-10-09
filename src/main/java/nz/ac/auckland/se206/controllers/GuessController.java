@@ -98,8 +98,10 @@ public class GuessController {
   @FXML private Label ownerLabel;
   @FXML private Label workerLabel;
   @FXML private Label brotherLabel;
+  @FXML private Label leaderboardResultLabel;
   @FXML private Label explanationLabel;
   @FXML private Label instructionLabel;
+
   @FXML private TextArea guessTextArea;
 
   @FXML private HBox chatHorizontalBox;
@@ -144,6 +146,7 @@ public class GuessController {
     restartButton.setCursor(Cursor.HAND);
     restartButton.setVisible(false);
     guessTextArea.setVisible(false);
+    leaderboardResultLabel.setVisible(false);
 
     // Adding the event handler for 'Enter' key on txtInput
     textInput.setOnKeyPressed(
