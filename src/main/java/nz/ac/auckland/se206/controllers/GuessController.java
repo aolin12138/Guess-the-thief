@@ -528,8 +528,10 @@ public class GuessController {
                     if (isCorrectExplanation && currentSuspect == 3) {
                       context.setState(context.getGameOverState());
                       isGameWon = true;
+                      instructionLabel.setText("Congratulations! You are Correct!");
                     } else {
                       context.setState(context.getGameOverState());
+                      instructionLabel.setText("Oh no, that's not right!");
                     }
                   });
             } catch (ApiProxyException e) {
