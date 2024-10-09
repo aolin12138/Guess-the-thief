@@ -20,3 +20,14 @@
   -fx-text-fill: #FFFFFF;
   -fx-background-radius: 10;
 }
+
+.sendButton {
+  -fx-background-radius: 35;
+  -fx-button-size: 20;
+  background-color: rgba(74, 136, 209, 1);
+  -fx-background-color: rgba(74, 136, 209, 1);
+}
+
+.sendButton:disabled {
+  -fx-background-color: rgba(87, 87, 87, 1);
+}
