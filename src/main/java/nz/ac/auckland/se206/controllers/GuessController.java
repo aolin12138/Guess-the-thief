@@ -80,6 +80,7 @@ public class GuessController {
   @FXML private Button sus1btn;
   @FXML private Button sus2btn;
   @FXML private Button sus3btn;
+  @FXML private Button restartButton;
 
   @FXML private TextArea textaChat;
 
@@ -665,4 +666,7 @@ public class GuessController {
   public void setContext(GameStateContext context) {
     this.context = context;
   }
+
+  @FXML
+  void onRestartButtonClicked(MouseEvent event) {}
 }
