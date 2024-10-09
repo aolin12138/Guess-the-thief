@@ -237,6 +237,7 @@ public class CrimeSceneController {
     instructionsTransition.setFromX(4);
     instructionsTransition.setToX(-500);
     instructionsTransition.play();
+    instructionsTransition.setOnFinished(e -> instructionsTextArea.setVisible(false));
   }
 
   /**
