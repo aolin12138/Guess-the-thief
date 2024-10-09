@@ -120,10 +120,10 @@ public class PhoneController {
             callRectangle.setDisable(false);
           }
         });
-
+    // Add the ring progress indicator to the pane
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
-
+    // Update the progress indicator and timer label
     timeline
         .getKeyFrames()
         .add(
@@ -132,10 +132,19 @@ public class PhoneController {
                 event -> {
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
+                  // flash the timer red below 30 seconds
+                  if (TimelineManager.getTimeToCount() < 30000) {
+                    if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 == 0) {
+                      timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
+                    } else {
+                      timerLabel.setStyle("-fx-text-fill: rgba(142,3,3,1);");
+                    }
+                  }
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
 
+    // Create a bouncing arrow animation for the phone screen
     TranslateTransition bouncingArrow = new TranslateTransition();
     bouncingArrow.setNode(arrow);
     bouncingArrow.setDuration(Duration.millis(1000));
@@ -145,6 +154,12 @@ public class PhoneController {
     bouncingArrow.play();
   }
 
+  /**
+   * This method is called when the call history is clicked. It will take the user to the call
+   * screen
+   *
+   * @param event
+   */
   @FXML
   private void onCallClicked(MouseEvent event) {
     arrow.setVisible(false);
@@ -182,6 +197,12 @@ public class PhoneController {
         });
   }
 
+  /**
+   * This method is called when the lock screen is clicked. It will unlock the phone
+   *
+   * @param lockScreen
+   * @param height
+   */
   private void unlock(ImageView lockScreen, double height) {
     TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), lockScreen);
     transition.setToY(-height); // Move the lock screen off the top
@@ -221,6 +242,11 @@ public class PhoneController {
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
   }
 
+  /**
+   * This method is called when the end call button is clicked. It will end the call.
+   *
+   * @param event
+   */
   @FXML
   private void onEndCallButtonClicked(MouseEvent event) {
     callScreen.setVisible(false);
@@ -228,11 +254,13 @@ public class PhoneController {
     mediaPlayer.stop();
   }
 
+  /** This method is called when it needs to disable all the rectangles */
   public void disableAll() {
     callRectangle.setDisable(true);
     callNumberRectangle.setDisable(true);
   }
 
+  /** This method is called when it needs to restart the call screen. */
   public void restart() {
     if (callScreen.isVisible()) {
       callScreen.setVisible(false);

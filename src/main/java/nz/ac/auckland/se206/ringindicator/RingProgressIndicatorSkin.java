@@ -45,6 +45,11 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
   private final RotateTransition transition =
       new RotateTransition(Duration.millis(2000), fillerArc);
 
+  /**
+   * method for the ring progress indicator skin
+   *
+   * @param indicator
+   */
   public RingProgressIndicatorSkin(final RingProgressIndicator indicator) {
     this.indicator = indicator;
     initContainer(indicator);
@@ -65,6 +70,7 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     outerCircle.getStyleClass().add("ringindicator-outer-circle-secondary");
     updateRadii();
 
+    // Listeners
     this.indicator
         .getIndeterminateProperty()
         .addListener(
@@ -114,12 +120,18 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     container.getChildren().addAll(fillerArc, outerCircle, innerCircle, percentLabel);
   }
 
+  /**
+   * This method sets the progress label
+   *
+   * @param value
+   */
   private void setProgressLabel(int value) {
     if (value >= 0) {
       percentLabel.setText(String.format("", value));
     }
   }
 
+  /** This method initializes the transition */
   private void initTransition() {
     transition.setAutoReverse(false);
     transition.setCycleCount(Animation.INDEFINITE);
@@ -128,6 +140,7 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     transition.setByAngle(360);
   }
 
+  /** This method initializes the filler arc */
   private void initFillerArc() {
     fillerArc.setManaged(false);
     fillerArc.getStyleClass().add("ringindicator-filler");
@@ -135,6 +148,11 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     fillerArc.setLength(indicator.getProgress() * -3.6);
   }
 
+  /**
+   * This method initializes the container
+   *
+   * @param indicator
+   */
   private void initContainer(final RingProgressIndicator indicator) {
     container.getStylesheets().addAll(indicator.getStylesheets());
     container.getStyleClass().addAll("circleindicator-container");
@@ -157,6 +175,11 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     innerCircle.setRadius(innerCircleRadius);
   }
 
+  /**
+   * This method initializes the label
+   *
+   * @param value
+   */
   private void initLabel(int value) {
     setProgressLabel(value);
     percentLabel.getStyleClass().add("circleindicator-label");
@@ -186,16 +209,19 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     }
   }
 
+  /** This method returns the skinnable */
   @Override
   public RingProgressIndicator getSkinnable() {
     return indicator;
   }
 
+  /** This method returns the node */
   @Override
   public Node getNode() {
     return container;
   }
 
+  /** This method disposes the transition */
   @Override
   public void dispose() {
     transition.stop();

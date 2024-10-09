@@ -247,14 +247,29 @@ public class Utils {
     }
   }
 
+  /**
+   * Sets the player's name.
+   *
+   * @param name
+   */
   public static void setPlayerName(String name) {
     playerName = name;
   }
 
+  /**
+   * Gets the player's name.
+   *
+   * @return
+   */
   public static String getPlayerName() {
     return playerName;
   }
 
+  /**
+   * Gets the top 3 scores from the CSV file to display on the start page.
+   *
+   * @return
+   */
   public static ArrayList<String> getScoresForStartPage() {
     // Need to read the csv and put the values into an array
     ArrayList<String> scoreBoardValues = new ArrayList<>();
@@ -310,6 +325,14 @@ public class Utils {
     return (int) (timeUsed / 1000);
   }
 
+  /**
+   * Checks the conditions to switch to the guessing scene.
+   *
+   * @param context
+   * @param isAllSuspectsSpokenTo
+   * @param isAnyClueFound
+   * @param timeline
+   */
   public static void checkConditions(
       GameStateContext context,
       boolean isAllSuspectsSpokenTo,

@@ -24,17 +24,17 @@
       <StackPane fx:id="phonePane" layoutX="293.0" layoutY="33.0" prefHeight="150.0" prefWidth="200.0">
 
          <children>
-            <ImageView fx:id="screen" fitHeight="405.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="screen" fitHeight="390.0" fitWidth="192.0" pickOnBounds="true">
                <image>
                   <Image url="@../images/screen.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="callHistory" fitHeight="392.0" fitWidth="219.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <ImageView fx:id="callHistory" fitHeight="388.0" fitWidth="220.0" pickOnBounds="true" visible="false">
                <image>
                   <Image url="@../images/call_history.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="lockScreen" fitHeight="402.0" fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="lockScreen" fitHeight="400.0" fitWidth="205.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/LockScreen.png" />
                </image>
@@ -69,7 +69,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Rectangle>
-      <Rectangle fx:id="callRectangle" arcHeight="5.0" arcWidth="5.0" disable="true" fill="DODGERBLUE" height="28.0" layoutX="315.0" layoutY="83.0" onMouseClicked="#onCallClicked" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="31.0">
+      <Rectangle fx:id="callRectangle" arcHeight="5.0" arcWidth="5.0" disable="true" fill="DODGERBLUE" height="28.0" layoutX="382.0" layoutY="395.0" onMouseClicked="#onCallClicked" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="31.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

@@ -51,6 +51,7 @@ public class CallHistoryController {
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
 
+    // Update the progress indicator and timer label
     timeline
         .getKeyFrames()
         .add(
@@ -60,6 +61,14 @@ public class CallHistoryController {
                   // Update the progress indicator and timer label
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
+                  // flash the timer red below 30 seconds
+                  if (TimelineManager.getTimeToCount() < 30000) {
+                    if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 == 0) {
+                      timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
+                    } else {
+                      timerLabel.setStyle("-fx-text-fill: rgba(142,3,3,1);");
+                    }
+                  }
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();

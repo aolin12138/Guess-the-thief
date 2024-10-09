@@ -36,6 +36,11 @@ public class ImageManager {
 
   private boolean isClicked = false;
 
+  /**
+   * Constructor for the ImageManager class
+   *
+   * @param imageView
+   */
   public ImageManager(ImageView imageView) {
     this.imageView = imageView;
 
@@ -45,6 +50,7 @@ public class ImageManager {
       originalX = 0;
     }
 
+    // new instance of a scale transition in
     scaleTransitionIn = new ScaleTransition(Duration.millis(100), imageView);
     scaleTransitionIn.setFromX(1.0);
     scaleTransitionIn.setFromY(1.0);
@@ -52,9 +58,10 @@ public class ImageManager {
     scaleTransitionIn.setToY(1.1);
     scaleTransitionIn.setCycleCount(1);
 
+    // new instance of a color adjust effect
     colorAdjustIn = new ColorAdjust();
     colorAdjustIn.setBrightness(-0.45);
-
+    // new instance of a drop shadow effect
     dropShadowIn = new DropShadow();
     dropShadowIn.setRadius(0);
     dropShadowIn.setOffsetX(0);
@@ -75,17 +82,17 @@ public class ImageManager {
             new KeyFrame(Duration.ZERO, new KeyValue(dropShadowIn.radiusProperty(), 0)),
             new KeyFrame(Duration.millis(100), new KeyValue(dropShadowIn.radiusProperty(), 10)));
     shadowTransitionIn.setCycleCount(1);
-
+    // new instance of a scale transition out
     scaleTransitionOut = new ScaleTransition(Duration.millis(100), imageView);
     scaleTransitionOut.setFromX(1.1);
     scaleTransitionOut.setFromY(1.1);
     scaleTransitionOut.setToX(1.0);
     scaleTransitionOut.setToY(1.0);
     scaleTransitionOut.setCycleCount(1);
-
+    // new instance of a color adjust effect
     colorAdjustOut = new ColorAdjust();
     colorAdjustOut.setBrightness(0);
-
+    // new instance of a drop shadow effect
     dropShadowOut = new DropShadow();
     dropShadowOut.setRadius(10);
     dropShadowOut.setOffsetX(0);
@@ -114,12 +121,16 @@ public class ImageManager {
                 new KeyValue(dropShadowIn.radiusProperty(), 10),
                 new KeyValue(colorAdjustIn.brightnessProperty(), 0)));
     brightnessTransitionIn.setCycleCount(1);
-
+    // new instance of a click scale transition out
     clickScale = new ScaleTransition(Duration.seconds(0.1), imageView);
     clickScale.setToX(1.1);
     clickScale.setToY(1.1);
   }
 
+  /**
+   * This method is called when the mouse hovers over the image. It will animate the image to hover
+   * in.
+   */
   public void hoverIn() {
     // if the image is clicked, it will not hover in
     if (isClicked) {
@@ -163,14 +174,25 @@ public class ImageManager {
     shadowTransitionOut.play();
   }
 
+  /** this method is to stay the current effect of the image */
   public void stayCurrentEffect() {
     imageView.setEffect(dropShadowOut);
   }
 
+  /**
+   * set the image to view the image
+   *
+   * @param imageView
+   */
   public void setImageView(ImageView imageView) {
     this.imageView = imageView;
   }
 
+  /**
+   * get the image view
+   *
+   * @return
+   */
   public ImageView getImageView() {
     return imageView;
   }
@@ -195,6 +217,7 @@ public class ImageManager {
     isClicked = true;
   }
 
+  /** this method is called when the image is unclicked */
   public void unclicked() {
     isClicked = false;
     hoverOut();
