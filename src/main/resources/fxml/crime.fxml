@@ -28,7 +28,7 @@
             <Font size="10.0" />
          </font></Button>
 
-      <VBox fx:id="imagesVerticalBox" layoutX="661.0" layoutY="14.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" styleClass="outline" stylesheets="@../css/sidebarlabel.css">
+      <VBox fx:id="imagesVerticalBox" layoutX="661.0" layoutY="14.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" styleClass="outline" stylesheets="@../css/sidebarlabel.css" visible="false">
 
          <children>
             <VBox prefHeight="88.0" prefWidth="132.0">
@@ -44,7 +44,7 @@
                         <Insets />
                      </VBox.margin>
                   </ImageView>
-                  <Label fx:id="crimeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="102.0" stylesheets="@../css/sidebarlabel.css" text="Crime Scene" textAlignment="CENTER" textFill="WHITE">
+                  <Label fx:id="crimeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="102.0" stylesheets="@../css/sidebarlabel.css" text="Crime Scene" textAlignment="CENTER" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -71,7 +71,7 @@
                         <Insets />
                      </VBox.margin>
                   </ImageView>
-                  <Label fx:id="ownerLabel" alignment="CENTER" minWidth="-Infinity" prefWidth="102.0" stylesheets="@../css/sidebarlabel.css" text="Cafe Owner" textFill="WHITE">
+                  <Label fx:id="ownerLabel" alignment="CENTER" minWidth="-Infinity" prefWidth="102.0" stylesheets="@../css/sidebarlabel.css" text="Cafe Owner" textAlignment="CENTER" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -98,7 +98,7 @@
                         <Rectangle2D />
                      </viewport>
                   </ImageView>
-                  <Label fx:id="workerLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" prefHeight="40.0" prefWidth="102.0" stylesheets="@../css/sidebarlabel.css" text="Restaurateur's Employee" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label fx:id="workerLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" prefHeight="40.0" prefWidth="102.0" stylesheets="@../css/sidebarlabel.css" text="Restaurateur's Employee" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
@@ -125,7 +125,7 @@
                         <Insets />
                      </VBox.margin>
                   </ImageView>
-                  <Label fx:id="brotherLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" prefHeight="40.0" prefWidth="102.0" stylesheets="@../css/sidebarlabel.css" text="Restaurateur's Brother" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label fx:id="brotherLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" prefHeight="40.0" prefWidth="102.0" stylesheets="@../css/sidebarlabel.css" text="Restaurateur's Brother" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>

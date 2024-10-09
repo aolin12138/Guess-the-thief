@@ -389,6 +389,7 @@ public class RoomController {
    */
   @FXML
   void onCrimeSceneClicked(MouseEvent event) throws ApiProxyException, IOException {
+    buttonSlide.setText("Show Side Bar");
     Scene sceneOfButton = buttonGuess.getScene();
     imagesVerticalBox.setVisible(false);
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
