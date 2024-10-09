@@ -25,24 +25,24 @@
             <Image url="@../images/crime_scene.jpeg" />
          </image>
       </ImageView>
-      <StackPane fx:id="indicatorPane" layoutX="4.0" layoutY="449.0" prefHeight="109.0" prefWidth="104.0">
+      <StackPane fx:id="indicatorPane" layoutX="10.0" layoutY="450.0" prefHeight="109.0" prefWidth="104.0">
          <children>
             <Circle fill="#ffffffcc" radius="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
          </children></StackPane>
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-19.0" layoutY="469.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="05:00" textAlignment="CENTER" textFill="#4effb2">
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-13.0" layoutY="470.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="05:00" textAlignment="CENTER" textFill="#4effb2">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <Button fx:id="buttonGuess" layoutX="665.0" layoutY="549.0" mnemonicParsing="false" onAction="#onHandleGuessClick" prefHeight="35.0" prefWidth="119.0" stylesheets="@../css/buttons.css" text="Make a Guess" />
-      <TextArea fx:id="textaChat" editable="false" layoutX="116.0" layoutY="445.0" prefHeight="103.0" prefWidth="529.0" wrapText="true">
+      <Button fx:id="buttonGuess" layoutX="671.0" layoutY="550.0" mnemonicParsing="false" onAction="#onHandleGuessClick" prefHeight="35.0" prefWidth="119.0" stylesheets="@../css/buttons.css" text="Make a Guess" />
+      <TextArea fx:id="textaChat" editable="false" layoutX="104.0" layoutY="72.0" prefHeight="103.0" prefWidth="529.0" wrapText="true">
          <stylesheets>
             <URL value="@../css/suspect_scene.css" />
             <URL value="@../css/textarea.css" />
          </stylesheets></TextArea>
 
-      <TextField fx:id="textInput" layoutX="115.0" layoutY="553.0" prefHeight="26.0" prefWidth="397.0" stylesheets="@../css/textfield.css" />
-      <Button fx:id="buttonSend" layoutX="527.0" layoutY="551.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="32.0" prefWidth="119.0" stylesheets="@../css/buttons.css" text="Send" />
+      <TextField fx:id="textInput" layoutX="104.0" layoutY="72.0" prefHeight="26.0" prefWidth="397.0" stylesheets="@../css/textfield.css" />
+      <Button fx:id="buttonSend" layoutX="503.0" layoutY="70.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="32.0" prefWidth="119.0" stylesheets="@../css/buttons.css" text="Send" />
       <ImageView fx:id="carImage" fitHeight="416.0" fitWidth="633.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/car_close_up.jpg" />
@@ -153,9 +153,9 @@
          </children>
       </VBox>
       <VBox layoutX="673.0" layoutY="444.0" prefHeight="98.0" prefWidth="105.0" spacing="10.0" />
-      <ScrollPane fx:id="scrollPane" layoutX="116.0" layoutY="130.0" prefHeight="227.0" prefWidth="572.0" stylesheets="@../css/scrollpane.css">
+      <ScrollPane fx:id="scrollPane" layoutX="122.0" layoutY="358.0" prefHeight="227.0" prefWidth="531.0" stylesheets="@../css/scrollpane.css">
          <content>
-            <VBox fx:id="messageBoxes" prefHeight="176.0" prefWidth="549.0" spacing="10.0">
+            <VBox fx:id="messageBoxes" prefHeight="176.0" prefWidth="522.0" spacing="10.0">
                <opaqueInsets>
                   <Insets bottom="30.0" />
                </opaqueInsets>
@@ -168,12 +168,28 @@
             <Insets bottom="40.0" />
          </padding>
       </ScrollPane>
-      <TextField fx:id="inputField" layoutX="122.0" layoutY="318.0" prefHeight="30.0" prefWidth="452.0" style="-fx-background-color: rgba(0,0,0,0.45); -fx-text-fill: white; -fx-background-radius: 15;">
+      <TextField fx:id="inputField" layoutX="126.0" layoutY="547.0" prefHeight="30.0" prefWidth="524.0" style="-fx-background-color: rgba(0,0,0,0.45); -fx-text-fill: white; -fx-background-radius: 15;">
          <padding>
-            <Insets left="15.0" />
-         </padding></TextField>
-      <Button fx:id="sendButton" layoutX="576.0" layoutY="317.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="101.0" text="Button" />
-      <Button fx:id="buttonSlide" layoutX="664.0" layoutY="480.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="119.0" stylesheets="@../css/buttons.css" text="Switching Scenes" />
-      <Label fx:id="chatStats" alignment="CENTER" layoutX="244.0" layoutY="412.0" prefHeight="26.0" prefWidth="318.0" styleClass="chatStats" stylesheets="@../css/suspect_scene.css" text="Testing" textAlignment="CENTER" />
+            <Insets left="15.0" right="35.0" />
+         </padding>
+      </TextField>
+      <Button fx:id="buttonSlide" layoutX="509.0" layoutY="318.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="139.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ios-menu-4.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Label fx:id="chatStats" alignment="CENTER" layoutX="124.0" layoutY="321.0" prefHeight="26.0" prefWidth="318.0" styleClass="chatStats" stylesheets="@../css/suspect_scene.css" text="Testing" textAlignment="CENTER" />
+      <Button fx:id="sendButton" layoutX="622.0" layoutY="550.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="24.0" prefWidth="25.0" styleClass="sendButton" stylesheets="@../css/suspect_scene.css">
+         <graphic>
+            <ImageView fitHeight="16.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/message_arrow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </Pane>

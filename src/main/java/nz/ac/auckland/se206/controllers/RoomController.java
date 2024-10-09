@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -133,6 +134,12 @@ public class RoomController {
   @FXML
   public void initialize() {
     buttonSlide.setText("Show Side Bar");
+    buttonSlide.setCursor(Cursor.HAND);
+    buttonGuess.setCursor(Cursor.HAND);
+    sendButton.setCursor(Cursor.HAND);
+    // initially nothing to send
+    sendButton.setDisable(true);
+
     // Probably delete this since we will only load this scene once
     if (isFirstTimeInit) {
       isFirstTimeInit = false;
@@ -376,6 +383,11 @@ public class RoomController {
   @FXML
   public void onKeyReleased(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " released");
+    if (!inputField.getText().isEmpty()) {
+      sendButton.setDisable(false);
+    } else {
+      sendButton.setDisable(true);
+    }
   }
 
   /**
@@ -429,6 +441,7 @@ public class RoomController {
       Media sound =
           new Media(App.class.getResource("/sounds/missing_suspect.mp3").toURI().toString());
       player = new MediaPlayer(sound);
+      player.stop();
       player.play();
       return;
       // if the clues are not found, play the clue reminder sound
@@ -436,6 +449,7 @@ public class RoomController {
       Media sound =
           new Media(App.class.getResource("/sounds/clue_reminder_1.mp3").toURI().toString());
       player = new MediaPlayer(sound);
+      player.stop();
       player.play();
       return;
       // if the suspects are not spoken to and the clues are not found, play the keep investigating
@@ -443,6 +457,7 @@ public class RoomController {
       Media sound =
           new Media(App.class.getResource("/sounds/keep_investigating.mp3").toURI().toString());
       player = new MediaPlayer(sound);
+      player.stop();
       player.play();
       return;
     }
@@ -489,6 +504,9 @@ public class RoomController {
           ProgressIndicator statsIndicator = new ProgressIndicator();
           statsIndicator.setMinSize(1, 1);
           statsPane.getChildren().add(statsIndicator);
+          context
+              .getRoomController()
+              .setChatStats(context.getRoomController().getPerson().getName());
         });
     // initialize the chat completion request
     try {
@@ -581,6 +599,7 @@ public class RoomController {
 
     // clear the text field
     inputField.clear();
+    sendButton.setDisable(true);
     messageBoxes.getChildren().clear();
     ChatMessage msg = new ChatMessage("user", message);
     appendMessage(msg, true);

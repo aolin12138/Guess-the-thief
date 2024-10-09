@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -106,7 +107,11 @@ public class NewspaperController {
     newspaper2.setVisible(false);
     newspaper3.setVisible(false);
     previousPageButton.setDisable(true);
-    // Add the ring progress indicator to the indicator pane
+
+    previousPageButton.setCursor(Cursor.HAND);
+    returnButton.setCursor(Cursor.HAND);
+    nextPageButton.setCursor(Cursor.HAND);
+
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
 
