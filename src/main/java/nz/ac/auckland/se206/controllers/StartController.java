@@ -44,6 +44,7 @@ public class StartController {
   public void initialize() {
 
     startButton.setCursor(Cursor.HAND);
+    startButton.setDisable(true);
     // This ArrayList will store the scores of the previous rounds.
     ArrayList<String> previousScores = new ArrayList<>();
     previousScores = Utils.getScoresForStartPage();
@@ -107,12 +108,20 @@ public class StartController {
     try {
       Button button = (Button) event.getSource();
       Scene sceneOfButton = button.getScene();
+      Platform.runLater(
+          () -> {
+            mediaPlayer.stop();
+          });
       sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
       TimelineManager.setContext(CrimeSceneController.getContext());
       TimelineManager.startTimer();
     } catch (ClassCastException e) {
       TextField field = (TextField) event.getSource();
       Scene sceneOfField = field.getScene();
+      Platform.runLater(
+          () -> {
+            mediaPlayer.stop();
+          });
       sceneOfField.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
       TimelineManager.setContext(CrimeSceneController.getContext());
       TimelineManager.startTimer();
@@ -142,5 +151,10 @@ public class StartController {
   @FXML
   public void onKeyReleased(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " released");
+    if (playerNameWindow.getText().isEmpty()) {
+      startButton.setDisable(true);
+    } else {
+      startButton.setDisable(false);
+    }
   }
 }
