@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -42,8 +43,7 @@ public class GameOverController {
    */
   @FXML
   public void initialize() {
-    System.out.println(oldTextArea);
-    System.out.println(isTextAlreadyDisplayed);
+    rstbtn.setCursor(Cursor.HAND);
 
     // Set the text of the text area to the explanation of the game
     if ((oldTextArea != null) && (!isTextAlreadyDisplayed)) {

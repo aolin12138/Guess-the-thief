@@ -8,6 +8,7 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -99,7 +100,7 @@ public class CrimeSceneController {
   private ClueManager newspaperImageManager;
 
   private Media media =
-      new Media(getClass().getResource("/sounds/Intro_brief.mp3").toExternalForm());
+      new Media(getClass().getResource("/sounds/new_intro_audio.mp3").toExternalForm());
   private MediaPlayer mediaPlayer = new MediaPlayer(media);
 
   /**
@@ -124,6 +125,9 @@ public class CrimeSceneController {
                 stage.sizeToScene();
               }
             });
+
+    buttonSlide.setCursor(Cursor.HAND);
+    buttonGuess.setCursor(Cursor.HAND);
 
     ownerImageManager = new ImageManager(ownerImage);
     workerImageManager = new ImageManager(workerImage);

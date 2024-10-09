@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -133,6 +134,12 @@ public class RoomController {
   @FXML
   public void initialize() {
     buttonSlide.setText("Show Side Bar");
+    buttonSlide.setCursor(Cursor.HAND);
+    buttonGuess.setCursor(Cursor.HAND);
+    sendButton.setCursor(Cursor.HAND);
+    // initially nothing to send
+    sendButton.setDisable(true);
+
     // Probably delete this since we will only load this scene once
     if (isFirstTimeInit) {
       isFirstTimeInit = false;
@@ -374,6 +381,11 @@ public class RoomController {
   @FXML
   public void onKeyReleased(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " released");
+    if (!inputField.getText().isEmpty()) {
+      sendButton.setDisable(false);
+    } else {
+      sendButton.setDisable(true);
+    }
   }
 
   /**
@@ -568,6 +580,7 @@ public class RoomController {
 
     // clear the text field
     inputField.clear();
+    sendButton.setDisable(true);
     messageBoxes.getChildren().clear();
     ChatMessage msg = new ChatMessage("user", message);
     appendMessage(msg, true);

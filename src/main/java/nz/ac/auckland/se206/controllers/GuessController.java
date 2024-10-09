@@ -11,6 +11,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -133,6 +134,11 @@ public class GuessController {
                 stage.sizeToScene();
               }
             });
+
+    brotherImage.setCursor(Cursor.HAND);
+    workerImage.setCursor(Cursor.HAND);
+    ownerImage.setCursor(Cursor.HAND);
+    buttonSend.setCursor(Cursor.HAND);
 
     // Adding the event handler for 'Enter' key on txtInput
     textInput.setOnKeyPressed(
