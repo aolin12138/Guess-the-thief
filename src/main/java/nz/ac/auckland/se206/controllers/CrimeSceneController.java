@@ -68,6 +68,7 @@ public class CrimeSceneController {
   @FXML private Rectangle newspaperClue;
   @FXML private Button buttonGuess;
   @FXML private Button buttonSlide;
+  @FXML private Rectangle helpButton;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
   @FXML private Rectangle suspect2Scene;
@@ -202,6 +203,9 @@ public class CrimeSceneController {
     Scene sceneOfButton = buttonGuess.getScene();
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.NEWSPAPER));
   }
+
+  @FXML
+  void onHelpButtonClicked(MouseEvent event) {}
 
   /**
    * This method is called when the guess button is clicked. It will take the user to the guess
