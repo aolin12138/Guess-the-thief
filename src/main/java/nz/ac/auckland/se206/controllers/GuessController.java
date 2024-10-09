@@ -214,6 +214,14 @@ public class GuessController {
 
                   ringProgressIndicator.setProgress(progress);
                   timerLabel.setText(Utils.formatTime(timeForGuessing));
+                  // flash the timer red below 15 seconds
+                  if (timeForGuessing < 15000) {
+                    if ((int) (timeForGuessing / 1000) % 2 == 0) {
+                      timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
+                    } else {
+                      timerLabel.setStyle("-fx-text-fill: rgba(142,3,3,1);");
+                    }
+                  }
                 }));
     // Set the cycle count to indefinite
     timeline.setCycleCount(Timeline.INDEFINITE);
