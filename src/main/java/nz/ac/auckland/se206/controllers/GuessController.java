@@ -34,7 +34,6 @@ import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
 import nz.ac.auckland.apiproxy.chat.openai.ChatMessage;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
-import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
@@ -100,6 +99,7 @@ public class GuessController {
   @FXML private Label brotherLabel;
   @FXML private Label explanationLabel;
   @FXML private Label instructionLabel;
+  @FXML private TextArea guessTextArea;
 
   @FXML private HBox chatHorizontalBox;
 
@@ -199,7 +199,6 @@ public class GuessController {
                     // Before switching state, make sure the game is still in the game started state
                     // and that we havent already switched state. Otherwise it will cause a bug
                     if (!(context.getGameState().equals(context.getGuessingState()))) {
-                      System.out.println(context.getGameState());
                       timeline.stop();
                       return;
                     }
@@ -426,17 +425,13 @@ public class GuessController {
         && context.getGameState().equals(context.getGuessingState())) {
       context.setState(context.getGameOverState());
       // Set the output text to the explanation of the guess
-      GameOverController.setOutputText(
+      guessTextArea.appendText(
           "You did not guess any of the suspects within the time limit!\n"
               + "Next time you play, make sure to click on your suspected thief and"
               + " type an explanation to support your decision.\n"
               + "Click play again to replay.");
-      try {
-        timeline.stop();
-        App.setRoot("gameover");
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+
+      timeline.stop();
       return;
       // No suspect selected, but message is entered and time is over
     } else if ((!isSuspectSelected)
@@ -445,16 +440,12 @@ public class GuessController {
         && context.getGameState().equals(context.getGuessingState())) {
       context.setState(context.getGameOverState());
       // Set the output text to the explanation of the guess
-      GameOverController.setOutputText(
+      guessTextArea.appendText(
           "Even though you typed your explanation, you did not guess any of the suspects within the"
               + " time limit!\n"
               + "Click play again to replay.");
-      try {
-        timeline.stop();
-        App.setRoot("gameover");
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+
+      timeline.stop();
       return;
       // Suspect selected, but message is not entered and time is over
     } else if ((isSuspectSelected)
@@ -463,18 +454,13 @@ public class GuessController {
         && context.getGameState().equals(context.getGuessingState())) {
       context.setState(context.getGameOverState());
       // Set the output text to the explanation of the guess
-      GameOverController.setOutputText(
+      guessTextArea.appendText(
           "Even though you guessed a suspect, you did not type any explanation within the"
               + " time limit.\n\n"
               + " Because of this, it is unlikely that the authortities will accept your"
               + " decision.\n\n"
               + "Click play again to replay.");
-      try {
-        timeline.stop();
-        App.setRoot("gameover");
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      timeline.stop();
       return;
     }
 
@@ -507,6 +493,7 @@ public class GuessController {
     }
     // Passes the amount of time used to Utils for the scoreboard
     Utils.setTimeUsed(timeForGuessing);
+    guessTextArea.appendText(message);
     timeline.stop();
     // Set the progress indicator to visible
     ProgressIndicator statsIndicator = new ProgressIndicator();
@@ -525,7 +512,7 @@ public class GuessController {
               String[] splitArray = validExplanation.split(" ", 2);
               // Check if the explanation is correct
               boolean isCorrectExplanation = splitArray[0].toLowerCase().contains("true");
-              GameOverController.setOutputText(splitArray[1]);
+              guessTextArea.appendText(splitArray[1]);
               // Set the chat stats to the explanation
               System.out.println("isCorrectExplanation: " + isCorrectExplanation);
 
@@ -540,21 +527,8 @@ public class GuessController {
                     if (isCorrectExplanation && currentSuspect == 3) {
                       context.setState(context.getGameOverState());
                       isGameWon = true;
-
-                      try {
-                        // Switch to the game over scene
-                        App.setRoot("gameover");
-                      } catch (IOException e) {
-                        e.printStackTrace();
-                      }
                     } else {
                       context.setState(context.getGameOverState());
-
-                      try {
-                        App.setRoot("gameover");
-                      } catch (IOException e) {
-                        e.printStackTrace();
-                      }
                     }
                   });
             } catch (ApiProxyException e) {
