@@ -174,6 +174,9 @@ public class CrimeSceneController {
    */
   @FXML
   void onCameraClueClicked(MouseEvent event) {
+    if (instructionsTextArea.isVisible()) {
+      onHideHelpClicked(null);
+    }
     context.clue1Found();
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
@@ -188,6 +191,9 @@ public class CrimeSceneController {
    */
   @FXML
   void onPhoneClueClicked(MouseEvent event) {
+    if (instructionsTextArea.isVisible()) {
+      onHideHelpClicked(null);
+    }
     context.clue2Found();
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
@@ -205,6 +211,9 @@ public class CrimeSceneController {
    */
   @FXML
   void onNewspaperClueClicked(MouseEvent event) {
+    if (instructionsTextArea.isVisible()) {
+      onHideHelpClicked(null);
+    }
     context.clue3Found();
     // Satisfies requirement of at least one clue being discovered
     context.clueFound();
@@ -250,6 +259,11 @@ public class CrimeSceneController {
    */
   @FXML
   private void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
+    // need to hide the instructions if it is visible
+    if (instructionsTextArea.isVisible()) {
+      onHideHelpClicked(null);
+    }
+
     // Check all 3 suspects have been spoken to and at least 1 clue has been clicked
     if (context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
       Utils.setTimeUsed(TimelineManager.getTimeToCount());
@@ -365,6 +379,10 @@ public class CrimeSceneController {
 
   /** This method toggles the VBox */
   private void toggleVerticalBox() {
+
+    if (instructionsTextArea.isVisible()) {
+      onHideHelpClicked(null);
+    }
     // Create the transition
     TranslateTransition transition =
         new TranslateTransition(Duration.seconds(0.5), imagesVerticalBox);
