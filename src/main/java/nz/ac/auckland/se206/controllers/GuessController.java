@@ -141,6 +141,9 @@ public class GuessController {
     workerImage.setCursor(Cursor.HAND);
     ownerImage.setCursor(Cursor.HAND);
     buttonSend.setCursor(Cursor.HAND);
+    restartButton.setCursor(Cursor.HAND);
+    restartButton.setVisible(false);
+    guessTextArea.setVisible(false);
 
     // Adding the event handler for 'Enter' key on txtInput
     textInput.setOnKeyPressed(
@@ -528,9 +531,11 @@ public class GuessController {
                     if (isCorrectExplanation && currentSuspect == 3) {
                       context.setState(context.getGameOverState());
                       isGameWon = true;
+                      styleEndOfGame();
                       instructionLabel.setText("Congratulations! You are Correct!");
                     } else {
                       context.setState(context.getGameOverState());
+                      styleEndOfGame();
                       instructionLabel.setText("Oh no, that's not right!");
                     }
                   });
@@ -667,6 +672,23 @@ public class GuessController {
   @SuppressWarnings("static-access")
   public void setContext(GameStateContext context) {
     this.context = context;
+  }
+
+  public void styleEndOfGame() {
+    // shows and hides various UI elements when the game ends
+    brotherImage.setVisible(false);
+    workerImage.setVisible(false);
+    ownerImage.setVisible(false);
+    restartButton.setVisible(true);
+    guessTextArea.setVisible(true);
+    textInput.setVisible(false);
+    statsPane.setVisible(false);
+    buttonSend.setVisible(false);
+    lblDescription.setVisible(false);
+    explanationLabel.setVisible(false);
+    ownerLabel.setVisible(false);
+    workerLabel.setVisible(false);
+    brotherLabel.setVisible(false);
   }
 
   @FXML
