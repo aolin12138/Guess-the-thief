@@ -22,7 +22,14 @@
 
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9964a" height="53.0" layoutX="272.0" layoutY="13.0" opacity="0.46" stroke="#393939" strokeType="INSIDE" width="225.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="270.0" layoutX="170.0" layoutY="290.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="450.0" />
-      <Button fx:id="startButton" layoutX="325.0" layoutY="230.0" mnemonicParsing="false" onAction="#onEnterPressed" prefHeight="37.0" prefWidth="148.0" stylesheets="@../css/buttons.css" text="Begin Investigation" />
+      <Button fx:id="startButton" contentDisplay="RIGHT" layoutX="312.0" layoutY="230.0" mnemonicParsing="false" onAction="#onEnterPressed" prefHeight="35.0" prefWidth="170.0" stylesheets="@../css/buttons.css" text="Begin Investigation">
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/side_arrow.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <Label layoutX="135.0" layoutY="57.0">
          <font>
             <Font size="21.0" />

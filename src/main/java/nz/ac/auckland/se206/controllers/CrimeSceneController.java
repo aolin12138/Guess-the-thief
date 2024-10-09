@@ -12,6 +12,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -68,7 +69,8 @@ public class CrimeSceneController {
   @FXML private Rectangle newspaperClue;
   @FXML private Button buttonGuess;
   @FXML private Button buttonSlide;
-  @FXML private Rectangle helpButton;
+  @FXML private Button showInstructionsButton;
+  @FXML private Button hideInstructionsButton;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
   @FXML private Rectangle suspect2Scene;
@@ -89,6 +91,8 @@ public class CrimeSceneController {
   @FXML private Label workerLabel;
   @FXML private Label ownerLabel;
   @FXML private Label brotherLabel;
+
+  @FXML private TextArea instructionsTextArea;
 
   private MediaPlayer player;
   private ImageManager ownerImageManager;
@@ -129,6 +133,10 @@ public class CrimeSceneController {
 
     buttonSlide.setCursor(Cursor.HAND);
     buttonGuess.setCursor(Cursor.HAND);
+    showInstructionsButton.setCursor(Cursor.HAND);
+    hideInstructionsButton.setCursor(Cursor.HAND);
+    hideInstructionsButton.setVisible(false);
+    instructionsTextArea.setVisible(false);
 
     ownerImageManager = new ImageManager(ownerImage);
     workerImageManager = new ImageManager(workerImage);
@@ -205,7 +213,18 @@ public class CrimeSceneController {
   }
 
   @FXML
-  void onHelpButtonClicked(MouseEvent event) {}
+  void onHelpButtonClicked(MouseEvent event) {
+    showInstructionsButton.setVisible(false);
+    hideInstructionsButton.setVisible(true);
+    instructionsTextArea.setVisible(true);
+  }
+
+  @FXML
+  void onHideHelpClicked(MouseEvent event) {
+    showInstructionsButton.setVisible(true);
+    hideInstructionsButton.setVisible(false);
+    instructionsTextArea.setVisible(false);
+  }
 
   /**
    * This method is called when the guess button is clicked. It will take the user to the guess
