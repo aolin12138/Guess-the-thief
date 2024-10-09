@@ -53,7 +53,7 @@
                         <Insets left="15.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Label fx:id="ownerLabel" alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="72.0" prefWidth="150.0" stylesheets="@../css/guesslabel.css" text="Struggling Cafe Owner" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label fx:id="ownerLabel" alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="72.0" prefWidth="150.0" stylesheets="@../css/guesslabel.css" text="Struggling Cafe Owner" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="20.0" />
                      </font>
@@ -77,7 +77,7 @@
                         <Insets left="15.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Label fx:id="workerLabel" alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="68.0" prefWidth="150.0" stylesheets="@../css/guesslabel.css" text="Restaurateur's Employee" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label fx:id="workerLabel" alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="68.0" prefWidth="150.0" stylesheets="@../css/guesslabel.css" text="Restaurateur's Employee" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="20.0" />
                      </font>
@@ -101,7 +101,7 @@
                         <Insets left="15.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Label fx:id="brotherLabel" alignment="TOP_CENTER" prefHeight="65.0" prefWidth="150.0" stylesheets="@../css/guesslabel.css" text="Restaurateur's Brother" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label fx:id="brotherLabel" alignment="TOP_CENTER" prefHeight="65.0" prefWidth="150.0" stylesheets="@../css/guesslabel.css" text="Restaurateur's Brother" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="20.0" />
                      </font>

@@ -798,7 +798,6 @@ public class RoomController {
         currentImage = ownerImage;
         // set the image of the owner
         currentImageManager.setImageView(currentImage);
-        context.person1Talked();
         context.handleRectangleClick(event, "rectPerson2");
         break;
       // if the id is worker image, set the person to the worker
@@ -811,7 +810,6 @@ public class RoomController {
         currentImage = workerImage;
         // set the image of the worker
         currentImageManager.setImageView(currentImage);
-        context.person2Talked();
         context.handleRectangleClick(event, "rectPerson1");
         break;
       // if the id is brother image, set the person to the brother
@@ -824,7 +822,6 @@ public class RoomController {
         currentImage = brotherImage;
         // set the image of the brother
         currentImageManager.setImageView(currentImage);
-        context.person3Talked();
         context.handleRectangleClick(event, "rectPerson3");
         break;
     }
