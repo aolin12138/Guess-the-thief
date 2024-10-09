@@ -217,13 +217,26 @@ public class CrimeSceneController {
     showInstructionsButton.setVisible(false);
     hideInstructionsButton.setVisible(true);
     instructionsTextArea.setVisible(true);
+    TranslateTransition instructionsTransition = new TranslateTransition();
+    instructionsTransition.setNode(instructionsTextArea);
+    instructionsTransition.setDuration(Duration.millis(500));
+    instructionsTextArea.setVisible(true);
+    instructionsTransition.setFromX(-500);
+    instructionsTransition.setToX(4);
+    instructionsTransition.play();
   }
 
   @FXML
   void onHideHelpClicked(MouseEvent event) {
     showInstructionsButton.setVisible(true);
     hideInstructionsButton.setVisible(false);
-    instructionsTextArea.setVisible(false);
+
+    TranslateTransition instructionsTransition = new TranslateTransition();
+    instructionsTransition.setNode(instructionsTextArea);
+    instructionsTransition.setDuration(Duration.millis(500));
+    instructionsTransition.setFromX(4);
+    instructionsTransition.setToX(-500);
+    instructionsTransition.play();
   }
 
   /**
