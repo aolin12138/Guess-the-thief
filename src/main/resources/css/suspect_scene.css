@@ -24,8 +24,8 @@
 .sendButton {
   -fx-background-radius: 35;
   -fx-button-size: 20;
-  background-color: rgba(53, 118, 248, 1);
-  -fx-background-color: rgba(53, 118, 248, 1);
+  background-color: rgba(74, 136, 209, 1);
+  -fx-background-color: rgba(74, 136, 209, 1);
 }
 
 .sendButton:disabled {
