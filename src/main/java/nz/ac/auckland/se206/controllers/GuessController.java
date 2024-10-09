@@ -122,6 +122,7 @@ public class GuessController {
    */
   @FXML
   public void initialize() {
+    // set the state to the guessing state
     context.setState(context.getGuessingState());
     textInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
 
@@ -155,11 +156,11 @@ public class GuessController {
             }
           }
         });
-
+    // Set the image managers for the suspects
     ownerImageManager = new ImageManager(ownerImage);
     workerImageManager = new ImageManager(workerImage);
     brotherImageManager = new ImageManager(brotherImage);
-
+    // adjust the brightness of the images
     ColorAdjust colorAdjust = new ColorAdjust();
     colorAdjust.setBrightness(-0.45);
     ownerImage.setEffect(colorAdjust);
@@ -167,7 +168,7 @@ public class GuessController {
     brotherImage.setEffect(colorAdjust);
 
     styleScene();
-
+    // Set the guess controller to this instance
     context.setGuessController(this);
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(60);
@@ -175,7 +176,7 @@ public class GuessController {
     if (timeForGuessing % 1000 == 0) {
       timerLabel.setText(Utils.formatTime(timeForGuessing));
     }
-
+    // use the time line to update the progress indicator and timer label
     timeline
         .getKeyFrames()
         .add(
@@ -214,34 +215,70 @@ public class GuessController {
                   ringProgressIndicator.setProgress(progress);
                   timerLabel.setText(Utils.formatTime(timeForGuessing));
                 }));
+    // Set the cycle count to indefinite
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
   }
 
+  /**
+   * Gets the stats pane.
+   *
+   * @return the time for guessing
+   */
   public Pane getStatsPane() {
     return statsPane;
   }
 
+  /**
+   * Gets the boolean for if the time is over.
+   *
+   * @return the time for guessing
+   */
   public Boolean getTimeOver() {
     return isTimeOver;
   }
 
+  /**
+   * Gets the boolean for if the suspect is selected.
+   *
+   * @return the time for guessing
+   */
   public Boolean getSuspectSelected() {
     return isSuspectSelected;
   }
 
+  /**
+   * method that stops the timeline.
+   *
+   * @return the time for guessing
+   */
   public void stopTimeLine() {
     timeline.stop();
   }
 
+  /**
+   * Gets the current context.
+   *
+   * @return the time for guessing
+   */
   public GameStateContext getContext() {
     return context;
   }
 
+  /**
+   * set the chat stats.
+   *
+   * @param stats
+   */
   public void setChatStats(String stats) {
     chatStats.setText(stats);
   }
 
+  /**
+   * gets the current person.
+   *
+   * @return
+   */
   public Person getPerson() {
     return person;
   }
@@ -524,6 +561,13 @@ public class GuessController {
     new Thread(task).start();
   }
 
+  /**
+   * Checks if the explanation is valid.
+   *
+   * @return the response
+   * @throws ApiProxyException if there is an error communicating with the API proxy
+   * @throws IOException if there is an I/O error
+   */
   public String isExplanationValid() throws ApiProxyException, IOException {
 
     try {
@@ -556,6 +600,11 @@ public class GuessController {
     }
   }
 
+  /**
+   * This method is called to get the suspect number that the user has selected.
+   *
+   * @param event
+   */
   public int getSuspectNumber() {
     return currentSuspect;
   }

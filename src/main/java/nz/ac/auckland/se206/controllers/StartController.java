@@ -40,6 +40,10 @@ public class StartController {
       new Media(getClass().getResource("/sounds/enter_name.mp3").toExternalForm());
   private MediaPlayer mediaPlayer = new MediaPlayer(media);
 
+  /**
+   * This method is called when the start scene is loaded. It will display the scores of the
+   * previous rounds.
+   */
   @FXML
   public void initialize() {
 
@@ -53,11 +57,13 @@ public class StartController {
     if (previousScores.size() == 2) {
       scoreBoardNameLabel1.setText(previousScores.get(0));
       scoreBoardTimeLabel1.setText(previousScores.get(1));
+      // If there is only one score, display the same score twice.
     } else if (previousScores.size() == 4) {
       scoreBoardNameLabel1.setText(previousScores.get(0));
       scoreBoardTimeLabel1.setText(previousScores.get(1));
       scoreBoardNameLabel2.setText(previousScores.get(2));
       scoreBoardTimeLabel2.setText(previousScores.get(3));
+      // If there are two scores, display the scores.
     } else if (previousScores.size() == 6) {
       scoreBoardNameLabel1.setText(previousScores.get(0));
       scoreBoardTimeLabel1.setText(previousScores.get(1));
@@ -84,6 +90,12 @@ public class StartController {
         });
   }
 
+  /**
+   * This method is called when the Enter is pressed. It will take the user to the crime scene.
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   private void onEnterPressed(Event event) throws IOException {
     // need to check that the user has entered a username, if they haven't, remind them
@@ -99,7 +111,7 @@ public class StartController {
     } else {
       Utils.setPlayerName(playerNameWindow.getText());
     }
-
+    // Load the crime scene
     FXMLLoader crimeSceneLoader = new FXMLLoader(App.class.getResource("/fxml/crime.fxml"));
     SceneManager.addRoot(SceneManager.Scene.CRIME, crimeSceneLoader.load());
     SceneManager.setCrimeSceneLoader(crimeSceneLoader);
@@ -115,6 +127,7 @@ public class StartController {
       sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
       TimelineManager.setContext(CrimeSceneController.getContext());
       TimelineManager.startTimer();
+      // If the event source is not a button, it is a text field
     } catch (ClassCastException e) {
       TextField field = (TextField) event.getSource();
       Scene sceneOfField = field.getScene();
@@ -128,8 +141,13 @@ public class StartController {
     }
   }
 
-  // This method will take the user to the instructions page when they click on the Instructions
-  // button
+  /**
+   * This method is called when the instructions button is clicked. It will take the user to the
+   * instruction page.
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   private void onViewInstructions(ActionEvent event) throws IOException {
     // print the class of the source of the event
@@ -143,11 +161,21 @@ public class StartController {
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.INSTRUCTIONS));
   }
 
+  /**
+   * This method is called when the key is pressed. It will print the key that is pressed.
+   *
+   * @param event
+   */
   @FXML
   public void onKeyPressed(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " pressed");
   }
 
+  /**
+   * This method is called when the key is released. It will print the key that is released.
+   *
+   * @param event
+   */
   @FXML
   public void onKeyReleased(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " released");

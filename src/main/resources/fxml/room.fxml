@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
@@ -60,13 +61,17 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="crimeLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Crime Scene" textFill="WHITE" visible="false">
+                  <Label fx:id="crimeLabel" stylesheets="@../css/sidebarlabel.css" text="Crime Scene" textAlignment="CENTER" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="25.0" top="3.0" />
+                        <Insets bottom="20.0" left="16.0" top="3.0" />
                      </VBox.margin>
+                     <styleClass>
+                        <String fx:value="outline" />
+                        <String fx:value="label-container" />
+                     </styleClass>
                   </Label>
                </children>
             </VBox>
@@ -80,13 +85,17 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="ownerLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Owner" textFill="WHITE" visible="false">
+                  <Label fx:id="ownerLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="102.0" stylesheets="@../css/sidebarlabel.css" text="Cafe Owner" textAlignment="CENTER" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="45.0" top="3.0" />
+                        <Insets bottom="20.0" left="16.0" top="3.0" />
                      </VBox.margin>
+                     <styleClass>
+                        <String fx:value="outline" />
+                        <String fx:value="label-container" />
+                     </styleClass>
                   </Label>
                </children>
             </VBox>
@@ -103,13 +112,17 @@
                         <Rectangle2D />
                      </viewport>
                   </ImageView>
-                  <Label fx:id="workerLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Worker" textFill="WHITE" visible="false">
+                  <Label fx:id="workerLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" prefHeight="40.0" prefWidth="102.0" stylesheets="@../css/sidebarlabel.css" text="Restaurateur's Employee" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="43.0" top="3.0" />
+                        <Insets left="16.0" top="3.0" />
                      </VBox.margin>
+                     <styleClass>
+                        <String fx:value="outline" />
+                        <String fx:value="label-container" />
+                     </styleClass>
                   </Label>
                </children>
             </VBox>
@@ -123,13 +136,17 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="brotherLabel" styleClass="outline" stylesheets="@../css/sidebarlabel.css" text="Brother" textFill="WHITE" visible="false">
+                  <Label fx:id="brotherLabel" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" prefHeight="40.0" prefWidth="102.0" stylesheets="@../css/sidebarlabel.css" text="Restaurateur's Brother" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="40.0" top="3.0" />
+                        <Insets left="16.0" top="3.0" />
                      </VBox.margin>
+                     <styleClass>
+                        <String fx:value="outline" />
+                        <String fx:value="label-container" />
+                     </styleClass>
                   </Label>
                </children>
             </VBox>

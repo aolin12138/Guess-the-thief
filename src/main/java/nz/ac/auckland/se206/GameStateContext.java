@@ -77,6 +77,7 @@ public class GameStateContext {
             "Elder brother of the family",
             Voice.GOOGLE_EN_AU_STANDARD_D);
 
+    // Map rectangle IDs to suspects
     rectanglesToProfession = new HashMap<>();
     rectanglesToProfession.put("rectPerson1", person1);
     rectanglesToProfession.put("rectPerson2", person2);
@@ -172,18 +173,38 @@ public class GameStateContext {
     gameState.handleGuessClick();
   }
 
+  /**
+   * sets the room controller to this current instance
+   *
+   * @param roomController
+   */
   public void setRoomController(RoomController roomController) {
     this.roomController = roomController;
   }
 
+  /**
+   * gets the room controller that is set to this instance.
+   *
+   * @return
+   */
   public RoomController getRoomController() {
     return roomController;
   }
 
+  /**
+   * gets the current game state.
+   *
+   * @return
+   */
   public GameState getGameState() {
     return gameState;
   }
 
+  /**
+   * sets the guess controller to this current instance.
+   *
+   * @param guessController
+   */
   public void setGuessController(GuessController guessController) {
     this.guessController = guessController;
   }
@@ -200,34 +221,46 @@ public class GameStateContext {
     return isPerson1Talked && isPerson2Talked && isPerson3Talked;
   }
 
+  /** Checks if the first suspect has been spoken to. */
   public void person1Talked() {
     isPerson1Talked = true;
   }
 
+  /** Checks if the second suspect has been spoken to. */
   public void person2Talked() {
     isPerson2Talked = true;
   }
 
+  /** Checks if the third suspect has been spoken to. */
   public void person3Talked() {
     isPerson3Talked = true;
   }
 
+  /** Checks if any clue has been found. */
   public void clueFound() {
     isAnyClueFound = true;
   }
 
+  /** Checks if the first clue has been found. */
   public void clue1Found() {
     isClue1Found = true;
   }
 
+  /** Checks if the second clue has been found. */
   public void clue2Found() {
     isClue2Found = true;
   }
 
+  /** Checks if the third clue has been found. */
   public void clue3Found() {
     isClue3Found = true;
   }
 
+  /**
+   * Checks if any clue has been found.
+   *
+   * @return true if any clue has been found, false otherwise
+   */
   public boolean isAnyClueFound() {
     return isAnyClueFound;
   }

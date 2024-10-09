@@ -51,6 +51,7 @@ public class CallHistoryController {
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
 
+    // Update the progress indicator and timer label
     timeline
         .getKeyFrames()
         .add(

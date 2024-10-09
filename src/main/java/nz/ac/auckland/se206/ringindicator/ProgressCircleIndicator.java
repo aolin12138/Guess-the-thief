@@ -47,23 +47,32 @@ abstract class ProgressCircleIndicator extends Control {
     return StyleableProperties.STYLEABLES;
   }
 
+  /**
+   * The CssMetaData associated with this class, which may include the CssMetaData of its super
+   * classes.
+   */
   private static class StyleableProperties {
     private static final CssMetaData<ProgressCircleIndicator, Number> INNER_CIRCLE_RADIUS =
         new CssMetaData<ProgressCircleIndicator, Number>(
             "-fx-inner-radius", SizeConverter.getInstance(), 60) {
 
+          // @formatter:off
           @Override
           public boolean isSettable(ProgressCircleIndicator n) {
             return n.innerCircleRadiusProperty() == null
                 || !n.innerCircleRadiusProperty().isBound();
           }
 
+          // @formatter:on
           @Override
           public StyleableProperty<Number> getStyleableProperty(ProgressCircleIndicator n) {
             return (StyleableProperty<Number>) n.innerCircleRadiusProperty();
           }
         };
 
+    /**
+     * The CssMetaData for the ProgressCircleIndicator. This is used to style the control via CSS.
+     */
     public static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
 
     static {
@@ -74,6 +83,7 @@ abstract class ProgressCircleIndicator extends Control {
     }
   }
 
+  // create a new ReadOnlyIntegerWrapper object and a ReadOnlyBooleanWrapper object
   private ReadOnlyIntegerWrapper progress = new ReadOnlyIntegerWrapper(0);
   private ReadOnlyBooleanWrapper indeterminate = new ReadOnlyBooleanWrapper(false);
 
@@ -96,10 +106,16 @@ abstract class ProgressCircleIndicator extends Control {
         }
       };
 
+  /** Get the pregress circile indicator. */
   public ProgressCircleIndicator() {
     this.getStylesheets().add(getClass().getResource("/css/circleprogress.css").toExternalForm());
   }
 
+  /**
+   * Get the progress value.
+   *
+   * @return
+   */
   public int getProgress() {
     return progress.get();
   }
@@ -116,22 +132,44 @@ abstract class ProgressCircleIndicator extends Control {
     indeterminate.set(progressValue < 0);
   }
 
+  /**
+   * Get the progress property.
+   *
+   * @return
+   */
   public ReadOnlyIntegerProperty progressProperty() {
     return progress.getReadOnlyProperty();
   }
 
+  /**
+   * Check if the progress is indeterminate.
+   *
+   * @return
+   */
   public boolean isIndeterminate() {
     return indeterminate.get();
   }
 
+  /** Set the progress to indeterminate. */
   public void makeIndeterminate() {
     setProgress(INDETERMINATE_PROGRESS);
   }
 
+  /**
+   * Get the indeterminate property.
+   *
+   * @return
+   */
   public ReadOnlyBooleanProperty getIndeterminateProperty() {
     return indeterminate.getReadOnlyProperty();
   }
 
+  /**
+   * Set the default value to 100 if the value is greater than 100.
+   *
+   * @param value
+   * @return
+   */
   private int defaultToHundred(int value) {
     if (value > 100) {
       return 100;
@@ -139,18 +177,36 @@ abstract class ProgressCircleIndicator extends Control {
     return value;
   }
 
+  /**
+   * Set the inner circle radius.
+   *
+   * @param value
+   */
   public final void setInnerCircleRadius(int value) {
     innerCircleRadiusProperty().set(value);
   }
 
+  /**
+   * Get the inner circle radius property.
+   *
+   * @return
+   */
   public final DoubleProperty innerCircleRadiusProperty() {
     return innerCircleRadius;
   }
 
+  /**
+   * Get the inner circle radius.
+   *
+   * @return
+   */
   public final double getInnerCircleRadius() {
     return innerCircleRadiusProperty().get();
   }
 
+  /**
+   * @return The CssMetaData associated with this class, which may include the CssMetaData of its
+   */
   @Override
   public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
     return StyleableProperties.STYLEABLES;

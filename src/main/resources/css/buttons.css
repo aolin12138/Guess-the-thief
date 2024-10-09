@@ -24,7 +24,7 @@
 
 .text {
   -fx-font-family: "Times New Roman";
-  -fx-fill: black;
+  -fx-fill: #39220e;
   -fx-font-size: 13px;
   -fx-font-weight: bold;
 }
