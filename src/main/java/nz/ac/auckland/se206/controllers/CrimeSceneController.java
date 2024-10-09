@@ -153,6 +153,9 @@ public class CrimeSceneController {
                 event -> {
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
+                  if (TimelineManager.getTimeToCount() < 280000) {
+                    ringProgressIndicator.setStyle("-fx-fill: rgba(255,0,0,1);");
+                  }
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
