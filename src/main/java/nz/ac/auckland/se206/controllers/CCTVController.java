@@ -2,6 +2,7 @@ package nz.ac.auckland.se206.controllers;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -20,11 +21,13 @@ import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 public class CCTVController {
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
+  private static boolean isSeen = false;
 
   @FXML private Button returnButton;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
   @FXML private Label messageLabel;
+  @FXML private Label revealImage;
   @FXML private Rectangle brotherFace;
 
   /**
@@ -70,12 +73,31 @@ public class CCTVController {
   /** This method is called when the face is clicked. It will show the recognition label */
   @FXML
   private void onFaceClicked() {
-    messageLabel.setVisible(true);
+    if (!isSeen) {
+      isSeen = true;
+      messageLabel.setVisible(false);
+      revealImage.setVisible(true);
+      TranslateTransition recognitionTransition = new TranslateTransition();
+      recognitionTransition.setNode(revealImage);
+      recognitionTransition.setDuration(Duration.millis(500));
+      recognitionTransition.setFromX(500);
+      recognitionTransition.setToX(0);
+      recognitionTransition.play();
+    }
   }
 
   @FXML
-  void onFaceHoverEnter(MouseEvent event) {}
+  void onFaceHoverEnter(MouseEvent event) {
+    if (!isSeen) {
+      messageLabel.setText("FACIAL RECOGNITION AVAILABLE. CLICK FACE TO RUN.");
+      messageLabel.setVisible(true);
+    }
+  }
 
   @FXML
-  void onFaceHoverExit(MouseEvent event) {}
+  void onFaceHoverExit(MouseEvent event) {
+    if (!isSeen) {
+      messageLabel.setVisible(false);
+    }
+  }
 }

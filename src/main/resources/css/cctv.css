@@ -1,0 +1,10 @@
+.label {
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+}
+
+.label-container {
+  -fx-background-color: rgb(237, 190, 132);
+  -fx-padding: 0.2px;
+  -fx-background-radius: 20px;
+}
