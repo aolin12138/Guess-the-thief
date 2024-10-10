@@ -51,7 +51,7 @@ public class PhoneController {
   @FXML private ImageView phoneApp;
   @FXML private ImageView callEnd;
 
-  private String audioPath = "/sounds/voicemail2.mp3";
+  private String audioPath = "/sounds/cafe_voicemail.mp3";
   private Media audio = new Media(getClass().getResource(audioPath).toString());
   private MediaPlayer mediaPlayer = new MediaPlayer(audio);
   private PhoneClueManager historyImageManager;
@@ -143,7 +143,7 @@ public class PhoneController {
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
                   // flash the timer red below 30 seconds
-                  if (TimelineManager.getTimeToCount() < 30000) {
+                  if (TimelineManager.getTimeToCount() <= 30000) {
                     if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 == 0) {
                       timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
                     } else {

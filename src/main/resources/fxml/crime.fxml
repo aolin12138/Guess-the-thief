@@ -152,10 +152,17 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <Button fx:id="buttonSlide" layoutX="276.0" layoutY="499.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="267.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
+      <Button fx:id="buttonSlide" layoutX="158.0" layoutY="445.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="139.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
          <font>
             <Font name="Calibri" size="10.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ios-menu-4.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
       <ImageView fx:id="newspaperImage" fitHeight="62.0" fitWidth="133.0" layoutX="416.0" layoutY="421.0" onMouseClicked="#onNewspaperClueClicked" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -181,7 +188,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <TextArea fx:id="instructionsTextArea" editable="false" layoutX="10.0" layoutY="65.0" prefHeight="215.0" prefWidth="423.0" stylesheets="@../css/textarea.css" text="A treasured family recipe belonging to the successful restaurateur has been stolen during a party celebrating his second Michelin star!&#10;&#10;There are 3 prime suspects remaining in this case.&#10;&#10;You must interview all 3 suspects, and find at least one clue in the crime scene before making your guess.&#10;&#10;You will have 5 minutes to investigate, and then 1 minute to make your guess and submit your reasoning to the judge. " wrapText="true">
+      <TextArea fx:id="instructionsTextArea" editable="false" layoutX="-450.0" layoutY="65.0" prefHeight="215.0" prefWidth="423.0" stylesheets="@../css/textarea.css" text="A treasured family recipe belonging to the successful restaurateur has been stolen during a party celebrating his second Michelin star!&#10;&#10;There are 3 prime suspects remaining in this case.&#10;&#10;You must interview all 3 suspects, and find at least one clue in the crime scene before making your guess.&#10;&#10;You will have 5 minutes to investigate, and then 1 minute to make your guess and submit your reasoning to the judge. " wrapText="true">
          <font>
             <Font name="Arial" size="13.0" />
          </font>
