@@ -34,12 +34,12 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <Label fx:id="recognition" layoutX="93.0" layoutY="-4.0" prefHeight="62.0" prefWidth="623.0" text="FACIAL RECOGNITION: THIS IS THE SUCCESSFUL OWNERS BROTHER" textFill="RED" visible="false">
+      <Label fx:id="messageLabel" layoutX="93.0" layoutY="-4.0" prefHeight="62.0" prefWidth="623.0" text="FACIAL RECOGNITION: THIS IS THE SUCCESSFUL OWNERS BROTHER" textFill="RED" visible="false">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Rectangle fx:id="brotherFace" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="238.0" layoutX="83.0" layoutY="58.0" onMouseClicked="#onFaceClicked" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="176.0">
+      <Rectangle fx:id="brotherFace" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="238.0" layoutX="83.0" layoutY="58.0" onMouseClicked="#onFaceClicked" onMouseEntered="#onFaceHoverEnter" onMouseExited="#onFaceHoverExit" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="176.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

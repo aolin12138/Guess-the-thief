@@ -8,6 +8,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -23,7 +24,7 @@ public class CCTVController {
   @FXML private Button returnButton;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
-  @FXML private Label recognition;
+  @FXML private Label messageLabel;
   @FXML private Rectangle brotherFace;
 
   /**
@@ -69,6 +70,12 @@ public class CCTVController {
   /** This method is called when the face is clicked. It will show the recognition label */
   @FXML
   private void onFaceClicked() {
-    recognition.setVisible(true);
+    messageLabel.setVisible(true);
   }
+
+  @FXML
+  void onFaceHoverEnter(MouseEvent event) {}
+
+  @FXML
+  void onFaceHoverExit(MouseEvent event) {}
 }
