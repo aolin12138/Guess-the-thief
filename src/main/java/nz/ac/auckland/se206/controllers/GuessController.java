@@ -230,7 +230,7 @@ public class GuessController {
                   ringProgressIndicator.setProgress(progress);
                   timerLabel.setText(Utils.formatTime(timeForGuessing));
                   // flash the timer red below 15 seconds
-                  if (timeForGuessing < 15000) {
+                  if (timeForGuessing <= 15000) {
                     if ((int) (timeForGuessing / 1000) % 2 == 0) {
                       timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
                     } else {

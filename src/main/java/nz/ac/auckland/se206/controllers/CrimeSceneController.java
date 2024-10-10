@@ -155,7 +155,7 @@ public class CrimeSceneController {
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
                   // flash the timer red below 30 seconds
-                  if (TimelineManager.getTimeToCount() < 30000) {
+                  if (TimelineManager.getTimeToCount() <= 30000) {
                     if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 == 0) {
                       timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
                     } else {
