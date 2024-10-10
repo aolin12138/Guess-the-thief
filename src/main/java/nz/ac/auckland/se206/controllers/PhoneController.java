@@ -19,6 +19,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.ClueManager;
+import nz.ac.auckland.se206.PhoneClueManager;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
@@ -53,9 +54,9 @@ public class PhoneController {
   private String audioPath = "/sounds/voicemail2.mp3";
   private Media audio = new Media(getClass().getResource(audioPath).toString());
   private MediaPlayer mediaPlayer = new MediaPlayer(audio);
-  private ClueManager historyImageManager;
+  private PhoneClueManager historyImageManager;
   private ClueManager phoneAppManager;
-  private ClueManager callEndManager;
+  private PhoneClueManager callEndManager;
 
   /** This method intializes the phone controller */
   @FXML
@@ -124,9 +125,9 @@ public class PhoneController {
           }
         });
 
-    historyImageManager = new ClueManager(historyImage);
+    historyImageManager = new PhoneClueManager(historyImage);
     phoneAppManager = new ClueManager(phoneApp);
-    callEndManager = new ClueManager(callEnd);
+    callEndManager = new PhoneClueManager(callEnd);
     styleScene();
 
     // Add the ring progress indicator to the pane
