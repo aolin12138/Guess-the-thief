@@ -67,6 +67,7 @@ public class PhoneController {
     backButton.setCursor(Cursor.HAND);
     phoneApp.setCursor(Cursor.HAND);
     historyImage.setCursor(Cursor.HAND);
+    callEnd.setCursor(Cursor.HAND);
 
     Rectangle clip = new Rectangle(209, 400); // Clip rectangle matching the phone screen size
     phonePane.setClip(clip);
