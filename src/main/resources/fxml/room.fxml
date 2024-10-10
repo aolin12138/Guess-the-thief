@@ -172,7 +172,7 @@
             <Insets left="15.0" right="35.0" />
          </padding>
       </TextField>
-      <Label fx:id="chatStats" alignment="CENTER" layoutX="295.0" layoutY="14.0" prefHeight="26.0" prefWidth="318.0" styleClass="chatStats" stylesheets="@../css/suspect_scene.css" text="Testing" textAlignment="CENTER" />
+      <Label fx:id="chatStats" alignment="CENTER" layoutX="223.0" layoutY="13.0" prefHeight="26.0" prefWidth="318.0" styleClass="chatStats" stylesheets="@../css/suspect_scene.css" text="Testing" textAlignment="CENTER" />
       <Button fx:id="sendButton" layoutX="622.0" layoutY="550.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="24.0" prefWidth="25.0" styleClass="sendButton" stylesheets="@../css/suspect_scene.css">
          <graphic>
             <ImageView fitHeight="16.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">

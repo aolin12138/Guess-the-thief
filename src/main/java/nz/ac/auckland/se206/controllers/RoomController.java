@@ -850,9 +850,6 @@ public class RoomController {
   private void appendMessage(ChatMessage message, boolean isUser) {
     Text text = new Text();
 
-    if (text.getLayoutBounds().getWidth() > 400) {
-      text.setWrappingWidth(400);
-    }
     // Set background and alignment based on the sender
     if (isUser) {
       StackPane messageContainer = new StackPane();
