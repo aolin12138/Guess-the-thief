@@ -141,8 +141,15 @@ public class GuessController {
    */
   @FXML
   public void initialize() {
-    // set the state to the guessing state
+    setGameStateContext(CrimeSceneController.getContext());
     context.setState(context.getGuessingState());
+
+    if (!context.isAnyClueFound() && !context.isAllSuspectsSpokenTo()) {
+      context.setState(context.getGameOverState());
+      styleEndOfGame();
+      instructionLabel.setText("You ran out of time! Game over!");
+      return;
+    }
 
     sendButton.setCursor(Cursor.HAND);
     sendButton.setDisable(true);
