@@ -3,7 +3,6 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -26,7 +25,6 @@ import nz.ac.auckland.se206.Utils;
 public class StartController {
 
   @FXML private Button startButton;
-  @FXML private Button instructionsButton;
   @FXML private Label gameTitle;
   @FXML private Label scoreBoardNameLabel1;
   @FXML private Label scoreBoardNameLabel2;
@@ -139,26 +137,6 @@ public class StartController {
       TimelineManager.setContext(CrimeSceneController.getContext());
       TimelineManager.startTimer();
     }
-  }
-
-  /**
-   * This method is called when the instructions button is clicked. It will take the user to the
-   * instruction page.
-   *
-   * @param event
-   * @throws IOException
-   */
-  @FXML
-  private void onViewInstructions(ActionEvent event) throws IOException {
-    // print the class of the source of the event
-    System.out.println(event.getSource().getClass() + "\n\n");
-    System.out.println(event.getSource());
-    // print the source of the event
-    Button button = (Button) event.getSource();
-    System.out.println(button.getScene());
-    Scene sceneOfButton = button.getScene();
-    // set the root of the scene to the instructions page
-    sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.INSTRUCTIONS));
   }
 
   /**
