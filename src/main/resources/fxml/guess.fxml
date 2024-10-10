@@ -43,7 +43,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <HBox layoutX="65.0" layoutY="160.0" prefHeight="232.0" prefWidth="636.0" spacing="125.0">
+      <HBox layoutX="75.0" layoutY="143.0" prefHeight="232.0" prefWidth="636.0" spacing="125.0">
          <children>
             <VBox minWidth="-Infinity" prefHeight="232.0" prefWidth="150.0">
                <children>
@@ -120,22 +120,22 @@
             </VBox>
          </children>
       </HBox>
+      <TextArea fx:id="guessTextArea" layoutX="216.0" layoutY="341.0" prefHeight="134.0" prefWidth="394.0" visible="false" />
+      <Button fx:id="restartButton" layoutX="698.0" layoutY="40.0" mnemonicParsing="false" onAction="#onRestartButtonClicked" text="Play Again" />
       <Label fx:id="explanationLabel" layoutX="154.0" layoutY="362.0" text="Please explain your answer below" textFill="WHITE" visible="false">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextArea fx:id="guessTextArea" layoutX="216.0" layoutY="341.0" prefHeight="134.0" prefWidth="394.0" visible="false" />
-      <Button fx:id="restartButton" layoutX="698.0" layoutY="40.0" mnemonicParsing="false" onAction="#onRestartButtonClicked" text="Play Again" />
       <Label fx:id="leaderboardResultLabel" alignment="CENTER" layoutX="169.0" layoutY="108.0" prefHeight="36.0" prefWidth="500.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" styleClass="instructionsLabel" stylesheets="@../css/suspect_scene.css" text="Leaderboard Result" textFill="WHITE">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Pane fx:id="chatPane" layoutX="306.0" layoutY="328.0" prefHeight="200.0" prefWidth="310.0">
+      <Pane fx:id="chatPane" layoutX="306.0" layoutY="328.0" prefHeight="200.0" prefWidth="310.0" visible="false">
          <children>
             <Button fx:id="buttonSend" layoutX="359.0" layoutY="200.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="26.0" prefWidth="9.0" stylesheets="@../css/buttons.css" text="Send" visible="false" />
-            <ScrollPane fx:id="scrollPane" layoutX="-140.0" layoutY="32.0" prefHeight="198.0" prefWidth="531.0" stylesheets="@../css/scrollpane.css">
+            <ScrollPane fx:id="scrollPane" layoutX="-140.0" layoutY="45.0" prefHeight="185.0" prefWidth="531.0" stylesheets="@../css/scrollpane.css">
                <content>
                   <VBox fx:id="messageBoxes" prefHeight="152.0" prefWidth="506.0" spacing="10.0">
                      <opaqueInsets>

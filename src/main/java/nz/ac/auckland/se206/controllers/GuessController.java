@@ -532,6 +532,7 @@ public class GuessController {
     Utils.setTimeUsed(timeForGuessing);
     Platform.runLater(
         () -> {
+          messageBoxes.getChildren().clear();
           appendMessage(message, true);
         });
     timeline.stop();
@@ -702,17 +703,17 @@ public class GuessController {
       chatPane.setVisible(true); // Show before animation
       transition.setFromY(chatPane.getHeight() + 50); // Start off-screen
       transition.setToY(0); // Move to visible position
+      transition.play();
     }
 
     transition
         .onFinishedProperty()
         .set(
             e -> {
-              explanationLabel.setVisible(true);
+              appendMessage(
+                  "Hello Investigator " + Utils.getPlayerName() + ", please explain your decision.",
+                  appendedSystem);
             });
-
-    // Play the transition
-    transition.play();
   }
 
   @SuppressWarnings("static-access")
