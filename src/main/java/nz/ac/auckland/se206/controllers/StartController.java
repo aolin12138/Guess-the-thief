@@ -108,6 +108,7 @@ public class StartController {
       return;
     } else {
       Utils.setPlayerName(playerNameWindow.getText());
+      playerNameWindow.clear();
     }
     // Load the crime scene
     FXMLLoader crimeSceneLoader = new FXMLLoader(App.class.getResource("/fxml/crime.fxml"));

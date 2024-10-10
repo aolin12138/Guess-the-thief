@@ -11,7 +11,9 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -34,9 +36,12 @@ import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
 import nz.ac.auckland.apiproxy.chat.openai.ChatMessage;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
+import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
+import nz.ac.auckland.se206.SceneManager;
+import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
@@ -48,7 +53,6 @@ public class GuessController {
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static boolean isThiefFound = false;
-  private static GuessController guessController;
   private static boolean isGameWon = false;
 
   public static boolean getThiefFound() {
@@ -57,6 +61,10 @@ public class GuessController {
 
   public static boolean getIsGameWon() {
     return isGameWon;
+  }
+
+  public static void setGameStateContext(GameStateContext gameStateContext) {
+    context = gameStateContext;
   }
 
   @FXML private Rectangle rectPerson1;
@@ -93,6 +101,7 @@ public class GuessController {
   @FXML private ImageView crimeScene;
 
   @FXML private StackPane indicatorPane;
+  @FXML private StackPane loadingPane;
   @FXML private Pane statsPane;
   @FXML private Label lblDescription;
   @FXML private Label ownerLabel;
@@ -605,11 +614,6 @@ public class GuessController {
     return currentSuspect;
   }
 
-  @SuppressWarnings("static-access")
-  public GuessController getGuessController() {
-    return this.guessController;
-  }
-
   public void styleScene() {
     // set the owner image to be hovable
     ownerImage.setOnMouseEntered(
@@ -698,5 +702,41 @@ public class GuessController {
   }
 
   @FXML
-  void onRestartButtonClicked(MouseEvent event) {}
+  void onRestartButtonClicked(ActionEvent event) {
+    TimelineManager.initialiseTimeLine();
+    CrimeSceneController.setContext(new GameStateContext());
+    Platform.runLater(
+        () -> {
+          Scene scene = restartButton.getScene();
+          scene.setRoot(SceneManager.getRoot(SceneManager.Scene.START));
+          FXMLLoader phoneLoader = new FXMLLoader(App.class.getResource("/fxml/phone.fxml"));
+          FXMLLoader newspaperLoader =
+              new FXMLLoader(App.class.getResource("/fxml/newspaper.fxml"));
+          FXMLLoader cctvLoader = new FXMLLoader(App.class.getResource("/fxml/cctv.fxml"));
+          try {
+            SceneManager.addRoot(SceneManager.Scene.PHONE, phoneLoader.load());
+          } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+          try {
+            SceneManager.addRoot(SceneManager.Scene.NEWSPAPER, newspaperLoader.load());
+          } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+          try {
+            SceneManager.addRoot(SceneManager.Scene.CCTV, cctvLoader.load());
+          } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+          // Set the root of the scene to the start scene
+          SceneManager.setPhoneLoader(phoneLoader);
+          SceneManager.setCameraLoader(cctvLoader);
+          SceneManager.setNewspaperLoader(newspaperLoader);
+
+          timeForGuessing = 60000;
+        });
+  }
 }

@@ -265,7 +265,7 @@ public class CrimeSceneController {
     // Check all 3 suspects have been spoken to and at least 1 clue has been clicked
     if (context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
       Utils.setTimeUsed(TimelineManager.getTimeToCount());
-      timeline.stop();
+      TimelineManager.stopTimer();
       context.setState(context.getGuessingState());
       // Play the guess scene
       App.setRoot("guess");

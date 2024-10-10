@@ -14,6 +14,7 @@ public class TimelineManager {
 
   /** This method initialises the timeline */
   public static void initialiseTimeLine() {
+    timeToCount = 300000;
     timeline = new Timeline();
     timeline
         .getKeyFrames()

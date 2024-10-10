@@ -21,7 +21,7 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <TextArea editable="false" layoutX="193.0" layoutY="204.0" prefHeight="182.0" prefWidth="420.0" text="A treasured family recipe has been stolen during a house party!&#10;&#10;There are 3 prime suspects remaining in this case.&#10;&#10;Your mission is to interview all 3 remaining suspects, and inspect&#10; the crime scene for clues.&#10;&#10;You will have 5 minutes to uncover the thief, and then 1 minute to &#10;make your guess and submit your reasoning to the judge.">
+      <TextArea editable="false" layoutX="186.0" layoutY="191.0" prefHeight="226.0" prefWidth="438.0" stylesheets="@../css/textarea.css" text="A treasured family recipe has been stolen during a house party!&#10;&#10;There are 3 prime suspects remaining in this case.&#10;&#10;Your mission is to interview all 3 remaining suspects, and inspect&#10; the crime scene for clues.&#10;&#10;You will have 5 minutes to uncover the thief, and then 1 minute to &#10;make your guess and submit your reasoning to the judge." wrapText="true">
          <font>
             <Font size="14.0" />
          </font></TextArea>
