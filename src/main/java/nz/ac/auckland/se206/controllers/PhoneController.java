@@ -51,7 +51,7 @@ public class PhoneController {
   @FXML private ImageView phoneApp;
   @FXML private ImageView callEnd;
 
-  private String audioPath = "/sounds/voicemail2.mp3";
+  private String audioPath = "/sounds/cafe_voicemail.mp3";
   private Media audio = new Media(getClass().getResource(audioPath).toString());
   private MediaPlayer mediaPlayer = new MediaPlayer(audio);
   private PhoneClueManager historyImageManager;
