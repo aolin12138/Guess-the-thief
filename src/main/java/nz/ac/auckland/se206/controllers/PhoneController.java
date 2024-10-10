@@ -32,7 +32,6 @@ public class PhoneController {
 
   @FXML private StackPane indicatorPane;
 
-  @FXML private Rectangle callNumberRectangle;
   @FXML private ImageView lockScreen;
   @FXML private ImageView screen;
   @FXML private ImageView callHistory;
@@ -175,7 +174,6 @@ public class PhoneController {
     swipeUpText.setVisible(false);
     callHistory.setVisible(true);
     phoneApp.setVisible(false);
-    callNumberRectangle.setDisable(false);
     historyImage.setVisible(true);
   }
 
@@ -190,7 +188,6 @@ public class PhoneController {
     arrow.setVisible(false);
     swipeUpText.setVisible(false);
     callScreen.setVisible(true);
-    callNumberRectangle.setDisable(true);
     historyImage.setVisible(false);
     callEnd.setVisible(true);
 
@@ -204,7 +201,6 @@ public class PhoneController {
         () -> {
           // Stop the voicemail sound if it has finished playing or player leaves the scene
           callScreen.setVisible(false);
-          callNumberRectangle.setDisable(false);
           historyImage.setVisible(true);
           callEnd.setVisible(false);
           mediaPlayer.stop();
@@ -265,7 +261,6 @@ public class PhoneController {
   @FXML
   private void onEndCallButtonClicked(MouseEvent event) {
     callScreen.setVisible(false);
-    callNumberRectangle.setDisable(false);
     historyImage.setVisible(true);
     callEnd.setVisible(false);
     mediaPlayer.stop();
@@ -303,7 +298,6 @@ public class PhoneController {
   /** This method is called when it needs to disable all the rectangles */
   public void disableAll() {
     phoneApp.setVisible(false);
-    callNumberRectangle.setDisable(true);
     historyImage.setVisible(false);
     callEnd.setVisible(false);
   }
@@ -312,7 +306,6 @@ public class PhoneController {
   public void restart() {
     if (callScreen.isVisible()) {
       callScreen.setVisible(false);
-      callNumberRectangle.setDisable(false);
       historyImage.setVisible(false);
       callEnd.setVisible(true);
     }

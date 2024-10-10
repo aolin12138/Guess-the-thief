@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -9,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.PhoneController">
@@ -64,11 +62,6 @@
             </Label>
          </children>
       </StackPane>
-      <Rectangle fx:id="callNumberRectangle" arcHeight="5.0" arcWidth="5.0" disable="true" fill="DODGERBLUE" height="55.0" layoutX="318.0" layoutY="83.0" onMouseClicked="#callNumber" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="167.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Rectangle>
       <ImageView fx:id="historyImage" fitHeight="145.0" fitWidth="182.0" layoutX="312.0" layoutY="80.0" onMouseClicked="#callNumber" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/history_hover.png" />
