@@ -63,11 +63,7 @@
          </children>
       </StackPane>
 
-      <Rectangle fx:id="callNumberRectangle" arcHeight="5.0" arcWidth="5.0" disable="true" fill="DODGERBLUE" height="55.0" layoutX="318.0" layoutY="83.0" onMouseClicked="#callNumber" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="167.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Rectangle>
+     
 
       <ImageView fx:id="historyImage" fitHeight="145.0" fitWidth="182.0" layoutX="312.0" layoutY="80.0" onMouseClicked="#callNumber" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
