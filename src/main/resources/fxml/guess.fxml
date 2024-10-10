@@ -79,7 +79,6 @@
                         <Insets left="15.0" />
                      </VBox.margin>
                   </ImageView>
-                  <StackPane fx:id="loadingPane" prefHeight="123.0" prefWidth="123.0" />
                   <Label fx:id="workerLabel" alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="68.0" prefWidth="150.0" stylesheets="@../css/guesslabel.css" text="Restaurateur's Employee" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
                      <font>
                         <Font name="Bai Jamjuree Regular" size="20.0" />
@@ -135,15 +134,12 @@
       <Pane fx:id="chatPane" layoutX="306.0" layoutY="328.0" prefHeight="200.0" prefWidth="310.0" visible="false">
          <children>
             <Button fx:id="buttonSend" layoutX="359.0" layoutY="200.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="26.0" prefWidth="9.0" stylesheets="@../css/buttons.css" text="Send" visible="false" />
-            <ScrollPane fx:id="scrollPane" layoutX="-140.0" layoutY="45.0" prefHeight="185.0" prefWidth="531.0" stylesheets="@../css/scrollpane.css">
+            <ScrollPane fx:id="scrollPane" layoutX="-140.0" layoutY="45.0" prefHeight="185.0" prefWidth="531.0" style="-fx-background-radius: 10;" stylesheets="@../css/scrollpane.css">
                <content>
                   <VBox fx:id="messageBoxes" prefHeight="152.0" prefWidth="506.0" spacing="10.0">
                      <opaqueInsets>
                         <Insets bottom="30.0" />
                      </opaqueInsets>
-                     <padding>
-                        <Insets bottom="40.0" />
-                     </padding>
                   </VBox>
                </content>
                <padding>

@@ -534,6 +534,8 @@ public class GuessController {
         () -> {
           messageBoxes.getChildren().clear();
           appendMessage(message, true);
+          sendButton.setVisible(false);
+          inputField.setVisible(false);
         });
     timeline.stop();
     // Set the progress indicator to visible
@@ -711,7 +713,7 @@ public class GuessController {
         .set(
             e -> {
               appendMessage(
-                  "Hello Investigator " + Utils.getPlayerName() + ", please explain your decision.",
+                  "Investigator " + Utils.getPlayerName() + ", please explain your decision.",
                   appendedSystem);
             });
   }

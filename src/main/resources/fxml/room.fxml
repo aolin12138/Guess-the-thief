@@ -40,9 +40,9 @@
          </image>
       </ImageView>
       <Pane fx:id="statsPane" layoutX="4.0" layoutY="27.0" prefHeight="25.0" prefWidth="26.0" />
-      <VBox fx:id="imagesVerticalBox" layoutX="660.0" layoutY="10.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" visible="false">
+      <VBox fx:id="imagesVerticalBox" layoutX="665.0" layoutY="38.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" visible="false">
          <children>
-            <VBox prefHeight="88.0" prefWidth="132.0">
+            <VBox prefHeight="88.0" prefWidth="132.0" spacing="5.0">
                <children>
                   <ImageView id="crimeImage" fx:id="crimeImage" fitHeight="70.0" fitWidth="135.0" onMouseClicked="#onCrimeSceneClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -57,16 +57,19 @@
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="20.0" left="16.0" top="3.0" />
+                        <Insets bottom="20.0" left="20.0" top="3.0" />
                      </VBox.margin>
                      <styleClass>
                         <String fx:value="outline" />
                         <String fx:value="label-container" />
                      </styleClass>
+                     <opaqueInsets>
+                        <Insets left="30.0" />
+                     </opaqueInsets>
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="83.0" prefWidth="130.0">
+            <VBox prefHeight="83.0" prefWidth="130.0" spacing="5.0">
                <children>
                   <ImageView id="ownerImage" fx:id="ownerImage" fitHeight="80.0" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -90,7 +93,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="88.0" prefWidth="130.0">
+            <VBox prefHeight="88.0" prefWidth="130.0" spacing="5.0">
                <children>
                   <ImageView id="workerImage" fx:id="workerImage" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -117,7 +120,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="88.0" prefWidth="130.0">
+            <VBox prefHeight="88.0" prefWidth="130.0" spacing="5.0">
                <children>
                   <ImageView id="brotherImage" fx:id="brotherImage" fitHeight="80.0" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -152,7 +155,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <ScrollPane fx:id="scrollPane" layoutX="122.0" layoutY="387.0" prefHeight="198.0" prefWidth="531.0" stylesheets="@../css/scrollpane.css">
+      <ScrollPane fx:id="scrollPane" layoutX="122.0" layoutY="387.0" prefHeight="198.0" prefWidth="531.0" style="-fx-background-radius: 10;" stylesheets="@../css/scrollpane.css">
          <content>
             <VBox fx:id="messageBoxes" prefHeight="176.0" prefWidth="522.0" spacing="10.0">
                <opaqueInsets>
@@ -182,5 +185,6 @@
             </ImageView>
          </graphic>
       </Button>
+      <Pane prefHeight="200.0" prefWidth="200.0" />
    </children>
 </Pane>
