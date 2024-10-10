@@ -53,7 +53,6 @@ public class GuessController {
   private static int progress = 0;
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static boolean isThiefFound = false;
-  private static GuessController guessController;
   private static boolean isGameWon = false;
 
   public static boolean getThiefFound() {
@@ -102,6 +101,7 @@ public class GuessController {
   @FXML private ImageView crimeScene;
 
   @FXML private StackPane indicatorPane;
+  @FXML private StackPane loadingPane;
   @FXML private Pane statsPane;
   @FXML private Label lblDescription;
   @FXML private Label ownerLabel;
@@ -614,11 +614,6 @@ public class GuessController {
     return currentSuspect;
   }
 
-  @SuppressWarnings("static-access")
-  public GuessController getGuessController() {
-    return this.guessController;
-  }
-
   public void styleScene() {
     // set the owner image to be hovable
     ownerImage.setOnMouseEntered(
@@ -712,36 +707,12 @@ public class GuessController {
     CrimeSceneController.setContext(new GameStateContext());
     Platform.runLater(
         () -> {
-          // Load the fxml files
-          FXMLLoader startLoader = new FXMLLoader(App.class.getResource("/fxml/start.fxml"));
-          FXMLLoader roomLoader = new FXMLLoader(App.class.getResource("/fxml/room.fxml"));
-          FXMLLoader instructionLoader =
-              new FXMLLoader(App.class.getResource("/fxml/instructions.fxml"));
+          Scene scene = restartButton.getScene();
+          scene.setRoot(SceneManager.getRoot(SceneManager.Scene.START));
           FXMLLoader phoneLoader = new FXMLLoader(App.class.getResource("/fxml/phone.fxml"));
           FXMLLoader newspaperLoader =
               new FXMLLoader(App.class.getResource("/fxml/newspaper.fxml"));
-          FXMLLoader callHistoryLoader =
-              new FXMLLoader(App.class.getResource("/fxml/callhistory.fxml"));
           FXMLLoader cctvLoader = new FXMLLoader(App.class.getResource("/fxml/cctv.fxml"));
-          // Load the fxml files
-          try {
-            SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, instructionLoader.load());
-          } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
-          try {
-            SceneManager.addRoot(SceneManager.Scene.START, startLoader.load());
-          } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
-          try {
-            SceneManager.addRoot(SceneManager.Scene.ROOM, roomLoader.load());
-          } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
           try {
             SceneManager.addRoot(SceneManager.Scene.PHONE, phoneLoader.load());
           } catch (IOException e) {
@@ -755,26 +726,17 @@ public class GuessController {
             e.printStackTrace();
           }
           try {
-            SceneManager.addRoot(SceneManager.Scene.CALL_HISTORY, callHistoryLoader.load());
-          } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
-          try {
             SceneManager.addRoot(SceneManager.Scene.CCTV, cctvLoader.load());
           } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
           }
           // Set the root of the scene to the start scene
-          SceneManager.setRoomLoader(roomLoader);
           SceneManager.setPhoneLoader(phoneLoader);
           SceneManager.setCameraLoader(cctvLoader);
-          SceneManager.setCallHistoryLoader(callHistoryLoader);
           SceneManager.setNewspaperLoader(newspaperLoader);
 
-          Scene scene = restartButton.getScene();
-          scene.setRoot(SceneManager.getRoot(SceneManager.Scene.START));
+          timeForGuessing = 60000;
         });
   }
 }
