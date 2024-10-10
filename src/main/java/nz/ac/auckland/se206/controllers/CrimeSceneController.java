@@ -424,6 +424,7 @@ public class CrimeSceneController {
    */
   @FXML
   public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {
+    onHideHelpClicked(event);
     buttonSlide.setText("Show Side Bar");
     ImageView clickedImage = (ImageView) event.getSource();
     id = clickedImage.getId();
