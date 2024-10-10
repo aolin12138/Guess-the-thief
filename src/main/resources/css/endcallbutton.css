@@ -1,0 +1,16 @@
+.endCallButton {
+  background-color: trasnparent;
+  -fx-background-radius: 0;
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-border-width: 0.5 0.5 0.5 0.5;
+  -fx-border-radius: 0.2em;
+  -fx-background-insets: 0;
+}
+
+.button:hover {
+  -fx-background-color: rgb(255, 0, 0);
+  -fx-background-radius: 0.5em;
+  -fx-border-radius: 0.2em;
+  /* -fx-background-insets: 0; */
+}

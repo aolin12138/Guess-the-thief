@@ -18,6 +18,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import nz.ac.auckland.se206.ClueManager;
+import nz.ac.auckland.se206.PhoneClueManager;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
@@ -31,7 +33,6 @@ public class PhoneController {
 
   @FXML private StackPane indicatorPane;
 
-  @FXML private Rectangle callRectangle;
   @FXML private Rectangle callNumberRectangle;
   @FXML private ImageView lockScreen;
   @FXML private ImageView screen;
@@ -46,10 +47,16 @@ public class PhoneController {
   @FXML private Button backButton;
   @FXML private Rectangle phoneAppRectangle;
   @FXML private Circle endCallButton;
+  @FXML private ImageView historyImage;
+  @FXML private ImageView phoneApp;
+  @FXML private ImageView callEnd;
 
   private String audioPath = "/sounds/voicemail2.mp3";
   private Media audio = new Media(getClass().getResource(audioPath).toString());
   private MediaPlayer mediaPlayer = new MediaPlayer(audio);
+  private PhoneClueManager historyImageManager;
+  private ClueManager phoneAppManager;
+  private PhoneClueManager callEndManager;
 
   /** This method intializes the phone controller */
   @FXML
@@ -77,7 +84,6 @@ public class PhoneController {
           // Only move the lock screen if the drag distance is significant
           if (dragDistance > 40) { // Threshold to avoid triggering on small movements
             unlock(lockScreen, phonePane.getHeight());
-            callRectangle.setDisable(false);
             arrow.setVisible(false);
             swipeUpText.setVisible(false);
           }
@@ -98,7 +104,6 @@ public class PhoneController {
             unlock(lockScreen, phonePane.getHeight());
             arrow.setVisible(false);
             swipeUpText.setVisible(false);
-            callRectangle.setDisable(false);
           }
         });
 
@@ -117,9 +122,14 @@ public class PhoneController {
             unlock(lockScreen, phonePane.getHeight());
             arrow.setVisible(false);
             swipeUpText.setVisible(false);
-            callRectangle.setDisable(false);
           }
         });
+
+    historyImageManager = new PhoneClueManager(historyImage);
+    phoneAppManager = new ClueManager(phoneApp);
+    callEndManager = new PhoneClueManager(callEnd);
+    styleScene();
+
     // Add the ring progress indicator to the pane
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
@@ -165,8 +175,9 @@ public class PhoneController {
     arrow.setVisible(false);
     swipeUpText.setVisible(false);
     callHistory.setVisible(true);
-    callRectangle.setDisable(true);
+    phoneApp.setVisible(false);
     callNumberRectangle.setDisable(false);
+    historyImage.setVisible(true);
   }
 
   /**
@@ -181,18 +192,23 @@ public class PhoneController {
     swipeUpText.setVisible(false);
     callScreen.setVisible(true);
     callNumberRectangle.setDisable(true);
+    historyImage.setVisible(false);
+    callEnd.setVisible(true);
 
     if (endCallButton.isDisable()) {
       endCallButton.setDisable(false);
       endCallButton.setCursor(Cursor.HAND);
     }
     // Play the voicemail sound
+    Utils.stopPlayer(); // stops any other audio from playing over the top
     mediaPlayer.play();
     mediaPlayer.setOnEndOfMedia(
         () -> {
           // Stop the voicemail sound if it has finished playing or player leaves the scene
           callScreen.setVisible(false);
           callNumberRectangle.setDisable(false);
+          historyImage.setVisible(true);
+          callEnd.setVisible(false);
           mediaPlayer.stop();
         });
   }
@@ -208,6 +224,7 @@ public class PhoneController {
     transition.setToY(-height); // Move the lock screen off the top
     transition.setOnFinished(event -> lockScreen.setVisible(false)); // Hide lock screen
     transition.play();
+    phoneApp.setVisible(true);
   }
 
   /**
@@ -251,13 +268,46 @@ public class PhoneController {
   private void onEndCallButtonClicked(MouseEvent event) {
     callScreen.setVisible(false);
     callNumberRectangle.setDisable(false);
+    historyImage.setVisible(true);
+    callEnd.setVisible(false);
     mediaPlayer.stop();
+  }
+
+  @FXML
+  public void styleScene() {
+    historyImage.setOnMouseEntered(
+        e -> {
+          historyImageManager.hoverIn();
+        });
+    historyImage.setOnMouseExited(
+        e -> {
+          historyImageManager.hoverOut();
+        });
+
+    phoneApp.setOnMouseEntered(
+        e -> {
+          phoneAppManager.hoverIn();
+        });
+    phoneApp.setOnMouseExited(
+        e -> {
+          phoneAppManager.hoverOut();
+        });
+    callEnd.setOnMouseEntered(
+        e -> {
+          callEndManager.hoverIn();
+        });
+    callEnd.setOnMouseExited(
+        e -> {
+          callEndManager.hoverOut();
+        });
   }
 
   /** This method is called when it needs to disable all the rectangles */
   public void disableAll() {
-    callRectangle.setDisable(true);
+    phoneApp.setVisible(false);
     callNumberRectangle.setDisable(true);
+    historyImage.setVisible(false);
+    callEnd.setVisible(false);
   }
 
   /** This method is called when it needs to restart the call screen. */
@@ -265,6 +315,8 @@ public class PhoneController {
     if (callScreen.isVisible()) {
       callScreen.setVisible(false);
       callNumberRectangle.setDisable(false);
+      historyImage.setVisible(false);
+      callEnd.setVisible(true);
     }
   }
 }
