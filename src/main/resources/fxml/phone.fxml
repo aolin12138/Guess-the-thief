@@ -15,7 +15,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.PhoneController">
    <children>
 
-      <ImageView fitHeight="583.0" fitWidth="805.0" layoutX="-1.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="583.0" fitWidth="805.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/crime_scene3.png" />
          </image>
@@ -69,11 +69,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Rectangle>
-      <Rectangle fx:id="callRectangle" arcHeight="5.0" arcWidth="5.0" disable="true" fill="DODGERBLUE" height="28.0" layoutX="382.0" layoutY="395.0" onMouseClicked="#onCallClicked" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="31.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Rectangle>
+      <ImageView fx:id="historyImage" fitHeight="145.0" fitWidth="182.0" layoutX="312.0" layoutY="80.0" onMouseClicked="#callNumber" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/history_hover.png" />
+         </image>
+      </ImageView>
       <StackPane fx:id="indicatorPane" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0">
          <children>
             <Circle fill="#ffffffcc" radius="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
@@ -84,5 +84,15 @@
          </font>
       </Label>
       <Circle fx:id="endCallButton" fill="#ffffff00" layoutX="397.0" layoutY="382.0" onMouseClicked="#onEndCallButtonClicked" radius="21.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <ImageView fx:id="phoneApp" fitHeight="42.0" fitWidth="52.0" layoutX="380.0" layoutY="382.0" onMouseClicked="#onCallClicked" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/phoneapp.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="callEnd" fitHeight="42.0" fitWidth="42.0" layoutX="380.0" layoutY="360.0" onMouseClicked="#onEndCallButtonClicked" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/callend.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
