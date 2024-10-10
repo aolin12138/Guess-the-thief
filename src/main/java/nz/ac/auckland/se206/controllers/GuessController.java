@@ -507,8 +507,6 @@ public class GuessController {
       lblDescription.setText("You must type an explanation to support your decision.");
       return;
     }
-    // Passes the amount of time used to Utils for the scoreboard
-    Utils.setTimeUsed(timeForGuessing);
     guessTextArea.appendText(message);
     timeline.stop();
     // Set the progress indicator to visible
@@ -529,17 +527,10 @@ public class GuessController {
               // Check if the explanation is correct
               boolean isCorrectExplanation = splitArray[0].toLowerCase().contains("true");
               guessTextArea.appendText(splitArray[1]);
-              // Set the chat stats to the explanation
-              System.out.println("isCorrectExplanation: " + isCorrectExplanation);
 
               // Set the chat stats to the explanation
               Platform.runLater(
                   () -> {
-
-                    // GuessTimeLimitManager.stopTimer();
-                    System.out.println("is Correct Explanation: " + isCorrectExplanation);
-                    System.out.println("currentSuspect: " + currentSuspect);
-                    System.out.println("isThiefFound: " + isThiefFound);
                     if (isCorrectExplanation && currentSuspect == 3) {
                       context.setState(context.getGameOverState());
                       isGameWon = true;
@@ -547,6 +538,13 @@ public class GuessController {
                       // need to determine if this score is worthy of being on the leaderboard
                       // if the time is quicker than the 3rd place time of the leaderboard, it is
                       // added.
+                      Utils.setTimeUsed(timeForGuessing);
+                      if (Utils.checkThirdTimeSlot()) {
+                        leaderboardResultLabel.setText(
+                            "Great work, you made it onto the leaderboard!");
+                        leaderboardResultLabel.setVisible(true);
+                      }
+                      Utils.updateScoreBoard(Utils.getTimeUsed(), Utils.getPlayerName());
                       instructionLabel.setText("Congratulations! You are Correct!");
                     } else {
                       context.setState(context.getGameOverState());
