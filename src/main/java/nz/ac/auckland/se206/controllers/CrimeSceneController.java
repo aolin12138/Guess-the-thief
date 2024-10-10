@@ -17,7 +17,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -92,7 +91,6 @@ public class CrimeSceneController {
 
   @FXML private TextArea instructionsTextArea;
 
-  private MediaPlayer player;
   private ImageManager ownerImageManager;
   private ImageManager workerImageManager;
   private ImageManager brotherImageManager;
@@ -101,6 +99,7 @@ public class CrimeSceneController {
   private ClueManager cameraImageManager;
   private ClueManager phoneImageManager;
   private ClueManager newspaperImageManager;
+  private boolean switchedRing = false;
 
   /**
    * This method is called when the crime scene is loaded. It will set the timer and the progress
@@ -156,6 +155,13 @@ public class CrimeSceneController {
                 event -> {
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
+                  if (TimelineManager.getTimeToCount() < 290000 && !switchedRing) {
+                    indicatorPane.getChildren().remove(ringProgressIndicator);
+                    ringProgressIndicator = new RingProgressIndicator(true);
+                    ringProgressIndicator.setRingWidth(50);
+                    indicatorPane.getChildren().add(ringProgressIndicator);
+                    switchedRing = true;
+                  }
                   // flash the timer red below 30 seconds
                   if (TimelineManager.getTimeToCount() < 30000) {
                     if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 == 0) {

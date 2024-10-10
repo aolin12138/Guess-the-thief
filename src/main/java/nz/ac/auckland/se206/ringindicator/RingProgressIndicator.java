@@ -99,6 +99,11 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
     this.getStyleClass().add("ringindicator");
   }
 
+  public RingProgressIndicator(boolean red) {
+    this.getStylesheets().add(getClass().getResource("/css/ringprogress2.css").toExternalForm());
+    this.getStyleClass().add("ringindicator");
+  }
+
   /** creates a default skin for the RingProgressIndicator. */
   @Override
   protected Skin<?> createDefaultSkin() {
