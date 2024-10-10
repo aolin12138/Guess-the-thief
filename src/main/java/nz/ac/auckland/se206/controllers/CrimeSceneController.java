@@ -5,7 +5,6 @@ import java.net.URISyntaxException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -18,7 +17,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -104,20 +102,15 @@ public class CrimeSceneController {
   private ClueManager phoneImageManager;
   private ClueManager newspaperImageManager;
 
-  private Media media =
-      new Media(getClass().getResource("/sounds/new_intro_audio.mp3").toExternalForm());
-  private MediaPlayer mediaPlayer = new MediaPlayer(media);
-
   /**
    * This method is called when the crime scene is loaded. It will set the timer and the progress
    * bar
+   *
+   * @throws URISyntaxException
    */
   @FXML
-  public void initialize() {
-    Platform.runLater(
-        () -> {
-          mediaPlayer.play();
-        });
+  public void initialize() throws URISyntaxException {
+    Utils.playSoundtrack("new_intro_audio.mp3");
     // Add the ring progress indicator to the pane
     indicatorPane.getChildren().add(ringProgressIndicator);
     ringProgressIndicator.setRingWidth(50);
@@ -283,26 +276,20 @@ public class CrimeSceneController {
       // if the user has not spoken to all suspects and has not found any clues
     } else if (!context.isAllSuspectsSpokenTo() && isAnyClueFound()) {
       // Play the sound for the user to keep investigating
-      Media sound =
-          new Media(App.class.getResource("/sounds/missing_suspect.mp3").toURI().toString());
-      player = new MediaPlayer(sound);
-      player.play();
+      Utils.stopPlayer();
+      Utils.playSoundtrack("missing_suspect.mp3");
       return;
       // if the user has spoken to all suspects but has not found any clues
     } else if (context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
       // Play the sound for the user to keep investigating
-      Media sound =
-          new Media(App.class.getResource("/sounds/clue_reminder_1.mp3").toURI().toString());
-      player = new MediaPlayer(sound);
-      player.play();
+      Utils.stopPlayer();
+      Utils.playSoundtrack("clue_reminder.mp3");
       return;
       // if the user has not spoken to all suspects and has not found any clues
     } else if (!context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
       // Play the sound for the user to keep investigating
-      Media sound =
-          new Media(App.class.getResource("/sounds/keep_investigating.mp3").toURI().toString());
-      player = new MediaPlayer(sound);
-      player.play();
+      Utils.stopPlayer();
+      Utils.playSoundtrack("keep_investigating.mp3");
       return;
     }
   }
