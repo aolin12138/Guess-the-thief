@@ -535,6 +535,9 @@ public class GuessController {
                       context.setState(context.getGameOverState());
                       isGameWon = true;
                       styleEndOfGame();
+                      // need to determine if this score is worthy of being on the leaderboard
+                      // if the time is quicker than the 3rd place time of the leaderboard, it is
+                      // added.
                       instructionLabel.setText("Congratulations! You are Correct!");
                     } else {
                       context.setState(context.getGameOverState());
