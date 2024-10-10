@@ -200,6 +200,7 @@ public class PhoneController {
       endCallButton.setCursor(Cursor.HAND);
     }
     // Play the voicemail sound
+    Utils.stopPlayer(); // stops any other audio from playing over the top
     mediaPlayer.play();
     mediaPlayer.setOnEndOfMedia(
         () -> {

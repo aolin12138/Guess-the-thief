@@ -5,9 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javafx.animation.Timeline;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import nz.ac.auckland.se206.controllers.CrimeSceneController;
 import nz.ac.auckland.se206.controllers.GameOverController;
 
@@ -20,6 +23,7 @@ public class Utils {
   private static ArrayList<String> previousScoresTimes = new ArrayList<String>();
   private static String playerName;
   private static double timeUsed = 0;
+  private static MediaPlayer player;
 
   /**
    * Writes the user's name and time to a CSV file. The data is appended to the end of any current
@@ -430,5 +434,21 @@ public class Utils {
    */
   public ArrayList<String> getScoresTimes() {
     return previousScoresTimes;
+  }
+
+  public static void playSoundtrack(String soundtrack) throws URISyntaxException {
+    Media sound = new Media(App.class.getResource("/sounds/" + soundtrack).toURI().toString());
+    player = new MediaPlayer(sound);
+    player.play();
+  }
+
+  /** Stops the media player. */
+  // Used to stop the intro soundtrack incase the player triggers new audio before current audio has
+  // finished playing.
+  public static void stopPlayer() {
+    try {
+      player.stop();
+    } catch (Exception e) {
+    }
   }
 }
