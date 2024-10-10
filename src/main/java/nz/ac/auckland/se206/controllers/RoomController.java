@@ -91,9 +91,6 @@ public class RoomController {
   @FXML private Button buttonSlide;
   @FXML private Button sendButton;
 
-  @FXML private TextArea textaChat;
-
-  @FXML private TextField textInput;
   @FXML private TextField inputField;
 
   @FXML private ImageView carImage;
@@ -142,8 +139,6 @@ public class RoomController {
     }
 
     messageBoxes.heightProperty().addListener(observable -> scrollPane.setVvalue(1D));
-
-    textInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
 
     buttonSend
         .sceneProperty()
@@ -490,12 +485,13 @@ public class RoomController {
       return;
     }
     // clear the chat text area
-    textaChat.clear();
+    
     this.person = person;
 
     Platform.runLater(
         () -> {
           // start the progress indicator
+          messageBoxes.getChildren().clear();
           ProgressIndicator statsIndicator = new ProgressIndicator();
           statsIndicator.setMinSize(1, 1);
           statsPane.getChildren().add(statsIndicator);
