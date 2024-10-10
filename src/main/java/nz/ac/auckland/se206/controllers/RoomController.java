@@ -435,7 +435,7 @@ public class RoomController {
     // Before switching to guess scene, check the user has spoken to all 3 suspects and seen at
     // least one clue
     if (context.isAllSuspectsSpokenTo() && CrimeSceneController.isAnyClueFound()) {
-      timeline.stop();
+      TimelineManager.stopTimer();
       context.setState(context.getGuessingState());
       Utils.setTimeUsed(TimelineManager.getTimeToCount());
       // change to the guess scene

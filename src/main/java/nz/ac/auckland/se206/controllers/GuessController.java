@@ -11,7 +11,9 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -34,9 +36,12 @@ import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
 import nz.ac.auckland.apiproxy.chat.openai.ChatMessage;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
+import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameStateContext;
 import nz.ac.auckland.se206.ImageManager;
 import nz.ac.auckland.se206.Person;
+import nz.ac.auckland.se206.SceneManager;
+import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
@@ -57,6 +62,10 @@ public class GuessController {
 
   public static boolean getIsGameWon() {
     return isGameWon;
+  }
+
+  public static void setGameStateContext(GameStateContext gameStateContext) {
+    context = gameStateContext;
   }
 
   @FXML private Rectangle rectPerson1;
@@ -698,5 +707,74 @@ public class GuessController {
   }
 
   @FXML
-  void onRestartButtonClicked(MouseEvent event) {}
+  void onRestartButtonClicked(ActionEvent event) {
+    TimelineManager.initialiseTimeLine();
+    CrimeSceneController.setContext(new GameStateContext());
+    Platform.runLater(
+        () -> {
+          // Load the fxml files
+          FXMLLoader startLoader = new FXMLLoader(App.class.getResource("/fxml/start.fxml"));
+          FXMLLoader roomLoader = new FXMLLoader(App.class.getResource("/fxml/room.fxml"));
+          FXMLLoader instructionLoader =
+              new FXMLLoader(App.class.getResource("/fxml/instructions.fxml"));
+          FXMLLoader phoneLoader = new FXMLLoader(App.class.getResource("/fxml/phone.fxml"));
+          FXMLLoader newspaperLoader =
+              new FXMLLoader(App.class.getResource("/fxml/newspaper.fxml"));
+          FXMLLoader callHistoryLoader =
+              new FXMLLoader(App.class.getResource("/fxml/callhistory.fxml"));
+          FXMLLoader cctvLoader = new FXMLLoader(App.class.getResource("/fxml/cctv.fxml"));
+          // Load the fxml files
+          try {
+            SceneManager.addRoot(SceneManager.Scene.INSTRUCTIONS, instructionLoader.load());
+          } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+          try {
+            SceneManager.addRoot(SceneManager.Scene.START, startLoader.load());
+          } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+          try {
+            SceneManager.addRoot(SceneManager.Scene.ROOM, roomLoader.load());
+          } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+          try {
+            SceneManager.addRoot(SceneManager.Scene.PHONE, phoneLoader.load());
+          } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+          try {
+            SceneManager.addRoot(SceneManager.Scene.NEWSPAPER, newspaperLoader.load());
+          } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+          try {
+            SceneManager.addRoot(SceneManager.Scene.CALL_HISTORY, callHistoryLoader.load());
+          } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+          try {
+            SceneManager.addRoot(SceneManager.Scene.CCTV, cctvLoader.load());
+          } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+          // Set the root of the scene to the start scene
+          SceneManager.setRoomLoader(roomLoader);
+          SceneManager.setPhoneLoader(phoneLoader);
+          SceneManager.setCameraLoader(cctvLoader);
+          SceneManager.setCallHistoryLoader(callHistoryLoader);
+          SceneManager.setNewspaperLoader(newspaperLoader);
+
+          Scene scene = restartButton.getScene();
+          scene.setRoot(SceneManager.getRoot(SceneManager.Scene.START));
+        });
+  }
 }
