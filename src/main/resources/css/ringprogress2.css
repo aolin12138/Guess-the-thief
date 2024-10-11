@@ -11,7 +11,7 @@
 }
 
 .ringindicator-filler {
-  -fx-stroke: red;
+  -fx-stroke: #e12421;
   -fx-fill: -fx-background;
   -fx-stroke-line-cap: butt;
 }

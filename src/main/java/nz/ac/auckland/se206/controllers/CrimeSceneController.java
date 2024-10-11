@@ -34,6 +34,8 @@ public class CrimeSceneController {
   private static GameStateContext context = new GameStateContext();
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
+  private static boolean switchedRing = false;
+  private static boolean initialisedRing = true;
 
   /**
    * This method returns true if any clue is found
@@ -60,6 +62,11 @@ public class CrimeSceneController {
    */
   public static GameStateContext getContext() {
     return context;
+  }
+
+  public static void resetBooleans() {
+    switchedRing = false;
+    initialisedRing = false;
   }
 
   @FXML private Rectangle phoneClue;
@@ -99,7 +106,6 @@ public class CrimeSceneController {
   private ClueManager cameraImageManager;
   private ClueManager phoneImageManager;
   private ClueManager newspaperImageManager;
-  private boolean switchedRing = false;
 
   /**
    * This method is called when the crime scene is loaded. It will set the timer and the progress
@@ -155,12 +161,11 @@ public class CrimeSceneController {
                 event -> {
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
+                  if (TimelineManager.getTimeToCount() > 290000 && !initialisedRing) {
+                    setGreenRing();
+                  }
                   if (TimelineManager.getTimeToCount() < 290000 && !switchedRing) {
-                    indicatorPane.getChildren().remove(ringProgressIndicator);
-                    ringProgressIndicator = new RingProgressIndicator(true);
-                    ringProgressIndicator.setRingWidth(50);
-                    indicatorPane.getChildren().add(ringProgressIndicator);
-                    switchedRing = true;
+                    setRedRing();
                   }
                   // flash the timer red below 30 seconds
                   if (TimelineManager.getTimeToCount() < 30000) {
@@ -452,5 +457,24 @@ public class CrimeSceneController {
    */
   public String getId() {
     return id;
+  }
+
+  /** Sets the ring progress indicator to red. */
+  public void setRedRing() {
+    indicatorPane.getChildren().remove(ringProgressIndicator);
+    ringProgressIndicator = new RingProgressIndicator(true);
+    ringProgressIndicator.setRingWidth(50);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
+    switchedRing = true;
+  }
+
+  public void setGreenRing() {
+    indicatorPane.getChildren().remove(ringProgressIndicator);
+    ringProgressIndicator = new RingProgressIndicator();
+    ringProgressIndicator.setRingWidth(50);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    timerLabel.setStyle("-fx-text-fill: #83F28F;");
+    initialisedRing = true;
   }
 }

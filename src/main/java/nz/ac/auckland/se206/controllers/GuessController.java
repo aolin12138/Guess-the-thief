@@ -736,6 +736,12 @@ public class GuessController {
           SceneManager.setCameraLoader(cctvLoader);
           SceneManager.setNewspaperLoader(newspaperLoader);
 
+          CCTVController.resetBooleans();
+          NewspaperController.resetBooleans();
+          PhoneController.resetBooleans();
+          CrimeSceneController.resetBooleans();
+          RoomController.resetBooleans();
+
           timeForGuessing = 60000;
         });
   }
