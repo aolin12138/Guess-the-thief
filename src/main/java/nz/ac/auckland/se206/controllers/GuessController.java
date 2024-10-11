@@ -64,6 +64,8 @@ public class GuessController {
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static boolean isThiefFound = false;
   private static boolean isGameWon = false;
+  private static boolean switchedRing = false;
+  private static boolean initialisedRing = true;
 
   public static boolean getThiefFound() {
     return isThiefFound;
@@ -75,6 +77,11 @@ public class GuessController {
 
   public static void setGameStateContext(GameStateContext gameStateContext) {
     context = gameStateContext;
+  }
+
+  public static void resetBooleans() {
+    switchedRing = false;
+    initialisedRing = false;
   }
 
   @FXML private Rectangle rectPerson1;
@@ -234,6 +241,17 @@ public class GuessController {
             new KeyFrame(
                 Duration.millis(1),
                 event -> {
+                  if (timeForGuessing < 30000 && !switchedRing) {
+                    setRedRing();
+                  }
+
+                  if (timeForGuessing < 15000) {
+                    if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 != 0) {
+                      timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
+                    } else {
+                      timerLabel.setStyle("-fx-text-fill: rgba(142,3,3,1);");
+                    }
+                  }
                   if (timeForGuessing > 0) {
                     // This runs when there is still time on the clock
                     timeForGuessing--;
@@ -253,11 +271,35 @@ public class GuessController {
                       timeline.stop();
                       return;
                     }
-                    try {
-                      onSendMessage(null);
-                    } catch (ApiProxyException | IOException e) {
-                      e.printStackTrace();
-                    }
+
+                    Task<Void> task =
+                        new Task<Void>() {
+
+                          @Override
+                          protected Void call() throws Exception {
+                            toggleHorizontalBox();
+                            return null;
+                          }
+                        };
+                    new Thread(task).start();
+                    task.setOnSucceeded(
+                        e -> {
+                          Platform.runLater(
+                              () -> {
+                                try {
+                                  onSendMessage(null);
+                                } catch (ApiProxyException | IOException e1) {
+                                  // TODO Auto-generated catch block
+                                  e1.printStackTrace();
+                                }
+                              });
+
+                          Platform.runLater(
+                              () -> {
+                                sendButton.setVisible(false);
+                                inputField.setVisible(false);
+                              });
+                        });
 
                     timeline.stop();
                   }
@@ -470,13 +512,18 @@ public class GuessController {
         && (isTimeOver)
         && context.getGameState().equals(context.getGuessingState())) {
       context.setState(context.getGameOverState());
-      // Set the output text to the explanation of the guess
-      appendMessage(
-          "You did not guess any of the suspects within the time limit!\n"
-              + "Next time you play, make sure to click on your suspected thief and"
-              + " type an explanation to support your decision.\n"
-              + "Click play again to replay.",
-          false);
+      Platform.runLater(
+          () -> {
+            instructionLabel.setText("You ran out of time! Game over!");
+            messageBoxes.getChildren().clear();
+            appendMessage(
+                "You did not guess any of the suspects within the time limit!\n"
+                    + "Next time you play, make sure to click on your suspected thief and"
+                    + " type an explanation to support your decision.\n"
+                    + "Click play again to replay.",
+                false);
+            styleEndOfGame();
+          });
       return;
       // No suspect selected, but message is entered and time is over
     } else if ((!isSuspectSelected)
@@ -484,12 +531,17 @@ public class GuessController {
         && (isTimeOver)
         && context.getGameState().equals(context.getGuessingState())) {
       context.setState(context.getGameOverState());
-      // Set the output text to the explanation of the guess
-      appendMessage(
-          "Even though you typed your explanation, you did not guess any of the suspects within the"
-              + " time limit!\n"
-              + "Click play again to replay.",
-          false);
+      Platform.runLater(
+          () -> {
+            instructionLabel.setText("You ran out of time! Game over!");
+            messageBoxes.getChildren().clear();
+            appendMessage(
+                "Even though you typed your explanation, you did not guess any of the suspects"
+                    + " within the time limit!\n"
+                    + "Click play again to replay.",
+                false);
+            styleEndOfGame();
+          });
       return;
       // Suspect selected, but message is not entered and time is over
     } else if ((isSuspectSelected)
@@ -497,14 +549,19 @@ public class GuessController {
         && (isTimeOver)
         && context.getGameState().equals(context.getGuessingState())) {
       context.setState(context.getGameOverState());
-      // Set the output text to the explanation of the guess
-      appendMessage(
-          "Even though you guessed a suspect, you did not type any explanation within the"
-              + " time limit.\n\n"
-              + " Because of this, it is unlikely that the authortities will accept your"
-              + " decision.\n\n"
-              + "Click play again to replay.",
-          false);
+      Platform.runLater(
+          () -> {
+            instructionLabel.setText("You ran out of time! Game over!");
+            messageBoxes.getChildren().clear();
+            appendMessage(
+                "Even though you guessed a suspect, you did not type any explanation within the"
+                    + " time limit.\n\n"
+                    + " Because of this, it is unlikely that the authortities will accept your"
+                    + " decision.\n\n"
+                    + "Click play again to replay.",
+                false);
+            styleEndOfGame();
+          });
       return;
     }
 
@@ -726,9 +783,11 @@ public class GuessController {
         .onFinishedProperty()
         .set(
             e -> {
-              appendMessage(
-                  "Investigator " + Utils.getPlayerName() + ", please explain your decision.",
-                  appendedSystem);
+              if (!isTimeOver) {
+                appendMessage(
+                    "Investigator " + Utils.getPlayerName() + ", please explain your decision.",
+                    appendedSystem);
+              }
             });
   }
 
@@ -791,6 +850,21 @@ public class GuessController {
           SceneManager.setPhoneLoader(phoneLoader);
           SceneManager.setCameraLoader(cctvLoader);
           SceneManager.setNewspaperLoader(newspaperLoader);
+
+          CCTVController.resetBooleans();
+          NewspaperController.resetBooleans();
+          PhoneController.resetBooleans();
+          CrimeSceneController.resetBooleans();
+          RoomController.resetBooleans();
+          GuessController.resetBooleans();
+
+          Platform.runLater(
+              () -> {
+                setGreenRing();
+              });
+
+          initialisedRing = false;
+          switchedRing = false;
 
           timeForGuessing = 60000;
         });
@@ -894,5 +968,24 @@ public class GuessController {
 
     // Start the Timeline animation
     timeline.play();
+  }
+
+  /** Sets the ring progress indicator to red. */
+  public void setRedRing() {
+    indicatorPane.getChildren().remove(ringProgressIndicator);
+    ringProgressIndicator = new RingProgressIndicator(true);
+    ringProgressIndicator.setRingWidth(50);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
+    switchedRing = true;
+  }
+
+  public void setGreenRing() {
+    indicatorPane.getChildren().remove(ringProgressIndicator);
+    ringProgressIndicator = new RingProgressIndicator();
+    ringProgressIndicator.setRingWidth(50);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    timerLabel.setStyle("-fx-text-fill: #83F28F;");
+    initialisedRing = true;
   }
 }

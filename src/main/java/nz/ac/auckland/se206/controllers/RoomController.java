@@ -64,6 +64,13 @@ public class RoomController {
   private static boolean isCarFound = false;
   private static GameStateContext context = new GameStateContext();
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
+  private static boolean switchedRing = false;
+  private static boolean initialisedRing = true;
+
+  public static void resetBooleans() {
+    switchedRing = false;
+    initialisedRing = false;
+  }
 
   @FXML private Rectangle rectPerson1;
   @FXML private Rectangle rectPerson2;
@@ -189,6 +196,12 @@ public class RoomController {
                 event -> {
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
+                  if (TimelineManager.getTimeToCount() > 60000 && !initialisedRing) {
+                    setGreenRing();
+                  }
+                  if (TimelineManager.getTimeToCount() < 60000 && !switchedRing) {
+                    setRedRing();
+                  }
                   // flash the timer red below 30 seconds
                   if (TimelineManager.getTimeToCount() <= 30000) {
                     if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 == 0) {
@@ -901,5 +914,24 @@ public class RoomController {
 
     // Start the Timeline animation
     timeline.play();
+  }
+
+  /** Sets the ring progress indicator to red. */
+  public void setRedRing() {
+    indicatorPane.getChildren().remove(ringProgressIndicator);
+    ringProgressIndicator = new RingProgressIndicator(true);
+    ringProgressIndicator.setRingWidth(50);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
+    switchedRing = true;
+  }
+
+  public void setGreenRing() {
+    indicatorPane.getChildren().remove(ringProgressIndicator);
+    ringProgressIndicator = new RingProgressIndicator();
+    ringProgressIndicator.setRingWidth(50);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    timerLabel.setStyle("-fx-text-fill: #83F28F;");
+    initialisedRing = true;
   }
 }
