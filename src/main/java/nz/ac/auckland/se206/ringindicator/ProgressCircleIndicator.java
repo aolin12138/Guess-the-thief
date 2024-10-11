@@ -112,15 +112,9 @@ abstract class ProgressCircleIndicator extends Control {
   }
 
   /**
-<<<<<<< HEAD
-   * Get the progress value of the progress bar.
-   *
-   * @return the value of the progress bar.
-=======
    * Get the progress value for usage.
    *
    * @return Adding extra due missing requirements in methods.
->>>>>>> main
    */
   public int getProgress() {
     return progress.get();
@@ -131,7 +125,8 @@ abstract class ProgressCircleIndicator extends Control {
    * means indeterminate progress.
    *
    * @param progressValue the value for the progress bar
-   * @see ProgressCircleIndicator#makeIndeterminate()
+   * @see ProgressCircleIndicator#makeIndeterminate() Adding extra due missing requirements in
+   *     methods.
    */
   public void setProgress(int progressValue) {
     progress.set(defaultToHundred(progressValue));

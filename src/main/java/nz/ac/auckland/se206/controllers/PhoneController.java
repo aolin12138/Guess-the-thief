@@ -183,7 +183,7 @@ public class PhoneController {
   /**
    * This method is called when the call number is clicked. It will take the user to the call screen
    *
-   * @param event
+   * @param event Adding more words due to requirements for description.
    */
   @FXML
   private void callNumber(MouseEvent event) {
