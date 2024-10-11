@@ -432,6 +432,8 @@ public class Utils {
     try {
       player.stop();
     } catch (Exception e) {
+      // do nothing here, simply move on
+      System.out.println("doing nothing");
     }
   }
 

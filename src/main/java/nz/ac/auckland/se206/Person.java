@@ -43,54 +43,54 @@ public class Person {
   }
 
   /**
-   * get the name of the person.
+   * Gets the name of the person.
    *
-   * @return
+   * @return the name of the person
    */
   public String getName() {
     return name;
   }
 
   /**
-   * get the role of the person.
+   * Gets the role of the person.
    *
-   * @return
+   * @return the role of the person
    */
   public String getRole() {
     return role;
   }
 
   /**
-   * get the profession of the person.
+   * Gets the profession of the person.
    *
-   * @return
+   * @return the profession of the person
    */
   public String getProfession() {
     return profession;
   }
 
   /**
-   * get the color of the person.
+   * Gets the color associated with the person.
    *
-   * @return
+   * @return the color of the person
    */
   public String getColor() {
     return color;
   }
 
   /**
-   * get the voice of the person.
+   * Gets the voice associated with the person.
    *
-   * @return
+   * @return the voice of the person
    */
   public Voice getVoice() {
     return voice;
   }
 
   /**
-   * boolean for checking if the person has talked.
+   * Checks if the person has talked.
    *
-   * @return
+   * @return true if the person has talked, false otherwise
    */
   public boolean hasTalked() {
     return talked;
@@ -107,18 +107,18 @@ public class Person {
   }
 
   /**
-   * boolean for checking if the person has been interviewed.
+   * Checks if the person has been interviewed.
    *
-   * @return
+   * @return true if the person has been interviewed, false otherwise
    */
   public boolean hasBeenInterviewed() {
     return isInterviewed;
   }
 
   /**
-   * get the chat completion request.
+   * Gets the chat completion request.
    *
-   * @return
+   * @return the chat completion request
    */
   public ChatCompletionRequest getChatCompletionRequest() {
     return chatCompletionRequest;

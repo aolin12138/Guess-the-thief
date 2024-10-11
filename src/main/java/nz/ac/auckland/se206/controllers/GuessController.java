@@ -273,54 +273,50 @@ public class GuessController {
   }
 
   /**
-   * Gets the boolean for if the time is over.
+   * Gets the boolean indicating if the time is over.
    *
-   * @return the time for guessing
+   * @return true if the time is over, false otherwise
    */
   public Boolean getTimeOver() {
     return isTimeOver;
   }
 
   /**
-   * Gets the boolean for if the suspect is selected.
+   * Gets the boolean indicating if a suspect is selected.
    *
-   * @return the time for guessing
+   * @return true if a suspect is selected, false otherwise
    */
   public Boolean getSuspectSelected() {
     return isSuspectSelected;
   }
 
-  /**
-   * method that stops the timeline.
-   *
-   * @return the time for guessing
-   */
+  /** Stops the timeline. */
   public void stopTimeLine() {
     timeline.stop();
   }
 
   /**
-   * Gets the current context.
+   * Gets the current game state context.
    *
-   * @return the time for guessing
+   * @return the current game state context
    */
   public GameStateContext getContext() {
     return context;
   }
 
   /**
-   * set the chat stats.
+   * Sets the chat statistics.
    *
-   * @param stats
+   * @param stats the chat statistics to set
    */
   public void setChatStats(String stats) {
     chatStats.setText(stats);
   }
 
   /**
-   * gets the current person.
+   * Gets the current person.
    *
-   * @return
+   * @return the current person
    */
   public Person getPerson() {
     return person;
@@ -352,11 +348,11 @@ public class GuessController {
   }
 
   /**
-   * selects the first suspect
+   * Selects the first suspect.
    *
-   * @param event
-   * @throws ApiProxyException
-   * @throws IOException
+   * @param event the mouse event that triggered this method
+   * @throws ApiProxyException if there is an error with the API proxy
+   * @throws IOException if an I/O error occurs
    */
   @FXML
   private void selectSuspect1(MouseEvent event) throws ApiProxyException, IOException {
@@ -384,11 +380,11 @@ public class GuessController {
   }
 
   /**
-   * selects the second suspect
+   * Selects the first suspect.
    *
-   * @param event
-   * @throws ApiProxyException
-   * @throws IOException
+   * @param event the mouse event that triggered this method
+   * @throws ApiProxyException if there is an error with the API proxy
+   * @throws IOException if an I/O error occurs
    */
   @FXML
   private void selectSuspect2(MouseEvent event) throws ApiProxyException, IOException {
@@ -416,11 +412,11 @@ public class GuessController {
   }
 
   /**
-   * selects the third suspect
+   * Selects the third suspect.
    *
-   * @param event
-   * @throws ApiProxyException
-   * @throws IOException
+   * @param event the mouse event that triggered this method
+   * @throws ApiProxyException if there is an error with the API proxy
+   * @throws IOException if an I/O error occurs
    */
   @FXML
   private void selectSuspect3(MouseEvent event) throws ApiProxyException, IOException {
@@ -648,14 +644,22 @@ public class GuessController {
   }
 
   /**
-   * This method is called to get the suspect number that the user has selected.
+   * Gets the number of the currently selected suspect.
    *
-   * @param event
+   * @return the number of the currently selected suspect
    */
   public int getSuspectNumber() {
     return currentSuspect;
   }
 
+  /**
+   * Styles the scene by setting hover effects for the owner and worker images.
+   *
+   * <p>This method sets mouse enter and exit event handlers for the owner and worker images. When
+   * the mouse enters an image, the corresponding label is made visible and a hover-in effect is
+   * applied. When the mouse exits an image, the hover-out effect is applied and the label is hidden
+   * if it is not the current label.
+   */
   public void styleScene() {
     // set the owner image to be hovable
     ownerImage.setOnMouseEntered(
@@ -739,6 +743,11 @@ public class GuessController {
     brotherLabel.setVisible(false);
   }
 
+  /**
+   * Handles the action when the restart button is clicked.
+   *
+   * @param event the action event that triggered this method
+   */
   @FXML
   void onRestartButtonClicked(ActionEvent event) {
     TimelineManager.initialiseTimeLine();

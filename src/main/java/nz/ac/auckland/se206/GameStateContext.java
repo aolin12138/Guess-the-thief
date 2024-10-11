@@ -201,9 +201,9 @@ public class GameStateContext {
   }
 
   /**
-   * sets the guess controller to this current instance.
+   * Sets the guess controller to this current instance.
    *
-   * @param guessController
+   * @param guessController the GuessController to set
    */
   public void setGuessController(GuessController guessController) {
     this.guessController = guessController;

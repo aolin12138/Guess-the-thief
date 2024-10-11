@@ -31,10 +31,9 @@ public class CCTVController {
   @FXML private Rectangle brotherFace;
 
   /**
-   * This method is called when the return button is clicked. It will take the user back to the
-   * crime
+   * Handles the action when the return button is clicked.
    *
-   * @param event
+   * @param event the action event that triggered this method
    */
   @FXML
   private void onReturnButtonClicked(ActionEvent event) {

@@ -38,18 +38,18 @@ public class TimelineManager {
   }
 
   /**
-   * This method sets the time to count
+   * Sets the time to count.
    *
-   * @param timeFromPreviousScene
+   * @param timeFromPreviousScene the time to set for counting, typically from the previous scene
    */
   public static void setTimeToCount(double timeFromPreviousScene) {
     timeToCount = timeFromPreviousScene;
   }
 
   /**
-   * This method gets the time to count
+   * Gets the time to count.
    *
-   * @return
+   * @return the time to count as a double
    */
   public static double getTimeToCount() {
     return timeToCount;
@@ -65,15 +65,19 @@ public class TimelineManager {
   }
 
   /**
-   * This method gets the progress
+   * Gets the current progress.
    *
-   * @return
+   * @return the current progress
    */
   public static int getProgress() {
     return progress;
   }
 
-  /** This method starts the timer */
+  /**
+   * Starts the timer.
+   *
+   * <p>This method plays the timeline, effectively starting the timer.
+   */
   public static void startTimer() {
     timeline.play();
   }
@@ -84,9 +88,9 @@ public class TimelineManager {
   }
 
   /**
-   * sets the context
+   * Sets the game state context.
    *
-   * @param context
+   * @param context the GameStateContext to set
    */
   public static void setContext(GameStateContext context) {
     TimelineManager.context = context;

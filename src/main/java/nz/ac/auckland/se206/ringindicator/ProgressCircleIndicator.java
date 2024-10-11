@@ -178,34 +178,37 @@ abstract class ProgressCircleIndicator extends Control {
   }
 
   /**
-   * Set the inner circle radius.
+   * Sets the room loader.
    *
-   * @param value
+   * @param roomLoader the FXMLLoader to set for the room
    */
   public final void setInnerCircleRadius(int value) {
     innerCircleRadiusProperty().set(value);
   }
 
   /**
-   * Get the inner circle radius property.
+   * Gets the inner circle radius property.
    *
-   * @return
+   * @return the DoubleProperty representing the inner circle radius
    */
   public final DoubleProperty innerCircleRadiusProperty() {
     return innerCircleRadius;
   }
 
   /**
-   * Get the inner circle radius.
+   * Gets the inner circle radius.
    *
-   * @return
+   * @return the radius of the inner circle
    */
   public final double getInnerCircleRadius() {
     return innerCircleRadiusProperty().get();
   }
 
   /**
-   * @return The CssMetaData associated with this class, which may include the CssMetaData of its
+   * Gets the CssMetaData associated with this class, which may include the CssMetaData of its
+   * superclasses.
+   *
+   * @return a list of CssMetaData associated with this class
    */
   @Override
   public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {
