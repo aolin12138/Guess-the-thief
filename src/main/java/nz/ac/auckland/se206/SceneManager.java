@@ -4,6 +4,7 @@ import java.util.HashMap;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
+/** This class is used to manage the scenes in the game. */
 public class SceneManager {
   public enum Scene {
     INSTRUCTIONS,
@@ -84,9 +85,9 @@ public class SceneManager {
   }
 
   /**
-   * Sets the call history loader.
+   * Sets the call history loader for usage in the game.
    *
-   * @param callHistoryLoader the FXMLLoader to set for the call history
+   * @param callhistoryLoader the FXMLLoader to set for the call history.
    */
   public static void setCallHistoryLoader(FXMLLoader callhistoryLoader) {
     SceneManager.callhistoryLoader = callhistoryLoader;

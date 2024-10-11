@@ -29,16 +29,26 @@ import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
+/**
+ * Handles the action when the guess button is clicked.
+ *
+ * <p>This method processes the user's guess, checks if the guess is correct, and updates the game
+ * state accordingly.
+ *
+ * @param event the mouse event that triggered this method
+ */
 public class CrimeSceneController {
 
   private static GameStateContext context = new GameStateContext();
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
+  private static boolean switchedRing = false;
+  private static boolean initialisedRing = true;
 
   /**
-   * This method returns true if any clue is found
+   * This method is a getter that returns the context.
    *
-   * @return Adding more words due to requirements for description.
+   * @return returns the context of the game state.
    */
   public static boolean isAnyClueFound() {
     return context.isAnyClueFound();
@@ -60,6 +70,11 @@ public class CrimeSceneController {
    */
   public static GameStateContext getContext() {
     return context;
+  }
+
+  public static void resetBooleans() {
+    switchedRing = false;
+    initialisedRing = false;
   }
 
   @FXML private Rectangle phoneClue;
@@ -154,9 +169,15 @@ public class CrimeSceneController {
                 event -> {
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
+                  if (TimelineManager.getTimeToCount() > 60000 && !initialisedRing) {
+                    setGreenRing();
+                  }
+                  if (TimelineManager.getTimeToCount() < 60000 && !switchedRing) {
+                    setRedRing();
+                  }
                   // flash the timer red below 30 seconds
                   if (TimelineManager.getTimeToCount() <= 30000) {
-                    if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 == 0) {
+                    if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 != 0) {
                       timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
                     } else {
                       timerLabel.setStyle("-fx-text-fill: rgba(142,3,3,1);");
@@ -169,9 +190,9 @@ public class CrimeSceneController {
   }
 
   /**
-   * This method is called when the CCTV clue is clicked. It will take the user to the CCTV scene
+   * This method is called when the CCTV clue is clicked. It will take the user to the CCTV scene.
    *
-   * @param event
+   * @param event Adding more words due to requirements for description.
    */
   @FXML
   void onCameraClueClicked(MouseEvent event) {
@@ -303,7 +324,7 @@ public class CrimeSceneController {
     } else if (context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
       // Play the sound for the user to keep investigating
       Utils.stopPlayer();
-      Utils.playSoundtrack("clue_reminder.mp3");
+      Utils.playSoundtrack("clue_reminder_1.mp3");
       return;
       // if the user has not spoken to all suspects and has not found any clues
     } else if (!context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
@@ -314,7 +335,7 @@ public class CrimeSceneController {
     }
   }
 
-  /** This method styles the scene */
+  /** This method styles the scene. */
   @FXML
   public void styleScene() {
 
@@ -468,5 +489,24 @@ public class CrimeSceneController {
    */
   public String getId() {
     return id;
+  }
+
+  /** Sets the ring progress indicator to red. */
+  public void setRedRing() {
+    indicatorPane.getChildren().remove(ringProgressIndicator);
+    ringProgressIndicator = new RingProgressIndicator(true);
+    ringProgressIndicator.setRingWidth(50);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
+    switchedRing = true;
+  }
+
+  public void setGreenRing() {
+    indicatorPane.getChildren().remove(ringProgressIndicator);
+    ringProgressIndicator = new RingProgressIndicator();
+    ringProgressIndicator.setRingWidth(50);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    timerLabel.setStyle("-fx-text-fill: #83F28F;");
+    initialisedRing = true;
   }
 }

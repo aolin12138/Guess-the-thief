@@ -89,7 +89,7 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
         }
 
         /**
-         * returns the CssMetaData associated with this class, which may include the CssMetaData
+         * returns the CssMetaData associated with this class, which may include the CssMetaData.
          *
          * @return The CssMetaData associated with this class, which may include the CssMetaData
          */
@@ -102,6 +102,11 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
   /** Creates a new instance of the RingProgressIndicator. */
   public RingProgressIndicator() {
     this.getStylesheets().add(getClass().getResource("/css/ringprogress.css").toExternalForm());
+    this.getStyleClass().add("ringindicator");
+  }
+
+  public RingProgressIndicator(boolean red) {
+    this.getStylesheets().add(getClass().getResource("/css/ringprogress2.css").toExternalForm());
     this.getStyleClass().add("ringindicator");
   }
 

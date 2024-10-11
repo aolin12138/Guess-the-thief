@@ -40,6 +40,9 @@ abstract class ProgressCircleIndicator extends Control {
   private static final int INDETERMINATE_PROGRESS = -1;
 
   /**
+   * Gets the CssMetaData associated with this class, which may include the CssMetaData of its super
+   * classes.
+   *
    * @return The CssMetaData associated with this class, which may include the CssMetaData of its
    *     super classes.
    */
@@ -151,13 +154,13 @@ abstract class ProgressCircleIndicator extends Control {
     return indeterminate.get();
   }
 
-  /** Set the progress to indeterminate. */
+  /** Set the progress to indeterminate state. */
   public void makeIndeterminate() {
     setProgress(INDETERMINATE_PROGRESS);
   }
 
   /**
-   * Get the indeterminate property.
+   * Get the indeterminate property Adding extra bulk due testing requirements.
    *
    * @return Adding extra bulk due testing requirements.
    */

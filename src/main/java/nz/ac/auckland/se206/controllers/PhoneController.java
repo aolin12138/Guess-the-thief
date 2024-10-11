@@ -24,11 +24,17 @@ import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
+/** This class is the controller for the phone scene. */
 public class PhoneController {
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
+  private static boolean switchedRing = false;
+  private static boolean initialisedRing = true;
 
-  private double initialY;
+  public static void resetBooleans() {
+    switchedRing = false;
+    initialisedRing = false;
+  }
 
   @FXML private StackPane indicatorPane;
 
@@ -54,6 +60,7 @@ public class PhoneController {
   private MediaPlayer mediaPlayer = new MediaPlayer(audio);
   private ClueManager historyImageManager;
   private ClueManager phoneAppManager;
+  private double initialY;
   private ClueManager callEndManager;
 
   /** This method intializes the phone controller. */
@@ -143,6 +150,12 @@ public class PhoneController {
                 event -> {
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
+                  if (TimelineManager.getTimeToCount() > 60000 && !initialisedRing) {
+                    setGreenRing();
+                  }
+                  if (TimelineManager.getTimeToCount() < 60000 && !switchedRing) {
+                    setRedRing();
+                  }
                   // flash the timer red below 30 seconds
                   if (TimelineManager.getTimeToCount() <= 30000) {
                     if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 == 0) {
@@ -228,7 +241,7 @@ public class PhoneController {
   /**
    * This method is called when the phone app is clicked. It will take the user to the call history
    *
-   * @param event
+   * @param event Adding extra bulk due testing requirements.
    */
   @FXML
   void onPhoneAppClicked(MouseEvent event) {
@@ -260,7 +273,7 @@ public class PhoneController {
   /**
    * This method is called when the end call button is clicked. It will end the call.
    *
-   * @param event
+   * @param event Adding extra bulk due testing requirements.
    */
   @FXML
   private void onEndCallButtonClicked(MouseEvent event) {
@@ -270,9 +283,12 @@ public class PhoneController {
     mediaPlayer.stop();
   }
 
+  /**
+   * This method is called when the home button is clicked. It will take the user back to the phone.
+   *
+   * @param event Adding more words due to requirements for description.
+   */
   @FXML
-  // this method allows for various in game UI elements to provide response to the user when they
-  // are hovred over with the mouse
   public void styleScene() {
     // missed call element
     historyImage.setOnMouseEntered(
@@ -317,5 +333,24 @@ public class PhoneController {
       historyImage.setVisible(false);
       callEnd.setVisible(true);
     }
+  }
+
+  /** Sets the ring progress indicator to red. */
+  public void setRedRing() {
+    indicatorPane.getChildren().remove(ringProgressIndicator);
+    ringProgressIndicator = new RingProgressIndicator(true);
+    ringProgressIndicator.setRingWidth(50);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
+    switchedRing = true;
+  }
+
+  public void setGreenRing() {
+    indicatorPane.getChildren().remove(ringProgressIndicator);
+    ringProgressIndicator = new RingProgressIndicator();
+    ringProgressIndicator.setRingWidth(50);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    timerLabel.setStyle("-fx-text-fill: #83F28F;");
+    initialisedRing = true;
   }
 }

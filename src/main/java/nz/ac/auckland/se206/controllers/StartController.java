@@ -22,6 +22,12 @@ import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 
+/**
+ * The Person class represents an individual with various attributes.
+ *
+ * <p>This class provides methods to access and manipulate the attributes of a person, such as their
+ * name, age, and interview status.
+ */
 public class StartController {
 
   @FXML private Button startButton;
@@ -153,7 +159,7 @@ public class StartController {
   /**
    * This method is called when the key is released. It will print the key that is released.
    *
-   * @param event
+   * @param event The event that is triggered when the key is released.
    */
   @FXML
   public void onKeyReleased(KeyEvent event) {

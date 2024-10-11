@@ -4,6 +4,12 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+/**
+ * The Timer class represents a simple timer.
+ *
+ * <p>This class provides methods to start, stop, and reset the timer, as well as to get the elapsed
+ * time.
+ */
 public class Timer {
 
   private static double timeToCountTo = 300000;
@@ -60,7 +66,7 @@ public class Timer {
   }
 
   /**
-   * Sets the time to count to a specified number of seconds for guessing
+   * Sets the time to count to a specified number of seconds for guessing the suspect.
    *
    * @param seconds Extra tag description due missing tag description.
    */
