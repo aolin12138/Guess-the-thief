@@ -161,15 +161,15 @@ public class CrimeSceneController {
                 event -> {
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
-                  if (TimelineManager.getTimeToCount() > 290000 && !initialisedRing) {
+                  if (TimelineManager.getTimeToCount() > 60000 && !initialisedRing) {
                     setGreenRing();
                   }
-                  if (TimelineManager.getTimeToCount() < 290000 && !switchedRing) {
+                  if (TimelineManager.getTimeToCount() < 60000 && !switchedRing) {
                     setRedRing();
                   }
                   // flash the timer red below 30 seconds
                   if (TimelineManager.getTimeToCount() <= 30000) {
-                    if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 == 0) {
+                    if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 != 0) {
                       timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
                     } else {
                       timerLabel.setStyle("-fx-text-fill: rgba(142,3,3,1);");
@@ -292,7 +292,7 @@ public class CrimeSceneController {
     } else if (context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
       // Play the sound for the user to keep investigating
       Utils.stopPlayer();
-      Utils.playSoundtrack("clue_reminder.mp3");
+      Utils.playSoundtrack("clue_reminder_1.mp3");
       return;
       // if the user has not spoken to all suspects and has not found any clues
     } else if (!context.isAllSuspectsSpokenTo() && !isAnyClueFound()) {
