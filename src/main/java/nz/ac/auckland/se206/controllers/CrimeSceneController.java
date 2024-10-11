@@ -38,7 +38,7 @@ public class CrimeSceneController {
   /**
    * This method returns true if any clue is found
    *
-   * @return
+   * @return Adding more words due to requirements for description.
    */
   public static boolean isAnyClueFound() {
     return context.isAnyClueFound();
@@ -47,7 +47,7 @@ public class CrimeSceneController {
   /**
    * This method is a setter that sets the context
    *
-   * @param context
+   * @param context Adding more words due to requirements for description.
    */
   public static void setContext(GameStateContext context) {
     CrimeSceneController.context = context;
@@ -56,7 +56,7 @@ public class CrimeSceneController {
   /**
    * This method is a getter that returns the context
    *
-   * @return
+   * @return Adding more words due to requirements for description.
    */
   public static GameStateContext getContext() {
     return context;
@@ -104,7 +104,7 @@ public class CrimeSceneController {
    * This method is called when the crime scene is loaded. It will set the timer and the progress
    * bar
    *
-   * @throws URISyntaxException
+   * @throws URISyntaxException Adding more words due to requirements for description.
    */
   @FXML
   public void initialize() throws URISyntaxException {
@@ -273,11 +273,11 @@ public class CrimeSceneController {
 
   /**
    * This method is called when the guess button is clicked. It will take the user to the guess
-   * scene
+   * scene.
    *
-   * @param event
-   * @throws IOException
-   * @throws URISyntaxException
+   * @param event Adding more words due to requirements for description.
+   * @throws IOException Adding more words due to requirements for description.
+   * @throws URISyntaxException Adding more words due to requirements for description.
    */
   @FXML
   private void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {

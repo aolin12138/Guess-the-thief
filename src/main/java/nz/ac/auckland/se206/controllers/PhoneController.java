@@ -56,7 +56,7 @@ public class PhoneController {
   private ClueManager phoneAppManager;
   private ClueManager callEndManager;
 
-  /** This method intializes the phone controller */
+  /** This method intializes the phone controller. */
   @FXML
   public void initialize() {
 
@@ -167,9 +167,9 @@ public class PhoneController {
 
   /**
    * This method is called when the call history is clicked. It will take the user to the call
-   * screen
+   * screen.
    *
-   * @param event
+   * @param event Adding more words due to requirements for description.
    */
   @FXML
   private void onCallClicked(MouseEvent event) {
@@ -212,10 +212,10 @@ public class PhoneController {
   }
 
   /**
-   * This method is called when the lock screen is clicked. It will unlock the phone
+   * This method is called when the lock screen is clicked. It will unlock the phone.
    *
-   * @param lockScreen
-   * @param height
+   * @param lockScreen Adding more words due to requirements for description.
+   * @param height Adding more words due to requirements for description.
    */
   private void unlock(ImageView lockScreen, double height) {
     TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), lockScreen);

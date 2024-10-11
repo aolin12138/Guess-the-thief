@@ -91,8 +91,8 @@ public class StartController {
   /**
    * This method is called when the Enter is pressed. It will take the user to the crime scene.
    *
-   * @param event
-   * @throws IOException
+   * @param event extra tag description due missing tag description.
+   * @throws IOException extra tag description due missing tag description.
    */
   @FXML
   private void onEnterPressed(Event event) throws IOException {

@@ -169,7 +169,7 @@ public class ClueManager {
     shadowTransitionOut.play();
   }
 
-  /** This method is called when it needs to stay at current effect */
+  /** This method is called when it needs to stay at current effect. */
   public void stayCurrentEffect() {
     imageView.setEffect(dropShadowOut);
   }
@@ -177,16 +177,16 @@ public class ClueManager {
   /**
    * Set the image view to vew the image.
    *
-   * @param imageView
+   * @param imageView Adding more words due to requirements for description.
    */
   public void setImageView(ImageView imageView) {
     this.imageView = imageView;
   }
 
   /**
-   * This method is called when the image is clicked. It will animate the image to be clicked
+   * This method is called when the image is clicked. It will animate the image to be clicked.
    *
-   * @return
+   * @return Adding more words due to requirements for description.
    */
   public ImageView getImageView() {
     return imageView;

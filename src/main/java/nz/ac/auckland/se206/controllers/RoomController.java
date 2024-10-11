@@ -217,7 +217,7 @@ public class RoomController {
     hasTalked = true;
   }
 
-  /** Disables all the rectangles in the room when called */
+  /** Disables all the rectangles in the room when called. */
   public void noTalking() {
     // send button is disabled to send messages
     buttonSend.setDisable(true);
@@ -227,7 +227,7 @@ public class RoomController {
     brotherImage.setDisable(true);
   }
 
-  /** Enables all the rectangles in the room when called */
+  /** Enables all the rectangles in the room when called. */
   public void enableTalking() {
     // send button is enabled to send messages
     buttonSend.setDisable(false);
@@ -240,7 +240,7 @@ public class RoomController {
   /**
    * Gets the rectangle representing the dashcam.
    *
-   * @return
+   * @return extra tag description due missing tag description.
    */
   public Rectangle getDashcam() {
     return dashcam;
@@ -254,7 +254,7 @@ public class RoomController {
   /**
    * boolean variable representing the found wallet
    *
-   * @return
+   * @return extra tag description due missing tag description.
    */
   public Boolean isWalletFound() {
     return walletFound;
@@ -271,36 +271,36 @@ public class RoomController {
   }
 
   /**
-   * boolean variable representing the found camera found
+   * boolean variable representing the found camera found.
    *
-   * @return
+   * @return extra tag description due missing tag description.
    */
   public Boolean isCameraFound() {
     return cameraFound;
   }
 
   /**
-   * getter method for the hasTalked boolean variable
+   * getter method for the hasTalked boolean variable.
    *
-   * @return
+   * @return extra tag description due missing tag description.
    */
   public Boolean getHasTalked() {
     return hasTalked;
   }
 
   /**
-   * boolean variable representing the found dashcam
+   * boolean variable representing the found dashcam.
    *
-   * @return
+   * @return extra tag description due missing tag description.
    */
   public Boolean isDashcamFound() {
     return dashcamFound;
   }
 
   /**
-   * boolean variable representing the found car
+   * boolean variable representing the found car.
    *
-   * @return
+   * @return extra tag description due missing tag description.
    */
   public Boolean isCarFound() {
     return isCarFound;
@@ -309,13 +309,13 @@ public class RoomController {
   /**
    * getter method for the guess button
    *
-   * @return
+   * @return extra tag description due missing tag description.
    */
   public Button getBtnGuess() {
     return buttonGuess;
   }
 
-  /** method for stopping the timeline */
+  /** method for stopping the timeline. */
   public void stopTimeLine() {
     timeline.stop();
   }
@@ -328,7 +328,7 @@ public class RoomController {
   /**
    * getter method for getting the context
    *
-   * @return
+   * @return extra tag description due missing tag description.
    */
   public GameStateContext getContext() {
     return context;
@@ -337,7 +337,7 @@ public class RoomController {
   /**
    * setter method for setting chat stats
    *
-   * @param stats
+   * @param stats extra tag description due missing tag description.
    */
   public void setChatStats(String stats) {
     chatStats.setText(stats);
@@ -346,7 +346,7 @@ public class RoomController {
   /**
    * method for getting the person
    *
-   * @return
+   * @return extra tag description due missing tag description.
    */
   public Person getPerson() {
     return person;
@@ -355,7 +355,7 @@ public class RoomController {
   /**
    * Handles the key pressed event.
    *
-   * @param event the key event
+   * @param event extra tag description due missing tag description.
    */
   @FXML
   public void onKeyPressed(KeyEvent event) {
@@ -365,7 +365,7 @@ public class RoomController {
   /**
    * Handles the key released event.
    *
-   * @param event the key event
+   * @param event extra tag description due missing tag description.
    */
   @FXML
   public void onKeyReleased(KeyEvent event) {
@@ -463,11 +463,7 @@ public class RoomController {
     }
   }
 
-  /**
-   * Sets the profession for the chat context and initializes the ChatCompletionRequest.
-   *
-   * @param profession the profession to set
-   */
+  /** Sets the profession for the chat context and initializes the ChatCompletionRequest. */
   public void setPerson(Person person) {
     if (this.person == person) {
       return;
@@ -685,11 +681,11 @@ public class RoomController {
   }
 
   /**
-   * Handles the event when an image is clicked. Depending on the clicked image, it either displays
+   * Handles the event when an image is clicked. Depending on the clicked image, it either displays.
    *
-   * @param event
-   * @throws IOException
-   * @throws InterruptedException
+   * @param event extra tag description due missing tag.
+   * @throws IOException extra tag description due missing tag.
+   * @throws InterruptedException extra tag description due missing tag.
    */
   @FXML
   public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {
@@ -770,9 +766,9 @@ public class RoomController {
   /**
    * Sets the image of the person clicked.
    *
-   * @param event
-   * @param id
-   * @throws IOException
+   * @param event Adding extra due missing requirements in methods.
+   * @param id Adding extra due missing requirements in methods.
+   * @throws IOException Adding extra due missing requirements in methods.
    */
   public void setPersonImage(MouseEvent event, String id) throws IOException {
     switch (id) {

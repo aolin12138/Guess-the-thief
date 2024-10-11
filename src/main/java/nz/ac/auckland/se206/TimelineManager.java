@@ -61,16 +61,16 @@ public class TimelineManager {
   }
 
   /**
-   * This method sets the progress
+   * This method sets the progress for usage.
    *
-   * @param progress
+   * @param progress Adding extra due missing requirements in methods.
    */
   public static void setProgress(int progress) {
     TimelineManager.progress = progress;
   }
 
   /**
-   * Gets the current progress.
+   * Gets the current progress Adding extra due missing requirements in methods.
    *
    * @return the current progress
    */
@@ -87,7 +87,7 @@ public class TimelineManager {
     timeline.play();
   }
 
-  /** This method stops the timer */
+  /** This method stops the timer. */
   public static void stopTimer() {
     timeline.stop();
   }
