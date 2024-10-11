@@ -24,3 +24,12 @@
 .text-area .viewport {
   -fx-background-color: transparent;
 }
+
+.text-area .scroll-pane .scroll-bar:vertical,
+.text-area .scroll-pane .scroll-bar:horizontal {
+  -fx-opacity: 0;
+  /* Make the scroll bar invisible */
+  -fx-max-width: 0;
+  /* Prevent the scroll bar from being shown */
+  -fx-max-height: 0;
+}
