@@ -5,7 +5,12 @@ import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.apiproxy.tts.TextToSpeechRequest.Voice;
 
-/** This class represents a person in the game. */
+/**
+ * The Person class represents an individual with various attributes.
+ *
+ * <p>This class provides methods to access and manipulate the attributes of a person, such as their
+ * name, age, and interview status.
+ */
 public class Person {
   private String name;
   private String role;

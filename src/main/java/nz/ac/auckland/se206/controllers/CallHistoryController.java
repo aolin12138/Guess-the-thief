@@ -20,7 +20,12 @@ import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
-/** This class is the controller for the call history scene. */
+/**
+ * The Timer class represents a simple timer.
+ *
+ * <p>This class provides methods to start, stop, and reset the timer, as well as to get the elapsed
+ * time.
+ */
 public class CallHistoryController {
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();

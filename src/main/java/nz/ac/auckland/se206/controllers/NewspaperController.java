@@ -35,7 +35,7 @@ public class NewspaperController {
    * This method is called when the next page button is clicked. It will take the user to the next
    * page
    *
-   * @param event extra tag description due missing tag description.
+   * @param event It will take the user to the next page
    */
   @FXML
   private void onNextPage(ActionEvent event) {

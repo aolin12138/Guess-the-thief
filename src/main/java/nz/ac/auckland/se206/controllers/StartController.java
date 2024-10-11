@@ -22,7 +22,12 @@ import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 
-/** This class is the controller for the start scene. */
+/**
+ * The Person class represents an individual with various attributes.
+ *
+ * <p>This class provides methods to access and manipulate the attributes of a person, such as their
+ * name, age, and interview status.
+ */
 public class StartController {
 
   @FXML private Button startButton;

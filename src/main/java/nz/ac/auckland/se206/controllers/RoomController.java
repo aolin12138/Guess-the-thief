@@ -252,7 +252,7 @@ public class RoomController {
   }
 
   /**
-   * boolean variable representing the found wallet
+   * boolean variable representing the found wallet.
    *
    * @return extra tag description due missing tag description.
    */
@@ -814,7 +814,7 @@ public class RoomController {
   /**
    * Sets the context for the room controller.
    *
-   * @param context the game state context to set for the room controller.
+   * @param context adding extra text due style requirements.
    */
   @SuppressWarnings("static-access")
   public void setContext(GameStateContext context) {

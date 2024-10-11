@@ -49,7 +49,12 @@ import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
-/** This class is the controller for the guess scene. */
+/**
+ * The Person class represents an individual with various attributes.
+ *
+ * <p>This class provides methods to access and manipulate the attributes of a person, such as their
+ * name, age, and interview status.
+ */
 public class GuessController {
   private static boolean isTimeOver = false;
   private static GameStateContext context = new GameStateContext();
@@ -349,7 +354,8 @@ public class GuessController {
   }
 
   /**
-   * Selects the first suspect and sets the current suspect to 1.
+   * <<<<<<< HEAD Selects the first suspect and sets the current suspect to 1. ======= Selects the
+   * first suspect for usage. >>>>>>> main
    *
    * @param event the mouse event that triggered this method
    * @throws ApiProxyException if there is an error with the API proxy
@@ -381,7 +387,8 @@ public class GuessController {
   }
 
   /**
-   * Selects the first suspect and sets the current suspect to 1.
+   * <<<<<<< HEAD Selects the first suspect and sets the current suspect to 1. ======= Selects the
+   * first suspect for selection. >>>>>>> main
    *
    * @param event the mouse event that triggered this method
    * @throws ApiProxyException if there is an error with the API proxy

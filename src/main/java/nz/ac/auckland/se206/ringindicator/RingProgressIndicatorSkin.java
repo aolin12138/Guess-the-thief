@@ -206,9 +206,9 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
   }
 
   /**
-   * Returns the ring progress indicator associated with this skin.
+   * Gets the control associated with this skin.
    *
-   * @return the ring progress indicator associated with this skin
+   * @return the control associated with this skin
    */
   @Override
   public RingProgressIndicator getSkinnable() {

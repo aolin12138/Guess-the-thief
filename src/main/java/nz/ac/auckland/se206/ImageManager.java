@@ -9,7 +9,12 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-/** This class manages the clues in the game. */
+/**
+ * The Person class represents an individual with various attributes.
+ *
+ * <p>This class provides methods to access and manipulate the attributes of a person, such as their
+ * name, age, and interview status.
+ */
 public class ImageManager {
   private ImageView imageView;
 
