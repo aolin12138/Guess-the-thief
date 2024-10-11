@@ -54,9 +54,9 @@ public class CrimeSceneController {
   }
 
   /**
-   * This method is a getter that returns the context
+   * This method is a getter that returns the context.
    *
-   * @return Adding more words due to requirements for description.
+   * @return returns the context of the game state.
    */
   public static GameStateContext getContext() {
     return context;

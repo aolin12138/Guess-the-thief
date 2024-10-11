@@ -147,7 +147,7 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
   /**
    * This method initializes the container.
    *
-   * @param indicator
+   * @param indicator the ring progress indicator to set the container for the skin.
    */
   private void initContainer(final RingProgressIndicator indicator) {
     container.getStylesheets().addAll(indicator.getStylesheets());
@@ -156,7 +156,7 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     container.setMaxWidth(Region.USE_PREF_SIZE);
   }
 
-  /** This method updates the radii of the circles and the arc */
+  /** This method updates the radii of the circles and the arc. */
   private void updateRadii() {
     // The width of the ring
     double ringWidth = indicator.getRingWidth();

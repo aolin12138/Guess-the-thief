@@ -125,7 +125,8 @@ abstract class ProgressCircleIndicator extends Control {
    * means indeterminate progress.
    *
    * @param progressValue the value for the progress bar
-   * @see ProgressCircleIndicator#makeIndeterminate()
+   * @see ProgressCircleIndicator#makeIndeterminate() Adding extra due missing requirements in
+   *     methods.
    */
   public void setProgress(int progressValue) {
     progress.set(defaultToHundred(progressValue));

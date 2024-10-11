@@ -411,7 +411,7 @@ public class RoomController {
    *
    * @param event the action event triggered by clicking the guess button
    * @throws IOException if there is an I/O error
-   * @throws URISyntaxException
+   * @throws URISyntaxException if there is an error with the URI syntax in the API.
    */
   @FXML
   private void onHandleGuessClick(ActionEvent event) throws IOException, URISyntaxException {

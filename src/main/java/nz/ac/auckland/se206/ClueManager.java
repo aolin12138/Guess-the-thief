@@ -33,7 +33,7 @@ public class ClueManager {
   private boolean isClicked = false;
 
   /**
-   * Constructor for the ClueManager class
+   * Constructor for the ClueManager class which manages the effects of the image.
    *
    * @param imageView
    */
