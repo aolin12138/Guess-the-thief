@@ -285,8 +285,6 @@ public class PhoneController {
 
   /**
    * This method is called when the home button is clicked. It will take the user back to the phone.
-   *
-   * @param event Adding more words due to requirements for description.
    */
   @FXML
   public void styleScene() {
@@ -345,6 +343,7 @@ public class PhoneController {
     switchedRing = true;
   }
 
+  /** Sets the ring progress indicator to green. */
   public void setGreenRing() {
     indicatorPane.getChildren().remove(ringProgressIndicator);
     ringProgressIndicator = new RingProgressIndicator();

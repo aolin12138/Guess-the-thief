@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 
 /** This class is used to manage the scenes in the game. */
 public class SceneManager {
+  /** The different scenes in the game. */
   public enum Scene {
     INSTRUCTIONS,
     START,
