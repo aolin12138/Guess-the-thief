@@ -502,7 +502,7 @@ public class GuessController {
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
 
     String message = inputField.getText().trim();
-    inputField.clear();
+    System.out.println("Message: " + message);
 
     // No time remaining
     if ((!isSuspectSelected)
@@ -683,6 +683,7 @@ public class GuessController {
 
       // generate a full prompt by fetching the user's reasoning
       String fullPrompt = evidencePrompt + "\nUser Reasoning:\n" + inputField.getText() + "\n";
+      inputField.clear();
       // Set the chat completion request
       ChatCompletionRequest request =
           new ChatCompletionRequest(ApiProxyConfig.readConfig())
