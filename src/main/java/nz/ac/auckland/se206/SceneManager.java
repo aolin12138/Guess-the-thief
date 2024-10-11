@@ -57,7 +57,7 @@ public class SceneManager {
   }
 
   /**
-   * Sets the camera loader.
+   * Sets the camera loader for usage.
    *
    * @param cctvLoader the FXMLLoader to set for the camera loader in the game.
    */

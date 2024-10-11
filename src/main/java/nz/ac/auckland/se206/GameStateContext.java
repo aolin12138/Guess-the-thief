@@ -92,7 +92,6 @@ public class GameStateContext {
    * Sets the current state of the game.
    *
    * @param state the new state to set Adding more words due to requirements for description.
-   * @return Adding more words due to requirements for description.
    */
   public void setState(GameState state) {
     this.gameState = state;

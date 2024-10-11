@@ -37,7 +37,7 @@ public class ImageManager {
   private boolean isClicked = false;
 
   /**
-   * Constructor for the ImageManager class
+   * Constructor for the ImageManager class.
    *
    * @param imageView the image view of the image to manage the effects of the image.
    */
@@ -197,7 +197,7 @@ public class ImageManager {
     return imageView;
   }
 
-  /** This method is called when the image is clicked */
+  /** This method is called when the image is clicked. */
   public void clicked() {
     // creates a new drop shadow effect
     DropShadow dropShadow = new DropShadow();

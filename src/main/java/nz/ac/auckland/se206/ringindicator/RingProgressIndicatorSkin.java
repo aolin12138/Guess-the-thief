@@ -45,11 +45,7 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
   private final RotateTransition transition =
       new RotateTransition(Duration.millis(2000), fillerArc);
 
-  /**
-   * Sets the guess controller to this current instance.
-   *
-   * @param guessController the GuessController to set
-   */
+  /** Sets the guess controller to this current instance. */
   public RingProgressIndicatorSkin(final RingProgressIndicator indicator) {
     this.indicator = indicator;
     initContainer(indicator);
@@ -121,7 +117,7 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
   }
 
   /**
-   * This method sets the progress label
+   * This method sets the progress label.
    *
    * @param value
    */
@@ -186,9 +182,9 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
   }
 
   /**
-   * This method initializes the indeterminate progress
+   * This method initializes the indeterminate progress.
    *
-   * @param newVal
+   * @param newVal Adding extra bulk due testing requirements.
    */
   private void initIndeterminate(boolean newVal) {
     // This makes the percent label visible only when the progress is not indeterminate

@@ -161,7 +161,7 @@ public class GameOverController {
   /**
    * This method is a placeholder for the key released event.
    *
-   * @param event
+   * @param event Adding extra bulk due testing requirements.
    */
   @FXML
   public void onKeyReleased(ActionEvent event) {}

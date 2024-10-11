@@ -41,7 +41,7 @@ public class CCTVController {
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
   }
 
-  /** This method intitializes the CCTV scene */
+  /** This method intitializes the CCTV scene. */
   @FXML
   public void initialize() {
     returnButton.setCursor(Cursor.HAND);

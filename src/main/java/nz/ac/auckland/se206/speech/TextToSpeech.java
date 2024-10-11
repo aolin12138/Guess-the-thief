@@ -69,8 +69,8 @@ public class TextToSpeech {
   /**
    * Converts the given text to speech and plays the audio.
    *
-   * @param text
-   * @param context
+   * @param text Adding extra bulk due testing requirements.
+   * @param context Adding extra bulk due testing requirements.
    */
   public static void speak(String text, GameStateContext context) {
     // Check if the text is null or empty
