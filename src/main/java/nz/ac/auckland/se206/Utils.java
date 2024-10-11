@@ -118,10 +118,16 @@ public class Utils {
     return (360 - ((minutes * 60) + seconds));
   }
 
-  // This method will be called in the Finished game controller.
-  // If the player won, their score will be passed here and checked to see if it is in the top 3.
-  // If it is, this method will sort the csv files to include the new score and in the correct
-  // order.
+  /**
+   * Updates the scoreboard with the new time and player name. The method compares the new time with
+   * the current top 3 scores and updates the scoreboard if the new time is faster. The method reads
+   * the current scores from the CSV file, compares the new time with the current top 3 scores, and
+   * updates the scoreboard if the new time is faster. The method then writes the updated scores to
+   * the CSV file.
+   *
+   * @param time the time to be added to the scoreboard.
+   * @param playerName the name of the player.
+   */
   public static void updateScoreBoard(int time, String playerName) {
     // Read current scores from the csv file
     System.out.println("First: " + previousScoresNames.size());
@@ -424,15 +430,19 @@ public class Utils {
     }
   }
 
+  /**
+   * Plays the soundtrack specified by the soundtrack parameter.
+   *
+   * @param soundtrack the name of the soundtrack to be played.
+   * @throws URISyntaxException if the URI syntax is invalid.
+   */
   public static void playSoundtrack(String soundtrack) throws URISyntaxException {
     Media sound = new Media(App.class.getResource("/sounds/" + soundtrack).toURI().toString());
     player = new MediaPlayer(sound);
     player.play();
   }
 
-  /** Stops the media player. */
-  // Used to stop the intro soundtrack incase the player triggers new audio before current audio has
-  // finished playing.
+  /** Stops the player from playing the soundtrack. */
   public static void stopPlayer() {
     try {
       player.stop();
