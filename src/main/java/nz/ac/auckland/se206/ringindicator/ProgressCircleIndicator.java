@@ -40,6 +40,9 @@ abstract class ProgressCircleIndicator extends Control {
   private static final int INDETERMINATE_PROGRESS = -1;
 
   /**
+   * Gets the CssMetaData associated with this class, which may include the CssMetaData of its super
+   * classes.
+   *
    * @return The CssMetaData associated with this class, which may include the CssMetaData of its
    *     super classes.
    */

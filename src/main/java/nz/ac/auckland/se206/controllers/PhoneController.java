@@ -24,6 +24,7 @@ import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
+/** This class is the controller for the phone scene. */
 public class PhoneController {
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
@@ -270,9 +271,12 @@ public class PhoneController {
     mediaPlayer.stop();
   }
 
+  /**
+   * This method is called when the home button is clicked. It will take the user back to the phone
+   *
+   * @param event Adding more words due to requirements for description.
+   */
   @FXML
-  // this method allows for various in game UI elements to provide response to the user when they
-  // are hovred over with the mouse
   public void styleScene() {
     // missed call element
     historyImage.setOnMouseEntered(

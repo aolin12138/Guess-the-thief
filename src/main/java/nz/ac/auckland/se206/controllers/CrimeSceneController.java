@@ -44,9 +44,9 @@ public class CrimeSceneController {
   private static Timeline timeline = new Timeline();
 
   /**
-   * This method returns true if any clue is found.
+   * This method is a getter that returns the context.
    *
-   * @return Adding more words due to requirements for description.
+   * @return returns the context of the game state.
    */
   public static boolean isAnyClueFound() {
     return context.isAnyClueFound();
