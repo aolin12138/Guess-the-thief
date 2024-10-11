@@ -23,13 +23,13 @@
             <Image url="@../images/crime_scene6.png" />
          </image>
       </ImageView>
-      <Button fx:id="buttonGuess" layoutX="681.0" layoutY="499.0" mnemonicParsing="false" onAction="#onGuessClick" prefHeight="26.0" prefWidth="104.0" stylesheets="@../css/buttons.css" text="Make a Guess">
+      <Button fx:id="buttonGuess" layoutX="345.0" layoutY="502.0" mnemonicParsing="false" onAction="#onGuessClick" prefHeight="26.0" prefWidth="104.0" stylesheets="@../css/buttons.css" text="Make a Guess">
 
          <font>
             <Font size="10.0" />
          </font></Button>
 
-      <VBox fx:id="imagesVerticalBox" layoutX="666.0" layoutY="2.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" styleClass="outline" stylesheets="@../css/sidebarlabel.css" visible="false">
+      <VBox fx:id="imagesVerticalBox" layoutX="655.0" layoutY="19.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" styleClass="outline" stylesheets="@../css/sidebarlabel.css" visible="false">
 
          <children>
             <VBox prefHeight="88.0" prefWidth="132.0" spacing="5.0">
@@ -152,7 +152,7 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <Button fx:id="buttonSlide" layoutX="331.0" layoutY="482.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="153.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
+      <Button fx:id="buttonSlide" layoutX="96.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="153.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
          <font>
             <Font name="Calibri" size="10.0" />
          </font>
