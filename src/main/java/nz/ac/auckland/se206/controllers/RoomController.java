@@ -27,7 +27,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
@@ -100,7 +99,6 @@ public class RoomController {
   @FXML private ImageView displayImage;
 
   @FXML private StackPane indicatorPane;
-  @FXML private Pane statsPane;
 
   @FXML private VBox imagesVerticalBox;
   @FXML private VBox messageBoxes;
@@ -202,15 +200,6 @@ public class RoomController {
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-  }
-
-  /**
-   * Gets the rectangle representing the first person in the room.
-   *
-   * @return
-   */
-  public Pane getStatsPane() {
-    return statsPane;
   }
 
   /** disables all the rectangles in the room */
@@ -491,9 +480,6 @@ public class RoomController {
         () -> {
           // start the progress indicator
           messageBoxes.getChildren().clear();
-          ProgressIndicator statsIndicator = new ProgressIndicator();
-          statsIndicator.setMinSize(1, 1);
-          statsPane.getChildren().add(statsIndicator);
           context
               .getRoomController()
               .setChatStats(context.getRoomController().getPerson().getName());
@@ -553,7 +539,6 @@ public class RoomController {
           () -> {
             appendMessage(result.getChatMessage(), false);
             context.getRoomController().enableTalking();
-            context.getRoomController().getStatsPane().getChildren().clear();
           });
       // speak the chat message
       TextToSpeech.speak(result.getChatMessage().getContent(), context);

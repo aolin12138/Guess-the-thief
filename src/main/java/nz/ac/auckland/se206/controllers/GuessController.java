@@ -107,7 +107,6 @@ public class GuessController {
   @FXML private ImageView crimeScene;
 
   @FXML private StackPane indicatorPane;
-  @FXML private Pane statsPane;
   @FXML private Label lblDescription;
   @FXML private Label ownerLabel;
   @FXML private Label workerLabel;
@@ -266,15 +265,6 @@ public class GuessController {
     // Set the cycle count to indefinite
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-  }
-
-  /**
-   * Gets the stats pane.
-   *
-   * @return the time for guessing
-   */
-  public Pane getStatsPane() {
-    return statsPane;
   }
 
   /**
@@ -546,10 +536,6 @@ public class GuessController {
           inputField.setVisible(false);
         });
     timeline.stop();
-    // Set the progress indicator to visible
-    ProgressIndicator statsIndicator = new ProgressIndicator();
-    statsIndicator.setMinSize(1, 1);
-    statsPane.getChildren().add(statsIndicator);
     // Create a new task
     Task<Void> task =
         new Task<Void>() {
@@ -740,7 +726,6 @@ public class GuessController {
     workerImage.setVisible(false);
     ownerImage.setVisible(false);
     restartButton.setVisible(true);
-    statsPane.setVisible(false);
     buttonSend.setVisible(false);
     lblDescription.setVisible(false);
     explanationLabel.setVisible(false);
