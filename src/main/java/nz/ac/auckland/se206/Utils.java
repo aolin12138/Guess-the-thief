@@ -118,13 +118,10 @@ public class Utils {
     return (360 - ((minutes * 60) + seconds));
   }
 
-  /**
-   * Updates the scoreboard with the new time and player name. The method compares the new time with
-   * the current top 3 scores in the CSV file and updates the scoreboard if the new time is faster.
-   *
-   * @param time the time to be added to the scoreboard.
-   * @param playerName the name of the player.
-   */
+  // This method will be called in the Finished game controller.
+  // If the player won, their score will be passed here and checked to see if it is in the top 3.
+  // If it is, this method will sort the csv files to include the new score and in the correct
+  // order.
   public static void updateScoreBoard(int time, String playerName) {
     // Read current scores from the csv file
     System.out.println("First: " + previousScoresNames.size());
@@ -280,7 +277,7 @@ public class Utils {
   /**
    * Gets the top 3 scores from the CSV file to display on the start page.
    *
-   * @return
+   * @return an ArrayList of the top 3 scores to display on the start page.
    */
   public static ArrayList<String> getScoresForStartPage() {
     // Need to read the csv and put the values into an array
@@ -427,12 +424,6 @@ public class Utils {
     }
   }
 
-  /**
-   * Plays the soundtrack specified by the soundtrack parameter.
-   *
-   * @param soundtrack the name of the soundtrack to be played in the format "soundtrack.mp3".
-   * @throws URISyntaxException if the URI syntax is incorrect in the format "soundtrack.mp3"..
-   */
   public static void playSoundtrack(String soundtrack) throws URISyntaxException {
     Media sound = new Media(App.class.getResource("/sounds/" + soundtrack).toURI().toString());
     player = new MediaPlayer(sound);
@@ -451,13 +442,6 @@ public class Utils {
     }
   }
 
-  /**
-   * Checks if the new time is faster than the 3rd element of the time array from the CSV file. If
-   * the new time is faster, the method returns true, and the new time will be added to the
-   * scoreboard.
-   *
-   * @return true if the new time is faster than the 3rd element of the time array, false otherwise
-   */
   public static boolean checkThirdTimeSlot() {
     // Checks the 3rd element of the time array from csv to decide if the new time gets added to the
     // scoreboard

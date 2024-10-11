@@ -46,7 +46,7 @@ public class CrimeSceneController {
   private static boolean initialisedRing = true;
 
   /**
-   * This method returns true if any clue is found.
+   * This method is a getter that returns the context.
    *
    * @return returns the context of the game state.
    */
