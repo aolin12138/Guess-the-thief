@@ -223,6 +223,7 @@ public class CrimeSceneController {
   }
 
   @FXML
+  // This methoid is called when the user presses the help button, and the instructions will appear.
   void onHelpButtonClicked(MouseEvent event) {
     showInstructionsButton.setVisible(false);
     instructionsTextArea.setVisible(true);
@@ -237,6 +238,8 @@ public class CrimeSceneController {
 
   @FXML
   void onHideHelpClicked(MouseEvent event) {
+    // This method is called when the user hides the instructions or attempts to click any other
+    // point on the game.
     hideInstructionsButton.setVisible(false);
     TranslateTransition instructionsTransition = new TranslateTransition();
     instructionsTransition.setNode(instructionsTextArea);

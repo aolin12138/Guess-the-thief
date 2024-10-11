@@ -271,7 +271,10 @@ public class PhoneController {
   }
 
   @FXML
+  // this method allows for various in game UI elements to provide response to the user when they
+  // are hovred over with the mouse
   public void styleScene() {
+    // missed call element
     historyImage.setOnMouseEntered(
         e -> {
           historyImageManager.hoverIn();
@@ -280,7 +283,7 @@ public class PhoneController {
         e -> {
           historyImageManager.hoverOut();
         });
-
+    // ios phone app image
     phoneApp.setOnMouseEntered(
         e -> {
           phoneAppManager.hoverIn();
@@ -289,6 +292,7 @@ public class PhoneController {
         e -> {
           phoneAppManager.hoverOut();
         });
+    // ios call screen image
     callEnd.setOnMouseEntered(
         e -> {
           callEndManager.hoverIn();
