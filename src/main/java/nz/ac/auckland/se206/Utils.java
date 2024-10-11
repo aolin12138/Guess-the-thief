@@ -254,7 +254,7 @@ public class Utils {
   /**
    * Sets the player's name.
    *
-   * @param name
+   * @param name extra tag description due missing tag
    */
   public static void setPlayerName(String name) {
     playerName = name;
@@ -332,10 +332,10 @@ public class Utils {
   /**
    * Checks the conditions to switch to the guessing scene.
    *
-   * @param context
-   * @param isAllSuspectsSpokenTo
-   * @param isAnyClueFound
-   * @param timeline
+   * @param context Extra tag description due missing tag description.
+   * @param isAllSuspectsSpokenTo Extra tag description due missing tag description.
+   * @param isAnyClueFound Extra tag description due missing tag description.
+   * @param timeline Extra tag description due missing tag description.
    */
   public static void checkConditions(
       GameStateContext context,

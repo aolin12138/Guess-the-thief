@@ -843,9 +843,9 @@ public class GuessController {
   /**
    * Appends text to the chat area letter by letter.
    *
-   * @param textNode
-   * @param message
-   * @param delay
+   * @param textNode extra tag description due missing tag
+   * @param message extra tag description due missing tag
+   * @param delay extra tag description due missing tag
    */
   public void appendTextLetterByLetter(Text textNode, String message, int delay) {
     textNode.setText("");

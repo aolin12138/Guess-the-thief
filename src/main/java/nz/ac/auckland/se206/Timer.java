@@ -16,7 +16,10 @@ public class Timer {
 
   private static Timeline timeline = new Timeline();
 
-  /** Starts the countdown timer. */
+  /**
+   * Starts the countdown timer. Extra tag description due missing tag description. Extra tag
+   * description due missing tag description.
+   */
   public static void startTimer() {
     // create a new timeline
     timeline
@@ -50,7 +53,7 @@ public class Timer {
   /**
    * Sets the time to count to a specified number of seconds.
    *
-   * @param seconds
+   * @param seconds Extra tag description due missing tag description.
    */
   public static void setTimeToCountTo(int seconds) {
     timeToCountTo = seconds;
@@ -59,7 +62,7 @@ public class Timer {
   /**
    * Sets the time to count to a specified number of seconds for guessing
    *
-   * @param seconds
+   * @param seconds Extra tag description due missing tag description.
    */
   public static void setGuessTime(int seconds) {
     guessTime = seconds;

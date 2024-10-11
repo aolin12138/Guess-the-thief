@@ -75,9 +75,9 @@ public class GameOverController {
    * This method is called when the restart button is clicked. It will take the user back to the
    * start scene.
    *
-   * @param event
-   * @throws ApiProxyException
-   * @throws IOException
+   * @param event Extra tag description due missing tag description.
+   * @throws ApiProxyException Extra tag description due missing tag description.
+   * @throws IOException Extra tag description due missing tag description.
    */
   @FXML
   private void onHandleRestartClick(ActionEvent event) throws ApiProxyException, IOException {

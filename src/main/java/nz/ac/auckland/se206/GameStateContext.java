@@ -174,9 +174,9 @@ public class GameStateContext {
   }
 
   /**
-   * sets the room controller to this current instance
+   * sets the room controller to this current instance.
    *
-   * @param roomController
+   * @param roomController Extra tag description due missing tag description.
    */
   public void setRoomController(RoomController roomController) {
     this.roomController = roomController;

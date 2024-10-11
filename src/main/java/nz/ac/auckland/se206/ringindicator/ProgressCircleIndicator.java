@@ -32,7 +32,7 @@ import javafx.css.converter.SizeConverter;
 import javafx.scene.control.Control;
 
 /**
- * Base class for the progress indicator controls represented by circualr shapes
+ * Base class for the progress indicator controls represented by circualr shapes.
  *
  * @author Andrea Vacondio
  */
