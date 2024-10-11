@@ -209,7 +209,7 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     }
   }
 
-  /** This method returns the skinnable */
+  /** This method returns the skinnable. */
   @Override
   public RingProgressIndicator getSkinnable() {
     return indicator;

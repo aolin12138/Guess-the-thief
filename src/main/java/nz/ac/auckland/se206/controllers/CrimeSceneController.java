@@ -186,9 +186,12 @@ public class CrimeSceneController {
   }
 
   /**
-   * This method is called when the phone clue is clicked. It will take the user to the phone scene
+   * Handles the action when the phone clue is clicked.
    *
-   * @param event
+   * <p>This method hides the instructions if they are visible, marks the second clue as found, and
+   * changes the scene to the phone scene.
+   *
+   * @param event the mouse event that triggered this method
    */
   @FXML
   void onPhoneClueClicked(MouseEvent event) {
@@ -205,10 +208,12 @@ public class CrimeSceneController {
   }
 
   /**
-   * This method is called when the newspaper clue is clicked. It will take the user to the
-   * newspaper scene
+   * Handles the action when the newspaper clue is clicked.
    *
-   * @param event
+   * <p>This method hides the instructions if they are visible, marks the first clue as found, and
+   * changes the scene to the newspaper scene.
+   *
+   * @param event the mouse event that triggered this method
    */
   @FXML
   void onNewspaperClueClicked(MouseEvent event) {
@@ -222,6 +227,14 @@ public class CrimeSceneController {
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.NEWSPAPER));
   }
 
+  /**
+   * Handles the action when the help button is clicked.
+   *
+   * <p>This method hides the show instructions button, makes the instructions text area visible,
+   * and animates the instructions text area sliding in from the left.
+   *
+   * @param event the mouse event that triggered this method
+   */
   @FXML
   void onHelpButtonClicked(MouseEvent event) {
     showInstructionsButton.setVisible(false);
@@ -235,6 +248,14 @@ public class CrimeSceneController {
     instructionsTransition.setOnFinished(e -> hideInstructionsButton.setVisible(true));
   }
 
+  /**
+   * Handles the action when the hide help button is clicked.
+   *
+   * <p>This method hides the hide instructions button, makes the instructions text area slide out
+   * to the left, and makes the show instructions button visible once the animation is finished.
+   *
+   * @param event the mouse event that triggered this method
+   */
   @FXML
   void onHideHelpClicked(MouseEvent event) {
     hideInstructionsButton.setVisible(false);
