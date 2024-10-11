@@ -77,7 +77,7 @@ public class SceneManager {
   /**
    * Sets the room loader.
    *
-   * @param roomLoader
+   * @param roomLoader the FXMLLoader to set for the room
    */
   public static void setRoomLoader(FXMLLoader roomLoader) {
     SceneManager.roomLoader = roomLoader;
@@ -86,7 +86,7 @@ public class SceneManager {
   /**
    * Sets the call history loader.
    *
-   * @param callhistoryLoader
+   * @param callHistoryLoader the FXMLLoader to set for the call history
    */
   public static void setCallHistoryLoader(FXMLLoader callhistoryLoader) {
     SceneManager.callhistoryLoader = callhistoryLoader;
@@ -102,54 +102,54 @@ public class SceneManager {
   }
 
   /**
-   * Gets the room loader.
+   * Gets the room loader for usage.
    *
-   * @return roomLoader
+   * @return the FXMLLoader for the room
    */
   public static FXMLLoader getRoomLoader() {
     return roomLoader;
   }
 
   /**
-   * Gets the phone loader.
+   * Gets the phone loader for usage.
    *
-   * @return
+   * @return the FXMLLoader for the phone
    */
   public static FXMLLoader getPhoneLoader() {
     return phoneLoader;
   }
 
   /**
-   * Gets the call history loader.
+   * Gets the call history loader for usage.
    *
-   * @return
+   * @return the FXMLLoader for the call history
    */
   public static FXMLLoader getCallHistoryLoader() {
     return callhistoryLoader;
   }
 
   /**
-   * Gets the camera loader.
+   * Gets the camera loader for usage.
    *
-   * @return
+   * @return the FXMLLoader for the camera
    */
   public static FXMLLoader getCameraLoader() {
     return cctvLoader;
   }
 
   /**
-   * Gets the newspaper loader.
+   * Gets the newspaper loader for usage.
    *
-   * @return
+   * @return the FXMLLoader for the newspaper
    */
   public static FXMLLoader getNewspaperLoader() {
     return newspaperLoader;
   }
 
   /**
-   * Gets the crime scene loader.
+   * Gets the crime scene loader for usage.
    *
-   * @return
+   * @return the FXMLLoader for the crime scene
    */
   public static FXMLLoader getCrimeSceneLoader() {
     return crimeSceneLoader;

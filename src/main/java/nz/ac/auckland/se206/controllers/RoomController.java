@@ -212,7 +212,7 @@ public class RoomController {
     car.setDisable(true);
   }
 
-  /** boolean variable to check if the user has talked the suspects */
+  /** boolean variable to check if the user has talked the suspects. */
   public void talked() {
     hasTalked = true;
   }

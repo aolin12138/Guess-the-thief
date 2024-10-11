@@ -76,7 +76,9 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
         }
 
         /**
-         * @return The name of the property we are bound to.
+         * Gets the name of the property this DoubleProperty is bound to.
+         *
+         * @return the name of the property, which is "ringWidth"
          */
         @Override
         public String getName() {

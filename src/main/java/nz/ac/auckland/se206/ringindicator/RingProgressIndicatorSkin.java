@@ -46,9 +46,9 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
       new RotateTransition(Duration.millis(2000), fillerArc);
 
   /**
-   * method for the ring progress indicator skin
+   * Sets the guess controller to this current instance.
    *
-   * @param indicator
+   * @param guessController the GuessController to set
    */
   public RingProgressIndicatorSkin(final RingProgressIndicator indicator) {
     this.indicator = indicator;
@@ -176,9 +176,9 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
   }
 
   /**
-   * This method initializes the label
+   * Initializes the label for the ring progress indicator.
    *
-   * @param value
+   * <p>This method sets up the label properties such as font, color, and alignment.
    */
   private void initLabel(int value) {
     setProgressLabel(value);
@@ -215,13 +215,21 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     return indicator;
   }
 
-  /** This method returns the node */
+  /**
+   * Returns the node associated with this skin.
+   *
+   * @return the node associated with this skin
+   */
   @Override
   public Node getNode() {
     return container;
   }
 
-  /** This method disposes the transition */
+  /**
+   * Disposes of the resources used by this skin.
+   *
+   * <p>This method stops the transition associated with the ring progress indicator.
+   */
   @Override
   public void dispose() {
     transition.stop();
