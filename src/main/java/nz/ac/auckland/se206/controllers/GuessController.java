@@ -54,6 +54,8 @@ public class GuessController {
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static boolean isThiefFound = false;
   private static boolean isGameWon = false;
+  private static boolean switchedRing = false;
+  private static boolean initialisedRing = true;
 
   public static boolean getThiefFound() {
     return isThiefFound;
@@ -199,6 +201,17 @@ public class GuessController {
             new KeyFrame(
                 Duration.millis(1),
                 event -> {
+                  if (timeForGuessing < 30000 && !switchedRing) {
+                    setRedRing();
+                  }
+
+                  if (timeForGuessing < 15000) {
+                    if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 == 0) {
+                      timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
+                    } else {
+                      timerLabel.setStyle("-fx-text-fill: rgba(142,3,3,1);");
+                    }
+                  }
                   if (timeForGuessing > 0) {
                     // This runs when there is still time on the clock
                     timeForGuessing--;
@@ -742,7 +755,29 @@ public class GuessController {
           CrimeSceneController.resetBooleans();
           RoomController.resetBooleans();
 
+          initialisedRing = false;
+          switchedRing = false;
+
           timeForGuessing = 60000;
         });
+  }
+
+  /** Sets the ring progress indicator to red. */
+  public void setRedRing() {
+    indicatorPane.getChildren().remove(ringProgressIndicator);
+    ringProgressIndicator = new RingProgressIndicator(true);
+    ringProgressIndicator.setRingWidth(50);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
+    switchedRing = true;
+  }
+
+  public void setGreenRing() {
+    indicatorPane.getChildren().remove(ringProgressIndicator);
+    ringProgressIndicator = new RingProgressIndicator();
+    ringProgressIndicator.setRingWidth(50);
+    indicatorPane.getChildren().add(ringProgressIndicator);
+    timerLabel.setStyle("-fx-text-fill: #83F28F;");
+    initialisedRing = true;
   }
 }
