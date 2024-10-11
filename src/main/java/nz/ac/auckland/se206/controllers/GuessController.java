@@ -96,8 +96,9 @@ public class GuessController {
   @FXML private Button restartButton;
 
   @FXML private TextArea textaChat;
+  @FXML private TextArea inputField;
 
-  @FXML private TextField inputField;
+  @FXML private TextField inputField1;
 
   @FXML private ImageView carImage;
   @FXML private ImageView ownerImage;

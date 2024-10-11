@@ -1,11 +1,11 @@
 .text-area {
-  -fx-font-family: "Times New Roman";
+  -fx-font-family: "Arial";
   -fx-font-size: 14px;
-  -fx-text-fill: #39220e;
+  -fx-text-fill: #ffffff;
   -fx-display-caret: true;
   -fx-background-radius: 2em;
   -fx-background-color: transparent;
-  -fx-border-color: black;
+  -fx-border-color: transparent;
   -fx-border-width: 2 2 2 2;
   -fx-border-radius: 1.5em;
   -fx-border-color: transparent;
@@ -15,11 +15,10 @@
 }
 
 .text-area .content {
-  -fx-background-radius: 20;
-  -fx-background-color: rgb(237, 190, 132);
-  -fx-border-color: black;
+  -fx-background-radius: 15;
+  -fx-background-color: rgba(0, 0, 0, 0.45);
   -fx-border-width: 1 1 1 1;
-  -fx-border-radius: 1.5em;
+  -fx-border-radius: 15;
 }
 
 .text-area .viewport {
