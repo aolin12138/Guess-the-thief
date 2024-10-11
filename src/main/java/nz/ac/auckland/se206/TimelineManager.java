@@ -20,12 +20,16 @@ public class TimelineManager {
         .getKeyFrames()
         .add(
             new KeyFrame(
+                // timeline counts down in milliseconds so we can be very accurate when passing time
+                // between scenes
                 Duration.millis(1),
                 event -> {
                   if (timeToCount > 0) {
                     timeToCount--;
+                    // set progress
                     progress = (int) (100 - ((timeToCountTo - timeToCount) * 100 / timeToCountTo));
                   } else {
+                    // check scene switching condiitions when timer is left to run out
                     Utils.checkConditions(
                         context,
                         context.isAllSuspectsSpokenTo(),
@@ -34,6 +38,7 @@ public class TimelineManager {
                     timeline.stop();
                   }
                 }));
+    // timer cycles indefinitely unless actively stopped
     timeline.setCycleCount(Timeline.INDEFINITE);
   }
 

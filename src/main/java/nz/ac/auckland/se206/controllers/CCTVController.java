@@ -72,6 +72,8 @@ public class CCTVController {
   /** This method is called when the face is clicked. It will show the recognition label */
   @FXML
   private void onFaceClicked() {
+    // When the face is clicked, the faceID label is hidden and the faceID animation label appears,
+    // showing the user the suspects identity.
     if (!isSeen) {
       isSeen = true;
       messageLabel.setVisible(false);
