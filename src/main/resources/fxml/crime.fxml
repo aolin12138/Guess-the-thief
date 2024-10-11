@@ -20,7 +20,7 @@
 
       <ImageView fx:id="displayImage" fitHeight="583.0" fitWidth="805.0" layoutX="-1.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true" styleClass="timer-label">
          <image>
-            <Image url="@../images/crime_scene5.png" />
+            <Image url="@../images/crime_scene6.png" />
          </image>
       </ImageView>
       <Button fx:id="buttonGuess" layoutX="681.0" layoutY="499.0" mnemonicParsing="false" onAction="#onGuessClick" prefHeight="26.0" prefWidth="104.0" stylesheets="@../css/buttons.css" text="Make a Guess">
@@ -152,7 +152,7 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <Button fx:id="buttonSlide" layoutX="158.0" layoutY="445.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="139.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
+      <Button fx:id="buttonSlide" layoutX="331.0" layoutY="482.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="153.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
          <font>
             <Font name="Calibri" size="10.0" />
          </font>
@@ -172,17 +172,17 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="phoneImage" fitHeight="18.0" fitWidth="11.0" layoutX="36.0" layoutY="362.0" onMouseClicked="#onPhoneClueClicked" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="phoneImage" fitHeight="26.0" fitWidth="41.0" layoutX="233.0" layoutY="428.0" onMouseClicked="#onPhoneClueClicked" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/phoneImage.png" />
+            <Image url="@../images/phoneImage2.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="cameraImage" fitHeight="17.0" fitWidth="21.0" layoutX="573.0" layoutY="101.0" onMouseClicked="#onCameraClueClicked" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="cameraImage" fitHeight="65.0" fitWidth="96.0" layoutX="617.0" layoutY="-8.0" onMouseClicked="#onCameraClueClicked" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/cameraImage.png" />
+            <Image url="@../images/cameraImage2.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
