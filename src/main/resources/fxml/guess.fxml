@@ -120,7 +120,6 @@
          </children>
       </HBox>
       <TextArea fx:id="guessTextArea" layoutX="216.0" layoutY="341.0" prefHeight="134.0" prefWidth="394.0" visible="false" />
-      <Button fx:id="restartButton" layoutX="698.0" layoutY="40.0" mnemonicParsing="false" onAction="#onRestartButtonClicked" text="Play Again" />
       <Label fx:id="explanationLabel" layoutX="154.0" layoutY="362.0" text="Please explain your answer below" textFill="WHITE" visible="false">
          <font>
             <Font size="18.0" />
