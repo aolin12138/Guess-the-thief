@@ -501,6 +501,7 @@ public class CrimeSceneController {
     switchedRing = true;
   }
 
+  /** Sets the ring progress indicator to green. */
   public void setGreenRing() {
     indicatorPane.getChildren().remove(ringProgressIndicator);
     ringProgressIndicator = new RingProgressIndicator();

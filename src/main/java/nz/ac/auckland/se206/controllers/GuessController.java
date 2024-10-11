@@ -65,7 +65,6 @@ public class GuessController {
   private static boolean isThiefFound = false;
   private static boolean isGameWon = false;
   private static boolean switchedRing = false;
-  private static boolean initialisedRing = true;
 
   public static boolean getThiefFound() {
     return isThiefFound;
@@ -81,7 +80,6 @@ public class GuessController {
 
   public static void resetBooleans() {
     switchedRing = false;
-    initialisedRing = false;
   }
 
   @FXML private Rectangle rectPerson1;
@@ -504,7 +502,7 @@ public class GuessController {
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
 
     String message = inputField.getText().trim();
-    inputField.clear();
+    System.out.println("Message: " + message);
 
     // No time remaining
     if ((!isSuspectSelected)
@@ -685,6 +683,7 @@ public class GuessController {
 
       // generate a full prompt by fetching the user's reasoning
       String fullPrompt = evidencePrompt + "\nUser Reasoning:\n" + inputField.getText() + "\n";
+      inputField.clear();
       // Set the chat completion request
       ChatCompletionRequest request =
           new ChatCompletionRequest(ApiProxyConfig.readConfig())
@@ -863,7 +862,6 @@ public class GuessController {
                 setGreenRing();
               });
 
-          initialisedRing = false;
           switchedRing = false;
 
           timeForGuessing = 60000;
@@ -980,12 +978,12 @@ public class GuessController {
     switchedRing = true;
   }
 
+  /** Sets the ring progress indicator to green. */
   public void setGreenRing() {
     indicatorPane.getChildren().remove(ringProgressIndicator);
     ringProgressIndicator = new RingProgressIndicator();
     ringProgressIndicator.setRingWidth(50);
     indicatorPane.getChildren().add(ringProgressIndicator);
     timerLabel.setStyle("-fx-text-fill: #83F28F;");
-    initialisedRing = true;
   }
 }
