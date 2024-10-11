@@ -35,7 +35,7 @@ public class ClueManager {
   /**
    * Constructor for the ClueManager class which manages the effects of the image.
    *
-   * @param imageView
+   * @param imageView class which manages the effects of the image.
    */
   public ClueManager(ImageView imageView) {
     this.imageView = imageView;

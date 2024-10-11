@@ -9,6 +9,12 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+/**
+ * The Person class represents an individual with various attributes.
+ *
+ * <p>This class provides methods to access and manipulate the attributes of a person, such as their
+ * name, age, and interview status.
+ */
 public class ImageManager {
   private ImageView imageView;
 
@@ -174,7 +180,7 @@ public class ImageManager {
     shadowTransitionOut.play();
   }
 
-  /** this method is to stay the current effect of the image */
+  /** this method is to stay the current effect of the image. */
   public void stayCurrentEffect() {
     imageView.setEffect(dropShadowOut);
   }
@@ -217,7 +223,7 @@ public class ImageManager {
     isClicked = true;
   }
 
-  /** this method is called when the image is unclicked */
+  /** this method is called when the image is unclicked. */
   public void unclicked() {
     isClicked = false;
     hoverOut();

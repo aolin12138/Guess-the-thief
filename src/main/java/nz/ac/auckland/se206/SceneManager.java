@@ -4,6 +4,12 @@ import java.util.HashMap;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
+/**
+ * The Person class represents an individual with various attributes.
+ *
+ * <p>This class provides methods to access and manipulate the attributes of a person, such as their
+ * name, age, and interview status.
+ */
 public class SceneManager {
   public enum Scene {
     INSTRUCTIONS,

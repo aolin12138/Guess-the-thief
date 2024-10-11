@@ -15,6 +15,13 @@ import nz.ac.auckland.se206.controllers.CrimeSceneController;
 import nz.ac.auckland.se206.controllers.GameOverController;
 
 /*Utility methods for common tasks. Feel free to add static methods here. */
+
+/**
+ * The Person class represents an individual with various attributes.
+ *
+ * <p>This class provides methods to access and manipulate the attributes of a person, such as their
+ * name, age, and interview status.
+ */
 public class Utils {
 
   public static Scanner scanner = new Scanner(System.in);
