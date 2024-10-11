@@ -119,7 +119,7 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
   /**
    * This method sets the progress label.
    *
-   * @param value
+   * @param value the value to set the progress label to.
    */
   private void setProgressLabel(int value) {
     if (value >= 0) {
@@ -205,7 +205,11 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     }
   }
 
-  /** This method returns the skinnable. */
+  /**
+   * Returns the ring progress indicator associated with this skin.
+   *
+   * @return the ring progress indicator associated with this skin
+   */
   @Override
   public RingProgressIndicator getSkinnable() {
     return indicator;

@@ -16,6 +16,7 @@ import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
+/** This class is the controller for the newspaper scene. */
 public class NewspaperController {
   private static RingProgressIndicator ringProgressIndicator = new RingProgressIndicator();
   private static Timeline timeline = new Timeline();
@@ -34,7 +35,7 @@ public class NewspaperController {
    * This method is called when the next page button is clicked. It will take the user to the next
    * page
    *
-   * @param event
+   * @param event extra tag description due missing tag description.
    */
   @FXML
   private void onNextPage(ActionEvent event) {

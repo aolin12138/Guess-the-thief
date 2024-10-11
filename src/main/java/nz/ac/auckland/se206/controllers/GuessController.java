@@ -49,6 +49,7 @@ import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
+/** This class is the controller for the guess scene. */
 public class GuessController {
   private static boolean isTimeOver = false;
   private static GameStateContext context = new GameStateContext();
@@ -305,7 +306,7 @@ public class GuessController {
   }
 
   /**
-   * Sets the chat statistics.
+   * Sets the chat statistics to the given string.
    *
    * @param stats the chat statistics to set
    */
@@ -348,7 +349,7 @@ public class GuessController {
   }
 
   /**
-   * Selects the first suspect.
+   * Selects the first suspect and sets the current suspect to 1.
    *
    * @param event the mouse event that triggered this method
    * @throws ApiProxyException if there is an error with the API proxy
@@ -380,7 +381,7 @@ public class GuessController {
   }
 
   /**
-   * Selects the first suspect.
+   * Selects the first suspect and sets the current suspect to 1.
    *
    * @param event the mouse event that triggered this method
    * @throws ApiProxyException if there is an error with the API proxy
@@ -412,7 +413,7 @@ public class GuessController {
   }
 
   /**
-   * Selects the third suspect.
+   * Selects the third suspect and sets the current suspect to 3.
    *
    * @param event the mouse event that triggered this method
    * @throws ApiProxyException if there is an error with the API proxy
@@ -729,6 +730,7 @@ public class GuessController {
     this.context = context;
   }
 
+  /** Styles the end of the game by showing and hiding various UI elements. */
   public void styleEndOfGame() {
     // shows and hides various UI elements when the game ends
     brotherImage.setVisible(false);

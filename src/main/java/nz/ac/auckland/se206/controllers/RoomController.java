@@ -246,7 +246,7 @@ public class RoomController {
     return dashcam;
   }
 
-  /** boolean variable representing the wallet */
+  /** boolean variable representing the wallet. */
   public void foundWallet() {
     walletFound = true;
   }
@@ -265,7 +265,7 @@ public class RoomController {
     cameraFound = true;
   }
 
-  /** boolean variable representing the found car */
+  /** boolean variable representing the found car. */
   public void foundCar() {
     isCarFound = true;
   }
@@ -320,7 +320,7 @@ public class RoomController {
     timeline.stop();
   }
 
-  /** getter method for getting car image */
+  /** getter method for getting car image. */
   public ImageView getCarImage() {
     return carImage;
   }
@@ -814,7 +814,7 @@ public class RoomController {
   /**
    * Sets the context for the room controller.
    *
-   * @param context
+   * @param context the game state context to set for the room controller.
    */
   @SuppressWarnings("static-access")
   public void setContext(GameStateContext context) {

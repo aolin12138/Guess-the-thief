@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+/** This class manages the countdown timer for the game. */
 public class Timer {
 
   private static double timeToCountTo = 300000;
@@ -60,7 +61,7 @@ public class Timer {
   }
 
   /**
-   * Sets the time to count to a specified number of seconds for guessing
+   * Sets the time to count to a specified number of seconds for guessing the suspect.
    *
    * @param seconds Extra tag description due missing tag description.
    */

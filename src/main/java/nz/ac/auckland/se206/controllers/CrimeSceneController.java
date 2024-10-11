@@ -29,6 +29,7 @@ import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
+/** This class is the controller for the crime scene. */
 public class CrimeSceneController {
 
   private static GameStateContext context = new GameStateContext();
@@ -36,9 +37,9 @@ public class CrimeSceneController {
   private static Timeline timeline = new Timeline();
 
   /**
-   * This method returns true if any clue is found
+   * This method is a getter that returns the context.
    *
-   * @return Adding more words due to requirements for description.
+   * @return returns the context of the game state.
    */
   public static boolean isAnyClueFound() {
     return context.isAnyClueFound();
@@ -171,7 +172,7 @@ public class CrimeSceneController {
   /**
    * This method is called when the CCTV clue is clicked. It will take the user to the CCTV scene
    *
-   * @param event
+   * @param event Adding more words due to requirements for description.
    */
   @FXML
   void onCameraClueClicked(MouseEvent event) {
@@ -314,7 +315,13 @@ public class CrimeSceneController {
     }
   }
 
-  /** This method styles the scene */
+  /**
+   * This method is called when the suspect 1 scene is clicked. It will take the user to the suspect
+   * 1 scene.
+   *
+   * @param event Adding more words due to requirements for description.
+   * @throws IOException Adding more words due to requirements for description.
+   */
   @FXML
   public void styleScene() {
 

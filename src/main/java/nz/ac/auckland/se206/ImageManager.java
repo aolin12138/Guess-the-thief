@@ -9,6 +9,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+/** This class manages the clues in the game. */
 public class ImageManager {
   private ImageView imageView;
 
@@ -174,7 +175,7 @@ public class ImageManager {
     shadowTransitionOut.play();
   }
 
-  /** this method is to stay the current effect of the image */
+  /** this method is to stay the current effect of the image. */
   public void stayCurrentEffect() {
     imageView.setEffect(dropShadowOut);
   }
@@ -217,7 +218,7 @@ public class ImageManager {
     isClicked = true;
   }
 
-  /** this method is called when the image is unclicked */
+  /** this method is called when the image is unclicked. */
   public void unclicked() {
     isClicked = false;
     hoverOut();

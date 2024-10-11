@@ -22,6 +22,7 @@ import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 
+/** This class is the controller for the start scene. */
 public class StartController {
 
   @FXML private Button startButton;
@@ -153,7 +154,7 @@ public class StartController {
   /**
    * This method is called when the key is released. It will print the key that is released.
    *
-   * @param event
+   * @param event The event that is triggered when the key is released.
    */
   @FXML
   public void onKeyReleased(KeyEvent event) {

@@ -89,7 +89,7 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
         }
 
         /**
-         * returns the CssMetaData associated with this class, which may include the CssMetaData
+         * returns the CssMetaData associated with this class, which may include the CssMetaData.
          *
          * @return The CssMetaData associated with this class, which may include the CssMetaData
          */

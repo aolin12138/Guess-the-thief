@@ -5,6 +5,7 @@ import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.apiproxy.tts.TextToSpeechRequest.Voice;
 
+/** This class represents a person in the game. */
 public class Person {
   private String name;
   private String role;
