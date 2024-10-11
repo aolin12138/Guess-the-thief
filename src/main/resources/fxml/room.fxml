@@ -39,7 +39,6 @@
             <Image url="@../images/car_close_up.jpg" />
          </image>
       </ImageView>
-      <Pane fx:id="statsPane" layoutX="4.0" layoutY="27.0" prefHeight="25.0" prefWidth="26.0" />
       <VBox fx:id="imagesVerticalBox" layoutX="665.0" layoutY="38.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" visible="false">
          <children>
             <VBox prefHeight="88.0" prefWidth="132.0" spacing="5.0">
@@ -185,6 +184,5 @@
             </ImageView>
          </graphic>
       </Button>
-      <Pane prefHeight="200.0" prefWidth="200.0" />
    </children>
 </Pane>

@@ -578,12 +578,6 @@ public class RoomController {
     messageBoxes.getChildren().clear();
     ChatMessage msg = new ChatMessage("user", message);
     appendMessage(msg, true);
-    // Platform.runLater(() -> scrollPane.setVvalue(1.0));
-
-    // start the progress indicator
-    ProgressIndicator statsIndicator = new ProgressIndicator();
-    statsIndicator.setMinSize(1, 1);
-    statsPane.getChildren().add(statsIndicator);
 
     noTalking();
     // start task to avoid blocking the UI thread

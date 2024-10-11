@@ -27,7 +27,6 @@
          <children>
             <Circle fill="#ffffffcc" radius="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
          </children></StackPane>
-      <Pane fx:id="statsPane" layoutX="28.0" layoutY="22.0" prefHeight="30.0" prefWidth="26.0" />
       <Label fx:id="instructionLabel" alignment="CENTER" layoutX="169.0" layoutY="34.0" prefHeight="36.0" prefWidth="500.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" styleClass="instructionsLabel" stylesheets="@../css/suspect_scene.css" text="Select who you think the Recipe Thief is!" textFill="WHITE">
          <font>
             <Font size="25.0" />
