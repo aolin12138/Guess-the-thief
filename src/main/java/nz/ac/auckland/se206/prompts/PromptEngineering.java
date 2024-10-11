@@ -27,9 +27,7 @@ public class PromptEngineering {
     try {
       // Load the prompt template file from resources
 
-      String resourcePath = "";
-
-      resourcePath = "prompts/" + promptId;
+      String resourcePath = "prompts/" + promptId;
 
       URL resourceUrl = PromptEngineering.class.getClassLoader().getResource(resourcePath);
       String template = loadTemplate(resourceUrl.toURI());
