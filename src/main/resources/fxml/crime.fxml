@@ -28,6 +28,66 @@
          <font>
             <Font size="10.0" />
          </font></Button>
+      <StackPane fx:id="indicatorPane" disable="true" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0">
+         <children>
+            <Circle fill="#ffffffcc" radius="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+         </children>
+      </StackPane>
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="05:00" textAlignment="CENTER" textFill="#7d0600" wrapText="true">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonSlide" layoutX="96.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="153.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
+         <font>
+            <Font name="Calibri" size="10.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ios-menu-4.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView fx:id="newspaperImage" fitHeight="62.0" fitWidth="133.0" layoutX="416.0" layoutY="421.0" onMouseClicked="#onNewspaperClueClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/newsPaperImage.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="phoneImage" fitHeight="26.0" fitWidth="41.0" layoutX="233.0" layoutY="428.0" onMouseClicked="#onPhoneClueClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/phoneImage2.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="cameraImage" fitHeight="65.0" fitWidth="96.0" layoutX="617.0" layoutY="-8.0" onMouseClicked="#onCameraClueClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/cameraImage2.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <TextArea fx:id="instructionsTextArea" editable="false" layoutX="-450.0" layoutY="65.0" prefHeight="215.0" prefWidth="423.0" stylesheets="@../css/textarea.css" text="A treasured family recipe belonging to the successful restaurateur has been stolen during a party celebrating his second Michelin star!&#10;&#10;There are 3 prime suspects remaining in this case.&#10;&#10;You must interview all 3 suspects, and find at least one clue in the crime scene before making your guess.&#10;&#10;You will have 5 minutes to investigate, and then 1 minute to make your guess and submit your reasoning to the judge. " wrapText="true">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </TextArea>
+      <Button fx:id="showInstructionsButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onHelpButtonClicked" prefHeight="26.0" prefWidth="51.0" stylesheets="@../css/buttons.css">
+         <graphic>
+            <ImageView fitHeight="34.0" fitWidth="33.0" onMouseClicked="#onHelpButtonClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Black_question_mark.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
 
       <VBox fx:id="imagesVerticalBox" layoutX="655.0" layoutY="19.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" styleClass="outline" stylesheets="@../css/sidebarlabel.css" visible="false">
 
@@ -142,66 +202,6 @@
             </VBox>
          </children>
       </VBox>
-      <StackPane fx:id="indicatorPane" disable="true" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0">
-         <children>
-            <Circle fill="#ffffffcc" radius="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
-         </children>
-      </StackPane>
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="05:00" textAlignment="CENTER" textFill="#7d0600" wrapText="true">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-      </Label>
-      <Button fx:id="buttonSlide" layoutX="96.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="153.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
-         <font>
-            <Font name="Calibri" size="10.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="32.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/ios-menu-4.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <ImageView fx:id="newspaperImage" fitHeight="62.0" fitWidth="133.0" layoutX="416.0" layoutY="421.0" onMouseClicked="#onNewspaperClueClicked" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/newsPaperImage.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <ImageView fx:id="phoneImage" fitHeight="26.0" fitWidth="41.0" layoutX="233.0" layoutY="428.0" onMouseClicked="#onPhoneClueClicked" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/phoneImage2.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <ImageView fx:id="cameraImage" fitHeight="65.0" fitWidth="96.0" layoutX="617.0" layoutY="-8.0" onMouseClicked="#onCameraClueClicked" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/cameraImage2.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
-      <TextArea fx:id="instructionsTextArea" editable="false" layoutX="-450.0" layoutY="65.0" prefHeight="215.0" prefWidth="423.0" stylesheets="@../css/textarea.css" text="A treasured family recipe belonging to the successful restaurateur has been stolen during a party celebrating his second Michelin star!&#10;&#10;There are 3 prime suspects remaining in this case.&#10;&#10;You must interview all 3 suspects, and find at least one clue in the crime scene before making your guess.&#10;&#10;You will have 5 minutes to investigate, and then 1 minute to make your guess and submit your reasoning to the judge. " wrapText="true">
-         <font>
-            <Font name="Arial" size="13.0" />
-         </font>
-      </TextArea>
-      <Button fx:id="showInstructionsButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onHelpButtonClicked" prefHeight="26.0" prefWidth="51.0" stylesheets="@../css/buttons.css">
-         <graphic>
-            <ImageView fitHeight="34.0" fitWidth="33.0" onMouseClicked="#onHelpButtonClicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/Black_question_mark.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
       <Button fx:id="hideInstructionsButton" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onHideHelpClicked" prefHeight="42.0" prefWidth="51.0" stylesheets="@../css/buttons.css">
          <graphic>
             <ImageView fitHeight="34.0" fitWidth="33.0" onMouseClicked="#onHideHelpClicked" pickOnBounds="true" preserveRatio="true">
