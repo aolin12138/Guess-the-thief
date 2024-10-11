@@ -65,7 +65,6 @@ public class GuessController {
   private static boolean isThiefFound = false;
   private static boolean isGameWon = false;
   private static boolean switchedRing = false;
-  private static boolean initialisedRing = true;
 
   public static boolean getThiefFound() {
     return isThiefFound;
@@ -81,7 +80,6 @@ public class GuessController {
 
   public static void resetBooleans() {
     switchedRing = false;
-    initialisedRing = false;
   }
 
   @FXML private Rectangle rectPerson1;
@@ -863,7 +861,6 @@ public class GuessController {
                 setGreenRing();
               });
 
-          initialisedRing = false;
           switchedRing = false;
 
           timeForGuessing = 60000;
@@ -987,6 +984,5 @@ public class GuessController {
     ringProgressIndicator.setRingWidth(50);
     indicatorPane.getChildren().add(ringProgressIndicator);
     timerLabel.setStyle("-fx-text-fill: #83F28F;");
-    initialisedRing = true;
   }
 }
