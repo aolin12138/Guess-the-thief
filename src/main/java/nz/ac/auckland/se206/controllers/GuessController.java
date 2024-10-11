@@ -255,7 +255,7 @@ public class GuessController {
                   ringProgressIndicator.setProgress(progress);
                   timerLabel.setText(Utils.formatTime(timeForGuessing));
                   // flash the timer red below 15 seconds
-                  if (timeForGuessing < 15000) {
+                  if (timeForGuessing <= 15000) {
                     if ((int) (timeForGuessing / 1000) % 2 == 0) {
                       timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
                     } else {
@@ -569,10 +569,6 @@ public class GuessController {
               Platform.runLater(
                   () -> {
                     appendMessage(splitArray[1], false);
-                    // GuessTimeLimitManager.stopTimer();
-                    System.out.println("is Correct Explanation: " + isCorrectExplanation);
-                    System.out.println("currentSuspect: " + currentSuspect);
-                    System.out.println("isThiefFound: " + isThiefFound);
                     if (isCorrectExplanation && currentSuspect == 3) {
                       context.setState(context.getGameOverState());
                       isGameWon = true;
@@ -580,6 +576,13 @@ public class GuessController {
                       // need to determine if this score is worthy of being on the leaderboard
                       // if the time is quicker than the 3rd place time of the leaderboard, it is
                       // added.
+                      Utils.setTimeUsed(timeForGuessing);
+                      if (Utils.checkThirdTimeSlot()) {
+                        leaderboardResultLabel.setText(
+                            "Great work, you made it onto the leaderboard!");
+                        leaderboardResultLabel.setVisible(true);
+                      }
+                      Utils.updateScoreBoard(Utils.getTimeUsed(), Utils.getPlayerName());
                       instructionLabel.setText("Congratulations! You are Correct!");
                     } else {
                       context.setState(context.getGameOverState());

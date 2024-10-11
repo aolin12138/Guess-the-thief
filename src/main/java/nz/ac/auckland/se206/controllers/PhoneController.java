@@ -19,7 +19,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.ClueManager;
-import nz.ac.auckland.se206.PhoneClueManager;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
@@ -33,7 +32,6 @@ public class PhoneController {
 
   @FXML private StackPane indicatorPane;
 
-  @FXML private Rectangle callNumberRectangle;
   @FXML private ImageView lockScreen;
   @FXML private ImageView screen;
   @FXML private ImageView callHistory;
@@ -51,12 +49,12 @@ public class PhoneController {
   @FXML private ImageView phoneApp;
   @FXML private ImageView callEnd;
 
-  private String audioPath = "/sounds/voicemail2.mp3";
+  private String audioPath = "/sounds/cafe_voicemail.mp3";
   private Media audio = new Media(getClass().getResource(audioPath).toString());
   private MediaPlayer mediaPlayer = new MediaPlayer(audio);
-  private PhoneClueManager historyImageManager;
+  private ClueManager historyImageManager;
   private ClueManager phoneAppManager;
-  private PhoneClueManager callEndManager;
+  private ClueManager callEndManager;
 
   /** This method intializes the phone controller */
   @FXML
@@ -67,6 +65,9 @@ public class PhoneController {
     arrow.setCursor(Cursor.HAND);
     swipeUpText.setCursor(Cursor.HAND);
     backButton.setCursor(Cursor.HAND);
+    phoneApp.setCursor(Cursor.HAND);
+    historyImage.setCursor(Cursor.HAND);
+    callEnd.setCursor(Cursor.HAND);
 
     Rectangle clip = new Rectangle(209, 400); // Clip rectangle matching the phone screen size
     phonePane.setClip(clip);
@@ -125,9 +126,9 @@ public class PhoneController {
           }
         });
 
-    historyImageManager = new PhoneClueManager(historyImage);
+    historyImageManager = new ClueManager(historyImage);
     phoneAppManager = new ClueManager(phoneApp);
-    callEndManager = new PhoneClueManager(callEnd);
+    callEndManager = new ClueManager(callEnd);
     styleScene();
 
     // Add the ring progress indicator to the pane
@@ -143,7 +144,7 @@ public class PhoneController {
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
                   // flash the timer red below 30 seconds
-                  if (TimelineManager.getTimeToCount() < 30000) {
+                  if (TimelineManager.getTimeToCount() <= 30000) {
                     if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 == 0) {
                       timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
                     } else {
@@ -176,7 +177,6 @@ public class PhoneController {
     swipeUpText.setVisible(false);
     callHistory.setVisible(true);
     phoneApp.setVisible(false);
-    callNumberRectangle.setDisable(false);
     historyImage.setVisible(true);
   }
 
@@ -191,7 +191,6 @@ public class PhoneController {
     arrow.setVisible(false);
     swipeUpText.setVisible(false);
     callScreen.setVisible(true);
-    callNumberRectangle.setDisable(true);
     historyImage.setVisible(false);
     callEnd.setVisible(true);
 
@@ -206,7 +205,6 @@ public class PhoneController {
         () -> {
           // Stop the voicemail sound if it has finished playing or player leaves the scene
           callScreen.setVisible(false);
-          callNumberRectangle.setDisable(false);
           historyImage.setVisible(true);
           callEnd.setVisible(false);
           mediaPlayer.stop();
@@ -267,7 +265,6 @@ public class PhoneController {
   @FXML
   private void onEndCallButtonClicked(MouseEvent event) {
     callScreen.setVisible(false);
-    callNumberRectangle.setDisable(false);
     historyImage.setVisible(true);
     callEnd.setVisible(false);
     mediaPlayer.stop();
@@ -305,7 +302,6 @@ public class PhoneController {
   /** This method is called when it needs to disable all the rectangles */
   public void disableAll() {
     phoneApp.setVisible(false);
-    callNumberRectangle.setDisable(true);
     historyImage.setVisible(false);
     callEnd.setVisible(false);
   }
@@ -314,7 +310,6 @@ public class PhoneController {
   public void restart() {
     if (callScreen.isVisible()) {
       callScreen.setVisible(false);
-      callNumberRectangle.setDisable(false);
       historyImage.setVisible(false);
       callEnd.setVisible(true);
     }

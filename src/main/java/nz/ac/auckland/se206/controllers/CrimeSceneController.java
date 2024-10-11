@@ -17,7 +17,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -92,7 +91,6 @@ public class CrimeSceneController {
 
   @FXML private TextArea instructionsTextArea;
 
-  private MediaPlayer player;
   private ImageManager ownerImageManager;
   private ImageManager workerImageManager;
   private ImageManager brotherImageManager;
@@ -157,7 +155,7 @@ public class CrimeSceneController {
                   ringProgressIndicator.setProgress(TimelineManager.getProgress());
                   timerLabel.setText(Utils.formatTime(TimelineManager.getTimeToCount()));
                   // flash the timer red below 30 seconds
-                  if (TimelineManager.getTimeToCount() < 30000) {
+                  if (TimelineManager.getTimeToCount() <= 30000) {
                     if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 == 0) {
                       timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
                     } else {
@@ -177,8 +175,8 @@ public class CrimeSceneController {
    */
   @FXML
   void onCameraClueClicked(MouseEvent event) {
-    if (instructionsTextArea.isVisible()) {
-      onHideHelpClicked(null);
+    if (hideInstructionsButton.isVisible()) {
+      onHideHelpClicked(event);
     }
     context.clue1Found();
     // Satisfies requirement of at least one clue being discovered
@@ -194,8 +192,8 @@ public class CrimeSceneController {
    */
   @FXML
   void onPhoneClueClicked(MouseEvent event) {
-    if (instructionsTextArea.isVisible()) {
-      onHideHelpClicked(null);
+    if (hideInstructionsButton.isVisible()) {
+      onHideHelpClicked(event);
     }
     context.clue2Found();
     // Satisfies requirement of at least one clue being discovered
@@ -214,8 +212,8 @@ public class CrimeSceneController {
    */
   @FXML
   void onNewspaperClueClicked(MouseEvent event) {
-    if (instructionsTextArea.isVisible()) {
-      onHideHelpClicked(null);
+    if (hideInstructionsButton.isVisible()) {
+      onHideHelpClicked(event);
     }
     context.clue3Found();
     // Satisfies requirement of at least one clue being discovered
@@ -231,9 +229,8 @@ public class CrimeSceneController {
     TranslateTransition instructionsTransition = new TranslateTransition();
     instructionsTransition.setNode(instructionsTextArea);
     instructionsTransition.setDuration(Duration.millis(100));
-    instructionsTextArea.setVisible(true);
-    instructionsTransition.setFromX(-500);
-    instructionsTransition.setToX(4);
+    instructionsTransition.setFromX(0);
+    instructionsTransition.setToX(460);
     instructionsTransition.play();
     instructionsTransition.setOnFinished(e -> hideInstructionsButton.setVisible(true));
   }
@@ -244,10 +241,9 @@ public class CrimeSceneController {
     TranslateTransition instructionsTransition = new TranslateTransition();
     instructionsTransition.setNode(instructionsTextArea);
     instructionsTransition.setDuration(Duration.millis(100));
-    instructionsTransition.setFromX(4);
-    instructionsTransition.setToX(-500);
+    instructionsTransition.setFromX(460);
+    instructionsTransition.setToX(0);
     instructionsTransition.play();
-    instructionsTransition.setOnFinished(e -> instructionsTextArea.setVisible(false));
     instructionsTransition.setOnFinished(e -> showInstructionsButton.setVisible(true));
   }
 
@@ -262,7 +258,7 @@ public class CrimeSceneController {
   @FXML
   private void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
     // need to hide the instructions if it is visible
-    if (instructionsTextArea.isVisible()) {
+    if (hideInstructionsButton.isVisible()) {
       onHideHelpClicked(null);
     }
 
@@ -376,7 +372,7 @@ public class CrimeSceneController {
   /** This method toggles the VBox */
   private void toggleVerticalBox() {
 
-    if (instructionsTextArea.isVisible()) {
+    if (hideInstructionsButton.isVisible()) {
       onHideHelpClicked(null);
     }
     // Create the transition
@@ -410,7 +406,9 @@ public class CrimeSceneController {
    */
   @FXML
   public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {
-    onHideHelpClicked(event);
+    if (hideInstructionsButton.isVisible()) {
+      onHideHelpClicked(event);
+    }
     buttonSlide.setText("Show Side Bar");
     ImageView clickedImage = (ImageView) event.getSource();
     id = clickedImage.getId();
