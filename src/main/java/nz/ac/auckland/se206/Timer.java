@@ -4,6 +4,12 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+/**
+ * The Timer class represents a simple timer.
+ *
+ * <p>This class provides methods to start, stop, and reset the timer, as well as to get the elapsed
+ * time.
+ */
 public class Timer {
 
   private static double timeToCountTo = 300000;

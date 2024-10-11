@@ -29,6 +29,14 @@ import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
+/**
+ * Handles the action when the guess button is clicked.
+ *
+ * <p>This method processes the user's guess, checks if the guess is correct, and updates the game
+ * state accordingly.
+ *
+ * @param event the mouse event that triggered this method
+ */
 public class CrimeSceneController {
 
   private static GameStateContext context = new GameStateContext();
@@ -36,7 +44,7 @@ public class CrimeSceneController {
   private static Timeline timeline = new Timeline();
 
   /**
-   * This method returns true if any clue is found
+   * This method returns true if any clue is found.
    *
    * @return Adding more words due to requirements for description.
    */
@@ -169,9 +177,9 @@ public class CrimeSceneController {
   }
 
   /**
-   * This method is called when the CCTV clue is clicked. It will take the user to the CCTV scene
+   * This method is called when the CCTV clue is clicked. It will take the user to the CCTV scene.
    *
-   * @param event
+   * @param event It will take the user to the CCTV scene.
    */
   @FXML
   void onCameraClueClicked(MouseEvent event) {
@@ -314,7 +322,7 @@ public class CrimeSceneController {
     }
   }
 
-  /** This method styles the scene */
+  /** This method styles the scene. */
   @FXML
   public void styleScene() {
 

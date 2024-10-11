@@ -49,6 +49,12 @@ import nz.ac.auckland.se206.TimelineManager;
 import nz.ac.auckland.se206.Utils;
 import nz.ac.auckland.se206.ringindicator.RingProgressIndicator;
 
+/**
+ * The Person class represents an individual with various attributes.
+ *
+ * <p>This class provides methods to access and manipulate the attributes of a person, such as their
+ * name, age, and interview status.
+ */
 public class GuessController {
   private static boolean isTimeOver = false;
   private static GameStateContext context = new GameStateContext();
@@ -348,7 +354,7 @@ public class GuessController {
   }
 
   /**
-   * Selects the first suspect.
+   * Selects the first suspect for usage.
    *
    * @param event the mouse event that triggered this method
    * @throws ApiProxyException if there is an error with the API proxy
@@ -380,7 +386,7 @@ public class GuessController {
   }
 
   /**
-   * Selects the first suspect.
+   * Selects the first suspect for selection.
    *
    * @param event the mouse event that triggered this method
    * @throws ApiProxyException if there is an error with the API proxy
