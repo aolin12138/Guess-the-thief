@@ -39,7 +39,7 @@ public class ImageManager {
   /**
    * Constructor for the ImageManager class
    *
-   * @param imageView
+   * @param imageView the image view of the image to manage the effects of the image.
    */
   public ImageManager(ImageView imageView) {
     this.imageView = imageView;

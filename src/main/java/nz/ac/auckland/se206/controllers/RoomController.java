@@ -858,9 +858,9 @@ public class RoomController {
   /**
    * Appends text to the chat area letter by letter.
    *
-   * @param textNode
-   * @param message
-   * @param delay
+   * @param textNode the text node to append to the chat area.
+   * @param message the message to append to the chat area.
+   * @param delay the delay between each letter in milliseconds.
    */
   public void appendTextLetterByLetter(Text textNode, String message, int delay) {
     // Clear the current text in the Text node

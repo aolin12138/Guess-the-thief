@@ -143,7 +143,7 @@ public class StartController {
   /**
    * This method is called when the key is pressed. It will print the key that is pressed.
    *
-   * @param event
+   * @param event The event that is triggered when the key is pressed.
    */
   @FXML
   public void onKeyPressed(KeyEvent event) {

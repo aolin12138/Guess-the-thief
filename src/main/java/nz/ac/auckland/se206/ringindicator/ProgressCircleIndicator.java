@@ -112,9 +112,15 @@ abstract class ProgressCircleIndicator extends Control {
   }
 
   /**
+<<<<<<< HEAD
+   * Get the progress value of the progress bar.
+   *
+   * @return the value of the progress bar.
+=======
    * Get the progress value for usage.
    *
    * @return Adding extra due missing requirements in methods.
+>>>>>>> main
    */
   public int getProgress() {
     return progress.get();
@@ -124,7 +130,7 @@ abstract class ProgressCircleIndicator extends Control {
    * Set the value for the progress, it cannot be more then 100 (meaning 100%). A negative value
    * means indeterminate progress.
    *
-   * @param progressValue
+   * @param progressValue the value for the progress bar
    * @see ProgressCircleIndicator#makeIndeterminate()
    */
   public void setProgress(int progressValue) {

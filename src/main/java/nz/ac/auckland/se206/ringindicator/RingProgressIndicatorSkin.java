@@ -149,7 +149,7 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
   }
 
   /**
-   * This method initializes the container
+   * This method initializes the container.
    *
    * @param indicator
    */

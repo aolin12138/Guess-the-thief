@@ -12,7 +12,7 @@ public class TimelineManager {
   private static Timeline timeline;
   private static GameStateContext context;
 
-  /** This method initialises the timeline */
+  /** This method initialises the timeline. */
   public static void initialiseTimeLine() {
     timeToCount = 300000;
     timeline = new Timeline();
@@ -72,7 +72,7 @@ public class TimelineManager {
   /**
    * Gets the current progress Adding extra due missing requirements in methods.
    *
-   * @return the current progress
+   * @return the current progress as an integer.
    */
   public static int getProgress() {
     return progress;
