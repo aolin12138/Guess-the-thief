@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -35,23 +33,15 @@
          </font>
       </Label>
       <Button fx:id="buttonGuess" layoutX="671.0" layoutY="550.0" mnemonicParsing="false" onAction="#onHandleGuessClick" prefHeight="35.0" prefWidth="119.0" stylesheets="@../css/buttons.css" text="Make a Guess" />
-      <TextArea fx:id="textaChat" editable="false" layoutX="104.0" layoutY="72.0" prefHeight="103.0" prefWidth="529.0" wrapText="true">
-         <stylesheets>
-            <URL value="@../css/suspect_scene.css" />
-            <URL value="@../css/textarea.css" />
-         </stylesheets></TextArea>
-
-      <TextField fx:id="textInput" layoutX="104.0" layoutY="72.0" prefHeight="26.0" prefWidth="397.0" stylesheets="@../css/textfield.css" />
-      <Button fx:id="buttonSend" layoutX="503.0" layoutY="70.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="32.0" prefWidth="119.0" stylesheets="@../css/buttons.css" text="Send" />
+      <Button fx:id="buttonSend" layoutX="621.0" layoutY="555.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="26.0" prefWidth="9.0" stylesheets="@../css/buttons.css" text="Send" visible="false" />
       <ImageView fx:id="carImage" fitHeight="416.0" fitWidth="633.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/car_close_up.jpg" />
          </image>
       </ImageView>
-      <Pane fx:id="statsPane" layoutX="4.0" layoutY="27.0" prefHeight="25.0" prefWidth="26.0" />
-      <VBox fx:id="imagesVerticalBox" layoutX="660.0" layoutY="10.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" visible="false">
+      <VBox fx:id="imagesVerticalBox" layoutX="665.0" layoutY="38.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" visible="false">
          <children>
-            <VBox prefHeight="88.0" prefWidth="132.0">
+            <VBox prefHeight="88.0" prefWidth="132.0" spacing="5.0">
                <children>
                   <ImageView id="crimeImage" fx:id="crimeImage" fitHeight="70.0" fitWidth="135.0" onMouseClicked="#onCrimeSceneClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -66,16 +56,19 @@
                         <Font name="Bai Jamjuree Regular" size="13.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="20.0" left="16.0" top="3.0" />
+                        <Insets bottom="20.0" left="20.0" top="3.0" />
                      </VBox.margin>
                      <styleClass>
                         <String fx:value="outline" />
                         <String fx:value="label-container" />
                      </styleClass>
+                     <opaqueInsets>
+                        <Insets left="30.0" />
+                     </opaqueInsets>
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="83.0" prefWidth="130.0">
+            <VBox prefHeight="83.0" prefWidth="130.0" spacing="5.0">
                <children>
                   <ImageView id="ownerImage" fx:id="ownerImage" fitHeight="80.0" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -99,7 +92,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="88.0" prefWidth="130.0">
+            <VBox prefHeight="88.0" prefWidth="130.0" spacing="5.0">
                <children>
                   <ImageView id="workerImage" fx:id="workerImage" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -126,7 +119,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="88.0" prefWidth="130.0">
+            <VBox prefHeight="88.0" prefWidth="130.0" spacing="5.0">
                <children>
                   <ImageView id="brotherImage" fx:id="brotherImage" fitHeight="80.0" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -152,8 +145,16 @@
             </VBox>
          </children>
       </VBox>
-      <VBox layoutX="673.0" layoutY="444.0" prefHeight="98.0" prefWidth="105.0" spacing="10.0" />
-      <ScrollPane fx:id="scrollPane" layoutX="122.0" layoutY="358.0" prefHeight="227.0" prefWidth="531.0" stylesheets="@../css/scrollpane.css">
+      <Button fx:id="buttonSlide" layoutX="122.0" layoutY="343.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="139.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ios-menu-4.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ScrollPane fx:id="scrollPane" layoutX="122.0" layoutY="387.0" prefHeight="198.0" prefWidth="531.0" style="-fx-background-radius: 10;" stylesheets="@../css/scrollpane.css">
          <content>
             <VBox fx:id="messageBoxes" prefHeight="176.0" prefWidth="522.0" spacing="10.0">
                <opaqueInsets>
@@ -173,15 +174,7 @@
             <Insets left="15.0" right="35.0" />
          </padding>
       </TextField>
-      <Button fx:id="buttonSlide" layoutX="509.0" layoutY="318.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="139.0" stylesheets="@../css/buttons.css" text="Show Side Bar">
-         <graphic>
-            <ImageView fitHeight="32.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/ios-menu-4.png" />
-               </image>
-            </ImageView>
-         </graphic></Button>
-      <Label fx:id="chatStats" alignment="CENTER" layoutX="124.0" layoutY="321.0" prefHeight="26.0" prefWidth="318.0" styleClass="chatStats" stylesheets="@../css/suspect_scene.css" text="Testing" textAlignment="CENTER" />
+      <Label fx:id="chatStats" alignment="CENTER" layoutX="223.0" layoutY="13.0" prefHeight="26.0" prefWidth="318.0" styleClass="chatStats" stylesheets="@../css/suspect_scene.css" text="Testing" textAlignment="CENTER" />
       <Button fx:id="sendButton" layoutX="622.0" layoutY="550.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="24.0" prefWidth="25.0" styleClass="sendButton" stylesheets="@../css/suspect_scene.css">
          <graphic>
             <ImageView fitHeight="16.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">

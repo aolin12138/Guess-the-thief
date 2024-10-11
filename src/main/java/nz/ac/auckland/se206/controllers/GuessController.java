@@ -9,14 +9,16 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
@@ -27,8 +29,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
@@ -84,6 +88,7 @@ public class GuessController {
 
   @FXML private Button buttonGuess;
   @FXML private Button buttonSend;
+  @FXML private Button sendButton;
   @FXML private Button buttonBack;
   @FXML private Button sus1btn;
   @FXML private Button sus2btn;
@@ -91,8 +96,9 @@ public class GuessController {
   @FXML private Button restartButton;
 
   @FXML private TextArea textaChat;
+  @FXML private TextArea inputField;
 
-  @FXML private TextField textInput;
+  @FXML private TextField inputField1;
 
   @FXML private ImageView carImage;
   @FXML private ImageView ownerImage;
@@ -101,8 +107,6 @@ public class GuessController {
   @FXML private ImageView crimeScene;
 
   @FXML private StackPane indicatorPane;
-  @FXML private StackPane loadingPane;
-  @FXML private Pane statsPane;
   @FXML private Label lblDescription;
   @FXML private Label ownerLabel;
   @FXML private Label workerLabel;
@@ -111,15 +115,18 @@ public class GuessController {
   @FXML private Label explanationLabel;
   @FXML private Label instructionLabel;
 
-  @FXML private TextArea guessTextArea;
+  @FXML private VBox messageBoxes;
 
-  @FXML private HBox chatHorizontalBox;
+  @FXML private ScrollPane scrollPane;
+
+  @FXML private Pane chatPane;
 
   private Person person;
 
   private Timeline timeline = new Timeline();
   private int currentSuspect = 0;
   private boolean isSuspectSelected = false;
+  private boolean appendedSystem = false;
 
   private Label currentLabel;
 
@@ -134,9 +141,20 @@ public class GuessController {
    */
   @FXML
   public void initialize() {
-    // set the state to the guessing state
+    setGameStateContext(CrimeSceneController.getContext());
     context.setState(context.getGuessingState());
-    textInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
+
+    if (!context.isAnyClueFound() && !context.isAllSuspectsSpokenTo()) {
+      context.setState(context.getGameOverState());
+      styleEndOfGame();
+      instructionLabel.setText("You ran out of time! Game over!");
+      return;
+    }
+
+    sendButton.setCursor(Cursor.HAND);
+    sendButton.setDisable(true);
+
+    messageBoxes.heightProperty().addListener(observable -> scrollPane.setVvalue(1D));
 
     buttonSend
         .sceneProperty()
@@ -146,7 +164,34 @@ public class GuessController {
                 Stage stage = (Stage) newScene.getWindow();
                 stage.sizeToScene();
               }
+              if (newScene != null) {
+                newScene.addEventHandler(
+                    KeyEvent.KEY_PRESSED,
+                    event -> {
+                      if (event.getCode() == KeyCode.ENTER) {
+                        event.consume();
+                        try {
+                          onSendMessage(new ActionEvent());
+                        } catch (ApiProxyException | IOException e) {
+                          e.printStackTrace();
+                        }
+                      }
+                    });
+              }
             });
+
+    inputField.setWrapText(true);
+    inputField.setOnKeyPressed(
+        event -> {
+          if (event.getCode() == KeyCode.ENTER) {
+            event.consume(); // Prevent the TextArea from adding a new line
+            try {
+              onSendMessage(new ActionEvent()); // Call your message sending method
+            } catch (ApiProxyException | IOException e) {
+              e.printStackTrace();
+            }
+          }
+        });
 
     brotherImage.setCursor(Cursor.HAND);
     workerImage.setCursor(Cursor.HAND);
@@ -154,24 +199,8 @@ public class GuessController {
     buttonSend.setCursor(Cursor.HAND);
     restartButton.setCursor(Cursor.HAND);
     restartButton.setVisible(false);
-    guessTextArea.setVisible(false);
     leaderboardResultLabel.setVisible(false);
 
-    // Adding the event handler for 'Enter' key on txtInput
-    textInput.setOnKeyPressed(
-        new EventHandler<KeyEvent>() {
-          @Override
-          public void handle(KeyEvent keyEvent) {
-            if (keyEvent.getCode() == KeyCode.ENTER) {
-              try {
-                // Calling the send message function
-                onSendMessage(new ActionEvent());
-              } catch (ApiProxyException | IOException e) {
-                e.printStackTrace();
-              }
-            }
-          }
-        });
     // Set the image managers for the suspects
     ownerImageManager = new ImageManager(ownerImage);
     workerImageManager = new ImageManager(workerImage);
@@ -241,15 +270,6 @@ public class GuessController {
     // Set the cycle count to indefinite
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-  }
-
-  /**
-   * Gets the stats pane.
-   *
-   * @return the time for guessing
-   */
-  public Pane getStatsPane() {
-    return statsPane;
   }
 
   /**
@@ -324,6 +344,11 @@ public class GuessController {
   @FXML
   public void onKeyReleased(KeyEvent event) {
     System.out.println("Key " + event.getCode() + " released");
+    if (!inputField.getText().isEmpty()) {
+      sendButton.setDisable(false);
+    } else {
+      sendButton.setDisable(true);
+    }
   }
 
   /**
@@ -432,7 +457,8 @@ public class GuessController {
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
 
-    String message = textInput.getText().trim();
+    String message = inputField.getText().trim();
+    inputField.clear();
 
     // No time remaining
     if ((!isSuspectSelected)
@@ -441,13 +467,12 @@ public class GuessController {
         && context.getGameState().equals(context.getGuessingState())) {
       context.setState(context.getGameOverState());
       // Set the output text to the explanation of the guess
-      guessTextArea.appendText(
+      appendMessage(
           "You did not guess any of the suspects within the time limit!\n"
               + "Next time you play, make sure to click on your suspected thief and"
               + " type an explanation to support your decision.\n"
-              + "Click play again to replay.");
-
-      timeline.stop();
+              + "Click play again to replay.",
+          false);
       return;
       // No suspect selected, but message is entered and time is over
     } else if ((!isSuspectSelected)
@@ -456,12 +481,11 @@ public class GuessController {
         && context.getGameState().equals(context.getGuessingState())) {
       context.setState(context.getGameOverState());
       // Set the output text to the explanation of the guess
-      guessTextArea.appendText(
+      appendMessage(
           "Even though you typed your explanation, you did not guess any of the suspects within the"
               + " time limit!\n"
-              + "Click play again to replay.");
-
-      timeline.stop();
+              + "Click play again to replay.",
+          false);
       return;
       // Suspect selected, but message is not entered and time is over
     } else if ((isSuspectSelected)
@@ -470,13 +494,13 @@ public class GuessController {
         && context.getGameState().equals(context.getGuessingState())) {
       context.setState(context.getGameOverState());
       // Set the output text to the explanation of the guess
-      guessTextArea.appendText(
+      appendMessage(
           "Even though you guessed a suspect, you did not type any explanation within the"
               + " time limit.\n\n"
               + " Because of this, it is unlikely that the authortities will accept your"
               + " decision.\n\n"
-              + "Click play again to replay.");
-      timeline.stop();
+              + "Click play again to replay.",
+          false);
       return;
     }
 
@@ -507,14 +531,16 @@ public class GuessController {
       lblDescription.setText("You must type an explanation to support your decision.");
       return;
     }
-    guessTextArea.appendText(message);
+    // Passes the amount of time used to Utils for the scoreboard
+    Utils.setTimeUsed(timeForGuessing);
+    Platform.runLater(
+        () -> {
+          messageBoxes.getChildren().clear();
+          appendMessage(message, true);
+          sendButton.setVisible(false);
+          inputField.setVisible(false);
+        });
     timeline.stop();
-    // Set the progress indicator to visible
-    ProgressIndicator statsIndicator = new ProgressIndicator();
-    statsIndicator.setMinSize(1, 1);
-    statsPane.getChildren().add(statsIndicator);
-    // Set the text of the progress indicator to visible
-    lblDescription.setText("Evaluating...");
     // Create a new task
     Task<Void> task =
         new Task<Void>() {
@@ -526,11 +552,14 @@ public class GuessController {
               String[] splitArray = validExplanation.split(" ", 2);
               // Check if the explanation is correct
               boolean isCorrectExplanation = splitArray[0].toLowerCase().contains("true");
-              guessTextArea.appendText(splitArray[1]);
+              System.out.println(splitArray[1]);
+              // Set the chat stats to the explanation
+              System.out.println("isCorrectExplanation: " + isCorrectExplanation);
 
               // Set the chat stats to the explanation
               Platform.runLater(
                   () -> {
+                    appendMessage(splitArray[1], false);
                     if (isCorrectExplanation && currentSuspect == 3) {
                       context.setState(context.getGameOverState());
                       isGameWon = true;
@@ -558,8 +587,6 @@ public class GuessController {
             return null;
           }
         };
-    // Set the text input to disabled
-    textInput.setDisable(true);
     // Start the task in a new thread
     new Thread(task).start();
   }
@@ -572,14 +599,31 @@ public class GuessController {
    * @throws IOException if there is an I/O error
    */
   public String isExplanationValid() throws ApiProxyException, IOException {
+    Platform.runLater(
+        () -> {
+          StackPane messageContainer = new StackPane();
+          messageContainer.setPadding(new Insets(10));
+          HBox hbox = new HBox(messageContainer);
+          hbox.setMaxWidth(400);
+          messageContainer.setStyle(
+              "-fx-background-color: white; -fx-background-radius: 15; -fx-effect:"
+                  + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
+          messageContainer.setAlignment(Pos.CENTER_LEFT);
+          // create a new ring progress indicator
+          ProgressIndicator statsIndicator2 = new ProgressIndicator();
+          statsIndicator2.setPrefSize(18, 18);
 
+          messageContainer.getChildren().add(statsIndicator2);
+          messageBoxes.getChildren().add(hbox);
+          appendedSystem = true;
+        });
     try {
       // read the evidence prompt from the file
       String evidencePrompt =
           new String(Files.readAllBytes(Paths.get("src/main/resources/prompts/guessing.txt")));
 
       // generate a full prompt by fetching the user's reasoning
-      String fullPrompt = evidencePrompt + "\nUser Reasoning:\n" + textInput.getText() + "\n";
+      String fullPrompt = evidencePrompt + "\nUser Reasoning:\n" + inputField.getText() + "\n";
       // Set the chat completion request
       ChatCompletionRequest request =
           new ChatCompletionRequest(ApiProxyConfig.readConfig())
@@ -657,24 +701,23 @@ public class GuessController {
   /** method for toggling the HBox */
   private void toggleHorizontalBox() {
     // Create the transition
-    TranslateTransition transition =
-        new TranslateTransition(Duration.seconds(0.5), chatHorizontalBox);
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), chatPane);
 
-    if (!chatHorizontalBox.isVisible()) {
-      chatHorizontalBox.setVisible(true); // Show before animation
-      transition.setFromY(chatHorizontalBox.getHeight() + 50); // Start off-screen
+    if (!chatPane.isVisible()) {
+      chatPane.setVisible(true); // Show before animation
+      transition.setFromY(chatPane.getHeight() + 50); // Start off-screen
       transition.setToY(0); // Move to visible position
+      transition.play();
     }
 
     transition
         .onFinishedProperty()
         .set(
             e -> {
-              explanationLabel.setVisible(true);
+              appendMessage(
+                  "Investigator " + Utils.getPlayerName() + ", please explain your decision.",
+                  appendedSystem);
             });
-
-    // Play the transition
-    transition.play();
   }
 
   @SuppressWarnings("static-access")
@@ -688,9 +731,6 @@ public class GuessController {
     workerImage.setVisible(false);
     ownerImage.setVisible(false);
     restartButton.setVisible(true);
-    guessTextArea.setVisible(true);
-    textInput.setVisible(false);
-    statsPane.setVisible(false);
     buttonSend.setVisible(false);
     lblDescription.setVisible(false);
     explanationLabel.setVisible(false);
@@ -736,5 +776,105 @@ public class GuessController {
 
           timeForGuessing = 60000;
         });
+  }
+
+  // Append a message to the chat area
+  private void appendMessage(String message, boolean isUser) {
+    Text text = new Text();
+    message = message.strip();
+
+    if (text.getLayoutBounds().getWidth() > 400) {
+      text.setWrappingWidth(400);
+    }
+    // Set background and alignment based on the sender
+    if (isUser) {
+      StackPane messageContainer = new StackPane();
+      messageContainer.setPadding(new Insets(10));
+      messageContainer.setMaxWidth(400);
+      HBox hbox = new HBox(messageContainer);
+      messageContainer.setAlignment(Pos.CENTER_LEFT);
+      messageContainer.getChildren().add(text);
+      // Set the style of the text
+      text.setStyle(
+          "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: white;");
+      messageContainer.setStyle(
+          "-fx-background-color: #eeac5a; -fx-background-radius: 15; -fx-effect:"
+              + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
+      messageContainer.setMaxWidth(400);
+      hbox.setAlignment(Pos.CENTER_RIGHT);
+      messageBoxes.getChildren().add(hbox);
+      appendTextLetterByLetter(text, message, 10);
+      // if the message is not from the user
+    } else if (!appendedSystem) {
+      StackPane messageContainer = new StackPane();
+      messageContainer.setPadding(new Insets(10));
+      HBox hbox = new HBox(messageContainer);
+      messageContainer.setStyle(
+          "-fx-background-color: white; -fx-background-radius: 15; -fx-effect:"
+              + " dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);");
+      // Set the style of the text
+      text.setStyle(
+          "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: white;");
+      messageContainer.setAlignment(Pos.CENTER_LEFT);
+      messageContainer.setMaxWidth(400);
+      messageContainer.getChildren().add(text);
+      messageBoxes.getChildren().add(hbox);
+      appendTextLetterByLetter(text, message, 10);
+    } else {
+      text.setStyle(
+          "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: black;");
+      HBox hbox = (HBox) messageBoxes.getChildren().get(messageBoxes.getChildren().size() - 1);
+      StackPane messageContainer = (StackPane) hbox.getChildren().get(0);
+      messageContainer.getChildren().clear();
+      messageContainer.getChildren().add(text);
+      appendTextLetterByLetter(text, message, 10);
+    }
+  }
+
+  /**
+   * Appends text to the chat area letter by letter.
+   *
+   * @param textNode
+   * @param message
+   * @param delay
+   */
+  public void appendTextLetterByLetter(Text textNode, String message, int delay) {
+    textNode.setText("");
+    String[] words = message.split(" ");
+    int[] wordIndex = {0};
+
+    Text currentText = new Text();
+    currentText.setStyle(
+        "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: black;");
+
+    currentText.setText(words[0]);
+    // Timeline to append letters one by one
+    Timeline timeline = new Timeline();
+
+    // Create a KeyFrame that appends one letter at a time
+    for (int i = 0; i < message.length(); i++) {
+      final int index = i; // Must be final or effectively final for lambda
+      KeyFrame keyFrame =
+          new KeyFrame(
+              Duration.millis(delay * i),
+              event -> {
+                if (message.charAt(index) == ' ') {
+                  wordIndex[0]++;
+                  currentText.setText(currentText.getText() + " " + words[wordIndex[0]]);
+                }
+                if (currentText.getLayoutBounds().getWidth() > 400) {
+                  System.out.println(currentText.getText());
+                  currentText.setText(words[wordIndex[0]]);
+                  textNode.setText(textNode.getText() + "\n");
+                } else {
+                  textNode.setText(textNode.getText() + message.charAt(index));
+                }
+              });
+
+      timeline.getKeyFrames().add(keyFrame);
+    }
+
+    // Start the Timeline animation
+    timeline.play();
   }
 }

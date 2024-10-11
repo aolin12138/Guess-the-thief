@@ -29,10 +29,10 @@
             <Font size="10.0" />
          </font></Button>
 
-      <VBox fx:id="imagesVerticalBox" layoutX="661.0" layoutY="14.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" styleClass="outline" stylesheets="@../css/sidebarlabel.css" visible="false">
+      <VBox fx:id="imagesVerticalBox" layoutX="666.0" layoutY="2.0" prefHeight="376.0" prefWidth="116.0" spacing="10.0" styleClass="outline" stylesheets="@../css/sidebarlabel.css" visible="false">
 
          <children>
-            <VBox prefHeight="88.0" prefWidth="132.0">
+            <VBox prefHeight="88.0" prefWidth="132.0" spacing="5.0">
                <children>
                   <ImageView id="crimeImage" fx:id="crimeImage" fitHeight="70.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -59,7 +59,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="83.0" prefWidth="130.0">
+            <VBox prefHeight="83.0" prefWidth="130.0" spacing="5.0">
                <children>
                   <ImageView id="ownerImage" fx:id="ownerImage" fitHeight="80.0" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -86,7 +86,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="88.0" prefWidth="130.0">
+            <VBox prefHeight="88.0" prefWidth="130.0" spacing="5.0">
                <children>
                   <ImageView id="workerImage" fx:id="workerImage" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -113,7 +113,7 @@
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="88.0" prefWidth="130.0">
+            <VBox prefHeight="88.0" prefWidth="130.0" spacing="5.0">
                <children>
                   <ImageView id="brotherImage" fx:id="brotherImage" fitHeight="80.0" fitWidth="130.0" onMouseClicked="#handleImageClick" pickOnBounds="true" preserveRatio="true">
                      <image>

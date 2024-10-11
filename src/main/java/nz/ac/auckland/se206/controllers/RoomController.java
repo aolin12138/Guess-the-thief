@@ -19,7 +19,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -28,7 +27,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
@@ -91,9 +89,6 @@ public class RoomController {
   @FXML private Button buttonSlide;
   @FXML private Button sendButton;
 
-  @FXML private TextArea textaChat;
-
-  @FXML private TextField textInput;
   @FXML private TextField inputField;
 
   @FXML private ImageView carImage;
@@ -104,7 +99,6 @@ public class RoomController {
   @FXML private ImageView displayImage;
 
   @FXML private StackPane indicatorPane;
-  @FXML private Pane statsPane;
 
   @FXML private VBox imagesVerticalBox;
   @FXML private VBox messageBoxes;
@@ -142,8 +136,6 @@ public class RoomController {
     }
 
     messageBoxes.heightProperty().addListener(observable -> scrollPane.setVvalue(1D));
-
-    textInput.setStyle("-fx-background-radius: 15; -fx-border-radius: 15;");
 
     buttonSend
         .sceneProperty()
@@ -208,15 +200,6 @@ public class RoomController {
                 }));
     timeline.setCycleCount(Timeline.INDEFINITE);
     timeline.play();
-  }
-
-  /**
-   * Gets the rectangle representing the first person in the room.
-   *
-   * @return
-   */
-  public Pane getStatsPane() {
-    return statsPane;
   }
 
   /** disables all the rectangles in the room */
@@ -490,15 +473,13 @@ public class RoomController {
       return;
     }
     // clear the chat text area
-    textaChat.clear();
+
     this.person = person;
 
     Platform.runLater(
         () -> {
           // start the progress indicator
-          ProgressIndicator statsIndicator = new ProgressIndicator();
-          statsIndicator.setMinSize(1, 1);
-          statsPane.getChildren().add(statsIndicator);
+          messageBoxes.getChildren().clear();
           context
               .getRoomController()
               .setChatStats(context.getRoomController().getPerson().getName());
@@ -558,7 +539,6 @@ public class RoomController {
           () -> {
             appendMessage(result.getChatMessage(), false);
             context.getRoomController().enableTalking();
-            context.getRoomController().getStatsPane().getChildren().clear();
           });
       // speak the chat message
       TextToSpeech.speak(result.getChatMessage().getContent(), context);
@@ -598,12 +578,6 @@ public class RoomController {
     messageBoxes.getChildren().clear();
     ChatMessage msg = new ChatMessage("user", message);
     appendMessage(msg, true);
-    // Platform.runLater(() -> scrollPane.setVvalue(1.0));
-
-    // start the progress indicator
-    ProgressIndicator statsIndicator = new ProgressIndicator();
-    statsIndicator.setMinSize(1, 1);
-    statsPane.getChildren().add(statsIndicator);
 
     noTalking();
     // start task to avoid blocking the UI thread
@@ -855,9 +829,6 @@ public class RoomController {
   private void appendMessage(ChatMessage message, boolean isUser) {
     Text text = new Text();
 
-    if (text.getLayoutBounds().getWidth() > 400) {
-      text.setWrappingWidth(400);
-    }
     // Set background and alignment based on the sender
     if (isUser) {
       StackPane messageContainer = new StackPane();
@@ -898,29 +869,33 @@ public class RoomController {
   public void appendTextLetterByLetter(Text textNode, String message, int delay) {
     // Clear the current text in the Text node
     textNode.setText("");
+    String[] words = message.split(" ");
+    int[] wordIndex = {0};
 
     Text currentText = new Text();
     currentText.setStyle(
         "-fx-padding: 10; -fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-text-fill: black;");
 
-    currentText.setText("");
-
+    currentText.setText(words[0]);
     // Timeline to append letters one by one
     Timeline timeline = new Timeline();
 
     // Create a KeyFrame that appends one letter at a time
     for (int i = 0; i < message.length(); i++) {
       final int index = i; // Must be final or effectively final for lambda
-
       KeyFrame keyFrame =
           new KeyFrame(
               Duration.millis(delay * i),
               event -> {
+                if (message.charAt(index) == ' ') {
+                  wordIndex[0]++;
+                  currentText.setText(currentText.getText() + " " + words[wordIndex[0]]);
+                }
                 if (currentText.getLayoutBounds().getWidth() > 400) {
-                  currentText.setText("");
-                  textNode.setText(textNode.getText() + message.charAt(index) + "\n");
+                  System.out.println(currentText.getText());
+                  currentText.setText(words[wordIndex[0]]);
+                  textNode.setText(textNode.getText() + "\n");
                 } else {
-                  currentText.setText(currentText.getText() + message.charAt(index));
                   textNode.setText(textNode.getText() + message.charAt(index));
                 }
               });

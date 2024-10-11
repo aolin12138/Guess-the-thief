@@ -377,7 +377,7 @@ public class Utils {
               + "Click play again to replay.");
       try {
         timeline.stop();
-        App.setRoot("gameover");
+        App.setRoot("guess");
         return;
       } catch (IOException e) {
         e.printStackTrace();
@@ -393,7 +393,7 @@ public class Utils {
               + "Click play again to replay");
       try {
         timeline.stop();
-        App.setRoot("gameover");
+        App.setRoot("guess");
         return;
       } catch (IOException e) {
         e.printStackTrace();
@@ -411,7 +411,7 @@ public class Utils {
               + "Click play again to replay.");
       try {
         timeline.stop();
-        App.setRoot("gameover");
+        App.setRoot("guess");
         return;
       } catch (IOException e) {
         e.printStackTrace();
