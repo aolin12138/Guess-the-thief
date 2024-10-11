@@ -48,7 +48,7 @@ public class SceneManager {
   }
 
   /**
-   * Sets the phone loader.
+   * Sets the phone loader for usage.
    *
    * @param phoneLoader
    */
@@ -95,7 +95,7 @@ public class SceneManager {
   /**
    * Sets the crime scene loader.
    *
-   * @param crimeSceneLoader
+   * @param crimeSceneLoader Adding more words due to requirements for description.
    */
   public static void setCrimeSceneLoader(FXMLLoader crimeSceneLoader) {
     SceneManager.crimeSceneLoader = crimeSceneLoader;

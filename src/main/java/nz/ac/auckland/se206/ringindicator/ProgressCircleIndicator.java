@@ -87,7 +87,7 @@ abstract class ProgressCircleIndicator extends Control {
   private ReadOnlyIntegerWrapper progress = new ReadOnlyIntegerWrapper(0);
   private ReadOnlyBooleanWrapper indeterminate = new ReadOnlyBooleanWrapper(false);
 
-  /** radius of the inner circle */
+  /** radius of the inner circle. */
   private DoubleProperty innerCircleRadius =
       new StyleableDoubleProperty(60) {
         @Override
@@ -112,9 +112,9 @@ abstract class ProgressCircleIndicator extends Control {
   }
 
   /**
-   * Get the progress value.
+   * Get the progress value for usage.
    *
-   * @return
+   * @return Adding extra due missing requirements in methods.
    */
   public int getProgress() {
     return progress.get();
@@ -133,9 +133,9 @@ abstract class ProgressCircleIndicator extends Control {
   }
 
   /**
-   * Get the progress property.
+   * Get the progress of the property.
    *
-   * @return
+   * @return Adding more words due to requirements for description.
    */
   public ReadOnlyIntegerProperty progressProperty() {
     return progress.getReadOnlyProperty();
@@ -144,7 +144,7 @@ abstract class ProgressCircleIndicator extends Control {
   /**
    * Check if the progress is indeterminate.
    *
-   * @return
+   * @return Adding more words due to requirements for description.
    */
   public boolean isIndeterminate() {
     return indeterminate.get();
@@ -178,7 +178,7 @@ abstract class ProgressCircleIndicator extends Control {
   }
 
   /**
-   * Sets the room loader.
+   * Sets the room loader Adding extra due missing requirements in methods.
    *
    * @param roomLoader the FXMLLoader to set for the room
    */

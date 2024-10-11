@@ -131,7 +131,7 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     }
   }
 
-  /** This method initializes the transition */
+  /** This method initializes the transition. */
   private void initTransition() {
     transition.setAutoReverse(false);
     transition.setCycleCount(Animation.INDEFINITE);
@@ -140,7 +140,7 @@ public class RingProgressIndicatorSkin implements Skin<RingProgressIndicator> {
     transition.setByAngle(360);
   }
 
-  /** This method initializes the filler arc */
+  /** This method initializes the filler arc. */
   private void initFillerArc() {
     fillerArc.setManaged(false);
     fillerArc.getStyleClass().add("ringindicator-filler");

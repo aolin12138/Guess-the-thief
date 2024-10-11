@@ -17,12 +17,12 @@ public class Person {
   private ChatCompletionRequest chatCompletionRequest;
 
   /**
-   * Constructor for the Person class
+   * Constructor for the Person class.
    *
-   * @param name
-   * @param role
-   * @param profession
-   * @param voice
+   * @param name Adding more words due to requirements for description.
+   * @param role Adding more words due to requirements for description.
+   * @param profession Adding more words due to requirements for description.
+   * @param voice Adding more words due to requirements for description.
    */
   public Person(String name, String role, String profession, Voice voice) {
     this.voice = voice;

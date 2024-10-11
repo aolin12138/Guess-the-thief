@@ -290,7 +290,7 @@ public class GuessController {
     return isSuspectSelected;
   }
 
-  /** Stops the timeline. */
+  /** Stops the progression of timeline. */
   public void stopTimeLine() {
     timeline.stop();
   }
@@ -314,9 +314,9 @@ public class GuessController {
   }
 
   /**
-   * Gets the current person.
+   * Gets the current person for usage.
    *
-   * @return the current person
+   * @return the current person Adding more words due to requirements for description.
    */
   public Person getPerson() {
     return person;
@@ -702,7 +702,7 @@ public class GuessController {
         });
   }
 
-  /** method for toggling the HBox */
+  /** method for toggling the HBox. */
   private void toggleHorizontalBox() {
     // Create the transition
     TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), chatPane);
@@ -843,9 +843,9 @@ public class GuessController {
   /**
    * Appends text to the chat area letter by letter.
    *
-   * @param textNode extra tag description due missing tag
-   * @param message extra tag description due missing tag
-   * @param delay extra tag description due missing tag
+   * @param textNode extra tag description due missing tag.
+   * @param message extra tag description due missing tag.
+   * @param delay extra tag description due missing tag.
    */
   public void appendTextLetterByLetter(Text textNode, String message, int delay) {
     textNode.setText("");

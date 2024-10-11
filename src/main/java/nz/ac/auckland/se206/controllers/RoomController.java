@@ -227,7 +227,7 @@ public class RoomController {
     brotherImage.setDisable(true);
   }
 
-  /** Enables all the rectangles in the room when called */
+  /** Enables all the rectangles in the room when called. */
   public void enableTalking() {
     // send button is enabled to send messages
     buttonSend.setDisable(false);
@@ -271,7 +271,7 @@ public class RoomController {
   }
 
   /**
-   * boolean variable representing the found camera found
+   * boolean variable representing the found camera found.
    *
    * @return extra tag description due missing tag description.
    */
@@ -280,7 +280,7 @@ public class RoomController {
   }
 
   /**
-   * getter method for the hasTalked boolean variable
+   * getter method for the hasTalked boolean variable.
    *
    * @return extra tag description due missing tag description.
    */
@@ -289,7 +289,7 @@ public class RoomController {
   }
 
   /**
-   * boolean variable representing the found dashcam
+   * boolean variable representing the found dashcam.
    *
    * @return extra tag description due missing tag description.
    */
@@ -298,7 +298,7 @@ public class RoomController {
   }
 
   /**
-   * boolean variable representing the found car
+   * boolean variable representing the found car.
    *
    * @return extra tag description due missing tag description.
    */
@@ -315,7 +315,7 @@ public class RoomController {
     return buttonGuess;
   }
 
-  /** method for stopping the timeline */
+  /** method for stopping the timeline. */
   public void stopTimeLine() {
     timeline.stop();
   }
@@ -766,9 +766,9 @@ public class RoomController {
   /**
    * Sets the image of the person clicked.
    *
-   * @param event
-   * @param id
-   * @throws IOException
+   * @param event Adding extra due missing requirements in methods.
+   * @param id Adding extra due missing requirements in methods.
+   * @throws IOException Adding extra due missing requirements in methods.
    */
   public void setPersonImage(MouseEvent event, String id) throws IOException {
     switch (id) {

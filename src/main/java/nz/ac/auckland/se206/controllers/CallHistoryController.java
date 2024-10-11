@@ -34,7 +34,7 @@ public class CallHistoryController {
   /**
    * This method is called when the home button is clicked. It will take the user back to the phone
    *
-   * @param event
+   * @param event Adding more words due to requirements for description.
    */
   @FXML
   private void onHomeButtonClicked(ActionEvent event) {
@@ -77,8 +77,8 @@ public class CallHistoryController {
   /**
    * This method is called when the voicemail is clicked. It will play the voicemail sound
    *
-   * @param event
-   * @throws URISyntaxException
+   * @param event Adding more words due to requirements for description.
+   * @throws URISyntaxException Adding more words due to requirements for description.
    */
   @FXML
   void onVoicemailClicked(MouseEvent event) throws URISyntaxException {

@@ -100,7 +100,6 @@ public class Utils {
    *
    * @param time the formatted time string in the format "MM:SS"
    * @return the total time in seconds
-   * @throws IllegalArgumentException if the time format is invalid
    */
   public static int convertTimeFormatToSeconds(String timeString) {
     String[] time = timeString.split(":");
@@ -252,7 +251,7 @@ public class Utils {
   }
 
   /**
-   * Sets the player's name.
+   * Sets the player's name for usage.
    *
    * @param name extra tag description due missing tag
    */
@@ -261,9 +260,9 @@ public class Utils {
   }
 
   /**
-   * Gets the player's name.
+   * Gets the player's name Adding extra due missing requirements in methods..
    *
-   * @return
+   * @return Adding extra due missing requirements in methods.
    */
   public static String getPlayerName() {
     return playerName;

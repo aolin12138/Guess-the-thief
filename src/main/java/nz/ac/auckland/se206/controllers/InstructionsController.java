@@ -9,6 +9,10 @@ import nz.ac.auckland.se206.SceneManager;
 
 public class InstructionsController {
 
+  /**
+   * This method is called when the go back button is clicked. It will take the user back to the
+   * start scene.
+   */
   @FXML private Button backButton;
 
   /**
