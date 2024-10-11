@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.controllers.CrimeSceneController;
 
+/** This class manages the timeline for the game. */
 public class TimelineManager {
   private static double timeToCount = 300000;
   private static double timeToCountTo = 300000;

@@ -16,6 +16,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.Utils;
 
+/** This class is the controller for the game over scene. */
 public class GameOverController {
 
   private static String explanation;

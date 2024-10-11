@@ -99,7 +99,7 @@ public class NewspaperController {
     sceneOfButton.setRoot(SceneManager.getRoot(SceneManager.Scene.CRIME));
   }
 
-  /** This method initializes the newspaper scene */
+  /** This method initializes the newspaper scene. */
   @FXML
   public void initialize() {
     // Set the first newspaper to be visible and the other two to be invisible

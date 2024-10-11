@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import nz.ac.auckland.se206.SceneManager;
 
+/** This class is the controller for the instructions scene. */
 public class InstructionsController {
 
   /**

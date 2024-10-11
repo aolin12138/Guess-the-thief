@@ -37,7 +37,7 @@ public class ImageManager {
   private boolean isClicked = false;
 
   /**
-   * Constructor for the ImageManager class
+   * Constructor for the ImageManager class which manages the effects of the image.
    *
    * @param imageView the image view of the image to manage the effects of the image.
    */
