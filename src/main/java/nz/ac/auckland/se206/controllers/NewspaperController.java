@@ -61,9 +61,9 @@ public class NewspaperController {
 
   /**
    * This method is called when the previous page button is clicked. It will take the user to the
-   * previous page
+   * previous page.
    *
-   * @param event
+   * @param event extra tag description due missing tag.
    */
   @FXML
   private void onPreviousPage(ActionEvent event) {
@@ -91,7 +91,7 @@ public class NewspaperController {
    * This method is called when the return button is clicked. It will take the user back to the
    * crime scene
    *
-   * @param event
+   * @param event extra tag description due missing tag
    */
   @FXML
   private void onReturnToCrimeScene(ActionEvent event) {

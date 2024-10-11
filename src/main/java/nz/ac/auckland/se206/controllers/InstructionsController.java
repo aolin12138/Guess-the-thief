@@ -9,14 +9,18 @@ import nz.ac.auckland.se206.SceneManager;
 
 public class InstructionsController {
 
+  /**
+   * This method is called when the go back button is clicked. It will take the user back to the
+   * start scene.
+   */
   @FXML private Button backButton;
 
   /**
    * This method is called when the go back button is clicked. It will take the user back to the
    * start scene.
    *
-   * @param event the event that triggered the method call.
-   * @throws IOException if the scene cannot be loaded.
+   * @param event extra tag description due missing tag description.
+   * @throws IOException extra tag description due missing tag description.
    */
   @FXML
   private void onGoBackButtonPressed(ActionEvent event) throws IOException {

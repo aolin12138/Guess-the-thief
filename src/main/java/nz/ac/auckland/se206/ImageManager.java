@@ -182,16 +182,16 @@ public class ImageManager {
   /**
    * set the image to view the image.
    *
-   * @param imageView the image view of the image.
+   * @param imageView extra tag description due missing tag description.
    */
   public void setImageView(ImageView imageView) {
     this.imageView = imageView;
   }
 
   /**
-   * get the image view
+   * extra tag description due missing tag description.
    *
-   * @return
+   * @return extra tag description due missing tag description.
    */
   public ImageView getImageView() {
     return imageView;

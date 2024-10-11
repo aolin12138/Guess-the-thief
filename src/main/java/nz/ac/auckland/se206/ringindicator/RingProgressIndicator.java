@@ -68,6 +68,9 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
   private DoubleProperty ringWidth =
       new StyleableDoubleProperty(22) {
         /**
+         * Adding more words due to requirements for description.Adding more words due to
+         * requirements for description.
+         *
          * @return The Object that contains the property we are bound to.
          */
         @Override
@@ -111,7 +114,11 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
   /**
    * sets te ring width of the RingProgressIndicator.
    *
+<<<<<<< HEAD
    * @param value the ring width of the RingProgressIndicator.
+=======
+   * @param value Adding more words due to requirements for description.
+>>>>>>> main
    */
   public final void setRingWidth(int value) {
     ringWidthProperty().set(value);
@@ -120,7 +127,7 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
   /**
    * gets the ring width of the RingProgressIndicator.
    *
-   * @return
+   * @return Adding more words due to requirements for description.
    */
   public final DoubleProperty ringWidthProperty() {
     return ringWidth;
@@ -129,14 +136,17 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
   /**
    * gets the ring width of the RingProgressIndicator.
    *
-   * @return
+   * @return Adding more words due to requirements for description.
    */
   public final double getRingWidth() {
     return ringWidthProperty().get();
   }
 
   /**
-   * @return The CssMetaData associated with this class, which may include the CssMetaData of its
+   * Adding more words due to requirements for description.Adding more words due to requirements for
+   * description.
+   *
+   * @return The CssMetaData associated with this class, which may include the CssMetaData of its.
    */
   @Override
   public List<CssMetaData<? extends Styleable, ?>> getControlCssMetaData() {

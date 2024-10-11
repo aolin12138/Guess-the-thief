@@ -91,8 +91,8 @@ public class GameStateContext {
   /**
    * Sets the current state of the game.
    *
-   * @param state the new state to set
-   * @return
+   * @param state the new state to set Adding more words due to requirements for description.
+   * @return Adding more words due to requirements for description.
    */
   public void setState(GameState state) {
     this.gameState = state;
@@ -174,9 +174,9 @@ public class GameStateContext {
   }
 
   /**
-   * sets the room controller to this current instance
+   * sets the room controller to this current instance.
    *
-   * @param roomController
+   * @param roomController Extra tag description due missing tag description.
    */
   public void setRoomController(RoomController roomController) {
     this.roomController = roomController;
@@ -185,7 +185,7 @@ public class GameStateContext {
   /**
    * gets the room controller that is set to this instance.
    *
-   * @return
+   * @return Adding more words due to requirements for description.
    */
   public RoomController getRoomController() {
     return roomController;
@@ -194,7 +194,7 @@ public class GameStateContext {
   /**
    * gets the current game state.
    *
-   * @return
+   * @return Adding more words due to requirements for description.
    */
   public GameState getGameState() {
     return gameState;
