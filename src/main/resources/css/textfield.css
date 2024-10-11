@@ -12,3 +12,25 @@
 .text-field .text {
   -fx-background-color: rgb(188, 188, 188);
 }
+
+.scroll-pane .scroll-bar:vertical {
+  -fx-background-color: transparent;
+  /* Makes the entire scrollbar background transparent */
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+  -fx-background-color: transparent;
+  /* Thumb color */
+  -fx-background-radius: 10px;
+  /* Rounded corners */
+  -fx-pref-width: 10px;
+  /* Width of the vertical scrollbar */
+}
+
+.scroll-pane .scroll-bar:vertical .track,
+.scroll-pane .scroll-bar:horizontal .track {
+  -fx-background-color: transparent;
+  /* Track color */
+  -fx-background-radius: 10px;
+  /* Rounded corners */
+}

@@ -377,7 +377,7 @@ public class Utils {
               + "Click play again to replay.");
       try {
         timeline.stop();
-        App.setRoot("gameover");
+        App.setRoot("guess");
         return;
       } catch (IOException e) {
         e.printStackTrace();
@@ -393,7 +393,7 @@ public class Utils {
               + "Click play again to replay");
       try {
         timeline.stop();
-        App.setRoot("gameover");
+        App.setRoot("guess");
         return;
       } catch (IOException e) {
         e.printStackTrace();
@@ -411,11 +411,43 @@ public class Utils {
               + "Click play again to replay.");
       try {
         timeline.stop();
-        App.setRoot("gameover");
+        App.setRoot("guess");
         return;
       } catch (IOException e) {
         e.printStackTrace();
       }
+    }
+  }
+
+  public static void playSoundtrack(String soundtrack) throws URISyntaxException {
+    Media sound = new Media(App.class.getResource("/sounds/" + soundtrack).toURI().toString());
+    player = new MediaPlayer(sound);
+    player.play();
+  }
+
+  /** Stops the media player. */
+  // Used to stop the intro soundtrack incase the player triggers new audio before current audio has
+  // finished playing.
+  public static void stopPlayer() {
+    try {
+      player.stop();
+    } catch (Exception e) {
+    }
+  }
+
+  public static boolean checkThirdTimeSlot() {
+    // Checks the 3rd element of the time array from csv to decide if the new time gets added to the
+    // scoreboard
+    readCsv();
+    System.out.println("time used: " + getTimeUsed());
+    System.out.println("3rd spot: " + convertTimeFormatToSeconds(previousScoresTimes.get(2)));
+    if (previousScoresTimes.size() < 3) {
+      // room for the new time
+      return true;
+    } else if (getTimeUsed() > convertTimeFormatToSeconds(previousScoresTimes.get(2))) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -434,21 +466,5 @@ public class Utils {
    */
   public ArrayList<String> getScoresTimes() {
     return previousScoresTimes;
-  }
-
-  public static void playSoundtrack(String soundtrack) throws URISyntaxException {
-    Media sound = new Media(App.class.getResource("/sounds/" + soundtrack).toURI().toString());
-    player = new MediaPlayer(sound);
-    player.play();
-  }
-
-  /** Stops the media player. */
-  // Used to stop the intro soundtrack incase the player triggers new audio before current audio has
-  // finished playing.
-  public static void stopPlayer() {
-    try {
-      player.stop();
-    } catch (Exception e) {
-    }
   }
 }

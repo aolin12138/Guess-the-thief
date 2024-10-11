@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -22,17 +23,16 @@
             <Image url="@../images/crime_scene3.png" />
          </image>
       </ImageView>
-      <StackPane fx:id="indicatorPane" layoutX="28.0" layoutY="408.0" prefHeight="109.0" prefWidth="104.0">
+      <StackPane fx:id="indicatorPane" layoutX="17.0" layoutY="423.0" prefHeight="109.0" prefWidth="104.0">
          <children>
             <Circle fill="#ffffffcc" radius="50.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
          </children></StackPane>
-      <Pane fx:id="statsPane" layoutX="28.0" layoutY="22.0" prefHeight="30.0" prefWidth="26.0" />
       <Label fx:id="instructionLabel" alignment="CENTER" layoutX="169.0" layoutY="34.0" prefHeight="36.0" prefWidth="500.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" styleClass="instructionsLabel" stylesheets="@../css/suspect_scene.css" text="Select who you think the Recipe Thief is!" textFill="WHITE">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="428.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="120" textAlignment="CENTER" textFill="#24f59b">
+      <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-6.0" layoutY="443.0" prefHeight="71.0" prefWidth="153.0" styleClass="outline" stylesheets="@../css/labeloutline.css" text="120" textAlignment="CENTER" textFill="#24f59b">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
@@ -42,7 +42,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <HBox layoutX="54.0" layoutY="144.0" prefHeight="232.0" prefWidth="636.0" spacing="125.0">
+      <HBox layoutX="75.0" layoutY="143.0" prefHeight="232.0" prefWidth="636.0" spacing="125.0">
          <children>
             <VBox minWidth="-Infinity" prefHeight="232.0" prefWidth="150.0">
                <children>
@@ -118,29 +118,49 @@
             </VBox>
          </children>
       </HBox>
-      <HBox fx:id="chatHorizontalBox" layoutX="152.0" layoutY="392.0" prefHeight="167.0" prefWidth="610.0" visible="false">
-         <children>
-      
-            <TextField fx:id="textInput" alignment="TOP_LEFT" prefHeight="159.0" prefWidth="512.0" stylesheets="@../css/textfield.css" />
-            <Button fx:id="buttonSend" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="30.0" prefWidth="84.0" stylesheets="@../css/buttons.css" text="Send">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
+      <TextArea fx:id="guessTextArea" layoutX="216.0" layoutY="341.0" prefHeight="134.0" prefWidth="394.0" visible="false" />
       <Label fx:id="explanationLabel" layoutX="154.0" layoutY="362.0" text="Please explain your answer below" textFill="WHITE" visible="false">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextArea fx:id="guessTextArea" layoutX="216.0" layoutY="341.0" prefHeight="134.0" prefWidth="394.0" />
-      <Button fx:id="restartButton" layoutX="698.0" layoutY="40.0" mnemonicParsing="false" onAction="#onRestartButtonClicked" text="Play Again" />
+      <Button fx:id="restartButton" layoutX="698.0" layoutY="40.0" mnemonicParsing="false" onAction="#onRestartButtonClicked" stylesheets="@../css/buttons.css" text="Play Again" />
       <Label fx:id="leaderboardResultLabel" alignment="CENTER" layoutX="169.0" layoutY="108.0" prefHeight="36.0" prefWidth="500.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" styleClass="instructionsLabel" stylesheets="@../css/suspect_scene.css" text="Leaderboard Result" textFill="WHITE">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <StackPane fx:id="loadingPane" layoutX="341.0" layoutY="191.0" prefHeight="123.0" prefWidth="123.0" />
+      <Pane fx:id="chatPane" layoutX="306.0" layoutY="328.0" prefHeight="200.0" prefWidth="310.0" visible="false">
+         <children>
+            <Button fx:id="buttonSend" layoutX="359.0" layoutY="200.0" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="26.0" prefWidth="9.0" stylesheets="@../css/buttons.css" text="Send" visible="false" />
+            <ScrollPane fx:id="scrollPane" layoutX="-140.0" layoutY="45.0" prefHeight="185.0" prefWidth="531.0" style="-fx-background-radius: 10;" stylesheets="@../css/scrollpane.css">
+               <content>
+                  <VBox fx:id="messageBoxes" prefHeight="152.0" prefWidth="506.0" spacing="10.0">
+                     <opaqueInsets>
+                        <Insets bottom="30.0" />
+                     </opaqueInsets>
+                  </VBox>
+               </content>
+               <padding>
+                  <Insets bottom="40.0" />
+               </padding>
+            </ScrollPane>
+            <TextField fx:id="inputField1" layoutX="-136.0" layoutY="88.0" prefHeight="134.0" prefWidth="524.0" style="-fx-background-color: rgba(0,0,0,0.45); -fx-text-fill: white; -fx-background-radius: 15;" visible="false">
+               <padding>
+                  <Insets left="15.0" right="35.0" />
+               </padding>
+            </TextField>
+            <TextArea fx:id="inputField" layoutX="-127.0" layoutY="90.0" prefHeight="134.0" prefWidth="486.0" stylesheets="@../css/textarea.css" />
+            <Button fx:id="sendButton" layoutX="360.0" layoutY="195.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="24.0" prefWidth="25.0" styleClass="sendButton" stylesheets="@../css/suspect_scene.css">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/message_arrow.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </Pane>
    </children>
 </Pane>

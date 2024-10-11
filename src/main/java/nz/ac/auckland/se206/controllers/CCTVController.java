@@ -2,12 +2,14 @@ package nz.ac.auckland.se206.controllers;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -22,6 +24,8 @@ public class CCTVController {
   private static boolean switchedRing = false;
   private static boolean initialisedRing = true;
 
+  private static boolean isSeen = false;
+
   public static void resetBooleans() {
     switchedRing = false;
     initialisedRing = false;
@@ -30,7 +34,8 @@ public class CCTVController {
   @FXML private Button returnButton;
   @FXML private StackPane indicatorPane;
   @FXML private Label timerLabel;
-  @FXML private Label recognition;
+  @FXML private Label messageLabel;
+  @FXML private Label revealImage;
   @FXML private Rectangle brotherFace;
 
   /**
@@ -67,7 +72,7 @@ public class CCTVController {
                     setRedRing();
                   }
                   // flash the timer red below 30 seconds
-                  if (TimelineManager.getTimeToCount() < 30000) {
+                  if (TimelineManager.getTimeToCount() <= 30000) {
                     if ((int) (TimelineManager.getTimeToCount() / 1000) % 2 == 0) {
                       timerLabel.setStyle("-fx-text-fill: rgba(255,0,0,1);");
                     } else {
@@ -82,7 +87,32 @@ public class CCTVController {
   /** This method is called when the face is clicked. It will show the recognition label */
   @FXML
   private void onFaceClicked() {
-    recognition.setVisible(true);
+    if (!isSeen) {
+      isSeen = true;
+      messageLabel.setVisible(false);
+      revealImage.setVisible(true);
+      TranslateTransition recognitionTransition = new TranslateTransition();
+      recognitionTransition.setNode(revealImage);
+      recognitionTransition.setDuration(Duration.millis(500));
+      recognitionTransition.setFromX(500);
+      recognitionTransition.setToX(0);
+      recognitionTransition.play();
+    }
+  }
+
+  @FXML
+  void onFaceHoverEnter(MouseEvent event) {
+    if (!isSeen) {
+      messageLabel.setText("FACIAL RECOGNITION AVAILABLE. CLICK FACE TO RUN.");
+      messageLabel.setVisible(true);
+    }
+  }
+
+  @FXML
+  void onFaceHoverExit(MouseEvent event) {
+    if (!isSeen) {
+      messageLabel.setVisible(false);
+    }
   }
 
   /** Sets the ring progress indicator to red. */
