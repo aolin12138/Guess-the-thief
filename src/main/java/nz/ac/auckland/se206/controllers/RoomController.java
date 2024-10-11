@@ -246,7 +246,7 @@ public class RoomController {
     return dashcam;
   }
 
-  /** boolean variable representing the wallet */
+  /** boolean variable representing the wallet. */
   public void foundWallet() {
     walletFound = true;
   }

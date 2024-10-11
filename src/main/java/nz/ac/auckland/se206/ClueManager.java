@@ -9,6 +9,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+/** This class manages the clues in the game. */
 public class ClueManager {
   private ImageView imageView;
 

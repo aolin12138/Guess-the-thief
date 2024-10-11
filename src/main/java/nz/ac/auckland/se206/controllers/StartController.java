@@ -159,7 +159,7 @@ public class StartController {
   /**
    * This method is called when the key is released. It will print the key that is released.
    *
-   * @param event
+   * @param event The event that is triggered when the key is released.
    */
   @FXML
   public void onKeyReleased(KeyEvent event) {

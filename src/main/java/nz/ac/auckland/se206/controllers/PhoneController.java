@@ -228,7 +228,7 @@ public class PhoneController {
   /**
    * This method is called when the phone app is clicked. It will take the user to the call history
    *
-   * @param event
+   * @param event Adding extra bulk due testing requirements.
    */
   @FXML
   void onPhoneAppClicked(MouseEvent event) {
@@ -260,7 +260,7 @@ public class PhoneController {
   /**
    * This method is called when the end call button is clicked. It will end the call.
    *
-   * @param event
+   * @param event Adding extra bulk due testing requirements.
    */
   @FXML
   private void onEndCallButtonClicked(MouseEvent event) {
@@ -270,9 +270,15 @@ public class PhoneController {
     mediaPlayer.stop();
   }
 
+  /**
+   * This method is called when the back button is clicked. It will take the user back to the crime
+   * scene.
+   *
+   * @param event Adding extra bulk due testing requirements.
+   */
   @FXML
   // this method allows for various in game UI elements to provide response to the user when they
-  // are hovred over with the mouse
+  // are hovred over with the mouse cursor by changing the opacity of the element.
   public void styleScene() {
     // missed call element
     historyImage.setOnMouseEntered(

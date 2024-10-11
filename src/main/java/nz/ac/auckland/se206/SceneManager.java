@@ -90,9 +90,9 @@ public class SceneManager {
   }
 
   /**
-   * Sets the call history loader.
+   * Sets the call history loader for usage in the game.
    *
-   * @param callHistoryLoader the FXMLLoader to set for the call history
+   * @param callhistoryLoader the FXMLLoader to set for the call history.
    */
   public static void setCallHistoryLoader(FXMLLoader callhistoryLoader) {
     SceneManager.callhistoryLoader = callhistoryLoader;

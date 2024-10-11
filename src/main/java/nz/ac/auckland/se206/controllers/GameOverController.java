@@ -154,7 +154,7 @@ public class GameOverController {
   /**
    * This method is a placeholder for the key pressed event.
    *
-   * @param event
+   * @param event Adding extra bulk due testing requirements.
    */
   @FXML
   public void onKeyPressed(ActionEvent event) {}

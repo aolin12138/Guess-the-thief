@@ -46,7 +46,7 @@ public class CrimeSceneController {
   /**
    * This method returns true if any clue is found.
    *
-   * @return Adding more words due to requirements for description.
+   * @return returns the context of the game state.
    */
   public static boolean isAnyClueFound() {
     return context.isAnyClueFound();
@@ -179,7 +179,7 @@ public class CrimeSceneController {
   /**
    * This method is called when the CCTV clue is clicked. It will take the user to the CCTV scene.
    *
-   * @param event It will take the user to the CCTV scene.
+   * @param event Adding more words due to requirements for description.
    */
   @FXML
   void onCameraClueClicked(MouseEvent event) {
