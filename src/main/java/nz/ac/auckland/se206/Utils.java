@@ -277,7 +277,7 @@ public class Utils {
   /**
    * Gets the top 3 scores from the CSV file to display on the start page.
    *
-   * @return
+   * @return an ArrayList of the top 3 scores to display on the start page.
    */
   public static ArrayList<String> getScoresForStartPage() {
     // Need to read the csv and put the values into an array

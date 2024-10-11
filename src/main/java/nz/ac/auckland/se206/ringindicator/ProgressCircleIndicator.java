@@ -154,13 +154,13 @@ abstract class ProgressCircleIndicator extends Control {
     return indeterminate.get();
   }
 
-  /** Set the progress to indeterminate. */
+  /** Set the progress to indeterminate state. */
   public void makeIndeterminate() {
     setProgress(INDETERMINATE_PROGRESS);
   }
 
   /**
-   * Get the indeterminate property.
+   * Get the indeterminate property Adding extra bulk due testing requirements.
    *
    * @return Adding extra bulk due testing requirements.
    */

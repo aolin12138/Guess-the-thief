@@ -49,7 +49,7 @@ public class GameStateContext {
   /**
    * Constructs a new GameStateContext and initializes the game states and professions.
    *
-   * @throws ApiProxyException
+   * @throws ApiProxyException if there is an API proxy error Adding more words due to requirements.
    */
   public GameStateContext() {
     gameStartedState = new GameStarted(this);
