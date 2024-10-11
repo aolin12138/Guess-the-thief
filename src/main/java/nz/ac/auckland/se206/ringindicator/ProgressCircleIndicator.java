@@ -159,7 +159,7 @@ abstract class ProgressCircleIndicator extends Control {
   /**
    * Get the indeterminate property.
    *
-   * @return
+   * @return Adding extra bulk due testing requirements.
    */
   public ReadOnlyBooleanProperty getIndeterminateProperty() {
     return indeterminate.getReadOnlyProperty();
@@ -168,8 +168,8 @@ abstract class ProgressCircleIndicator extends Control {
   /**
    * Set the default value to 100 if the value is greater than 100.
    *
-   * @param value
-   * @return
+   * @param value Adding extra bulk due testing requirements.
+   * @return Adding extra bulk due testing requirements.
    */
   private int defaultToHundred(int value) {
     if (value > 100) {

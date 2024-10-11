@@ -98,7 +98,6 @@ public class Utils {
    * time string represents the time used, and the method calculates the time remaining from a total
    * of 360 seconds (600 seconds gameplay + 60 seconds to guess).
    *
-   * @param time the formatted time string in the format "MM:SS"
    * @return the total time in seconds
    */
   public static int convertTimeFormatToSeconds(String timeString) {

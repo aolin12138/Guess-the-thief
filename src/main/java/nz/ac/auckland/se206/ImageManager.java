@@ -197,7 +197,7 @@ public class ImageManager {
     return imageView;
   }
 
-  /** This method is called when the image is clicked */
+  /** This method is called when the image is clicked. */
   public void clicked() {
     // creates a new drop shadow effect
     DropShadow dropShadow = new DropShadow();

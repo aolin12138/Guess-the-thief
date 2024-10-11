@@ -114,7 +114,7 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
   /**
    * sets te ring width of the RingProgressIndicator.
    *
-   * @param value Adding more words due to requirements for description.
+   * @param value the ring width of the RingProgressIndicator.
    */
   public final void setRingWidth(int value) {
     ringWidthProperty().set(value);

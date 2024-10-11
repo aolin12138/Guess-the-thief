@@ -202,7 +202,7 @@ public class RoomController {
     timeline.play();
   }
 
-  /** disables all the rectangles in the room */
+  /** disables all the rectangles in the room. */
   public void disableAll() {
     officer.setDisable(true);
     officer2.setDisable(true);
@@ -260,7 +260,7 @@ public class RoomController {
     return walletFound;
   }
 
-  /** boolean variable representing the found camera */
+  /** boolean variable representing the found camera. */
   public void foundCamera() {
     cameraFound = true;
   }

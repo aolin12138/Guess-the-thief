@@ -183,7 +183,7 @@ public class PhoneController {
   /**
    * This method is called when the call number is clicked. It will take the user to the call screen
    *
-   * @param event Adding more words due to requirements for description.
+   * @param event Adding extra bulk due testing requirements.
    */
   @FXML
   private void callNumber(MouseEvent event) {
@@ -238,9 +238,9 @@ public class PhoneController {
   }
 
   /**
-   * This method is called when the back button is clicked. It will take the user back to the crime
+   * This method is called when the back button is clicked. It will take the user back to the crime.
    *
-   * @param event
+   * @param event Adding extra bulk due testing requirements.
    */
   @FXML
   private void onReturnToCrimeScene(ActionEvent event) {
@@ -303,7 +303,7 @@ public class PhoneController {
         });
   }
 
-  /** This method is called when it needs to disable all the rectangles */
+  /** This method is called when it needs to disable all the rectangles. */
   public void disableAll() {
     phoneApp.setVisible(false);
     historyImage.setVisible(false);

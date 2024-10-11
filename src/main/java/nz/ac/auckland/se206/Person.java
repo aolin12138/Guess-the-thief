@@ -127,7 +127,7 @@ public class Person {
   /**
    * set the chat completion request.
    *
-   * @param chatCompletionRequest
+   * @param chatCompletionRequest Adding extra bulk due testing requirements.
    */
   public void setChatCompletionRequest(ChatCompletionRequest chatCompletionRequest) {
     this.chatCompletionRequest = chatCompletionRequest;

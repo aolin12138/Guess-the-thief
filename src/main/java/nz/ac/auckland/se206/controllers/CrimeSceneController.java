@@ -45,7 +45,7 @@ public class CrimeSceneController {
   }
 
   /**
-   * This method is a setter that sets the context
+   * This method is a setter that sets the context.
    *
    * @param context Adding more words due to requirements for description.
    */
@@ -57,7 +57,6 @@ public class CrimeSceneController {
    * This method is a getter that returns the context.
    *
    * @return returns the context of the game state.
-   * @return Adding more words due to requirements for description.
    */
   public static GameStateContext getContext() {
     return context;
@@ -394,7 +393,7 @@ public class CrimeSceneController {
     buttonSlide.setOnAction(e -> toggleVerticalBox());
   }
 
-  /** This method toggles the VBox */
+  /** This method toggles the VBox. */
   private void toggleVerticalBox() {
 
     if (hideInstructionsButton.isVisible()) {
@@ -463,9 +462,9 @@ public class CrimeSceneController {
   }
 
   /**
-   * This method is a getter that returns the id
+   * This method is a getter that returns the id.
    *
-   * @return
+   * @return Adding extra bulk due testing requirements.
    */
   public String getId() {
     return id;
