@@ -150,7 +150,7 @@
                   <Insets left="15.0" right="35.0" />
                </padding>
             </TextField>
-            <TextArea fx:id="inputField" layoutX="-127.0" layoutY="90.0" prefHeight="134.0" prefWidth="483.0" stylesheets="@../css/textarea.css" />
+            <TextArea fx:id="inputField" layoutX="-127.0" layoutY="90.0" prefHeight="134.0" prefWidth="486.0" stylesheets="@../css/textarea.css" />
             <Button fx:id="sendButton" layoutX="360.0" layoutY="195.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="24.0" prefWidth="25.0" styleClass="sendButton" stylesheets="@../css/suspect_scene.css">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">

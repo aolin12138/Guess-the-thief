@@ -164,29 +164,12 @@ public class GuessController {
                 Stage stage = (Stage) newScene.getWindow();
                 stage.sizeToScene();
               }
-            });
-
-    brotherImage.setCursor(Cursor.HAND);
-    workerImage.setCursor(Cursor.HAND);
-    ownerImage.setCursor(Cursor.HAND);
-    buttonSend.setCursor(Cursor.HAND);
-    restartButton.setCursor(Cursor.HAND);
-    restartButton.setVisible(false);
-    leaderboardResultLabel.setVisible(false);
-
-    buttonSend
-        .sceneProperty()
-        .addListener(
-            (observable, oldScene, newScene) -> {
-              if (newScene != null) {
-                Stage stage = (Stage) newScene.getWindow();
-                stage.sizeToScene();
-              }
               if (newScene != null) {
                 newScene.addEventHandler(
                     KeyEvent.KEY_PRESSED,
                     event -> {
                       if (event.getCode() == KeyCode.ENTER) {
+                        event.consume();
                         try {
                           onSendMessage(new ActionEvent());
                         } catch (ApiProxyException | IOException e) {
@@ -196,6 +179,28 @@ public class GuessController {
                     });
               }
             });
+
+    inputField.setWrapText(true);
+    inputField.setOnKeyPressed(
+        event -> {
+          if (event.getCode() == KeyCode.ENTER) {
+            event.consume(); // Prevent the TextArea from adding a new line
+            try {
+              onSendMessage(new ActionEvent()); // Call your message sending method
+            } catch (ApiProxyException | IOException e) {
+              e.printStackTrace();
+            }
+          }
+        });
+
+    brotherImage.setCursor(Cursor.HAND);
+    workerImage.setCursor(Cursor.HAND);
+    ownerImage.setCursor(Cursor.HAND);
+    buttonSend.setCursor(Cursor.HAND);
+    restartButton.setCursor(Cursor.HAND);
+    restartButton.setVisible(false);
+    leaderboardResultLabel.setVisible(false);
+
     // Set the image managers for the suspects
     ownerImageManager = new ImageManager(ownerImage);
     workerImageManager = new ImageManager(workerImage);
