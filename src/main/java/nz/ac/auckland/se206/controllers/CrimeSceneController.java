@@ -56,7 +56,7 @@ public class CrimeSceneController {
   /**
    * This method is a getter that returns the context
    *
-   * @return
+   * @return returns the context of the game state.
    */
   public static GameStateContext getContext() {
     return context;
@@ -275,9 +275,9 @@ public class CrimeSceneController {
    * This method is called when the guess button is clicked. It will take the user to the guess
    * scene
    *
-   * @param event
-   * @throws IOException
-   * @throws URISyntaxException
+   * @param event the event that triggered the method call.
+   * @throws IOException if the scene cannot be loaded throws an IOException.
+   * @throws URISyntaxException if the URI is invalid throws a URISyntaxException.
    */
   @FXML
   private void onGuessClick(ActionEvent event) throws IOException, URISyntaxException {
@@ -424,9 +424,9 @@ public class CrimeSceneController {
    * This method is called when an image is clicked. It will set the context and take the user to
    * the image scene
    *
-   * @param event
-   * @throws IOException
-   * @throws InterruptedException
+   * @param event the mouse event that triggered this method
+   * @throws IOException if the image cannot be loaded throws an IOException
+   * @throws InterruptedException if the thread is interrupted throws an InterruptedException
    */
   @FXML
   public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {

@@ -86,8 +86,9 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
         }
 
         /**
-         * @return The CssMetaData associated with this class, which may include the CssMetaData of
-         *     its
+         * returns the CssMetaData associated with this class, which may include the CssMetaData
+         *
+         * @return The CssMetaData associated with this class, which may include the CssMetaData
          */
         @Override
         public CssMetaData<RingProgressIndicator, Number> getCssMetaData() {
@@ -110,7 +111,7 @@ public class RingProgressIndicator extends ProgressCircleIndicator {
   /**
    * sets te ring width of the RingProgressIndicator.
    *
-   * @param value
+   * @param value the ring width of the RingProgressIndicator.
    */
   public final void setRingWidth(int value) {
     ringWidthProperty().set(value);

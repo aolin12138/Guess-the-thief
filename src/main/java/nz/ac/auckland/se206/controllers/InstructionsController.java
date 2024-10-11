@@ -15,8 +15,8 @@ public class InstructionsController {
    * This method is called when the go back button is clicked. It will take the user back to the
    * start scene.
    *
-   * @param event
-   * @throws IOException
+   * @param event the event that triggered the method call.
+   * @throws IOException if the scene cannot be loaded.
    */
   @FXML
   private void onGoBackButtonPressed(ActionEvent event) throws IOException {

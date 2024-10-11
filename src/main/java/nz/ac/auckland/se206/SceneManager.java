@@ -50,7 +50,7 @@ public class SceneManager {
   /**
    * Sets the phone loader.
    *
-   * @param phoneLoader
+   * @param phoneLoader the FXMLLoader to set for the phone loader in the game.
    */
   public static void setPhoneLoader(FXMLLoader phoneLoader) {
     SceneManager.phoneLoader = phoneLoader;
@@ -59,25 +59,25 @@ public class SceneManager {
   /**
    * Sets the camera loader.
    *
-   * @param cctvLoader
+   * @param cctvLoader the FXMLLoader to set for the camera loader in the game.
    */
   public static void setCameraLoader(FXMLLoader cctvLoader) {
     SceneManager.cctvLoader = cctvLoader;
   }
 
   /**
-   * Sets the newspaper loader.
+   * Sets the newspaper loader for usage in the game.
    *
-   * @param newspaperLoader
+   * @param newspaperLoader the FXMLLoader to set for the newspaper.
    */
   public static void setNewspaperLoader(FXMLLoader newspaperLoader) {
     SceneManager.newspaperLoader = newspaperLoader;
   }
 
   /**
-   * Sets the room loader.
+   * Sets the room loader for usage in the game.
    *
-   * @param roomLoader the FXMLLoader to set for the room
+   * @param roomLoader the FXMLLoader to set for the room.
    */
   public static void setRoomLoader(FXMLLoader roomLoader) {
     SceneManager.roomLoader = roomLoader;

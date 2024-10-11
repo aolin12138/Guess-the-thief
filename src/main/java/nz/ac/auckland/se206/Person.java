@@ -19,10 +19,10 @@ public class Person {
   /**
    * Constructor for the Person class
    *
-   * @param name
-   * @param role
-   * @param profession
-   * @param voice
+   * @param name the name of the person
+   * @param role the role of the person
+   * @param profession the profession of the person
+   * @param voice the voice of the person
    */
   public Person(String name, String role, String profession, Voice voice) {
     this.voice = voice;

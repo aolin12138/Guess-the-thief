@@ -685,11 +685,11 @@ public class RoomController {
   }
 
   /**
-   * Handles the event when an image is clicked. Depending on the clicked image, it either displays
+   * Handles the event when an image is clicked. Depending on the clicked image, it either displays.
    *
-   * @param event
-   * @throws IOException
-   * @throws InterruptedException
+   * @param event the mouse event triggered by clicking an image.
+   * @throws IOException if there is an I/O error when loading the image.
+   * @throws InterruptedException if the thread is interrupted while waiting.
    */
   @FXML
   public void handleImageClick(MouseEvent event) throws IOException, InterruptedException {
@@ -862,9 +862,9 @@ public class RoomController {
   /**
    * Appends text to the chat area letter by letter.
    *
-   * @param textNode
-   * @param message
-   * @param delay
+   * @param textNode the text node to append to the chat area.
+   * @param message the message to append to the chat area.
+   * @param delay the delay between each letter in milliseconds.
    */
   public void appendTextLetterByLetter(Text textNode, String message, int delay) {
     // Clear the current text in the Text node

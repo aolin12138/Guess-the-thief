@@ -91,8 +91,8 @@ public class StartController {
   /**
    * This method is called when the Enter is pressed. It will take the user to the crime scene.
    *
-   * @param event
-   * @throws IOException
+   * @param event The event that is triggered when the Enter key is pressed.
+   * @throws IOException If the file is not found or the file is corrupted.
    */
   @FXML
   private void onEnterPressed(Event event) throws IOException {
@@ -143,7 +143,7 @@ public class StartController {
   /**
    * This method is called when the key is pressed. It will print the key that is pressed.
    *
-   * @param event
+   * @param event The event that is triggered when the key is pressed.
    */
   @FXML
   public void onKeyPressed(KeyEvent event) {

@@ -214,8 +214,8 @@ public class PhoneController {
   /**
    * This method is called when the lock screen is clicked. It will unlock the phone
    *
-   * @param lockScreen
-   * @param height
+   * @param lockScreen the lock screen image view to be unlocked.
+   * @param height the height of the phone pane.
    */
   private void unlock(ImageView lockScreen, double height) {
     TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), lockScreen);
